@@ -53,8 +53,8 @@
     /* 서브메뉴바 메뉴버튼(기본) */
     .subBtn{
         border:0;
-        width:150px;
-        height:50px;
+        width: 150px;
+        height: 50px;
         font-size: 19px;
         color:rgb(127, 127, 127);
         background-color: white;
@@ -64,76 +64,21 @@
     /* 서브메뉴바 메뉴버튼(기본) */
     /* 서브메뉴바 메뉴버튼(현재페이지일때) */
     .subActive{
-        border:4px solid rgb(26, 188, 156);
+        border: 4px solid rgb(26, 188, 156);
     }
     /* 서브메뉴바 메뉴버튼(현재페이지일때) */
 
     /* 콘텐츠영역 */
     .contentArea {
         margin-top: 50px;
-        margin-left:100px;
-        width:1600px;
-        height:auto;
-        float:left;
+        margin-left: 100px;
+        width: 1600px;
+        height: auto;
+        float: left;
     }
     /* 콘텐츠영역 */
 
 /* ==========페이지영역========== */
-	
-	/* 예약하기 버튼 */
-	.reservationBtn {
-		width: 160px;
-		height: 50px;
-		background-color: rgb(26, 188, 156);
-		text-align: center;
-		font-size: 25px;
-		color: white;
-		margin-left: 10px;
-		outline: none;
-		border-radius: 10px;
-		border: 0px;
-		margin-top: 10px;
-	}
-	/* 나의 예약 버튼*/
-	 #myReservationBtn {
-		width: 140px;
-		height: 40px;
-		border: 0px;
-		border-radius: 5px;
-		background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
-		color: white;
-		font-size: 18px;
-		margin-left: 900px;
-	}
-	
-	 #myReservationBtn:hover {
-		cursor: pointer;
-	}
-	
-	
-	/* 예약 모달 */
-	.modal {
-		max-width: 2000px;
-		width: 1000px;
-		height: 700px; /* 모달 크기지정 */
-		padding: 0px;
-		border-radius: 0px;
-	}
-	
-	.modal-title {
-		margin: 0;
-		width: 100%;
-		height: 50px;
-		background-color: rgba(22, 160, 133, 0.68);
-		font-size: 25px;
-		padding: 10px;
-		color: white;
-		box-sizing: border-box;
-	}
-	
-	.modal-content {
-		padding: 20px;
-	}
 	
 	html, body {
 		margin: 0;
@@ -143,55 +88,21 @@
 		font-family: "Nanum Gothic", serif;
 		overflow-x: hidden;
 	}
-	
-	.reservationContent {
-		border: 1px solid black;
-		width: 100%;
-		height: 400px;
-		margin-top: 10px;
-	}
-	/*select 옵션*/
-	.meetionroom {
-		float: left;
-	}
-	
-	/* inputs */
-	.inputs {
-		width: 300px;
-		height: 25px;
-		border: 1px solid lightgray;
-		border-radius: 3px;
-	}
-	
-	.BigInput {
-		width: 400px;
-		height: 35px;
-		border: 1px solid lightgray;
-		border-radius: 3px;
-		margin-left: 10px;
-	}
-	
-	/* 예약하기 버튼*/
-	.btns {
-		margin-left: 30%;
-	}
-	
-	.reservationBtn {
+	#reservationBtn {
 		width: 140px;
 		height: 40px;
 		border: 0px;
 		border-radius: 5px;
-		background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
+		background: rgb(26, 188, 156);
 		color: white;
 		font-size: 18px;
 		margin-left: 50px;
 	}
-	
-	.reservationBtn:hover {
+	#reservationBtn:hover {
 		cursor: pointer;
 	}
 	
-	/*나의예약현황*/
+	/* 나의 예약 현황 버튼*/
 	#myReservation{
 		width: 120px;
 		height: 30px;
@@ -203,10 +114,7 @@
 		margin-left:1000px;
 		float:left;
 		text-decoration:none;
-		
 	}
-	
-	
 	#myReservationBtn:hover {
 		cursor: pointer;
 	}
@@ -214,50 +122,98 @@
 		text-align:center;
 	}
 	
-	/* 취소 버튼 */
-	.resetBtn {
-		width: 140px;
-		height: 40px;
-		border: 0px;
-		border-radius: 5px;
-		background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
+/* ==========예약하기 모달========== */
+	
+	/* 예약 모달 */
+	.modal {
+		max-width: 2000px;
+		width: 1000px;
+		height: 700px; /* 모달 크기지정 */
+		padding: 0px;
+		border-radius: 0px;
+	}
+	.modal-title {
+		margin: 0;
+		width: 100%;
+		height: 50px;
+		background-color: rgba(22, 160, 133, 0.68);
+		font-size: 25px;
+		padding: 10px;
 		color: white;
-		font-size: 18px;
+		box-sizing: border-box;
 	}
-	
-	.resetBtn:hover {
-		cursor: pointer;
+	.modal-content {
+		padding: 20px;
 	}
-	
-	/* 가용회의실 검색 버튼*/
-	.searchBtn {
-		width: 100px;
-		height: 25px;
-		border: 0px;
-		border-radius: 5px;
-		background: lightgray;
-		color: white;
-		font-size: 12px;
-		float: left;
-	}
-	
-	.searchBtn:hover {
-		cursor: pointer;
-	}
-	
-	#meetingroomBox {
-		float: left;
-		height: 20px;
-	}
-	
-	/*콘텐트 내용*/
 	.reservationContent {
+		width: 100%;
+		height: 400px;
+		margin-top: 10px;
 		border-collapse: collapse;
 		border-bottom: 3px solid lightgray;
 		border-top: 3px solid #dddd;
 		border-left: none;
 		border-right: none;
-		font-size: 13px;
+	}
+	.reservationContent *{
+		font-size: 15px;
+	}
+
+	#minusImg{
+		width: 15px;
+		height: 15px;
+		vertical-align: middle;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 5px;
+	}
+
+	/*select 옵션*/
+	.meetionroom {
+		float: left;
+	}
+	.inputs {
+		width: 300px;
+		height: 30px;
+		border: 1px solid lightgray;
+		border-radius: 3px;
+		padding-left: 5px;
+		font-size: 16px;
+	}
+	.btns {
+		margin-left: 30%;
+	}
+
+	/* 가용회의실 검색, 참석자 지정 버튼*/
+	.searchBtn {
+		height: 33px;
+		border: none;
+		border-radius: 5px;
+		background: rgb(190, 190, 190);
+		color: white;
+		font-size: 14px;
+		float: left;
+	}
+	.searchBtn:hover {
+		cursor: pointer;
+	}
+	#searchBtn1{
+		width: 120px;
+		margin-top: 17px;
+		margin-right: 10px;
+	}
+	#searchBtn2{
+		width: 90px;
+	}
+	#partArea{
+		border: 1px solid lightgray;
+		margin-left: 10px;
+		border-radius: 3px;
+		resize: none;
+	}
+	#meetingroomBox {
+		float: left;
+		height: 20px;
 	}
 	
 	#r1 {
@@ -266,26 +222,38 @@
 		border-bottom: 1px ridge lightgray;
 		background-color: #eeee;
 	}
-	
 	#r2 {
 		width: 80%;
 		padding: 20px;
 		border-bottom: 1px solid lightgray;
 	}
-	
 	#r3 {
 		text-align: center;
 		background-color: #eeee;
 	}
-	
 	#r4 {
 		width: 80%;
 		padding: 20px;
 	}
-	
-
-
-/* ==========예약하기 모달========== */
+	#reservBtn, #resetBtn{
+		width: 140px;
+		height: 40px;
+		border: 0px;
+		border-radius: 5px;
+		color: white;
+		font-size: 18px;
+		margin-top: 20px;
+	}
+	#reservBtn{
+		background: rgb(26, 188, 156);
+		margin-left: 60px;
+	}
+	#resetBtn{
+		background: rgb(190, 190, 190);
+	}
+	#reservBtn:hover, #resetBtn:hover{
+		cursor: pointer;
+	}
 
 /* ==========예약하기 모달========== */
 
@@ -340,7 +308,6 @@
 		margin-bottom: 10px;
 	}
 	
-	
 	/* 페이징바 스타일 */
 	.pagingBar {
 		list-style: none;
@@ -372,6 +339,7 @@
 	}
 	/* 페이징바 스타일 */
 	
+/* ==========나의 예약 현황 모달========== */
 
 
 </style>
@@ -380,7 +348,7 @@
 
 	<!-- 메뉴바 -->
 
-	<div class="outer" style="border: 1px solid red">
+	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
 			<span>회의실</span>
@@ -391,11 +359,11 @@
 				<li><button class="subBtn subActive">회의실 예약</button></li>
 			</ul>
 		</div>
-		<div class="contentArea" style="border: 1px solid blue">
+		<div class="contentArea">
 
-			<button class="reservationBtn" onclick="open_modal();">예약하기</button>
-			<a id="open_reservation" class="open-modal" href="" style="display: none;">모달</a> <br> 
-			<a id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
+			<button id="reservationBtn">예약하기</button>
+			<a  id="reservation" class="open-modal" href="#open_reservation" style="display: none;">모달</a> <br> 
+			<a  id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
 
 		</div>
 
@@ -403,49 +371,54 @@
 
 		<!-- 모달~모달~ 핵어렵 -->
 		<!-- 모달 내용(예약하기 부분) -->
-		<div id="reservation" class="modal" style="border: 1px solid red">
+		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
-			<div class="modal-content" style="border: 1px solid blue">
-				<table class="reservationContent" border="1">
+			<div class="modal-content">
+				<table class="reservationContent">
 					<tr>
 						<td id="r1">신청자</td>
-						<td id="r2">케빈과장</td>
+						<td id="r2">케빈</td>
 					</tr>
-
 					<tr>
 						<td id="r1">사용기간</td>
-						<td id="r2"><form name="" action="" method="post">
-								<input type="date" value="">
-							</form></td>
-						<!-- <td><form name="" action="" method="post"><input type="date" value=""></form></td> -->
+						<td id="r2">
+							<form name="" action="" method="post">
+								<input type="date" class="inputs" style="width:140px">
+								<input type="time" class="inputs" style="width:120px">
+								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
+								<input type="date" class="inputs" style="width:140px">
+								<input type="time" class="inputs" style="width:120px">
+							</form>
+						</td>
 					</tr>
-
 					<tr>
 						<td id="r1">회의실</td>
-						<td id="r2"><select name="meetingroom">
+						<td id="r2">
+							<select name="meetingroom" class="inputs" style="width:120px">
 								<option selected>회의실 선택</option>
-								<option value="5F 회의실1">5F 회의실1</option>
-								<option value="5F 회의실">5F 회의실2</option>
-								<option value="5F 회의실">5F 회의실3</option>
-								<option value="6F 회의실">6F회의실</option>
-						</select> <br>
-							<button class="searchBtn">가용회의실 검색</button> <br> <input
-							type="text" id="meetingroomBox" class="inputs"></td>
+								<option>5F 회의실1</option>
+								<option>5F 회의실2</option>
+								<option>5F 회의실3</option>
+								<option>6F회의실</option>
+							</select>
+							<br>
+							<button id="searchBtn1" class="searchBtn">가용회의실 검색</button> 
+							<br> 
+							<input type="text" id="meetingroomBox" class="inputs" style="height:30px" readonly>
+						</td>
 					</tr>
-
 					<tr>
 						<td id="r1">사용목적</td>
-						<td id="r2"><input type="text" placeholder="내용을 입력하세요"
-							class="inputs"></td>
+						<td id="r2">
+							<input type="text" placeholder="내용을 입력하세요" class="inputs">
+						</td>
 					</tr>
-
 					<tr>
 						<td id="r1">참석자(내부)</td>
-						<td id="r2"><button class="searchBtn" onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자 지정</button>
-						
-						 <input type="text" class="BigInput"></td>
+						<td id="r2"><button id="searchBtn2" class="searchBtn" onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자 지정</button>
+							<textarea cols="60" rows="4" id="partArea" readonly></textarea>
+						</td>
 					</tr>
-
 					<tr>
 						<td id="r3">참석자(외부)</td>
 						<td id="r4"><input type="text" class="inputs"></td>
@@ -453,11 +426,10 @@
 				</table>
 			</div>
 
-			<br> <br>
 			<!-- 예약/취소 버튼 -->
-			<div class=btns>
-				<button class="reservationBtn" type="submit">예약하기</button>
-				<button class="resetBtn" type="reset">취소</button>
+			<div class="btns">
+				<button id="reservBtn" type="submit">예약하기</button>
+				<button id="resetBtn" type="reset">취소</button>
 			</div>
 		</div>
 
@@ -466,7 +438,6 @@
 		<div id="myReservation_open_modal" class="modal">
 			<div class="modal-title">나의 예약현황</div>
 			<div class="modal-content">
-
 			
 				<table class="mtrmCurrentInner">
 					<tr>
@@ -551,8 +522,6 @@
 						<td class="mcTdContent"><button class="mcBtn" type="button">예약 취소</button></td>
 					</tr>
 				</table>
-				
-
 
 			<!-- 페이징바 -->
 			<ul class="pagingBar">
@@ -568,51 +537,26 @@
 			</ul>
 			<!-- 페이징바 -->
 
+			</div>
 		</div>
-
-
-
-
-
-
-	</div>
-
+		
 	<br>
 	<br>
 	</div>
-
-
-
-
-
 
 	<!-- 모달용 스크립트 -->
 	<script>
-			$('.open-modal').click(function() {
-				$(this).modal({
-					fadeDuration : 150
-				});
-
+		$('.open-modal').click(function() {
+			$(this).modal({
+				fadeDuration : 150
 			});
+		});
 
-			
-			/* 예약하기 모달 여는 function */
-			function open_modal() {
-				$("#open_reservation").click();
-			};
-			
-			
-		
-			
-		
-	
-			
-			
-		</script>
+		/* 예약하기 모달 여는 function */
+		$("#reservationBtn").on("click",function(){
+				$("#reservation").click();
+		});
+	</script>
 
-
-
-
-	</div>
 </body>
 </html>

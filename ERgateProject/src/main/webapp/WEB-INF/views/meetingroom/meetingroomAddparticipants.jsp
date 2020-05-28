@@ -199,7 +199,7 @@ div {
 
 /* 우측 선택영역 */
 #selectArea {
-	height: 100%;
+	height: 600px;
 	width: 380px;	
 }
 
@@ -239,13 +239,48 @@ div {
 .btnDel{
 	color:rgb(190, 190, 190);
 }
+
+.resetBtn{
+	width: 140px;
+	height: 40px;
+	border: 0px;
+	border-radius: 5px;
+	background: rgb(190, 190, 190);
+	color: white;
+	font-size: 18px;
+}
+
+.resetBtn:hover {
+	cursor: pointer;
+
+}
+
+.submitBtn{
+	width: 140px;
+	height: 40px;
+	border: 0px;
+	border-radius: 5px;
+	background: rgb(26, 188, 156);
+	color: white;
+	font-size: 18px;
+}
+
+.submitBtn:hover {
+	cursor: pointer;
+
+}
+
+.btns{
+	margin-left:850px;
+
+}
 </style>
 </head>
 <body>
 
 
 	<div class="popup-outer">
-		<div class="popup-title">결재라인 설정</div>
+		<div class="popup-title">참석자 추가</div>
 		<div class="popup-content">
 			<!-- 검색바 -->
 			<div class="searchBar">
@@ -316,9 +351,9 @@ div {
 				<div id="selectArea">
 					<div id="signArea">
 						<button class="middleBtn">선택추가</button>
-						<h2 style="display:inline-block;margin:0;">결재</h2>
+						<h2 style="display:inline-block;margin:0;">참석자</h2>
 						<br><br>
-						<div style="width:100%;height:280px;overflow:auto;">
+						<div style="width:100%;height:200px;overflow:auto;">
 								<table id="signList" class="boardTable signSel">
 								<thead>
 									<tr>
@@ -344,39 +379,13 @@ div {
 						</div>	
 					</div>
 					
-					<div id="refArea">
-						<button class="middleBtn">선택추가</button>
-						<h2 style="display:inline-block;margin:0;">수신/참조</h2>
-						<br><br>
-						<div id="signSelDiv">
-							<div style="width:100%;height:280px;overflow:auto;">
-								<table class="boardTable signSel">
-								<thead>
-									<tr>
-										<th width="100">이름</th>
-										<th>부서</th>
-										<th width="120">직책/직급</th>
-										<th width="40"></th>
-									</tr>
-								</thead>
-								<tr>
-									<td>써니</td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
-								<tr>
-									<td>써니</td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
-								</table>
-							</div>	
-						</div>
-						
-					</div>
+					<!-- 예약/취소 버튼 -->
+				
 				</div>
+					<div class=btns>
+						<button class="resetBtn" type="reset">초기화</button>
+						<button class="submitBtn" type="reset">등록</button>
+					</div>
 			</div>
 		</div>
 	</div>

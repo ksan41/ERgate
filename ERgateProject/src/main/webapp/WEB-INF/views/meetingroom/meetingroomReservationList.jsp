@@ -16,190 +16,180 @@
 <!-- 모달 사용페이지에 복사해주세요 -->
 
 <style>
-.outer {
-	padding-left: 320px;
-	float: left;
-	width: 100%;
-	min-height: 100%;
-	background-color: rgba(224, 224, 224, 0.12);
-}
-
-.topBar {
-	background-color: rgba(22, 160, 133, 0.39);
-	width: 100%;
-	height: 50px;
-	color: white;
-	font-size: 25px;
-	box-sizing: border-box;
-	padding-top: 10px;
-	padding-left: 30px;
-	font-weight: 500;
-}
-
-
-.contentArea {
-	margin-top: 50px;
-	margin-left: 100px;
-	width: 1600px;
-	height: auto;
-	float: left;
-}
-
-/* 모달팝업 스타일 */
-.modal {
-	width: 1000px;
-	max-width: 2000px;
-	height: 800px; /* 모달 크기지정 */
-	padding: 0px;
-	border-radius: 0px;
-}
-
-.modal-title {
-	margin: 0;
-	width: 100%;
-	height: 50px;
-	background-color: rgba(22, 160, 133, 0.68);
-	font-size: 25px;
-	padding: 10px;
-	color: white;
-	box-sizing: border-box;
-}
-
-.modal-content {
-	padding: 20px;
-}
-
-/* 모달팝업 스타일 */
-
-.subMenuArea {
-	background-color: white;
-	width: 100%;
-	height: 70px;
-}
-
-#subMenuList {
-	margin: 0;
-	list-style: none;
-	padding-left: 0;
-}
-
-#subMenuList li {
-	margin-top: 10px;
-	margin-left: 20px;
-	float: left;
-	text-decoration-style: none;
-}
-
-.subBtn {
-	border: 0;
-	width: 160px;
-	height: 50px;
-	font-size: 19px;
-	color: rgb(127, 127, 127);
-	background-color: white;
-	border-radius: 25px;
-}
-
-.subBtn:hover {
-	cursor: pointer;
-}
-/* 서브메뉴바 메뉴버튼(기본) */
-/* 서브메뉴바 메뉴버튼(현재페이지일때) */
-.subActive {
-	border: 4px solid rgb(26, 188, 156);
-}
-
-/* 체크박스 스타일 */
-.checkBox {
-	zoom: 1.7;
-}
-
-/* 스케줄관련 아이콘스타일 */
-.schedule_icons {
-	fill: rgb(190, 190, 190); /* 검은색 : rgb(94, 94, 94)*/
-	width: 35px;
-	vertical-align: bottom;
-}
-/* 스케줄관련 아이콘스타일 */
-
-.material-icons{
-	font-size:40px;
-	vertical-align:middle;
-}
-.material-icons:hover{
-	cursor:pointer;
-}
-
-
-/* 게시판 스타일 */
-.boardTable {
-	width: 1400px;
-	height: 400px;
-	margin-top: 10px;
-}
-
-.boardTable, .boardTable th, .boardTable td {
-	border-width: 1px 0;
-	border-collapse: collapse;
-	text-align: center;
-	font-size: 16px;
-}
-
-.boardTable th {
-	background-color: #999;
-	color: #fff;
-	height: 35px;
-}
-
-.boardTable td {
-	border-color: lightgray;
-	border-style: solid;
-	height: 35px;
-}
-
-.boardTable tr:hover td {
-	background-color: rgb(224, 224, 224);
-	cursor: pointer;
-}
-
-/* 게시판 스타일 */
-
-/* 페이징바 스타일 */
-.pagingBar {
-	list-style: none;
-	margin-left: 400px;
-	margin-top:50px;
-}
-
-.pagingBar li {
-	float: left;
-}
-
-.pagingBar li * {
-	float: left;
-	padding: 4px;
-	margin-right: 3px;
-	width: 20px;
-	color: rgb(190, 190, 190);
-	font: bold 12px tahoma;
-	border: 1px solid rgb(190, 190, 190);
-	text-align: center;
-	text-decoration: none;
-	font-size: 15px;
-}
-
-.pagingBar li>span {
-	color: rgb(26, 188, 156);
-	border: 1px solid rgb(26, 188, 156);
-}
-
-.pagingBar li a:hover {
-	color: rgb(26, 188, 156);
-	border: 1px solid rgb(26, 188, 156);
-}
-
-/* 페이징바 스타일 */
-
+	.outer {
+		padding-left: 320px;
+		float: left;
+		width: 100%;
+		min-height: 100%;
+		background-color: rgba(224, 224, 224, 0.12);
+	}
+	.topBar {
+		background-color: rgba(22, 160, 133, 0.39);
+		width: 100%;
+		height: 50px;
+		color: white;
+		font-size: 25px;
+		box-sizing: border-box;
+		padding-top: 10px;
+		padding-left: 30px;
+		font-weight: 500;
+	}
+	.contentArea {
+		margin-top: 50px;
+		margin-left: 100px;
+		width: 1600px;
+		height: auto;
+		float: left;
+	}
+	
+	/* 모달팝업 스타일 */
+	.modal {
+		width: 1000px;
+		max-width: 2000px;
+		height: 800px; /* 모달 크기지정 */
+		padding: 0px;
+		border-radius: 0px;
+	}
+	.modal-title {
+		margin: 0;
+		width: 100%;
+		height: 50px;
+		background-color: rgba(22, 160, 133, 0.68);
+		font-size: 25px;
+		padding: 10px;
+		color: white;
+		box-sizing: border-box;
+	}
+	.modal-content {
+		padding: 20px;
+	}
+	/* 모달팝업 스타일 */
+	
+	.subMenuArea {
+		background-color: white;
+		width: 100%;
+		height: 70px;
+	}
+	#subMenuList {
+		margin: 0;
+		list-style: none;
+		padding-left: 0;
+	}
+	#subMenuList li {
+		margin-top: 10px;
+		margin-left: 20px;
+		float: left;
+		text-decoration-style: none;
+	}
+	.subBtn {
+		border: 0;
+		width: 160px;
+		height: 50px;
+		font-size: 19px;
+		color: rgb(127, 127, 127);
+		background-color: white;
+		border-radius: 25px;
+	}
+	.subBtn:hover {
+		cursor: pointer;
+	}
+	
+	/* 서브메뉴바 메뉴버튼(기본) */
+	/* 서브메뉴바 메뉴버튼(현재페이지일때) */
+	.subActive {
+		border: 4px solid rgb(26, 188, 156);
+	}
+	
+	/* 체크박스 스타일 */
+	.checkBox {
+		zoom: 1.7;
+	}
+	
+	/* 스케줄관련 아이콘스타일 */
+	.schedule_icons {
+		fill: rgb(190, 190, 190); /* 검은색 : rgb(94, 94, 94)*/
+		width: 35px;
+		vertical-align: bottom;
+	}
+	
+	/* 스케줄관련 아이콘스타일 */
+	.material-icons{
+		font-size:40px;
+		vertical-align:middle;
+	}
+	.material-icons:hover{
+		cursor:pointer;
+	}
+	#labelBackground{
+		width: 1400px;
+		height: 70px;
+		background: #eeee;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+	
+	/* 게시판 스타일 */
+	.boardTable {
+		width: 1400px;
+		height: 400px;
+		margin-top: 10px;
+	}
+	.boardTable, .boardTable th, .boardTable td {
+		border-width: 1px 0;
+		border-collapse: collapse;
+		text-align: center;
+		font-size: 16px;
+	}
+	.boardTable th {
+		background-color: #999;
+		color: #fff;
+		height: 45px;
+	}
+	.boardTable td {
+		border-color: lightgray;
+		border-style: solid;
+		height: 35px;
+	}
+	.boardTable tr:hover td {
+		background-color: rgb(224, 224, 224);
+		cursor: pointer;
+	}
+	/* 게시판 스타일 */
+	
+	/* 페이징바 스타일 */
+	.pagingBar {
+		list-style: none;
+		margin-left: 400px;
+		margin-top:50px;
+	}
+	
+	.pagingBar li {
+		float: left;
+	}
+	
+	.pagingBar li * {
+		float: left;
+		padding: 4px;
+		margin-right: 3px;
+		width: 20px;
+		color: rgb(190, 190, 190);
+		font: bold 12px tahoma;
+		border: 1px solid rgb(190, 190, 190);
+		text-align: center;
+		text-decoration: none;
+		font-size: 15px;
+	}
+	
+	.pagingBar li>span {
+		color: rgb(26, 188, 156);
+		border: 1px solid rgb(26, 188, 156);
+	}
+	
+	.pagingBar li a:hover {
+		color: rgb(26, 188, 156);
+		border: 1px solid rgb(26, 188, 156);
+	}
+	/* 페이징바 스타일 */
 
 </style>
 </head>
@@ -220,14 +210,15 @@
 
 		<div class="contentArea">
 			<!-- 달력 설정 부분 -->
-			
-				<h2 style="display: inline-block; margin-left: 500px;">
+			<div id="labelBackground">
+				<h2 style="display: inline-block">
 					<span class="material-icons"> arrow_left </span> 2020년 5월
 					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="48px" height="48px">
 					<path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
 					<path d="M0 0h24v24H0z" fill="none" /></svg>
 					<span class="material-icons"> arrow_right </span>
 				</h2>
+			</div>
 				<br> <br>
 			
 
@@ -342,11 +333,7 @@
 			});
 		</script>
 
-
 	</div>
-
-
-
 
 </body>
 </html>
