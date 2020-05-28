@@ -77,7 +77,7 @@
     
     /* 배경 이미지 */
     body{
-	    background-image: url('../../resources/siteImg/backgroundImage.png');
+	    background-image: url('${pageContext.servletContext.contextPath }/resources/siteImgs/backgroundImage.png');
 	    background-repeat: no-repeat; 
 	    background-size: 99% 70%;
 	    background-position: center; 
@@ -93,7 +93,7 @@
 	    <form action="">
 	        <table id="loginTable">
 	            <tr>
-	                <td colspan="2" style="text-align: center;"><img src="../../resources/siteImg/logo.png"></td>
+	                <td colspan="2" style="text-align: center;"><img src="${pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
 	            </tr>
 	            <tr>
 	                <td class="loginTd" style="font-size: 20px;">ID</td>

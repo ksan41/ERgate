@@ -157,14 +157,14 @@ html, body {
 	<div class="menubar">
 		<!-- 로고영역 -->
 		<div id="logoArea">
-			<img src="../../resources/siteImg/logo.png" alt="">
+			<img src="${pageContext.servletContext.contextPath }/resources/siteImgs/logo.png" alt="">
 		</div>
 		<!-- 로고영역 -->
 		<div id="infoArea" onclick="매핑값">
 			<!-- 프로필사진 영역 -->
 			<div id="profile_area">
 				<div id="profileImg">
-					<img src="../../resources/siteImg/3531276919_gdNCw120_glffj3_1476631182027.jpg" alt="">
+					<img src="${pageContext.servletContext.contextPath }/resources/siteImgs/3531276919_gdNCw120_glffj3_1476631182027.jpg" alt="">
 				</div>
 			</div>
 			<!-- 프로필사진 영역 -->
