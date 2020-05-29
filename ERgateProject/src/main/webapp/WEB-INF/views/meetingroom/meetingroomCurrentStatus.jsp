@@ -442,7 +442,7 @@
 				<table class="mtrmCurrentInner">
 					<tr>
 						<td rowspan="5" class="mcTdImg">
-							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mcTdContent"><span class="mcContent1">3층 회의실1</span></td>
 					</tr>
@@ -463,7 +463,7 @@
 				<table class="mtrmCurrentInner">
 					<tr>
 						<td rowspan="5" class="mcTdImg">
-							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mcTdContent"><span class="mcContent1">3층 회의실1</span></td>
 					</tr>
@@ -484,7 +484,7 @@
 				<table class="mtrmCurrentInner">
 					<tr>
 						<td rowspan="5" class="mcTdImg">
-							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mcTdContent"><span class="mcContent1">3층 회의실1</span></td>
 					</tr>
@@ -505,7 +505,7 @@
 				<table class="mtrmCurrentInner">
 					<tr>
 						<td rowspan="5" class="mcTdImg">
-							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mcTdContent"><span class="mcContent1">3층 회의실1</span></td>
 					</tr>

@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <jsp:include page="../common/menubar.jsp" />
+
 <!-- 모달 사용페이지에 복사해주세요 -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -157,17 +158,17 @@
 	/* 게시판 스타일 */
 	
 	/* 페이징바 스타일 */
-	.pagingBar {
+	.pagination {
 		list-style: none;
 		margin-left: 400px;
 		margin-top:50px;
 	}
 	
-	.pagingBar li {
+	.pagination li {
 		float: left;
 	}
 	
-	.pagingBar li * {
+	.pagination li * {
 		float: left;
 		padding: 4px;
 		margin-right: 3px;
@@ -180,12 +181,12 @@
 		font-size: 15px;
 	}
 	
-	.pagingBar li>span {
+	.pagination li>span {
 		color: rgb(26, 188, 156);
 		border: 1px solid rgb(26, 188, 156);
 	}
 	
-	.pagingBar li a:hover {
+	.pagination li a:hover {
 		color: rgb(26, 188, 156);
 		border: 1px solid rgb(26, 188, 156);
 	}
@@ -223,7 +224,7 @@
 			
 
 			<!-- 게시판 -->
-			<table class="boardTable">
+			<table id="reservationList" class="boardTable">
 				<thead>
 					<tr>
 						<th>부서명</th>
@@ -233,75 +234,62 @@
 						<th style="width:350px">사용기간</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>5층 회의실1</td>
-					<td>팀미팅</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>5층 회의실1</td>
-					<td>팀미팅</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>5층 회의실1</td>
-					<td>팀미팅</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>5층 회의실1</td>
-					<td>팀미팅</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>5층 회의실1</td>
-					<td>팀미팅</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>5층 회의실1</td>
-					<td>팀미팅</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>5층 회의실1</td>
-					<td>팀미팅</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
+				<tbody>
+					<c:forEach items="${ list }" var="m">
+					<tr>
+						<td>${ m.mtrmDeptTitle }</td>
+						<td>${ m.empId }</td>
+						<td>${ m.mtrmName }</td>
+						<td>${ m.mtrmPurpose }</td>
+						<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
+						</c:forEach>
+					</tr>
+				</tbody>
 
 			</table>
+			
+			<script>
+				$(function(){
+					$("#reservationList tbody tr").click(function(){
+						location.href = "detail.mo?mno" + $(this).children().eq(0).text();
+					});
+				});
+			</script>
 
 			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
-			</ul>
+			         <div id="pagingArea">
+                <ul class="pagination">
+                
+                   <c:choose>
+                      <c:when test="${ pi.currentPage eq 1 }">
+                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                       </c:when>
+                       <c:otherwise>
+                          <li class="page-item "><a class="page-link" href="list.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                  </c:otherwise>                   
+                   </c:choose>
+                    
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                       <c:choose>
+                          <c:when test="${ p eq pi.currentPage }">
+                             <li class="page-item disabled"><a class="page-link" href="#">${ p }</a></li>
+                          </c:when>
+                          <c:otherwise>
+                             <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">${ p }</a></li>
+                     </c:otherwise>                       
+                       </c:choose>
+                    </c:forEach>
+                
+                    <c:choose>
+                       <c:when test="${ pi.currentPage eq pi.maxPage }">
+                          <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                       </c:when>
+                       <c:otherwise>
+                          <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                  </c:otherwise>
+               </c:choose>                
+                </ul>
+            </div>
 			<!-- 페이징바 -->
 
 		</div>

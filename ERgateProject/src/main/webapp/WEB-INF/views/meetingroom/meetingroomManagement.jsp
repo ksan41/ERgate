@@ -368,7 +368,7 @@
 				<table class="mtrmManageInner">
 					<tr>
 						<td rowspan="5" class="mmTdImg">
-							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 회의실1</span></td>
 					</tr>
@@ -392,7 +392,7 @@
 				<table class="mtrmManageInner">
 					<tr>
 						<td rowspan="5" class="mmTdImg">
-							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 회의실1</span></td>
 					</tr>
@@ -416,7 +416,7 @@
 				<table class="mtrmManageInner">
 					<tr>
 						<td rowspan="5" class="mmTdImg">
-							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 회의실1</span></td>
 					</tr>
@@ -440,7 +440,7 @@
 				<table class="mtrmManageInner">
 					<tr>
 						<td rowspan="5" class="mmTdImg">
-							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 						</td>
 						<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 회의실1</span></td>
 					</tr>
@@ -507,7 +507,7 @@
 						<tr>
 							<td class="mmImgEnroll">회의실 이미지</td>
 							<td class="mmImgEnroll2">
-								<img id="mmImgEnroll" src="${ pageContext.servletContext.contextPath }/resources/siteImg/mtrmLogo.png">
+								<img id="mmImgEnroll" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
 							</td>
 						</tr>
 
@@ -551,7 +551,7 @@
 							<tr>
 								<td class="mmImgEnroll">회의실 이미지</td>
 								<td class="mmImgEnroll2">
-									<img id="mmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/siteImg/크기변환_KENN4462-1.jpg">
+									<img id="mmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 								</td>
 							</tr>
 	                </table>
