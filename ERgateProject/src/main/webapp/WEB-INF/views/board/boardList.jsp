@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -252,76 +253,15 @@
 						<th width="150">조회수</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>100</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>99</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>98</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>97</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>96</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>95</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>94</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>93</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>92</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>91</td>
-					<td>게시판제목</td>
-					<td>김사원</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
+				<c:forEach items="${ list }" var="b">
+					<tr>
+						<td>${b.boardNo }</td>
+						<td>${b.boardTitle }</td>
+						<td>${b.boardWriter }</td>
+						<td>${b.boardEnrollDate }</td>
+						<td>${b.boardCount }</td>
+					</tr>
+				</c:forEach>
 				
 				
 			</table>

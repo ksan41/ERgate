@@ -23,6 +23,7 @@ public class Board {
 	private Date boardModifyDate;	//수정일
 	private int boardCount;			//글조회수
 	private String boardStatus;		//글상태
+	private String boardFileFlag;   //파일첨부여부
 }
 
 

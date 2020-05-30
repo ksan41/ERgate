@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.kh.ergate.board.model.vo.Board" alias="Board" />
 	</typeAliases>
 	
 	

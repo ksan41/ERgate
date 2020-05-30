@@ -10,25 +10,24 @@ import com.kh.ergate.board.model.dao.BoardDao;
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.common.model.vo.PageInfo;
 
-@Service("bService")
+@Service("bodService")
 public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	@Autowired
-	private BoardDao bDao;
+	private BoardDao bodDao;
 	
 	
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return bodDao.selectListCount(sqlSession);
 	}
 	@Override
-	public ArrayList<com.kh.ergate.board.model.vo.Board> selectList(com.kh.ergate.common.model.vo.PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Board> selectList(PageInfo pi) {
+		return bodDao.selectList(sqlSession, pi);
 	}
+	
 	@Override
 	public int insertBoard(com.kh.ergate.board.model.vo.Board b) {
 		// TODO Auto-generated method stub

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.common.model.vo.PageInfo;
 
-@Repository("bDao")
+@Repository("bodDao")
 public class BoardDao {
 	
 	public int selectListCount(SqlSessionTemplate sqlSession) {
