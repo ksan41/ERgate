@@ -190,12 +190,17 @@
 	font-size: 15px;
 }
 
-.pagingBar li>span {
+.pagingBar .pstyle>span {
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
 
-.pagingBar li a:hover {
+.pagingBar .pstyle a:hover {
+	color: rgb(26, 188, 156);
+	border: 1px solid rgb(26, 188, 156);
+}
+
+.pagingBar li .crt{
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
@@ -271,23 +276,39 @@
 	
 			<!-- 페이징바 -->
 			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
+				<li class="pstyle"><a class="pstyle" href="list.bo?currentPage=1">&lt;&lt;</a></li>
+				<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li><a class="pstyle disabled" href="#">&lt;</a></li>
+					</c:when>
+	                <c:otherwise>
+	                	<li class="pstyle"><a href="list.bo?currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+	                </c:otherwise>
+	            </c:choose>
+	        
+	        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	            <c:choose>
+                    <c:when test="${ p eq pi.currentPage }">
+                    	<li><a class="crt disabled" href="#">${p}</a></li>
+                    </c:when>
+	                <c:otherwise>
+	                    <li class="pstyle"><a href="list.bo?currentPage=${ p }">${ p }</a></li>
+	                </c:otherwise>
+                </c:choose>
+			 </c:forEach>
+				
+				<c:choose>
+	                <c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    <li><a class="disabled" href="#">&gt;</a></li>
+					</c:when>
+		            <c:otherwise>
+		                <li class="pstyle"><a href="list.bo?currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+		            </c:otherwise>
+	            </c:choose>
+			<li class="pstyle"><a href="list.bo?currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
 			</ul>
 			<!-- 페이징바 -->
-
+			
 		</div>
 	</div>
 	
@@ -303,6 +324,8 @@
 			location.href="detail.bo?bno=" + bno;
 		});
 	});
+	
+	$('.disabled').click(function () {return false;});
 	</script>
 </body>
 </html>
