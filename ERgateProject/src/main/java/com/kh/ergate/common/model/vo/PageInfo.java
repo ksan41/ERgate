@@ -21,4 +21,5 @@ public class PageInfo {
 	private int pageLimit;		// 페이징바의 페이지 목록 최대수
 	private int boardLimit;		// 한 페이지에 보여질 게시글 최대수
 	
+	
 }
