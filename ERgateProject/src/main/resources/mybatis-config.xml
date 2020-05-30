@@ -14,7 +14,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 	
 	<mappers>
+		<mapper resource="mappers/attendance-mapper.xml"/>
 		<mapper resource="mappers/board-mapper.xml"/>
+		<mapper resource="mappers/common-mapper.xml"/>
+		<mapper resource="mappers/group-mapper.xml"/>
+		<mapper resource="mappers/mail-mapper.xml"/>
+		<mapper resource="mappers/main-mapper.xml"/>
+		<mapper resource="mappers/meetingroom-mapper.xml"/>
+		<mapper resource="mappers/notice-mapper.xml"/>
+		<mapper resource="mappers/schedule-mapper.xml"/>
+		<mapper resource="mappers/sign-mapper.xml"/>
+		<mapper resource="mappers/vehicle-mapper.xml"/>
 	</mappers>
 	
 	
