@@ -460,7 +460,6 @@ h2, h3 {
 								<textarea id="signContent" cols="168" rows="24"></textarea>
 							</td>								
 						</tr>
-					</tbody>
 				</table>
 
 			</form>
