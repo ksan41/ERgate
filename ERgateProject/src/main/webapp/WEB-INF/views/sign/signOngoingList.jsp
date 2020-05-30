@@ -203,10 +203,10 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">결재대기함</button></li>
-				<li><button class="subBtn subActive">진행결재함</button></li>
-				<li><button class="subBtn">상신내역</button></li>
-				<li><button class="subBtn">지출결의내역</button></li>
+				<li><button class="subBtn" onclick="location.href='waitingList.si';">결재대기함</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='ongoingList.si';">진행결재함</button></li>
+				<li><button class="subBtn" onclick="location.href='reportList.si';">상신내역</button></li>
+				<li><button class="subBtn" onclick="location.href='expenseList.si';">지출결의내역</button></li>
 				<li><button class="subBtn">외근&휴가내역</button></li>
 			</ul>
 		</div>

@@ -26,7 +26,7 @@ public class SignController {
 	
 	
 	//결재상세 요청용
-	@RequestMapping("(signDetail.si)")
+	@RequestMapping("signDetail.si")
 	public String signDetail(SignDocument sd,Model model) {
 		
 	}
@@ -35,7 +35,7 @@ public class SignController {
 	// 진행결재함요청용
 	@RequestMapping("ongoingList.si")
 	public String ongoingList(SignDocument sd,Model model) {
-		
+		return "sign/signOngoingList";
 	}
 	
 	//진행결재함 월선택용
@@ -47,7 +47,7 @@ public class SignController {
 	//상신내역요청용
 	@RequestMapping("reportList.si")
 	public String reportList(SignDocument sd,Model model) {
-		
+		return "sign/signReportList";
 	}
 	 
 	//상신내역 월선택용
@@ -58,8 +58,8 @@ public class SignController {
 	
 	//지출결의내역요청용
 	@RequestMapping("expenseList.si")
-	public String expenseList(SignDocument sd,Model model) {\
-		
+	public String expenseList(SignDocument sd,Model model) {
+		return "sign/signExpenseList";
 	}
 	
 	//지출결의내역 월선택용

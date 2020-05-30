@@ -16,6 +16,9 @@ html, body {
 	font-family: 'Nanum Gothic', serif;
 	overflow-x: hidden;
 }
+button:focus{
+	outline:0;
+}
 
 .menubar {
 	position: fixed;
