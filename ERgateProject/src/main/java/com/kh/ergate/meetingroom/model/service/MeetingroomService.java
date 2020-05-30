@@ -12,37 +12,30 @@ public interface MeetingroomService {
 	 //현재 예약현황 조회용 --- currentStatusList()
 		int currentStatusList();
 		
-		
 	 //날짜선택 예약현황 조회용 --- currentStatusDay(String day)
 		int currentStatusDay(String day);
 		
 	 //회의실 예약용 ---reserveMtroom(MeetingroomReservation,ArrayList<String> empId)
 	
-		
 	 //참석자 팝업 조회용 ---selectPeople()
 		Meetingroom selectPeople();
-		
 	
 	 //참석자 검색용 ---searchPeople(String condition,String keyword)
+		
 	 //참석자 등록용--- insertPeople(ArrayList<String>)
+		
 	 //예약상세 조회용 ---reserveDetail(int reservNo)
+		int reserveDetail(int reservNo);
 		
 	 //내 예약현황 리스트 조회용 --- myReserveList(String empId)
-		Meetingroom my
 		
-	
 	 //예약취소용---cancelReserve(int mtrmReservNo)
 		int cancelReserve(int mtrmReservNo);
-
-
 
 	 /* 관리자 입장에서 관리하는 페이지(?) service */
 
 	 //회의실 예약현황 리스트 조회용--- statusList(Meetingroom)
-		int statusList();
-		// 요청한 페이지에 보여질 게시글 리스트 조회용 서비스
-		ArrayList<Meetingroom> selectList(PageInfo pi);
-		
+		int selectStatusList(Meetingroom m);
 		
 		
 	 //회의실 예약현황 월 선택 조회용 ---statusListMonth(String month)
