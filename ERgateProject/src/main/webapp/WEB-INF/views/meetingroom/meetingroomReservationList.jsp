@@ -291,7 +291,7 @@
                 </ul>
             </div>
 			<!-- 페이징바 -->
-
+			<br clear="both"><br>
 		</div>
 
 
