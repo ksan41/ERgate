@@ -261,7 +261,7 @@ button:focus{
 				</tr>
 				<tr></tr>
 				<tr>
-					<th onclick="location.href='currentStatus.me';"><svg class="menuIcons"
+					<th onclick="location.href='currentStatus.me?currentPage=1';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path d="M0 0h24v24H0z" fill="none" />
