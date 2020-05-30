@@ -1,0 +1,133 @@
+*도메인
+com.kh.ergate
+
+**기본적인 명명규칙은 매핑값.해당 패키지명 앞두글자로 합니다. ex)login.ma
+** 기본적으로 써둔 것들 절대적인거 아닙니다.(반환값등) 틀렸을수도 있고 작업하시는 분이 더 괜찮게 바꿀수있는것도 있을거에요! 네이밍 정도만 되도록 따라가주세요.
+**작업하시다가 추가되는거 있으면 적어주세요.  매핑값 중복 안되는지 ctrl+F로 확인부탁드려요.
+
+
+
+@** com.kh.ergate.common
+*vo
+ 인증번호
+ PageInfo
+ Pagination
+
+*controller
+  인증메일발송(sendMailKey.co) --- sendMailKey
+
+*service
+
+*dao
+
+
+
+
+
+
+
+@** com.kh.ergate.board
+*vo
+ Board
+ BoardAttachment
+ BoardReply
+ BoardReReply
+
+*controller
+ 게시판 리스트조회용(list.bo)---selectBoardList(int currentPage,Model model)
+ 게시판 검색용(search.bo) --- searchBoardList(String condition,String keyword,Model model)
+ 게시판 상세조회용(detail.bo)---selectBoard(int bno,Model model)
+ 게시판 작성폼(enrollForm.bo)---enrollForm()
+ 게시판 등록용(insert.bo)--- insertBoard(Board,HttpServletRequest,Model,HttpSession,MultipartFile)
+ 게시판 수정폼(updateForm.bo)---updateForm(int bno)
+ 게시판수정용(update.bo)---updateBoard(Board,Model,MultipartFile,HttpServletRequest)
+ 게시판삭제용 (delete.bo)---deleteBoard(int bno,String fileName,HttpServletRequest request,Model model)
+ 댓글조회용(rlist.bo)--- selectReplyList(int bno,Model model)
+ 댓글 작성용(insertReply.bo)----insertReply(int refBno,BoardReply)
+ 댓글 수정용(updateReply.bo)---updateReply(BoardReply)
+ 댓글 삭제용(deleteReply.bo)---deleteReply(int replyNo)
+ 대댓글 작성용(insertReReply.bo)----insertReReply(int refRno,BoardReReply)
+ 대댓글 수정용(updateReReply.bo)---updateReReply(BoardReReply)
+ 대댓글 삭제용(deleteReReply.bo)---deleteReReply(int replyNo)
+ 파일 저장용 ---saveFile(MultipartFile,HttpServlet)
+ 파일 삭제용 ---deleteFile(String,HttpServletRequest)
+
+*service
+  게시판 리스트조회용---selectBoardList(int currentPage)
+  게시판 검색용 --- searchBoardList(String condition,String keyword)
+  게시판 상세조회용---selectBoard(int bno)
+  게시판 등록용--- insertBoard(Board)
+  게시판수정용---updateBoard(Board)
+  게시판삭제용---deleteBoard(int bno)
+  댓글조회용--- selectReplyList(int bno)
+  댓글 작성용----insertReply(BoardReply)
+  댓글 수정용---updateReply(BoardReply)
+  댓글 삭제용---deleteReply(int replyNo)
+  대댓글 작성용----insertReReply(BoardReReply)
+  대댓글 수정용---updateReReply(BoardReReply)
+  대댓글 삭제용---deleteReReply(int replyNo)
+
+*dao
+  게시판 리스트조회용---selectBoardList(SqlSessionTemplate,int currentPage)
+  게시판 검색용 --- searchBoardList(SqlSessionTemplate,String condition,String keyword)
+  게시판 상세조회용---selectBoard(SqlSessionTemplate,int bno)
+  게시판 등록용--- insertBoard(SqlSessionTemplate,Board)
+  게시판수정용---updateBoard(SqlSessionTemplate,Board)
+  게시판삭제용---deleteBoard(SqlSessionTemplate,int bno)
+  댓글조회용--- selectReplyList(SqlSessionTemplate,int bno)
+  댓글 작성용----insertReplySqlSessionTemplate,(BoardReply)
+  댓글 수정용---updateReply(SqlSessionTemplate,BoardReply)
+  댓글 삭제용---deleteReply(SqlSessionTemplate,int replyNo)
+  대댓글 작성용----insertReReply(SqlSessionTemplate,BoardReReply)
+  대댓글 수정용---updateReReply(SqlSessionTemplate,BoardReReply)
+  대댓글 삭제용---deleteReReply(SqlSessionTemplate,int replyNo)
+
+
+
+
+
+
+
+@** com.kh.ergate.mail
+*vo
+ Mail
+ MailAttachment
+
+*controller
+  받은메일함 조회용(mailbox.ml) --- selectMailbox(HttpSession, Model)
+  받은메일함 검색용(searchMailbox.ml) --- searchMailbox(String condition,String keyword,HttpSession,Model)
+  보낸메일함 조회용(sentbox.ml) ---selectSentbox(HttpSession, Model)
+  보낸메일함 검색용(searchSentbox.ml) ---searchSentbox(String condition,String keyword,HttpSession,Model)
+  중요메일함 조회용(important.ml) --- selectImportant(HttpSession, Model)
+  중요메일함 검색용(searchImportant.ml) ---searchImportant(String condition,String keyword,HttpSession,Model)
+  메일 상세조회용(mailDetail.ml) ---selectDetail(int mailNo,Model)
+  중요메일 체크용(checkImport.ml) ---checkImportant(int MailNo,Model)
+  메일전달폼 요청용(relayMail.ml) ---relayMail(int mailNo,Model)
+  메일삭제용(deleteMail.ml) ---deleteMail(int mailNo,Model)
+  메일답장폼 요청용(replyMail.ml) ---replyMail(Mail,Model)
+  메일전송용(sendMail.ml) ---sendMail(Mail,Model)
+  
+*service
+  받은메일함 조회용 --- selectMailbox(String mailTo)
+  받은메일함 검색용 --- searchMailbox(String condition,String keyword,String mailTo)
+  보낸메일함 조회용 ---selectSentbox(String mailFrom)
+  보낸메일함 검색용---searchSentbox(String condition,String keyword,String mailFrom)
+  중요메일함 조회용--- selectImportant(String mailTo)
+  중요메일함 검색용 ---searchImportant(String condition,String keyword,String mailTo)
+  메일 상세조회용---selectDetail(int mailNo)
+  중요메일 체크용---checkImportant(int MailNo)
+  메일삭제용 ---deleteMail(int mailNo)
+  메일전송용 ---sendMail(Mail)
+
+*dao
+  받은메일함 조회용 --- selectMailbox(SqlSessionTemplate,String mailTo)
+  받은메일함 검색용 --- searchMailbox(SqlSessionTemplate,String condition,String keyword,String mailTo)
+  보낸메일함 조회용 ---selectSentbox(SqlSessionTemplate,String mailFrom)
+  보낸메일함 검색용 ---searchSentbox(SqlSessionTemplate,String condition,String keyword,String mailFrom)
+  중요메일함 조회용 --- selectImportant(SqlSessionTemplate,String mailTo)
+  중요메일함 검색용 ---searchImportant(SqlSessionTemplate,String condition,String keyword,String mailTo)
+  메일 상세조회용---selectDetail(SqlSessionTemplate,int mailNo)
+  중요메일 체크용 ---checkImportant(SqlSessionTemplate,int MailNo)
+  메일삭제용---deleteMail(SqlSessionTemplate,int mailNo)
+  메일전송용---sendMail(SqlSessionTemplate,Mail)
+
