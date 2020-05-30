@@ -209,7 +209,7 @@ button:focus{
 		<div id="navigatorArea">
 			<table id="naviIcons">
 				<tr>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='selectList.sc';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path d="M0 0h24v24H0z" fill="none" />
@@ -217,7 +217,7 @@ button:focus{
 								d="M17 10H7v2h10v-2zm2-7h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-5H7v2h7v-2z" /></svg>
 						<br>
 					<span>일정</span></th>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='atList.at';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path d="M0 0h24v24H0z" fill="none" />
@@ -225,7 +225,7 @@ button:focus{
 								d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" /></svg>
 						<br>
 					<span>근태</span></th>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='waitingList.si';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path d="M0 0h24v24H0z" fill="none" />
@@ -236,14 +236,14 @@ button:focus{
 				</tr>
 				<tr></tr>
 				<tr>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='list.no'"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path
 								d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
 							<path d="M0 0h24v24H0z" fill="none" /></svg> <br>
 					<span>공지</span></th>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='list.bo';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path d="M0 0h24v24H0z" fill="none" />
@@ -251,7 +251,7 @@ button:focus{
 								d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z" /></svg>
 						<br>
 					<span>사내게시판</span></th>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='mailbox.ml';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path
@@ -261,7 +261,7 @@ button:focus{
 				</tr>
 				<tr></tr>
 				<tr>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='currentStatus.me';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path d="M0 0h24v24H0z" fill="none" />
@@ -269,14 +269,14 @@ button:focus{
 								d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" /></svg>
 						<br>
 					<span>회의실</span></th>
-					<th onclick="매핑값" h><svg class="menuIcons"
+					<th onclick="location.href='currentStatus.ve';" h><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path
 								d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
 							<path d="M0 0h24v24H0z" fill="none" /></svg> <br>
 					<span>업무차량</span></th>
-					<th onclick="매핑값"><svg class="menuIcons"
+					<th onclick="location.href='groupList.gr';"><svg class="menuIcons"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
 							<path d="M0 0h24v24H0z" fill="none" />
