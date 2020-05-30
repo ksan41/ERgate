@@ -94,8 +94,8 @@ public class SignController {
 	
 	//기안작성폼메인요청용
 	@RequestMapping("formSelect.si")
-	public String formSelectPage(Model model) {
-		
+	public String formSelectPage() {
+		return "sign/signFormMain";
 	}
 	
 	//기안작성폼-지출결의서 요청용

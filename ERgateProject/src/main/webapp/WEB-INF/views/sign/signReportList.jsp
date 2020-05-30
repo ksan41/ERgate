@@ -213,7 +213,7 @@
 			</ul>
 		</div>
 		<div class="contentArea">
-			<button class="bigBtn">기안</button>
+			<button class="bigBtn" onclick="location.href='formSelect.si';">기안</button>
 			<h2 style="display: inline-block; margin-left: 400px;">
 				<span class="material-icons"> arrow_left </span> 2020년 5월
 				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
