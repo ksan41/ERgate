@@ -3,10 +3,13 @@
 <mapper namespace="meetingroomMapper">
 
 	<select id="selectStatusList">
-	
+		select count(*)
+		  from meetingroomReservation
+		  
 	</select>
 
-
+<!-- INSERT INTO MEETINROOM_RESERVATION(SEQ_MRESERV_NO.NEXTVAL, 'rachel', SEQ_MROOM_NO.NEXTVAL, '5층회의실', '2020/05/20', '회계팀', ''
+ -->
 
 
 

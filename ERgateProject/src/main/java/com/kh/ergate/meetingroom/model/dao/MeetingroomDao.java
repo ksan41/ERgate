@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 public class MeetingroomDao {
 
 	public int selectStatusList(SqlSessionTemplate sqlSession) {
-		
+		/* return sqlSession.selectStatusList ; */
 	}
-	
-	
+
 }
