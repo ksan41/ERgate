@@ -25,9 +25,9 @@
 	차량페이지 요청용(vehicleCurrentStatus) <br>
 	<a href="currentStatus.ve">차량</a><br><br>
 	공지사항요청용(noticeList)<br>
-	<a href="list.no">공지</a><br><br>
+	<a href="list.no?currentPage=1">공지</a><br><br>
 	사내게시판요청용(boardList)<br>
-	<a href="list.bo">사내게시판</a><br><br>
+	<a href="list.bo?currentPage=1">사내게시판</a><br><br>
 	조직도 요청용(groupList)
 	<a href="groupList.gr">조직도</a><br><br>
 	메일 요청용(mailInbox) <br>
