@@ -159,7 +159,7 @@ button:focus{
 <body>
 	<div class="menubar">
 		<!-- 로고영역 -->
-		<div id="logoArea">
+		<div id="logoArea" onclick="location.href='main.ma';">
 			<img src="${pageContext.servletContext.contextPath }/resources/siteImgs/logo.png" alt="">
 		</div>
 		<!-- 로고영역 -->
@@ -174,7 +174,7 @@ button:focus{
 			<!-- 사용자 정보 영역 -->
 			<div id="info_userInfoArea">
 				<p id="info_userName">
-					홍길동<a href="매핑값"><svg id="info_setting"
+					홍길동<a href="myPage.ma"><svg id="info_setting"
 							xmlns="http://www.w3.org/2000/svg"
 							enable-background="new 0 0 24 24" viewBox="0 0 24 24"
 							fill="black" width="48px" height="48px">
