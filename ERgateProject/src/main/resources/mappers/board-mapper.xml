@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
+
+	<resultMap id="boardResultSet" type="Board">
+		<id column="board_no" property="boardNo"/>
+		<result column="emp_id" property="empId"/>
+		<result column="board_writer" property="boardWriter"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_content" property="boardContent"/>
+		<result column="board_enroll_date" property="boardEnrollDate"/>
+		<result column="board_modify_date" property="boardModifyDate"/>
+		<result column="board_count" property="boardCount"/>
+		<result column="board_status" property="boardStatus"/>
+		<result column="board_file_flag" property="boardFileFlag"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		select count(*)
+		  from board
+		 where board_status='Y'
+	</select>
+	
+	<select id="selectList" resultMap="boardResultSet">
+		select * 
+		  from board
+		 where board_status='Y'
+		 order by board_no desc
+	</select>
+	
 </mapper>
+
+
+
+
+
+
+
