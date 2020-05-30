@@ -6,26 +6,6 @@ com.kh.ergate
 **작업하시다가 추가되는거 있으면 적어주세요.  매핑값 중복 안되는지 ctrl+F로 확인부탁드려요.
 
 
-
-@** com.kh.ergate.common
-*vo
- 인증번호
- PageInfo
- Pagination
-
-*controller
-  인증메일발송(sendMailKey.co) --- sendMailKey
-
-*service
-
-*dao
-
-
-
-
-
-
-
 @** com.kh.ergate.board
 *vo
  Board
@@ -34,7 +14,7 @@ com.kh.ergate
  BoardReReply
 
 *controller
- 게시판 리스트조회용(list.bo)---selectBoardList(int currentPage,Model model)
+ ---게시판 리스트조회용(list.bo)---selectBoardList(int currentPage,Model model)
  게시판 검색용(search.bo) --- searchBoardList(String condition,String keyword,Model model)
  게시판 상세조회용(detail.bo)---selectBoard(int bno,Model model)
  게시판 작성폼(enrollForm.bo)---enrollForm()
@@ -53,7 +33,7 @@ com.kh.ergate
  파일 삭제용 ---deleteFile(String,HttpServletRequest)
 
 *service
-  게시판 리스트조회용---selectBoardList(int currentPage)
+ --- 게시판 리스트조회용---selectBoardList(int currentPage)
   게시판 검색용 --- searchBoardList(String condition,String keyword)
   게시판 상세조회용---selectBoard(int bno)
   게시판 등록용--- insertBoard(Board)
@@ -68,7 +48,7 @@ com.kh.ergate
   대댓글 삭제용---deleteReReply(int replyNo)
 
 *dao
-  게시판 리스트조회용---selectBoardList(SqlSessionTemplate,int currentPage)
+  ---게시판 리스트조회용---selectBoardList(SqlSessionTemplate,int currentPage)
   게시판 검색용 --- searchBoardList(SqlSessionTemplate,String condition,String keyword)
   게시판 상세조회용---selectBoard(SqlSessionTemplate,int bno)
   게시판 등록용--- insertBoard(SqlSessionTemplate,Board)
