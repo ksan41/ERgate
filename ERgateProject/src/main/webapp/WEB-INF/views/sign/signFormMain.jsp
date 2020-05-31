@@ -155,15 +155,15 @@
 			<div class="selectArea">
 				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;※문서 양식을 선택해주세요.</p>
 				<br>
-				<div id="selectAnnual" class="selectDiv" onclick="window.open('signFormAnnualVacation.jsp','annualVacationForm','_blank')">
+				<div id="selectAnnual" class="selectDiv" onclick="location.href='annualForm.si';">
 					<span class="material-icons"> emoji_food_beverage </span>
 					<h2 align="center">휴가계</h2>
 				</div>
-				<div id="selectExpense" class="selectDiv" onclick="window.open('signFormExpense.jsp','expenseForm','_blank')">
+				<div id="selectExpense" class="selectDiv" onclick="location.href='expenseForm.si';">
 					<span class="material-icons"> account_balance_wallet </span>
 					<h2 align="center">지출결의서</h2>
 				</div>
-				<div id="selectBusiness" class="selectDiv" onclick="window.open('signFormBusinessTrip.jsp','businessTripForm','_blank')">
+				<div id="selectBusiness" class="selectDiv" onclick="location.href='approvalForm.si';">
 					<span class="material-icons"> work </span>
 					<h2 align="center">외근신청서</h2>
 				</div>

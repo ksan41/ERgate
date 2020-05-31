@@ -101,20 +101,20 @@ public class SignController {
 	//기안작성폼-지출결의서 요청용
 	@RequestMapping("expenseForm.si")
 	public String expenseForm(HttpSession session,Model model) {
-		
+		return "sign/signFormExpense";
 	}
 	
 	//기안작성폼-휴가계 요청용
 	@RequestMapping("annualForm.si")
 	public String annualForm(HttpSession session, Model model) {
-		
+		return "sign/signFormAnnualVacation";
 	}
 	
 	
 	//기안작성폼-외근신청서 요청용
 	@RequestMapping("approvalForm.si")
 	public String approvalForm(HttpSession session, Model model) {
-		
+		return "sign/signFormBusinessTrip";
 	}
 	
 	//결재라인 등록요청용
