@@ -163,7 +163,7 @@
 					<span class="material-icons"> account_balance_wallet </span>
 					<h2 align="center">지출결의서</h2>
 				</div>
-				<div id="selectBusiness" class="selectDiv" onclick="location.href='approvalForm.si';">
+				<div id="selectBusiness" class="selectDiv" onclick="location.href='businessForm.si';">
 					<span class="material-icons"> work </span>
 					<h2 align="center">외근신청서</h2>
 				</div>

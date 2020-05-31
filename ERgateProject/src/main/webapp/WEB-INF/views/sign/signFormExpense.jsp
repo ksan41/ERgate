@@ -339,7 +339,7 @@ h2, h3 {
 					<tr>
 						<th rowspan="2" width="120">결재라인
 							<button type="button" class="middleBtn"
-								style="width: 120px; margin-top: 10px;">결재라인추가</button>
+								style="width: 120px; margin-top: 10px;" onclick="window.open('signFormExpense.jsp','expenseForm','_blank');">결재라인추가</button>
 						</th>
 						<th>팀장</th>
 						<th>팀장</th>

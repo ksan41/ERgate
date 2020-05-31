@@ -112,10 +112,17 @@ public class SignController {
 	
 	
 	//기안작성폼-외근신청서 요청용
-	@RequestMapping("approvalForm.si")
-	public String approvalForm(HttpSession session, Model model) {
+	@RequestMapping("businessForm.si")
+	public String businessForm(HttpSession session, Model model) {
 		return "sign/signFormBusinessTrip";
 	}
+	
+	//결재라인 팝업 요청용
+	@RequestMapping("approval.si")
+	public String approvalPath() {
+		return "sign/signApprovalPath";
+	}
+	
 	
 	//결재라인 등록요청용
 	@RequestMapping("insertSigner.si")
