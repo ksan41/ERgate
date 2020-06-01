@@ -23,10 +23,29 @@ public class BoardServiceImpl implements BoardService {
 	public int selectListCount() {
 		return bodDao.selectListCount(sqlSession);
 	}
+	
 	@Override
 	public ArrayList<Board> selectList(PageInfo pi) {
 		return bodDao.selectList(sqlSession, pi);
 	}
+	
+	@Override
+	public int searchListCount(String condition, String keyword) {
+		return bodDao.searchListCount(sqlSession, condition, keyword);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@Override
 	public int insertBoard(com.kh.ergate.board.model.vo.Board b) {
@@ -53,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	
 
 }

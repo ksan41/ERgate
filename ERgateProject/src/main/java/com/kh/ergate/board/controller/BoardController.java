@@ -30,10 +30,6 @@ public class BoardController {
 	@RequestMapping("list.bo")
 	public String selectList(int currentPage, Model model) {
 
-		// 숙제
-		// listCount 관련한 service, dao, mapper 채워오기
-		// arrayList 조회 관련한것도 다 채워오기
-
 		int listCount = bodService.selectListCount();
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
@@ -43,6 +39,14 @@ public class BoardController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 
+		return "board/boardList";
+	}
+	
+	@RequestMapping("search.bo")
+	public String searchBoardList(String condition, String keyword, Model model) {
+		
+		int searchListCount = bodService.searchListCount(condition, keyword);
+		
 		return "board/boardList";
 	}
 

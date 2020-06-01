@@ -13,6 +13,8 @@ public interface BoardService {
 	// 1_2. 요청한 페이지에 보여질 게시글 리스트 조회용 서비스
 	ArrayList<Board> selectList(PageInfo pi);
 	
+	int searchListCount(String condition, String keyword);
+	
 	// 2. 게시판 작성용 서비스
 	int insertBoard(Board b);
 	

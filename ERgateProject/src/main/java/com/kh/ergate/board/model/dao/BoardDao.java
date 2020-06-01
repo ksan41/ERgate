@@ -25,6 +25,10 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectList", null, rowBounds);
 		
 	}
+
+	public int searchListCount(SqlSessionTemplate sqlSession, String condition, String keyword) {
+		return sqlSession.selectOne("boardMapper.searchListCount");
+	}
 	
 	/*
 	 * public int insertBoard(SqlSessionTemplate sqlSession, Board b) { return
