@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,27 +94,27 @@
 </head>
 <body>
 	<div id="loginOuter">
-	    <form action="">
+	    <form action="login.ma" method="post">
 	        <table id="loginTable">
 	            <tr>
 	                <td colspan="2" style="text-align: center;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
 	            </tr>
 	            <tr>
 	                <td class="loginTd" style="font-size: 20px;">ID</td>
-	                <td><input id="loginId" type="text"></td>
+	                <td><input id="loginId" name="empId" type="text"></td>
 	            </tr>
 	            <tr>
 	                <td class="loginTd" style="font-size: 20px;">PW</td>
-	                <td><input id="loginPwd" type="password"></td>
+	                <td><input id="loginPwd" name="empPwd" type="password"></td>
 	            </tr>
 	            <tr>
 	            	<td colspan="2" class="loginTd"><input id="loginSaveId" type="checkbox"><label id="loginSaveIdLabel" for="">아이디 저장 &nbsp;</label></td>
 	            </tr>
 	            <tr>
-	                <td colspan="2" class="loginTd"><button id="loginBtn" class="bigBtn">로그인</button></td>
+	                <td colspan="2" class="loginTd"><button type="submit" id="loginBtn" class="bigBtn">로그인</button></td>
 	            </tr>
 	            <tr>
-	                <td colspan="2" class="loginTd"><button id="loginEnrollBtn" class="bigBtn">계정등록</button></td>
+	                <td colspan="2" class="loginTd"><button type="button" id="loginEnrollBtn" onclick="location.href='enroll.ma'" class="bigBtn">계정등록</button></td>
 	            </tr>
 	            <tr>
 	            	<td colspan="2" class="loginTd">
@@ -124,5 +125,13 @@
 	        </table>
 	    </form>
 	</div>
+	
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+	
 </body>
 </html>

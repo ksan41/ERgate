@@ -21,6 +21,11 @@ public class MainController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	
+	@RequestMapping("loginTest.ma")
+	public String loginTest() {
+		return "main/loginIndex";
+	}
+	
 	@RequestMapping("login.ma")
 	public String loginMember(Employee e, HttpSession session, Model model) {
 		
@@ -28,7 +33,7 @@ public class MainController {
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) {
 			session.setAttribute("loginUser", loginUser);
-			return "main/main.jsp";
+			return "main/main";
 		}else {
 			model.addAttribute("msg", "로그인에 실패하였습니다. 알맞은 아이디와 비밀번호를 입력해주세요.");
 			return "redirect:/";
@@ -41,32 +46,25 @@ public class MainController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// page 이동용 메소드
+	
+	@RequestMapping("enroll.ma")
+	public String enrollMember() {
+		return "main/accountRequest";
+	}
+	
+	@RequestMapping("returnLogin.ma")
+	public String returnLogin() {
+		return "main/loginIndex";
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -71,22 +71,5 @@
 			   #{empAddress}, #{empImage}, #{empBirthday}, NULL, NULL, NULL)
 	</insert>
 	
-	<update id="approvalMember" parameterType="Employee">
-		
-	</update>
-
-	<update id="updateMember" parameterType="Employee">
-		UPDATE EMPLOYEE
-		   SET EMP_IMAGE=#{},
-		   	   EMP_PWD=#{},
-		   	   EMP_EXTENSION=#{},
-		   	   EMP_FAX=#{},
-		   	   EMP_NAME=#{},
-		   	   EMP_BIRTHDAY=#{},
-		   	   EMP_PHONE=#{},
-		   	   EMP_PRI_EMAIL=#{},
-		   	   EMP_ADDRESS=#{}
-		 WHERE EMP_ID=#{empId}
-	</update>
 
 </mapper>

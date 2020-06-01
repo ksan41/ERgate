@@ -194,7 +194,7 @@
 	            <tr>
 	                <td colspan="2" align="center">
 	                	<button id="enrollSubmit" class="bigBtn">계정등록요청</button> &nbsp;&nbsp;
-	                	<button id="enrollCancel" class="bigBtn">취소</button>
+	                	<button id="enrollCancel" type="button" onclick="location.href='returnLogin.ma'" class="bigBtn">취소</button>
 	                </td>
 	            </tr>
 	        </table>
