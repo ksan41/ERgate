@@ -1,4 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mainMapper">
+
+	<resultMap id="employeeResultSet" type="Employee">
+		<id column="EMP_ID" property="empId"/>
+		<result column="RANK_CODE" property="rankCode"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="JOB_CODE" property="jobCode"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="EMP_PWD" property="empPwd"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="HIRE_DATE" property="hireDate"/>
+		<result column="EMP_EXTENSION" property="empExtension"/>
+		<result column="EMP_FAX" property="empFax"/>
+		<result column="EMP_COM_EMAIL" property="empComEmail"/>
+		<result column="EMP_PRI_EMAIL" property="empPriEmail"/>
+		<result column="EMP_PHONE" property="empPhone"/>
+		<result column="EMP_ADDRESS" property="empAddress"/>
+		<result column="EMP_IMAGE" property="empImage"/>
+		<result column="EMP_BIRTHDAY" property="empBirthday"/>
+		<result column="RESIGN_FLAG" property="resignFlag"/>
+		<result column="RESIGN_DATE" property="resignDate"/>
+		<result column="EMP_STATUS" property="empStatus"/>
+		<result column="RANK_TITLE" property="rankTitle"/>
+		<result column="DEPT_TITLE" property="deptTitle"/>
+		<result column="JOB_TITLE" property="jobTitle"/>
+	</resultMap>
+	
+	<select id="loginMember" resultMap="employeeResultSet" parameterType="Employee">
+		SELECT * 
+		  FROM EMPLOYEE
+		 WHERE EMP_ID=#{empId}
+		 	   AND RESIGN_FLAG='N'
+	</select>
+	
+	<select id="findId" resultType="string" parameterType="Employee">
+		SELECT EMP_ID
+		  FROM EMPLOYEE
+		 WHERE EMP_NAME=#{empName}
+		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
+		 	   AND RESIGN_FLAG='N'
+	</select>
+	
+	<select id="findPwd" resultMap="employeeResultSet" parameterType="Employee">
+		SELECT *
+		  FROM EMPLOYEE
+		 WHERE EMP_ID=#{empId}
+		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
+		 	   AND RESIGN_FLAG='N'
+	</select>
+	
+	<update id="updatePwd" parameterType="string">
+		UPDATE EMPLOYEE
+		   SET EMP_PWD=#{userPwd}
+		 WHERE EMP_ID=#{empId}
+		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
+		 	   AND RESIGN_FLAG='N'
+	</update>
+	
+	<select id="idCheck" resultType="_int" parameterType="string">
+		SELECT COUNT(*)
+		  FROM EMPLOYEE
+		 WHERE EMP_ID=#{userId}
+	</select>
+	
+	<insert id="insertRequest" parameterType="Employee">
+		INSERT INTO EMPLOYEE
+		VALUES(#{empId}, NULL, NULL, NULL, NULL, #{empPwd}, #{empName}, 
+			   NULL, NULL, NULL, NULL, #{empPriEmail}, #{empPhone}, 
+			   #{empAddress}, #{empImage}, #{empBirthday}, NULL, NULL, NULL)
+	</insert>
+	
+	<update id="approvalMember" parameterType="Employee">
+		
+	</update>
+
+	<update id="updateMember" parameterType="Employee">
+		UPDATE EMPLOYEE
+		   SET EMP_IMAGE=#{},
+		   	   EMP_PWD=#{},
+		   	   EMP_EXTENSION=#{},
+		   	   EMP_FAX=#{},
+		   	   EMP_NAME=#{},
+		   	   EMP_BIRTHDAY=#{},
+		   	   EMP_PHONE=#{},
+		   	   EMP_PRI_EMAIL=#{},
+		   	   EMP_ADDRESS=#{}
+		 WHERE EMP_ID=#{empId}
+	</update>
+
 </mapper>

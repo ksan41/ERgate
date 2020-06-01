@@ -121,7 +121,7 @@
     
     /* 배경 이미지 */
     body{
-	    background-image: url('../../resources/siteImg/backgroundImage.png');
+	    background-image: url('${ pageContext.servletContext.contextPath }/resources/siteImgs/backgroundImage.png');
 	    background-repeat: no-repeat; 
 	    background-size: 99% 70%;
 	    background-position: center; 
@@ -137,7 +137,7 @@
 	    <form action="">
 	        <table id="findIdTable">
 	            <tr>
-	                <td colspan="2" style="text-align: center; height: 60px;"><img src="../../resources/siteImg/logo.png"></td>
+	                <td colspan="2" style="text-align: center; height: 60px;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" id="findIdDescript">

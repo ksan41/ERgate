@@ -217,7 +217,7 @@
                         <td rowspan="2" id="mypageProfileArea">
                             <table id="mypageProfileTable">
                                 <tr>
-                                    <td><img id="mypageProfileImg" src="../../resources/siteImg/profile_logo.png" width="150" height="150"></td>
+                                    <td><img id="mypageProfileImg" src="../../resources/siteImgs/profile_logo.png" width="150" height="150"></td>
                                 </tr>
                                 <tr>
                                     <td ><button class="smallBtn">편집</button></td>
@@ -226,9 +226,6 @@
                                     <td style="height:50px; font-size: 18px;">
                                     	<span style="color:rgb(26, 188, 156); font-weight: 550;">ID </span> erkevin
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td id="mypageDescript">개인정보 수정 후 <br>그룹웨어 정보 반영을 위해 <br>재로그인 해주세요.</bt></td>
                                 </tr>
                             </table>
                         </td>
@@ -335,7 +332,7 @@
                                 </tr>
                                 <tr>
                                     <td><input type="text" name="" id=""></td>
-                                    <td><input type="text"></td>
+                                    <td><input type="date"></td>
                                 </tr>
                                 <tr>
                                     <td>휴대폰번호</td>
@@ -345,12 +342,7 @@
                                     <td><input type="text" name="" id=""></td>
                                     <td>
                                     	<input id="mypageEmail1" type="text" style="width: 180px">
-					                	<input id="mypageEmail2" name="emailDomain" type="text" list="emailDomain" placeholder="직접입력" style="width: 180px">
-									        <datalist id="emailDomain">
-									            <option>@naver.com</option>
-									            <option>@gmail.com</option>
-									            <option>@hanmail.net</option>
-					        </datalist>
+					                	<input id="mypageEmail2" name="emailDomain" type="text" value="@gmail.com" readonly style="width: 180px">
                                     </td>
                                 </tr>
                                 <tr>
@@ -359,8 +351,8 @@
                                 <tr>
                                     <td colspan="2">
                                     	<button id="mypageAddressBtn" class="middleBtn">우편번호찾기</button>
-                                    	<input type="text" style="width: 100px">
-                                    	<input type="text" style="width: 370px"> <br>
+                                    	<input type="text" style="width: 100px" readonly>
+                                    	<input type="text" style="width: 370px" readonly> <br>
                                     	<input type="text" style="width: 650px">
                                     </td>
                                 </tr>

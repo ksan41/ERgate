@@ -124,7 +124,7 @@
     
     /* 배경 이미지 */
     body{
-	    background-image: url('../../resources/siteImg/backgroundImage.png');
+	    background-image: url('${ pageContext.servletContext.contextPath }/resources/siteImgs/backgroundImage.png');
 	    background-repeat: no-repeat; 
 	    background-size: 100% 70%;
 	    background-position: center; 
@@ -140,7 +140,7 @@
 	    <form action="">
 	        <table id="enrollTable">
 	            <tr>
-	                <td colspan="2" style="text-align: center;"><img src="../../resources/siteImg/logo.png"></td>
+	                <td colspan="2" style="text-align: center;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" id="enrollDescript">계정 등록을 위해 필요한 정보를 입력해 주세요.</td>
@@ -166,7 +166,7 @@
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">프로필 사진</td>
-	                <td><img id="enrollImg" src="../../resources/siteImg/profile_logo.png" width="150" height="150"></td>
+	                <td><img id="enrollImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="150" height="150"></td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">생년월일</td>
@@ -180,12 +180,7 @@
 	                <td class="enrollLabel">이메일 주소</td>
 	                <td>
 	                	<input id="enrollEmail1" type="text">
-	                	<input id="enrollEmail2" name="emailDomain" type="text" list="emailDomain" placeholder="직접입력">
-					        <datalist id="emailDomain">
-					            <option>@naver.com</option>
-					            <option>@gmail.com</option>
-					            <option>@hanmail.net</option>
-					        </datalist>
+						<input id="enrollEmail2" name="emailDomain" type="text" value="@gmail.com" readonly style="width: 180px">
 	                </td>
 	            </tr>
 	            <tr>

@@ -9,6 +9,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.kh.ergate.main.model.vo.Employee" alias="Employee"/>
+		<typeAlias type="com.kh.ergate.main.model.vo.Department" alias="Department"/>
+		<typeAlias type="com.kh.ergate.main.model.vo.Rank" alias="Rank"/>
+		<typeAlias type="com.kh.ergate.main.model.vo.Job" alias="Job"/>
 		<typeAlias type="com.kh.ergate.board.model.vo.Board" alias="Board" />
 	</typeAliases>
 	

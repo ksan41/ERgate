@@ -36,6 +36,9 @@
     	width: 60px;
     	text-align: center;
     }
+    .loginTd a:hover{
+    	cursor: pointer;
+    }
     #loginId, #loginPwd{
     	padding: 5px;
 		width: 280px;
@@ -77,7 +80,7 @@
     
     /* 배경 이미지 */
     body{
-	    background-image: url('${pageContext.servletContext.contextPath }/resources/siteImgs/backgroundImage.png');
+	    background-image: url('${ pageContext.servletContext.contextPath }/resources/siteImgs/backgroundImage.png');
 	    background-repeat: no-repeat; 
 	    background-size: 99% 70%;
 	    background-position: center; 
@@ -93,7 +96,7 @@
 	    <form action="">
 	        <table id="loginTable">
 	            <tr>
-	                <td colspan="2" style="text-align: center;"><img src="${pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
+	                <td colspan="2" style="text-align: center;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
 	            </tr>
 	            <tr>
 	                <td class="loginTd" style="font-size: 20px;">ID</td>
@@ -113,7 +116,10 @@
 	                <td colspan="2" class="loginTd"><button id="loginEnrollBtn" class="bigBtn">계정등록</button></td>
 	            </tr>
 	            <tr>
-	            	<td colspan="2" class="loginTd"><a>아이디 찾기</a> | <a>비밀번호 찾기</a></td>
+	            	<td colspan="2" class="loginTd">
+	            		<a>아이디 찾기</a> | 
+	            		<a>비밀번호 찾기</a>
+	            	</td>
 	            </tr>
 	        </table>
 	    </form>
