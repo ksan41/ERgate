@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ergate.board.model.service.BoardService;
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
 
@@ -45,7 +46,18 @@ public class BoardController {
 	@RequestMapping("search.bo")
 	public String searchBoardList(String condition, String keyword, Model model) {
 		
-		int searchListCount = bodService.searchListCount(condition, keyword);
+		SearchCondition sc = new SearchCondition();
+		
+		switch(condition) {
+		case "title" : sc.setBoardTitle(keyword);  break;
+		case "content" : sc.setBoardContent(keyword); break;
+		case "writer" : sc.setBoardWriter(keyword); break;
+		}
+		
+		
+		
+		int searchListCount = bodService.searchListCount(sc);
+		System.out.println(searchListCount);
 		
 		return "board/boardList";
 	}

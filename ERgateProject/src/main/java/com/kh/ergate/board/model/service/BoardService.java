@@ -3,6 +3,7 @@ package com.kh.ergate.board.model.service;
 import java.util.ArrayList;
 
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
 public interface BoardService {
@@ -13,7 +14,7 @@ public interface BoardService {
 	// 1_2. 요청한 페이지에 보여질 게시글 리스트 조회용 서비스
 	ArrayList<Board> selectList(PageInfo pi);
 	
-	int searchListCount(String condition, String keyword);
+	int searchListCount(SearchCondition sc);
 	
 	// 2. 게시판 작성용 서비스
 	int insertBoard(Board b);

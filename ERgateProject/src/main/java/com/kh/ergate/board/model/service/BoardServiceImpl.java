@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ergate.board.model.dao.BoardDao;
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
 @Service("bodService")
@@ -30,8 +31,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int searchListCount(String condition, String keyword) {
-		return bodDao.searchListCount(sqlSession, condition, keyword);
+	public int searchListCount(SearchCondition sc) {
+		return bodDao.searchListCount(sqlSession, sc);
 	}
 
 	
