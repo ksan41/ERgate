@@ -34,16 +34,20 @@ public class BoardServiceImpl implements BoardService {
 	public int searchListCount(SearchCondition sc) {
 		return bodDao.searchListCount(sqlSession, sc);
 	}
+	
+	@Override
+	public ArrayList<Board> searchList(PageInfo pi, SearchCondition sc) {
+		return bodDao.searchList(sqlSession,  pi, sc);
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public int increaseCount(int bno) {
+		return bodDao.increaseCount(sqlSession, int bno);
+	}
+	@Override
+	public Board selectBoard(int bno) {
+		return null;
+	}
 	
 	
 	
@@ -53,16 +57,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	@Override
-	public int increaseCount(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public com.kh.ergate.board.model.vo.Board selectBoard(int bno) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	@Override
 	public int deleteBoard(int bno) {
 		// TODO Auto-generated method stub
@@ -73,6 +68,8 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 	
 	
 

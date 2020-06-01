@@ -30,6 +30,15 @@ public class BoardDao {
 	public int searchListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
 		return sqlSession.selectOne("boardMapper.searchListCount", sc);
 	}
+
+	public ArrayList<Board> searchList(SqlSessionTemplate sqlSession, PageInfo pi, SearchCondition sc) {
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.searchList", sc, rowBounds);
+	}
 	
 	/*
 	 * public int insertBoard(SqlSessionTemplate sqlSession, Board b) { return

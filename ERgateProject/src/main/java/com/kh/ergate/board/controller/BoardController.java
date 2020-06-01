@@ -44,7 +44,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("search.bo")
-	public String searchBoardList(String condition, String keyword, Model model) {
+	public String searchBoardList(String condition, String keyword, int currentPage, Model model) {
 		
 		SearchCondition sc = new SearchCondition();
 		
@@ -57,9 +57,31 @@ public class BoardController {
 		
 		
 		int searchListCount = bodService.searchListCount(sc);
-		System.out.println(searchListCount);
 		
+		PageInfo pi = Pagination.getPageInfo(searchListCount, currentPage, 5, 10);
+		
+		ArrayList<Board> slist = bodService.searchList(pi,sc);
+		
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", slist);
+		model.addAttribute("sc", 1);
 		return "board/boardList";
+	}
+	
+	@RequestMapping("detail.bo") public ModelAndView selectBoard(int bno,
+	ModelAndView mv) {
+	
+		int result = bodService.increaseCount(bno);
+	
+		if(result > 0) {
+			Board b = bodService.selectBoard(bno); mv.addObject("b", b);
+			mv.setViewName("board/boardDetailView");
+		}else { // 게시글 상세조회 실패
+			mv.addObject("msg", "게시글 상세조회 실패!"); mv.setViewName("common/errorPage");
+		}
+		return mv;
 	}
 
 	/*
@@ -99,25 +121,7 @@ public class BoardController {
 	 * }
 	 * 
 	 * 
-	 * @RequestMapping("detail.bo") public ModelAndView selectBoard(int bno,
-	 * ModelAndView mv) {
-	 * 
-	 * int result = bService.increaseCount(bno);
-	 * 
-	 * if(result > 0) {
-	 * 
-	 * Board b = bService.selectBoard(bno); mv.addObject("b", b);
-	 * mv.setViewName("board/boardDetailView");
-	 * 
-	 * }else { // 게시글 상세조회 실패
-	 * 
-	 * mv.addObject("msg", "게시글 상세조회 실패!"); mv.setViewName("common/errorPage");
-	 * 
-	 * }
-	 * 
-	 * return mv;
-	 * 
-	 * }
+
 	 * 
 	 * @RequestMapping("delete.bo") public String deleteBoard(int bno, String
 	 * fileName, HttpServletRequest request, Model model) {
