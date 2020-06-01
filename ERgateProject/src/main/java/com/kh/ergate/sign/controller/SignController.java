@@ -1,5 +1,7 @@
 package com.kh.ergate.sign.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.sign.model.service.SignServiceImpl;
 import com.kh.ergate.sign.model.vo.SignDocument;
 import com.kh.ergate.sign.model.vo.Signer;
@@ -15,7 +19,7 @@ import com.kh.ergate.sign.model.vo.Signer;
 public class SignController {
 	
 	@Autowired
-	private SignServiceImpl siSevice;
+	private SignServiceImpl siService;
 	
 	
 	// 결재대기리스트
@@ -58,7 +62,17 @@ public class SignController {
 	
 	//지출결의내역요청용
 	@RequestMapping("expenseList.si")
-	public String expenseList(SignDocument sd,Model model) {
+	public String expenseList(int currentPage,SignDocument sd,Model model) {
+		
+		int listCount = siService.selectElistCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<SignDocument> list = siService.expenseList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list",list);
+		
 		return "sign/signExpenseList";
 	}
 	
