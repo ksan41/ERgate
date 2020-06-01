@@ -32,6 +32,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 		<url-pattern>*.ma</url-pattern>
+		<url-pattern>*.me</url-pattern>
 	</servlet-mapping>
 	
 	
