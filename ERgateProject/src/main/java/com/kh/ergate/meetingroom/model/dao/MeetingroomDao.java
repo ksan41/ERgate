@@ -22,7 +22,7 @@ public class MeetingroomDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.statusList("meetingroomMapper.statusList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.statusList", null, rowBounds);
 		
 	}
 

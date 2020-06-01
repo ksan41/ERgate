@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="meetingroomMapper">
 
-	<resultMap type="MeetingroomResultSet" id="Meetingroom">
+	<resultMap type="Meetingroom" id="MeetingroomResultSet">
 		<id column="MTRM_CODE" property="mtrmCode"/>
 		<result column="MTRM_NAME" property="mtrmName"/>
 		<result column="MTRM_LOCATION" property="mtrmLocation"/>
@@ -10,7 +10,7 @@
 		<result column="MTRM_IMAGE" property="mtrmImage"/>
 	</resultMap>
 	
-	<resultMap type="MeetingroomReservationResultSet" id="MeetingroomReservation">
+	<resultMap type="MeetingroomReservation" id="MeetingroomReservationResultSet">
 		<id column="MTRM_RESERV_NO" property="mtrmReservNo"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="MTRM_CODE" property="mtrmCode"/>
@@ -22,7 +22,6 @@
 		<result column="MTRM_END_DATE" property="mtrmEndDate"/>
 		<result column="MTRM_END_TIME" property="mtrmEndTime"/>
 		<result column="MTRM_PURPOSE" property="mtrmPurpose"/>
-
 	</resultMap>
 
 	<select id="StatusListCount" resultType="_int">

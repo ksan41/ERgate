@@ -3,35 +3,36 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-	
-	<settings>
-		<setting name="jdbcTypeForNull" value="NULL"/>
-	</settings>
-	
-	<typeAliases>
-		<typeAlias type="com.kh.ergate.main.model.vo.Employee" alias="Employee"/>
-		<typeAlias type="com.kh.ergate.main.model.vo.Department" alias="Department"/>
-		<typeAlias type="com.kh.ergate.main.model.vo.Rank" alias="Rank"/>
-		<typeAlias type="com.kh.ergate.main.model.vo.Job" alias="Job"/>
-		<typeAlias type="com.kh.ergate.board.model.vo.Board" alias="Board" />
-	</typeAliases>
-	
-	
-	<mappers>
-		<mapper resource="mappers/attendance-mapper.xml"/>
-		<mapper resource="mappers/board-mapper.xml"/>
-		<mapper resource="mappers/common-mapper.xml"/>
-		<mapper resource="mappers/group-mapper.xml"/>
-		<mapper resource="mappers/mail-mapper.xml"/>
-		<mapper resource="mappers/main-mapper.xml"/>
-		<mapper resource="mappers/meetingroom-mapper.xml"/>
-		<mapper resource="mappers/notice-mapper.xml"/>
-		<mapper resource="mappers/schedule-mapper.xml"/>
-		<mapper resource="mappers/sign-mapper.xml"/>
-		<mapper resource="mappers/vehicle-mapper.xml"/>
-	</mappers>
-	
-	
+   
+   <settings>
+      <setting name="jdbcTypeForNull" value="NULL"/>
+   </settings>
+   
+   <typeAliases>
+      <typeAlias type="com.kh.ergate.main.model.vo.Employee" alias="Employee"/>
+      <typeAlias type="com.kh.ergate.main.model.vo.Department" alias="Department"/>
+      <typeAlias type="com.kh.ergate.main.model.vo.Rank" alias="Rank"/>
+      <typeAlias type="com.kh.ergate.main.model.vo.Job" alias="Job"/>
+      <typeAlias type="com.kh.ergate.board.model.vo.Board" alias="Board" />
+      <typeAlias type="com.kh.ergate.meetingroom.model.vo.Meetingroom" alias="Meetingroom"/>
+      <typeAlias type="com.kh.ergate.meetingroom.model.vo.MeetingroomReservation" alias="MeetingroomReservation"/>
+   </typeAliases>
+   
+   
+   <mappers>
+      <mapper resource="mappers/attendance-mapper.xml"/>
+      <mapper resource="mappers/board-mapper.xml"/>
+      <mapper resource="mappers/common-mapper.xml"/>
+      <mapper resource="mappers/group-mapper.xml"/>
+      <mapper resource="mappers/mail-mapper.xml"/>
+      <mapper resource="mappers/main-mapper.xml"/>
+      <mapper resource="mappers/meetingroom-mapper.xml"/>
+      <mapper resource="mappers/notice-mapper.xml"/>
+      <mapper resource="mappers/schedule-mapper.xml"/>
+      <mapper resource="mappers/sign-mapper.xml"/>
+      <mapper resource="mappers/vehicle-mapper.xml"/>
+   </mappers>
+   
+   
 </configuration>
-
 
