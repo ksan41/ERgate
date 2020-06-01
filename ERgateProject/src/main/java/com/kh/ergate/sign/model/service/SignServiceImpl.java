@@ -42,11 +42,15 @@ public class SignServiceImpl implements SignService{
 	}
 
 	@Override
-	public ArrayList<SignDocument> expenseList(SignDocument sd) {
-		// TODO Auto-generated method stub
+	public ArrayList<SignDocument> expenseList(PageInfo pi) {
 		return null;
 	}
-
+	
+	@Override
+	public int selectElistCount() {
+		return siDao.selectElistCount(sqlSession);
+	}
+	
 	@Override
 	public ArrayList<SignDocument> hrList(SignDocument sd) {
 		// TODO Auto-generated method stub
@@ -82,5 +86,7 @@ public class SignServiceImpl implements SignService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }
