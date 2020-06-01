@@ -28,7 +28,7 @@
 		 order by board_no desc
 	</select>
 	
-		<select id="selectListCount" parameterType="com.kh.ergate.board.model.vo.SearchCondition" resultType="_int">
+		<select id="searchListCount" parameterType="com.kh.ergate.board.model.vo.SearchCondition" resultType="_int">
 		select count(*)
 		  from board
 		 where board_status='Y'
