@@ -49,9 +49,9 @@ public class BoardController {
 		SearchCondition sc = new SearchCondition();
 		
 		switch(condition) {
-		case "title" : sc.setBoardTitle(keyword);  break;
-		case "content" : sc.setBoardContent(keyword); break;
-		case "writer" : sc.setBoardWriter(keyword); break;
+		case "boardTitle" : sc.setBoardTitle(keyword);  break;
+		case "boardContent" : sc.setBoardContent(keyword); break;
+		case "boardWriter" : sc.setBoardWriter(keyword); break;
 		}
 		
 		
