@@ -93,6 +93,14 @@
 </style>   
 </head>
 <body>
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+
 	<div id="loginOuter">
 	    <form action="login.ma" method="post">
 	        <table id="loginTable">
@@ -114,24 +122,17 @@
 	                <td colspan="2" class="loginTd"><button type="submit" id="loginBtn" class="bigBtn">로그인</button></td>
 	            </tr>
 	            <tr>
-	                <td colspan="2" class="loginTd"><button type="button" id="loginEnrollBtn" onclick="location.href='enroll.ma'" class="bigBtn">계정등록</button></td>
+	                <td colspan="2" class="loginTd"><button type="button" id="loginEnrollBtn" onclick="location.href='accountForm.ma'" class="bigBtn">계정등록</button></td>
 	            </tr>
 	            <tr>
 	            	<td colspan="2" class="loginTd">
-	            		<a>아이디 찾기</a> | 
-	            		<a>비밀번호 찾기</a>
+	            		<a href="findIdForm.ma">아이디 찾기</a> | 
+	            		<a href="findPwdForm.ma">비밀번호 찾기</a>
 	            	</td>
 	            </tr>
 	        </table>
 	    </form>
 	</div>
-	
-	<c:if test="${ !empty msg }">
-		<script>
-			alert('${ msg }');
-		</script>
-		<c:remove var="msg" scope="session"/>
-	</c:if>
 	
 </body>
 </html>

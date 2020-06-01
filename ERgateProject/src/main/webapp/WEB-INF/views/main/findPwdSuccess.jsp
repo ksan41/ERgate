@@ -140,7 +140,7 @@
 </head>
 <body>
 	<div id="findPwdOuter">
-	    <form action="">
+	    <form action="loginTest.ma">
 	        <table id="findPwdTable">
 	            <tr>
 	                <td colspan="2" style="text-align: center; height: 60px;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
@@ -171,7 +171,7 @@
 	            <tr><td></td><td></td></tr>
 	            <tr><td></td><td></td></tr>
 	            <tr>
-	                <td colspan="2" class="findPwdTd"><button id="findPwdBtn" class="bigBtn">비밀번호 변경</button></td>
+	                <td colspan="2" class="findPwdTd"><button type="submit" id="findPwdBtn" class="bigBtn">비밀번호 변경</button></td>
 	            </tr>
 	        </table>
 	    </form>

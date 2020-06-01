@@ -116,31 +116,29 @@
 </head>
 <body>
 	<div id="findIdOuter">
-	    <form action="">
-	        <table id="findIdTable">
-	            <tr>
-	                <td style="text-align: center; height: 60px;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
-	            </tr>
-	            <tr>
-	                <td id="findIdDescript">
-						<ul id="subMenuList">
-							<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-							<li><button class="subBtn subActive">아이디 찾기</button></li>
-							<li><button class="subBtn">비밀번호 찾기</button></li>
-						</ul>
-					</td>
-	            </tr>
-	            <tr>
-					<td id="findIdSuccess">
-						가나다라마바사님의 아이디는 <br>
-						<span style="color: orange;">useruser01</span>입니다.
-					</td>
-	            </tr>
-	            <tr>
-	                <td colspan="2" class="findIdTd"><button id="findIdBtn" class="bigBtn">로그인하기</button></td>
-	            </tr>
-	        </table>
-	    </form>
+        <table id="findIdTable">
+            <tr>
+                <td style="text-align: center; height: 60px;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
+            </tr>
+            <tr>
+                <td id="findIdDescript">
+					<ul id="subMenuList">
+						<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
+						<li><button class="subBtn subActive">아이디 찾기</button></li>
+						<li><button class="subBtn">비밀번호 찾기</button></li>
+					</ul>
+				</td>
+            </tr>
+            <tr>
+				<td id="findIdSuccess">
+					가나다라마바사님의 아이디는 <br>
+					<span style="color: orange;">useruser01</span>입니다.
+				</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="findIdTd"><button onclick="location.href='loginTest.ma'" id="findIdBtn" class="bigBtn">로그인하기</button></td>
+            </tr>
+        </table>
 	</div>
 </body>
 </html>

@@ -259,7 +259,7 @@
 						<table id="mainScheduleTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="../../resources/icons/event.png">
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/event.png">
 									<span style="vertical-align: top;">일정관리</span>
 								</th>
 								<td class="mainNextArea">
@@ -271,7 +271,7 @@
 										<input type="radio" id="share" class="mainRadioBtn" checked>
 										<label for="share" class="mainRadioLabel">공유</label>
 									</div>
-									<button class="mainNextBtn"><img src="../../resources/icons/next.png"></button>
+									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
 								</td>
 							</tr>
 							<tr>
@@ -317,11 +317,11 @@
 						<table id="mainMailTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="../../resources/icons/mail.png">
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/mail.png">
 									<span style="vertical-align: top;">전자메일</span>
 								</th>
 								<td class="mainNextArea">
-									<button class="mainNextBtn"><img src="../../resources/icons/next.png"></button>
+									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
 								</td>
 							</tr>
 							<tr>
@@ -383,11 +383,11 @@
 						<table id="mainNoticeTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="../../resources/icons/notice.png">
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/notice.png">
 									<span style="vertical-align: top;">공지사항</span>
 								</th>
 								<td class="mainNextArea">
-									<button class="mainNextBtn"><img src="../../resources/icons/next.png"></button>
+									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
 								</td>
 							</tr>
 							<tr>
@@ -439,11 +439,11 @@
 						<table id="mainSignTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="../../resources/icons/sign.png">
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/sign.png">
 									<span style="vertical-align: top;">전자결재</span>
 								</th>
 								<td class="mainNextArea">
-									<button class="mainNextBtn"><img src="../../resources/icons/next.png"></button>
+									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
 								</td>
 							</tr>
 							<tr>

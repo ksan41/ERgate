@@ -21,17 +21,15 @@ public class MainController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	
-	@RequestMapping("loginTest.ma")
-	public String loginTest() {
-		return "main/loginIndex";
-	}
-	
 	@RequestMapping("login.ma")
 	public String loginMember(Employee e, HttpSession session, Model model) {
 		
 		Employee loginUser = mService.loginMember(e);
 		
-		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) {
+		
+		// 비밀번호 암화화 과정 추가하기
+		
+		if(loginUser != null) {
 			session.setAttribute("loginUser", loginUser);
 			return "main/main";
 		}else {
@@ -41,7 +39,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping
+	@RequestMapping("logout.ma")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
@@ -57,8 +55,13 @@ public class MainController {
 	
 	// page 이동용 메소드
 	
-	@RequestMapping("enroll.ma")
-	public String enrollMember() {
+	@RequestMapping("loginTest.ma")
+	public String loginTest() {
+		return "main/loginIndex";
+	}
+	
+	@RequestMapping("accountForm.ma")
+	public String accountForm() {
 		return "main/accountRequest";
 	}
 	
@@ -66,5 +69,27 @@ public class MainController {
 	public String returnLogin() {
 		return "main/loginIndex";
 	}
+	
+	@RequestMapping("findIdForm.ma")
+	public String findIdForm() {
+		return "main/findId";
+	}
+	
+	@RequestMapping("findId.ma")
+	public String findId() {
+		return "main/findIdSuccess";
+	}
+	
+	@RequestMapping("findPwdForm.ma")
+	public String findPwdForm() {
+		return "main/findPwd";
+	}
+	
+	@RequestMapping("findPwd.ma")
+	public String findPwd() {
+		return "main/findPwdSuccess";
+	}
+	
+	
 
 }
