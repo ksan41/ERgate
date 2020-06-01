@@ -41,10 +41,11 @@ public class SignServiceImpl implements SignService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	// 지출결의내역 리스트 요청
 	@Override
 	public ArrayList<SignDocument> expenseList(PageInfo pi) {
-		return null;
+		return siDao.expenseList(sqlSession,pi);
 	}
 	
 	@Override
@@ -86,12 +87,6 @@ public class SignServiceImpl implements SignService{
 	public int insertDocument(SignDocument sd) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public ArrayList<SignDocument> expenseList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 

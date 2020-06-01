@@ -32,9 +32,9 @@ public class BoardController {
 	public String selectList(int currentPage, Model model) {
 
 		int listCount = bodService.selectListCount();
-
+		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-
+		
 		ArrayList<Board> list = bodService.selectList(pi);
 
 		model.addAttribute("pi", pi);
