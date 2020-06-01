@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ergate.board.model.dao.BoardDao;
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
 @Service("bodService")
@@ -30,19 +31,23 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int searchListCount(String condition, String keyword) {
-		return bodDao.searchListCount(sqlSession, condition, keyword);
+	public int searchListCount(SearchCondition sc) {
+		return bodDao.searchListCount(sqlSession, sc);
+	}
+	
+	@Override
+	public ArrayList<Board> searchList(PageInfo pi, SearchCondition sc) {
+		return bodDao.searchList(sqlSession,  pi, sc);
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public int increaseCount(int bno) {
+		return bodDao.increaseCount(sqlSession, int bno);
+	}
+	@Override
+	public Board selectBoard(int bno) {
+		return null;
+	}
 	
 	
 	
@@ -52,16 +57,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	@Override
-	public int increaseCount(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public com.kh.ergate.board.model.vo.Board selectBoard(int bno) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	@Override
 	public int deleteBoard(int bno) {
 		// TODO Auto-generated method stub
@@ -72,6 +68,8 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 	
 	
 

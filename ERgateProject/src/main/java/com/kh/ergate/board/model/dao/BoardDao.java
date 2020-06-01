@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
 @Repository("bodDao")
@@ -26,8 +27,17 @@ public class BoardDao {
 		
 	}
 
-	public int searchListCount(SqlSessionTemplate sqlSession, String condition, String keyword) {
-		return sqlSession.selectOne("boardMapper.searchListCount");
+	public int searchListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
+		return sqlSession.selectOne("boardMapper.searchListCount", sc);
+	}
+
+	public ArrayList<Board> searchList(SqlSessionTemplate sqlSession, PageInfo pi, SearchCondition sc) {
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.searchList", sc, rowBounds);
 	}
 	
 	/*

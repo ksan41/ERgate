@@ -28,6 +28,37 @@
 		 order by board_no desc
 	</select>
 	
+	<select id="searchListCount" parameterType="com.kh.ergate.board.model.vo.SearchCondition" resultType="_int">
+		select count(*)
+		  from board
+		 where board_status='Y'
+		    <if test="boardWriter != null">
+				AND BOARD_WRITER LIKE '%' || #{boardWriter} || '%'  
+			</if>
+			<if test="boardTitle != null">
+				AND BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
+			</if>
+			<if test="boardContent != null">
+				AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
+			</if>
+	</select>
+	
+	<select id="searchList" parameterType="com.kh.ergate.board.model.vo.SearchCondition" resultMap="boardResultSet">
+		select * 
+		  from board
+		 where board_status='Y'
+		 	<if test="boardWriter != null">
+				AND BOARD_WRITER LIKE '%' || #{boardWriter} || '%'  
+			</if>
+			<if test="boardTitle != null">
+				AND BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
+			</if>
+			<if test="boardContent != null">
+				AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
+			</if>
+		 order by board_no desc
+	</select>
+	
 </mapper>
 
 

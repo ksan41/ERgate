@@ -2,6 +2,7 @@ package com.kh.ergate.sign.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.sign.model.vo.SignDocument;
 import com.kh.ergate.sign.model.vo.Signer;
 
@@ -20,7 +21,10 @@ public interface SignService {
 	public ArrayList<SignDocument> reportList(SignDocument sd);
 	
 	//지출결의내역요청용
-	public ArrayList<SignDocument> expenseList(SignDocument sd);
+	public ArrayList<SignDocument> expenseList(PageInfo pi);
+	
+	//지출결의내역 게시글수 조회용
+	public int selectElistCount();
 	
 	//외근&휴가내역요청용 
 	public ArrayList<SignDocument> hrList(SignDocument sd);

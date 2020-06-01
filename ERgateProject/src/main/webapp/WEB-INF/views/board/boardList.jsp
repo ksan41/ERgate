@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -266,56 +267,118 @@
 						<th width="150">조회수</th>
 					</tr>
 				</thead>
-				<c:forEach items="${ list }" var="b">
-					<tr>
-						<td>${b.boardNo }</td>
-						<td>${b.boardTitle }</td>
-						<td>${b.boardWriter }</td>
-						<td>${b.boardEnrollDate }</td>
-						<td>${b.boardCount }</td>
-					</tr>
-				</c:forEach>
-				
-				
+				<c:choose>
+					<c:when test="${fn:length(list) eq 10}">
+						<c:forEach items="${ list }" var="b">
+						<tr>
+							<td>${b.boardNo }</td>
+							<td>${b.boardTitle }</td>
+							<td>${b.boardWriter }</td>
+							<td>${b.boardEnrollDate }</td>
+							<td>${b.boardCount }</td>
+						</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${ list }" var="b">
+						<tr>
+							<td>${b.boardNo }</td>
+							<td>${b.boardTitle }</td>
+							<td>${b.boardWriter }</td>
+							<td>${b.boardEnrollDate }</td>
+							<td>${b.boardCount }</td>
+						</tr>
+						</c:forEach>
+						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
+    						<tr>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+						</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</table>
 			<!-- 게시판 -->
 			
 			<br>
-	
-			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				<li class="pstyle"><a class="pstyle" href="list.bo?currentPage=1">&lt;&lt;</a></li>
-				<c:choose>
-					<c:when test="${ pi.currentPage eq 1 }">
-						<li><a class="pstyle disabled" href="#">&lt;</a></li>
-					</c:when>
-	                <c:otherwise>
-	                	<li class="pstyle"><a href="list.bo?currentPage=${ pi.currentPage-1 }">&lt;</a></li>
-	                </c:otherwise>
-	            </c:choose>
-	        
-	        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	            <c:choose>
-                    <c:when test="${ p eq pi.currentPage }">
-                    	<li><a class="crt disabled" href="#">${p}</a></li>
-                    </c:when>
-	                <c:otherwise>
-	                    <li class="pstyle"><a href="list.bo?currentPage=${ p }">${ p }</a></li>
-	                </c:otherwise>
-                </c:choose>
-			 </c:forEach>
-				
-				<c:choose>
-	                <c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    <li><a class="disabled" href="#">&gt;</a></li>
-					</c:when>
-		            <c:otherwise>
-		                <li class="pstyle"><a href="list.bo?currentPage=${ pi.currentPage+1 }">&gt;</a></li>
-		            </c:otherwise>
-	            </c:choose>
-			<li class="pstyle"><a href="list.bo?currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
-			</ul>
-			<!-- 페이징바 -->
+			<c:choose>
+				<c:when test="${sc eq 1}">
+					<!-- 페이징바 -->
+					<ul class="pagingBar">
+						<li class="pstyle"><a class="pstyle" href="search.bo?condition=${condition}&keyword=${keyword}&currentPage=1">&lt;&lt;</a></li>
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li><a class="pstyle disabled" href="#">&lt;</a></li>
+							</c:when>
+			                <c:otherwise>
+			                	<li class="pstyle"><a href="search.bo?condition=${condition}&keyword=${keyword}&currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+			                </c:otherwise>
+			            </c:choose>
+			        
+			        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            <c:choose>
+		                    <c:when test="${ p eq pi.currentPage }">
+		                    	<li><a class="crt disabled" href="#">${p}</a></li>
+		                    </c:when>
+			                <c:otherwise>
+			                    <li class="pstyle"><a href="search.bo?condition=${condition}&keyword=${keyword}&currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+		                </c:choose>
+					 </c:forEach>
+						
+						<c:choose>
+			                <c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li><a class="disabled" href="#">&gt;</a></li>
+							</c:when>
+				            <c:otherwise>
+				                <li class="pstyle"><a href="search.bo?condition=${condition}&keyword=${keyword}&currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+				            </c:otherwise>
+			            </c:choose>
+					<li class="pstyle"><a href="search.bo?condition=${condition}&keyword=${keyword}&currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
+					</ul>
+					<!-- 페이징바 -->
+				</c:when>
+				<c:otherwise>
+					<!-- 페이징바 -->
+					<ul class="pagingBar">
+						<li class="pstyle"><a class="pstyle" href="list.bo?currentPage=1">&lt;&lt;</a></li>
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li><a class="pstyle disabled" href="#">&lt;</a></li>
+							</c:when>
+			                <c:otherwise>
+			                	<li class="pstyle"><a href="list.bo?currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+			                </c:otherwise>
+			            </c:choose>
+			        
+			        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            <c:choose>
+		                    <c:when test="${ p eq pi.currentPage }">
+		                    	<li><a class="crt disabled" href="#">${p}</a></li>
+		                    </c:when>
+			                <c:otherwise>
+			                    <li class="pstyle"><a href="list.bo?currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+		                </c:choose>
+					 </c:forEach>
+						
+						<c:choose>
+			                <c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li><a class="disabled" href="#">&gt;</a></li>
+							</c:when>
+				            <c:otherwise>
+				                <li class="pstyle"><a href="list.bo?currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+				            </c:otherwise>
+			            </c:choose>
+					<li class="pstyle"><a href="list.bo?currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
+					</ul>
+					<!-- 페이징바 -->
+				</c:otherwise>
+			</c:choose>
+			
 			
 		</div>
 	</div>
