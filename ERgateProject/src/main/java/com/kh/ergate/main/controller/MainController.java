@@ -26,10 +26,7 @@ public class MainController {
 		
 		Employee loginUser = mService.loginMember(e);
 		
-		
-		// 비밀번호 암화화 과정 추가하기
-		
-		if(loginUser != null) {
+		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			return "main/main";
 		}else {
@@ -39,7 +36,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping("logout.ma")
+	@RequestMapping
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";

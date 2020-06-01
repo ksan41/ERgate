@@ -31,7 +31,6 @@
 		SELECT * 
 		  FROM EMPLOYEE
 		 WHERE EMP_ID=#{empId}
-		 	   AND EMP_PWD=#{empPwd}
 		 	   AND RESIGN_FLAG='N'
 	</select>
 	
