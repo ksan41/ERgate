@@ -63,15 +63,15 @@ public class SignController {
 	//지출결의내역요청용
 	@RequestMapping("expenseList.si")
 	public String expenseList(int currentPage,SignDocument sd,Model model) {
-		
-		int listCount = siService.selectElistCount();
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		
-		ArrayList<SignDocument> list = siService.expenseList(pi);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list",list);
+		/*
+		 * int listCount = siService.selectElistCount();
+		 * 
+		 * PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		 * 
+		 * ArrayList<SignDocument> list = siService.expenseList(pi);
+		 * 
+		 * model.addAttribute("pi", pi); model.addAttribute("list",list);
+		 */
 		
 		return "sign/signExpenseList";
 	}

@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.sign.model.dao.SignDao;
 import com.kh.ergate.sign.model.vo.SignDocument;
 import com.kh.ergate.sign.model.vo.Signer;
@@ -85,6 +86,12 @@ public class SignServiceImpl implements SignService{
 	public int insertDocument(SignDocument sd) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<SignDocument> expenseList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
