@@ -34,8 +34,11 @@ public interface MeetingroomService {
 
 	 /* 관리자 입장에서 관리하는 페이지(?) service */
 
+	// 회의실 총 개수 조회용 서비스
+		int statusListCount();
 	 //회의실 예약현황 리스트 조회용--- statusList(Meetingroom)
-		int selectStatusList(Meetingroom m);
+		ArrayList<Meetingroom> statusList(PageInfo pi);
+		
 		
 		
 	 //회의실 예약현황 월 선택 조회용 ---statusListMonth(String month)
