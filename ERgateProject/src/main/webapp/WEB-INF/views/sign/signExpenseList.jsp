@@ -108,17 +108,6 @@
 	font-size: 15px;
 }
 
-/* .pagingBar li>span {
-	color: rgb(26, 188, 156);
-	border: 1px solid rgb(26, 188, 156);
-}
-
-.pagingBar li a:hover {
-	color: rgb(26, 188, 156);
-	border: 1px solid rgb(26, 188, 156);
-}
-
- */
 .pagingBar .pstyle>span {
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
@@ -129,10 +118,11 @@
 	border: 1px solid rgb(26, 188, 156);
 }
 
-.pagingBar li .crt {
+.pagingBar li .crt{
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
+
 /* 페이징바 스타일 */
 
 /* 게시판 스타일 */
@@ -204,10 +194,10 @@
 	cursor: pointer;
 }
 
-/* .pageNoClick{
+.pageNoClick{
 	pointer-events: none;
     cursor: default;
-} */
+}
 </style>
 </head>
 <body>
@@ -287,22 +277,19 @@
 			<!-- 페이징바 -->
 			<c:if test="${!empty pi}">
 				<ul class="pagingBar">
-
+					<li><a href="expenseList.si?currentPage=1" class="pageNoClick">&lt;&lt;</a></li>
 					<c:choose>
 						<c:when test="${pi.currentPage eq 1 }">
-							<li><a href="#" class="pageNoClick">&lt;&lt;</a></li>
 							<li><a href="#" class="pageNoClick">&lt;</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="expenseList.si?currentPage=1">&lt;&lt;</a></li>
-							<li><a
-								href="expenseList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
+							<li><a href="expenseList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
 						</c:otherwise>
 					</c:choose>
-					<c:forEach var="p" begin="${pi.startPage }" end="${endPage }">
+					<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
 						<c:choose>
 							<c:when test="${pi.currentPage eq p }">
-								<li><a class="pageNoClick" href="#">${p}</a></li>
+								<li><span>${p}</span>
 							</c:when>
 							<c:otherwise>
 								<li><a href="expenseList.si?currentPage=${p}">${p}</a></li>
@@ -313,18 +300,21 @@
 					<c:choose>
 						<c:when test="${pi.currentPage eq pi.maxPage }">
 							<li><a href="#" class="pageNoClick">&gt;</a></li>
-							<li><a href="#" class="pageNoClick">&gt;&gt;</a></li>
 						</c:when>
 						<c:otherwise>
 							<li><a
 								href="expenseList.si?currentPage=${pi.currentPage + 1 }">&gt;</a></li>
-							<li><a href="expenseList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
 						</c:otherwise>
 					</c:choose>
+					<li><a href="expenseList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
 				</ul>
 				<!-- 페이징바 -->
 			</c:if>
+			
+			
+				
 
+			
 		</div>
 	</div>
 
@@ -361,6 +351,8 @@
 			});
 
 		});
+		
+		
 	</script>
 </body>
 </html>
