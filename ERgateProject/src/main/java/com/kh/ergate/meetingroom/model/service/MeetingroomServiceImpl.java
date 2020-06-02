@@ -80,12 +80,12 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 	// 회의실예약현황리스트조회용
 	@Override
 	public ArrayList<MeetingroomReservation> statusList(Meetingroom m, PageInfo pi) {
-		return null;
+		return mrDao.statusList(sqlSession, pi);
 	}
 
 	@Override
-	public int selectMtroomDetail(String mtrmCode, Meetingroom m) {
-		return mrDao.selectMtroomDetail(sqlSession, m);
+	public ArrayList<Meetingroom> selectMtroomDetail(String mtrmCode, Meetingroom m) {
+		return mrDao.selectMtroomDetail(sqlSession, mtrmCode, m);
 	}
 
 	

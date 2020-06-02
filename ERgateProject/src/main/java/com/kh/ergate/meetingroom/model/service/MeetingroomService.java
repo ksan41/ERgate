@@ -36,7 +36,7 @@ public interface MeetingroomService {
 	 //예약취소용---cancelReserve(int mtrmReservNo)
 		int cancelReserve(int mtrmReservNo);
 
-	 /* 관리자 입장에서 관리하는 페이지(?) service */
+	 /* =========================관리자 입장에서 관리하는 페이지  service==================================== */
 
 	// 회의실 총 개수 조회용 서비스
 		int statusListCount();
@@ -53,7 +53,7 @@ public interface MeetingroomService {
 		int insertMeetingroom(Meetingroom m);
 		
 	 //회의실 정보 상세조회용---selectMtroomDetail(String mtrmCode,Meetingroom)
-		int selectMtroomDetail(String mtrmCode, Meetingroom m);
+		ArrayList<Meetingroom> selectMtroomDetail(String mtrmCode, Meetingroom m);
 		
 	 //회의실 수정용---updateMeetingroom(Meetingroom)
 		int updateMeetingroom(Meetingroom m);
