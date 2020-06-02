@@ -267,7 +267,7 @@
                         <td rowspan="3" id="mypageProfileArea">
                             <table id="mypageProfileTable">
                                 <tr>
-                                    <td><img id="mypageProfileImg" src="../../resources/siteImg/profile_logo.png" width="150" height="150"></td>
+                                    <td><img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImg/profile_logo.png" width="150" height="150"></td>
                                 </tr>
                                 <tr>
                                     <td ><button class="smallBtn">편집</button></td>

@@ -347,42 +347,18 @@
 		        <div class="empList_area" style="overflow-y:scroll;">
 		            <ul class="empList">
 		                <a href="#"><li><span>앨리스</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a href="#"><li><span>리차드</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
+		                <!-- <a href="#"><li><span>리차드</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
 		                <a href="#"><li><span>케빈</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
 		                <a href="#"><li><span>김카카오</span> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></li></a>
 		                <a href="#"><li><span>최삼성</span> <span class="rank_code">(기술팀 /</span> <span class="job_code">팀원)</span></li></a>
-		                <a href="#"><li><span>박다음</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">대리)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
+		                <a href="#"><li><span>박다음</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">대리)</span></li></a> -->
 		                
 		            </ul>
 		        </div>
 		        <div class="profile_area" style="overflow: auto;">
 		            <div class="profile_up">
 		                <div class="profile_img">
-		                    <img id="mypageProfileImg" src="../../resources/siteImg/profile_logo.png" width="140" height="140">
+		                    <img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">
 		                </div>
 		                <div class="profile_name">
 		                    <div class="dept_name">앨리스</div>
