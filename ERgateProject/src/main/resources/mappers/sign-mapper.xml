@@ -6,7 +6,7 @@
 		SELECT COUNT(*)
 		  FROM SIGN_DOCUMENT
         WHERE SIGN_STATUS != 0 AND
-              TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') <= DRAFT_DATE AND
-              LAST_DAY(SYSDATE) >= DRAFT_DATE
+              TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') &gt;= DRAFT_DATE AND
+              LAST_DAY(SYSDATE) &lt;= DRAFT_DATE
 	</select>
 </mapper>
