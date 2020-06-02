@@ -73,14 +73,11 @@ public class MeetingroomController {
 	@RequestMapping("mtroomDetail.me")
 	public String selectMtroomDetail(String mtrmCode, Meetingroom m, Model model) {
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		
-		ArrayList<Meetingroom> list = mrService.selectMtroomDetail(pi);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
 		
-		return "meetingroom/meetingroomReservationList";
+		
+		return "meetingroom/meetingroomCurrentStatus";
 		
 		
 	

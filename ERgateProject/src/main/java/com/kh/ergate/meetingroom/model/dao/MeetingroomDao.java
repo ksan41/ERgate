@@ -28,7 +28,7 @@ public class MeetingroomDao {
 	
 	public Meetingroom selectMtroomDetail(SqlSessionTemplate sqlSession, String mtrmCode, Meetingroom m) {
 		
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMtroomDetail", mtrmCode, m);
+		return sqlSession.selectList("meetingroomMapper.selectMtroomDetail", mtrmCode, m);
 	}
 	
 

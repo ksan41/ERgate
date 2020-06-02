@@ -8,6 +8,7 @@
 		<result column="MTRM_LOCATION" property="mtrmLocation"/>
 		<result column="MTRM_CAPACITY" property="mtrmCapacity"/>
 		<result column="MTRM_IMAGE" property="mtrmImage"/>
+		<result column="MTRM_STATUS" property="mtrmStatus"/>
 	</resultMap>
 	
 	<resultMap type="MeetingroomReservation" id="MeetingroomReservationResultSet">
@@ -22,6 +23,7 @@
 		<result column="MTRM_END_DATE" property="mtrmEndDate"/>
 		<result column="MTRM_END_TIME" property="mtrmEndTime"/>
 		<result column="MTRM_PURPOSE" property="mtrmPurpose"/>
+		<result column="MTRM_RESERV_STATUS" property="mtrmReservStatus"/>
 	</resultMap>
 
 	<select id="StatusListCount" resultType="_int">
@@ -37,7 +39,11 @@
 		 order by mtrm_reserv_no desc
 	</select>
 
-
+	<select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
+		select *
+		  from Meetingroom
+		 where mtrmStatus = 'Y'
+	</select>
 
 
 

@@ -462,43 +462,10 @@
 				</table>
 			</div>
 			
-			<!-- 페이징바 -->
 
 
-			<!-- 페이징바 -->
-			  <div id="pagingArea">
-                <ul class="pagination">
-                
-                   <c:choose>
-                      <c:when test="${ pi.currentPage eq 1 }">
-                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                       </c:when>
-                       <c:otherwise>
-                          <li class="page-item "><a class="page-link" href="mtroomDetail.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
-                  </c:otherwise>                   
-                   </c:choose>
-                    
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                       <c:choose>
-                          <c:when test="${ p eq pi.currentPage }">
-                             <li class="page-item disabled"><a class="page-link" href="#">${ p }</a></li>
-                          </c:when>
-                          <c:otherwise>
-                             <li class="page-item"><a class="page-link" href="mtroomDetail.me?currentPage=${ p }">${ p }</a></li>
-                     </c:otherwise>                       
-                       </c:choose>
-                    </c:forEach>
-                
-                    <c:choose>
-                       <c:when test="${ pi.currentPage eq pi.maxPage }">
-                          <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                       </c:when>
-                       <c:otherwise>
-                          <li class="page-item"><a class="page-link" href="mtroomDetail.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
-                  </c:otherwise>
-               </c:choose>                
-                </ul>
-            </div>
+			<!-- 페이징바 안함 그냥 늘어나면 스크롤 늘어나는 형식으로 하기 -->
+			 
 			<!-- 페이징바 -->
 			
 		</div>
@@ -611,15 +578,7 @@
 				$("#open_edit").click();
 			};
 			
-			
-		/* 회의실 정보 리스트 관련 스크립트*/
-					<script>
-				$(function(){
-					$("#mtrmManageOuter tr").click(function(){
-						location.href = "mtroomDetail.me?mno" + $(this).children().eq(0).text();
-					});
-				});
-		
+
 			
 		</script>
 
