@@ -395,24 +395,15 @@
 			var bno = $(this).children().eq(0).text();
 			console.log();
 			if($.trim(bno).length > 0){
-				location.href="detail.bo?bno=" + bno;
+				location.href="detail.bo?bno=" + bno + "&currentPage=" + ${pi.currentPage};
 			}
 		});
 	});
 	
-	/* var hover1 = $('.boardTable>tbody>tr');
-	hover1.hover(function(){
-	  if($.trim($(this).children().eq(0).text()).length > 0){
-	  	hover1.css('cursor','pointer');
-	  	$(".boardTable tr:hover td").css('background-color', 'rgb(224, 224, 224)');
-	  }
-	},
-	function(){
-	  hover1.css('cursor','default');
-	  $(".boardTable tr:hover td").css('background-color', 'rgba(224, 224, 224, 0.12)');
-	}); */
 	
 	$('.disabled').click(function () {return false;});
+	
+	
 	</script>
 </body>
 </html>

@@ -222,6 +222,19 @@
 	padding-left:50px;
 }
 
+/* 파일테이블 */
+.fileTable {
+	text-align:center;
+}
+.fileTable tr:nth-child(1) td:nth-child(1) b {
+	margin-left:1px;
+}
+.fileTable tr:nth-child(1) td:nth-child(2) img {
+	margin-left:-10px;
+	margin-top:8px;
+}
+
+
 </style>
 </head>
 <body>
@@ -251,9 +264,16 @@
 					<br> <br>
 					<div id="boardContent">${b.boardContent }</div>
 					<c:if test="${b.boardFileFlag eq 'Y' }">
-						<b style="position: absolute; bottom: 0px; margin-bottom: 20px;">
-							첨부파일 : <a href="#">첨부파일.jpg</a>
-						</b>
+					<table class="fileTable">
+						<tr>
+							<td width="65">
+								<b>첨부파일</b>
+							</td>
+							<td>
+								<img src="${pageContext.servletContext.contextPath }/resources/icons/save_alt.png" style="transform:translate(0,-2px) scale(0.5);">
+							</td>
+						</tr>
+					</table>
 					</c:if>					
 					
 			</div>
@@ -442,7 +462,7 @@
 	$(document).ready(function() { 
 		$(".listBtn").click(function(){
 			var pno=0; // 페이지 번호가 들어갈꺼임 (나중에 돌아올때 현재 페이지로 오기 위해서)
-			location.href="list.bo?pno=" + pno;
+			location.href="list.bo?currentPage=" + ${currentPage};
 		});
 		
 		$(".updateBtn").click(function(){

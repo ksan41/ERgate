@@ -71,13 +71,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping("detail.bo") public ModelAndView selectBoard(int bno,
-	ModelAndView mv) {
+	ModelAndView mv, int currentPage) {
 	
 		int result = bodService.increaseCount(bno);
 	
 		if(result > 0) {
 			Board b = bodService.selectBoard(bno); 
 			mv.addObject("b", b);
+			mv.addObject("currentPage", currentPage);
 			mv.setViewName("board/boardDetail");
 		}else { // 게시글 상세조회 실패
 			mv.addObject("msg", "게시글 상세조회 실패!"); 
