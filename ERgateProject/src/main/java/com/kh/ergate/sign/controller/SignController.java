@@ -24,8 +24,9 @@ public class SignController {
 	  // 결재대기리스트
 	  
 	  @RequestMapping("waitingList.si") public String
-	  selectWaitingList(SignDocument sd, Model model) { return
-	  "sign/signWaitingList"; }
+	  selectWaitingList(SignDocument sd, Model model) { 
+		  return "sign/signWaitingList"; 
+	  }
 	  
 	  // 결재상세 요청용
 	  
@@ -69,7 +70,8 @@ public class SignController {
 	  
 	  ArrayList<SignDocument> list = siService.expenseList(pi);
 	  
-	  model.addAttribute("pi", pi); model.addAttribute("list", list);
+	  model.addAttribute("pi", pi); 
+	  model.addAttribute("list", list);
 	  
 	  return "sign/signExpenseList"; }
 	  

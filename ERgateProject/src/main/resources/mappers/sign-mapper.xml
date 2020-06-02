@@ -44,7 +44,7 @@
                SIGN_TYPE_NAME = '지출결의서' AND
                TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') <= DRAFT_DATE AND
               LAST_DAY(SYSDATE) >= DRAFT_DATE
-		 ORDER BY DRAFT_DATE DESC;
+		 ORDER BY DRAFT_DATE DESC
 	]]>	 
 	</select>
 </mapper>

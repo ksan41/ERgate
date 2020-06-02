@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -234,106 +235,30 @@
 						<th>기안일시</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>완료</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>이지영</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
+				<c:choose>
+					<c:when test="${ empty list }">
+						<tr>
+							<td colspan="8" rowspan="10">
+								조회된 결과가 없습니다.
+							</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${list}" var="l">
+							<tr>
+								<td>진행중</td>
+								<td>${l.signTypeNo }</td>
+								<td>${l.documentNo }</td>
+								<td>${l.deptTitle }</td>
+								<td>${l.empName }</td>
+								<td>결재자</td>
+								<td>${l.signTitle }</td>
+								<td>${l.draftDate }</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				
 			</table>
 			<br>
 			<!-- 페이징바 -->
