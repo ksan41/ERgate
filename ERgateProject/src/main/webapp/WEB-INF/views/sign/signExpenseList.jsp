@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,7 +108,7 @@
 	font-size: 15px;
 }
 
-.pagingBar li>span {
+/* .pagingBar li>span {
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
@@ -118,6 +118,21 @@
 	border: 1px solid rgb(26, 188, 156);
 }
 
+ */
+.pagingBar .pstyle>span {
+	color: rgb(26, 188, 156);
+	border: 1px solid rgb(26, 188, 156);
+}
+
+.pagingBar .pstyle a:hover {
+	color: rgb(26, 188, 156);
+	border: 1px solid rgb(26, 188, 156);
+}
+
+.pagingBar li .crt {
+	color: rgb(26, 188, 156);
+	border: 1px solid rgb(26, 188, 156);
+}
 /* 페이징바 스타일 */
 
 /* 게시판 스타일 */
@@ -189,10 +204,10 @@
 	cursor: pointer;
 }
 
-.pageNoClick{
+/* .pageNoClick{
 	pointer-events: none;
     cursor: default;
-}
+} */
 </style>
 </head>
 <body>
@@ -208,22 +223,27 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
-				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
-				<li><button class="subBtn" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
-				<li><button class="subBtn subActive" onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+				<li><button class="subBtn"
+						onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
+				<li><button class="subBtn"
+						onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
+				<li><button class="subBtn"
+						onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
+				<li><button class="subBtn subActive"
+						onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
 				<li><button class="subBtn">외근&휴가내역</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
 			<h2 style="display: inline-block; margin-left: 530px;">
-				<span class="material-icons"> arrow_left </span> 2020년 5월
+				<span id="arrowLeft" class="material-icons"> arrow_left </span> <b
+					id="calYear"></b>년 <b id="calMonth"></b>월
 				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
 				<path
 						d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
 				<path d="M0 0h24v24H0z" fill="none" /></svg>
-				<span class="material-icons"> arrow_right </span>
+				<span id="arrowRight" class="material-icons"> arrow_right </span>
 			</h2>
 			<br> <br>
 
@@ -243,9 +263,7 @@
 				<c:choose>
 					<c:when test="${ empty list }">
 						<tr>
-							<td colspan="8" rowspan="10">
-								조회된 결과가 없습니다.
-							</td>
+							<td colspan="8" rowspan="10">조회된 결과가 없습니다.</td>
 						</tr>
 					</c:when>
 					<c:otherwise>
@@ -263,49 +281,86 @@
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-				
+
 			</table>
 			<br>
 			<!-- 페이징바 -->
 			<c:if test="${!empty pi}">
 				<ul class="pagingBar">
-				
-				<c:choose>
-					<c:when test="${pi.currentPage eq 1 }">
-						<li><a href="#" class="pageNoClick">&lt;&lt;</a></li>
-						<li><a href="#" class="pageNoClick">&lt;</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="expenseList.si?currentPage=1">&lt;&lt;</a></li>
-						<li><a href="expenseList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
-					</c:otherwise>
-				</c:choose>
-				<c:forEach var="p" begin="${pi.startPage }" end="${endPage }">
+
 					<c:choose>
-						<c:when test="${pi.currentPage eq p }">
-							<li><a class="pageNoClick" href="expenseList.si?currentPage=${p}">${p}</a></li>
+						<c:when test="${pi.currentPage eq 1 }">
+							<li><a href="#" class="pageNoClick">&lt;&lt;</a></li>
+							<li><a href="#" class="pageNoClick">&lt;</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="expenseList.si?currentPage=${p}">${p}</a></li>
+							<li><a href="expenseList.si?currentPage=1">&lt;&lt;</a></li>
+							<li><a
+								href="expenseList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
 						</c:otherwise>
 					</c:choose>
-				</c:forEach>			
-					
-				<c:choose>
-					<c:when test="${pi.currentPage eq pi.maxPage }">
-						<li><a href="#" class="pageNoClick">&gt;</a></li>
-						<li><a href="#" class="pageNoClick">&gt;&gt;</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="expenseList.si?currentPage=${pi.currentPage + 1 }">&gt;</a></li>
-						<li><a href="expenseList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
-					</c:otherwise>
-				</c:choose>	
+					<c:forEach var="p" begin="${pi.startPage }" end="${endPage }">
+						<c:choose>
+							<c:when test="${pi.currentPage eq p }">
+								<li><a class="pageNoClick" href="#">${p}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="expenseList.si?currentPage=${p}">${p}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+					<c:choose>
+						<c:when test="${pi.currentPage eq pi.maxPage }">
+							<li><a href="#" class="pageNoClick">&gt;</a></li>
+							<li><a href="#" class="pageNoClick">&gt;&gt;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a
+								href="expenseList.si?currentPage=${pi.currentPage + 1 }">&gt;</a></li>
+							<li><a href="expenseList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 				<!-- 페이징바 -->
 			</c:if>
-			
+
 		</div>
 	</div>
+
+	<script>
+		$(document).ready(function() {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+
+			$("#calYear").text(year);
+			$("#calMonth").text(month);
+
+			$("#arrowLeft").click(function() {
+				console.log("클릭");
+				month = month - 1;
+				if (month == 1) {
+					month = 12;
+					year = year - 1;
+				}
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+
+			});
+
+			$("#arrowRight").click(function() {
+				console.log("클릭");
+				month = month + 1;
+				if (month > 12) {
+					month = 1;
+					year = year + 1;
+				}
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+			});
+
+		});
+	</script>
 </body>
 </html>
