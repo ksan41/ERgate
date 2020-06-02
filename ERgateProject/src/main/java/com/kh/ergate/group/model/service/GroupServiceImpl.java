@@ -1,5 +1,7 @@
 package com.kh.ergate.group.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,13 @@ public class GroupServiceImpl implements GroupService {
 
 	
 	@Override
-	public void selectGroupList() {
+	public ArrayList<Employee> selectEmpList() {
+		return grDao.selectEmpList(sqlSession);
+	}
 
+	@Override
+	public Employee selectEmpProfile(String empId) {
+		return grDao.selectEmpProfile(sqlSession, empId);
 	}
 
 //	@Override

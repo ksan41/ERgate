@@ -415,5 +415,45 @@
 		    </div> <!-- groupMap_outer -->
 		</div> <!-- contentArea -->
 	</div> <!-- outer -->
+	
+	
+	
+	<!-- empList - 사원리스트 조회 -->
+	<script>
+	$(function(){
+		selectNoList();
+	});
+	
+	function selectNoList(){		
+			
+		$.ajax({
+			url: "empList.gr",
+			type: "post",
+			
+			success: function(list){
+				// console.log(list);
+				var value = "";
+				
+				if(list.length == 0){ // 리스트가 비어있을 경우
+	            	value = "<li>조회된 사원이 없습니다.</li>";
+				}else{ // 리스트가 비어있지 않을 경우
+	            
+					for(var i in list){
+						
+						var empName = list[i].empName;
+						var empRank = list[i].rankTitle;
+						var empJob = list[i].jobTitle;
+						
+						value += '<li>' + empName +empRank + empJob +'</li>';
+					}
+					$(".empList_area").html(value);
+				}
+			},
+			error:function(){
+				console.log("조직도 사원 리스트조회용 통신 실패");
+			}
+		});
+	}
+    </script>
 </body>
 </html>

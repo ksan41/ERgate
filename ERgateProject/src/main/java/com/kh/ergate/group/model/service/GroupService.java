@@ -1,11 +1,16 @@
 package com.kh.ergate.group.model.service;
 
+import java.util.ArrayList;
+
 import com.kh.ergate.main.model.vo.Employee;
 
 public interface GroupService {
 	
-	// 조직도리스트 요청용 
-	void selectGroupList();
+	// 조직도 리스트 요청용 (가운데 부분) 
+	ArrayList<Employee> selectEmpList();
+	
+	// 조직도 리스트 사원 프로필 요청용
+	Employee selectEmpProfile(String empId);
 	
 //	// 사원 검색 요청용
 //	Employee searchGroupList(String condition,String keyword);

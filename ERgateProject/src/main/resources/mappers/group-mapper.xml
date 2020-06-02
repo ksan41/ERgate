@@ -1,4 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="groupMapper">
+
+	<resultMap id="employeeResultSet" type="Employee">
+		<id column="EMP_ID" property="empId"/>
+		<result column="RANK_CODE" property="rankCode"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="JOB_CODE" property="jobCode"/>
+		<result column="EMP_CODE" property="empCode"/>
+		<result column="EMP_PWD" property="empPwd"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="HIRE_DATE" property="hireDate"/>
+		<result column="EMP_EXTENSION" property="empExtension"/>
+		<result column="EMP_FAX" property="empFax"/>
+		<result column="EMP_COM_EMAIL" property="empComEmail"/>
+		<result column="EMP_PRI_EMAIL" property="empPriEmail"/>
+		<result column="EMP_PHONE" property="empPhone"/>
+		<result column="EMP_ADDRESS" property="empAddress"/>
+		<result column="EMP_IMAGE" property="empImage"/>
+		<result column="EMP_BIRTHDAY" property="empBirthday"/>
+		<result column="RESIGN_FLAG" property="resignFlag"/>
+		<result column="RESIGN_DATE" property="resignDate"/>
+		<result column="EMP_STATUS" property="empStatus"/>
+		<result column="RANK_TITLE" property="rankTitle"/>
+		<result column="DEPT_TITLE" property="deptTitle"/>
+		<result column="JOB_TITLE" property="jobTitle"/>
+	</resultMap>
+	
+	<select id="selectEmpList" resultMap="employeeResultSet">
+		select emp_name, rank_title, job_title, emp_id
+		  from employee e	
+		  join rank r on e.rank_code=r.rank_code
+		  join job j on e.job_code=j.job_code
+		 where resign_flag='N'
+	</select>
+	
+	<select id="selectEmpProfile" parameterType="string" resultMap="employeeResultSet">
+		select emp_code, hire_date, emp_id, emp_birthday, emp_phone, emp_extension, emp_fax, dept_title, rank_title, job_title, emp_adress
+		  from employee e
+		  join rank r on e.rank_code=r.rank_code
+		  join job j on e.job_code=j.job_code
+		  join department d on e.dept_code=d.dept_code
+		 where emp_id=#{empId} and resign_flag='N'
+		
+	</select>
 </mapper>
