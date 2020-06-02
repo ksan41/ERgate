@@ -235,15 +235,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${ list }" var="m">
+					<c:forEach var="mr" items="${ list }">
 					<tr>
-						<td>${ m.mtrmDeptTitle }</td>
-						<td>${ m.empId }</td>
-						<td>${ m.mtrmName }</td>
-						<td>${ m.mtrmPurpose }</td>
-						<td>${ m.mtrmStartDate }${ m.mtrmStartTime } ~ ${ m.mtrmEndDate }${ m.mtrmEndTime }</td>
-						</c:forEach>
+						<td>${ mr.mtrmDeptTitle }</td>
+						<td>${ mr.empId }</td>
+						<td>${ mr.mtrmName }</td>
+						<td>${ mr.mtrmPurpose }</td>
+						<td>${ mr.mtrmStartDate }${ mr.mtrmStartTime } ~ ${ mr.mtrmEndDate }${ mr.mtrmEndTime }</td>
 					</tr>
+					</c:forEach>
+					
 				</tbody>
 
 			</table>
@@ -259,7 +260,7 @@
                           <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                        </c:when>
                        <c:otherwise>
-                          <li class="page-item "><a class="page-link" href="mtroomList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                          <li class="page-item "><a class="page-link" href="statusList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
                   </c:otherwise>                   
                    </c:choose>
                     
@@ -269,7 +270,7 @@
                              <li class="page-item disabled"><a class="page-link" href="#">${ p }</a></li>
                           </c:when>
                           <c:otherwise>
-                             <li class="page-item"><a class="page-link" href="mtroomList.me?currentPage=${ p }">${ p }</a></li>
+                             <li class="page-item"><a class="page-link" href="statusList.me?currentPage=${ p }">${ p }</a></li>
                      </c:otherwise>                       
                        </c:choose>
                     </c:forEach>
@@ -279,7 +280,7 @@
                           <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                        </c:when>
                        <c:otherwise>
-                          <li class="page-item"><a class="page-link" href="mtroomList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                          <li class="page-item"><a class="page-link" href="statusList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
                   </c:otherwise>
                </c:choose>                
                 </ul>
@@ -315,12 +316,12 @@
 			});
 			
 			
-			/* 페이징 처리 스크립트(회의실 리스트)*/
+		/* 	 페이징 처리 스크립트(회의실 리스트)
 			$(function(){
 				$("#reservationList tbody tr").click(function(){
-					location.href = "mtroomList.me?mno" + $(this).children().eq(0).text();
+					location.href = "statusList.me?mno" + $(this).children().eq(0).text();
 				});
-			});
+			}); */
 		</script>
 
 	</div>

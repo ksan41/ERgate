@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 @Repository("mrDao")
 public class MeetingroomDao {
@@ -16,7 +17,7 @@ public class MeetingroomDao {
 		return sqlSession.selectOne("meetingroomMapper.statusListCount");
 	}
 	
-	public ArrayList<Meetingroom> statusList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<MeetingroomReservation> statusList(SqlSessionTemplate sqlSession, PageInfo pi){
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		
@@ -26,9 +27,9 @@ public class MeetingroomDao {
 		
 	}
 	
-	public ArrayList<Meetingroom> selectMtroomDetail(SqlSessionTemplate sqlSession, String mtrmCode, Meetingroom m) {
+	public ArrayList<Meetingroom> selectMtroomDetail(SqlSessionTemplate sqlSession) {
 		
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMtroomDetail", mtrmCode, m);
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMtroomDetail");
 	}
 	
 

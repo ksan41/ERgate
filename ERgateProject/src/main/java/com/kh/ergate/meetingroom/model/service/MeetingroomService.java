@@ -42,7 +42,7 @@ public interface MeetingroomService {
 		int statusListCount();
 		
 	 //회의실 예약현황 리스트 조회용--- statusList(Meetingroom)
-		ArrayList<MeetingroomReservation> statusList(Meetingroom m, PageInfo pi);
+		ArrayList<MeetingroomReservation> statusList(MeetingroomReservation mr, PageInfo pi);
 		
 		
 		
@@ -53,7 +53,7 @@ public interface MeetingroomService {
 		int insertMeetingroom(Meetingroom m);
 		
 	 //회의실 정보 상세조회용---selectMtroomDetail(String mtrmCode,Meetingroom)
-		ArrayList<Meetingroom> selectMtroomDetail(String mtrmCode, Meetingroom m);
+		ArrayList<Meetingroom> selectMtroomDetail();
 		
 	 //회의실 수정용---updateMeetingroom(Meetingroom)
 		int updateMeetingroom(Meetingroom m);

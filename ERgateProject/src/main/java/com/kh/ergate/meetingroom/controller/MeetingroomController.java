@@ -30,19 +30,19 @@ public class MeetingroomController {
 	// 회의실예약현황리스트조회용(statusList.me) --- statusList(Meetingroom,Model)
 
 	@RequestMapping("statusList.me")
-	public String statusList(int currentPage, Meetingroom m, Model model) {
+	public String statusList(int currentPage, MeetingroomReservation mr, Model model) {
 		
 		
 		  int listCount = mrService.statusListCount();
 		  
 		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		  
-		  ArrayList<MeetingroomReservation> list = mrService.statusList(pi);
+		  ArrayList<MeetingroomReservation> list = mrService.statusList(mr, pi);
 		  
 		  model.addAttribute("pi", pi); 
 		  model.addAttribute("list", list);
 		 
-		
+		  System.out.println(list);
 		
 		return "meetingroom/meetingroomReservationList";
 	}
@@ -74,11 +74,13 @@ public class MeetingroomController {
 	
 	// 회의실정보상세조회용(mtroomDetail.me) ---selectMtroomDetail(String mtrmCode,Meetingroom,Model)
 	@RequestMapping("mtroomDetail.me")
-	public String selectMtroomDetail(String mtrmCode, Meetingroom m, Model model) {
+	public String selectMtroomDetail(Meetingroom m, Model model) {
 		
 		ArrayList<Meetingroom> list = mrService.selectMtroomDetail();
 		
-		return "meetingroom/meetingroomCurrentStatus";
+		model.addAttribute("list", list);
+		
+		return "meetingroom/meetingroomManagement";
 		
 		
 	

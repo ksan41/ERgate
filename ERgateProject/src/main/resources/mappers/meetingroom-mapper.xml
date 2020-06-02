@@ -26,7 +26,7 @@
 		<result column="MTRM_RESERV_STATUS" property="mtrmReservStatus"/>
 	</resultMap>
 
-	<select id="StatusListCount" resultType="_int">
+	<select id="statusListCount" resultType="_int">
 		select count(*)
 		  from meetingroom_reservation
 		 where mtrm_reserv_status='Y'
@@ -36,14 +36,13 @@
 		select *
 		  from meetingroom_reservation
 		 where mtrm_reserv_status='Y'
-		 order by mtrm_reserv_no desc
 	</select>
 
-	<select id="selectMtroomDetail" parameterType="_int" resultMap="MeetingroomResultSet">
+	<!-- <select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
 		select *
-		  from Meetingroom
-		 where mtrmStatus = 'Y'
-	</select>
+		  from meetingroom
+		 where mtrm_Status = 'Y'
+	</select> -->
 
 
 
