@@ -73,7 +73,7 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 
 	// 회의실예약현황리스트조회용
 	@Override
-	public ArrayList<MeetingroomReservation> statusList(MeetingroomReservation mr, PageInfo pi) {
+	public ArrayList<MeetingroomReservation> statusList(PageInfo pi) {
 		return mrDao.statusList(sqlSession, pi);
 	}
 	

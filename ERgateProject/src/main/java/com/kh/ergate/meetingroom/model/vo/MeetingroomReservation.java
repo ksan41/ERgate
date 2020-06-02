@@ -27,7 +27,7 @@ public class MeetingroomReservation {
 	private String mtrmEndDate;			// 사용 종료일
 	private String mtrmEndTime;			// 사용종료시간
 	private String mtrmPurpose;			// 사용목적
-	private String mtrmReservStatus;
+	private String mtrmReservStatus;	// 회의실예약노출여부
 	
 	
 }

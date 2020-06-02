@@ -42,7 +42,7 @@ public interface MeetingroomService {
 		int statusListCount();
 		
 	 //회의실 예약현황 리스트 조회용--- statusList(Meetingroom)
-		ArrayList<MeetingroomReservation> statusList(MeetingroomReservation mr, PageInfo pi);
+		ArrayList<MeetingroomReservation> statusList(PageInfo pi);
 		
 		
 		
