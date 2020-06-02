@@ -229,11 +229,14 @@
 .fileTable tr:nth-child(1) td:nth-child(1) b {
 	margin-left:1px;
 }
+.fileTable tr:nth-child(1) td:nth-child(2) {
+	width:25px;
+}
 .fileTable tr:nth-child(1) td:nth-child(2) img {
 	margin-left:-10px;
 	margin-top:8px;
 }
-
+/* 파일 첨부 관련 */
 
 </style>
 </head>
@@ -270,11 +273,54 @@
 								<b>첨부파일</b>
 							</td>
 							<td>
-								<img src="${pageContext.servletContext.contextPath }/resources/icons/save_alt.png" style="transform:translate(0,-2px) scale(0.5);">
+								<img class="fileShow"src="${pageContext.servletContext.contextPath }/resources/icons/save_alt.png" style="transform:translate(0,-2px) scale(0.5);" class="bigBtn fileShow">
+							</td>
+							<td colspan="6">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="8">
+										<div class="fileWrap" style="display:none;">
+								        <div id="dropZone" style="width: 1140px; height: 100px; border: 1px solid lightgray;">
+								            <table id="fileListTable" width="100%" border="0px">
+								                <tbody id="fileTableTbody">
+								                </tbody>
+								            </table>
+								        </div>
 							</td>
 						</tr>
 					</table>
-					</c:if>					
+					</c:if>
+					
+			<script>
+			$(document).ready(function() {
+				$(".fileShow").click(function() {
+					if($(".fileWrap").is(":visible")){
+						$(".fileWrap").slideUp(100);
+					}else {
+						$(".fileWrap").slideDown(100);
+					}
+					$.ajax({
+						url:"detailFile.bo",
+						data:{refBoardNo:${b.boardNo}},
+						success:function(list){
+							var value = "";
+							for(var i in list){
+								value += "<tr>" +
+											"<td>" + "<a href='"+"${pageContext.servletContext.contextPath }/resources/uploadFiles/board/"+list[i].changeName+"' download>"+ list[i].originName +"</a>" +"</td>" +
+										 "<tr>";
+							}
+							$("#fileListTable tbody").html(value);
+						},error:function(){
+							console.log("ajax 통신 실패");
+							
+						}
+					});
+
+					
+				});
+			});
+			</script>					
 					
 			</div>
 			<br>

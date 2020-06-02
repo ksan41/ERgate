@@ -13,11 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.ergate.board.model.service.BoardService;
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
@@ -70,8 +73,8 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	@RequestMapping("detail.bo") public ModelAndView selectBoard(int bno,
-	ModelAndView mv, int currentPage) {
+	@RequestMapping("detail.bo") 
+	public ModelAndView selectBoard(int bno, ModelAndView mv, int currentPage) {
 	
 		int result = bodService.increaseCount(bno);
 	
@@ -86,6 +89,19 @@ public class BoardController {
 		}
 		return mv;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="detailFile.bo", produces="application/json; charset=utf-8")
+	public String fileList(int refBoardNo) {
+		
+		ArrayList<BoardAttachment> list = new ArrayList<>();
+		list.add(new BoardAttachment(1, "saysay.jpg", "20200505192345.jpg", "B", 30, "C:/ERgate/ERgateProject/src/main/webapp/resources/uploadFiles/board"));
+		
+		
+		
+		return new Gson().toJson(list);
+	}
+	
 
 	/*
 	 * @RequestMapping("enrollForm.bo") public String enrollForm() { return

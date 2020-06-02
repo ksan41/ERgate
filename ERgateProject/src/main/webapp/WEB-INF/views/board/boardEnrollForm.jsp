@@ -230,13 +230,13 @@
 										<input type="file" id="input_file" multiple="multiple" style="height: 100%;" />
 										<button class="upload-btn fileShow">파일선택</button>
 									</div>
-							            <div id="dropZone" style="width: 1140px; height: 100px; border: 1px solid lightgray;">
-							                <div id="fileDragDesc"> ※파일을 드래그 해주세요. </div>
-							                <table id="fileListTable" width="100%" border="0px">
-							                    <tbody id="fileTableTbody">
-							                    </tbody>
-							                </table>
-							            </div>
+							        <div id="dropZone" style="width: 1140px; height: 100px; border: 1px solid lightgray;">
+							            <div id="fileDragDesc"> ※파일을 드래그 해주세요. </div>
+							            <table id="fileListTable" width="100%" border="0px">
+							                <tbody id="fileTableTbody">
+							                </tbody>
+							            </table>
+							        </div>
 						</td>
 					</tr>
 					<tr>
