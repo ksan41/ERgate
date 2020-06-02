@@ -3,10 +3,16 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="signMapper">
 	<select id="selectElistCount" resultType="_int">
+	<![CDATA[
 		SELECT COUNT(*)
 		  FROM SIGN_DOCUMENT
         WHERE SIGN_STATUS != 0 AND
-              TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') &gt;= DRAFT_DATE AND
-              LAST_DAY(SYSDATE) &lt;= DRAFT_DATE
+              TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') <= DRAFT_DATE AND
+              LAST_DAY(SYSDATE) >= DRAFT_DATE	
+	]]>
+	</select>
+	
+	<select id="selectExpenseList" resultMap="">
+		
 	</select>
 </mapper>
