@@ -188,6 +188,11 @@
 .material-icons:hover {
 	cursor: pointer;
 }
+
+.pageNoClick{
+	pointer-events: none;
+    cursor: default;
+}
 </style>
 </head>
 <body>
@@ -262,23 +267,44 @@
 			</table>
 			<br>
 			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
-			</ul>
-			<!-- 페이징바 -->
+			<c:if test="${!empty pi}">
+				<ul class="pagingBar">
+				
+				<c:choose>
+					<c:when test="${pi.currentPage eq 1 }">
+						<li><a href="#" class="pageNoClick">&lt;&lt;</a></li>
+						<li><a href="#" class="pageNoClick">&lt;</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="expenseList.si?currentPage=1">&lt;&lt;</a></li>
+						<li><a href="expenseList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach var="p" begin="${pi.startPage }" end="${endPage }">
+					<c:choose>
+						<c:when test="${pi.currentPage eq p }">
+							<li><a class="pageNoClick" href="expenseList.si?currentPage=${p}">${p}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="expenseList.si?currentPage=${p}">${p}</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>			
+					
+				<c:choose>
+					<c:when test="${pi.currentPage eq pi.maxPage }">
+						<li><a href="#" class="pageNoClick">&gt;</a></li>
+						<li><a href="#" class="pageNoClick">&gt;&gt;</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="expenseList.si?currentPage=${pi.currentPage + 1 }">&gt;</a></li>
+						<li><a href="expenseList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
+					</c:otherwise>
+				</c:choose>	
+				</ul>
+				<!-- 페이징바 -->
+			</c:if>
+			
 		</div>
 	</div>
 </body>
