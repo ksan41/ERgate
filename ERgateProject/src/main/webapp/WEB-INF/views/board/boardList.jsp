@@ -108,11 +108,13 @@
 	height: 35px;
 }
 
-.boardTable tr:hover td {
-	background-color: rgb(224, 224, 224);
-	cursor: pointer;
+.boardTable tr:hover .haveContent {
+	background-color : rgb(224, 224, 224);
+	cursor : pointer;
 }
-
+.boardTable tr:hover .nonContent {
+	cursor : default;
+}
 /* 게시판 스타일 */
 
 /* 큰버튼 스타일 */
@@ -271,22 +273,22 @@
 					<c:when test="${fn:length(list) eq 10}">
 						<c:forEach items="${ list }" var="b">
 						<tr>
-							<td>${b.boardNo }</td>
-							<td>${b.boardTitle }</td>
-							<td>${b.boardWriter }</td>
-							<td>${b.boardEnrollDate }</td>
-							<td>${b.boardCount }</td>
+							<td class="haveContent">${b.boardNo }</td>
+							<td class="haveContent">${b.boardTitle }</td>
+							<td class="haveContent">${b.boardWriter }</td>
+							<td class="haveContent">${b.boardEnrollDate }</td>
+							<td class="haveContent">${b.boardCount }</td>
 						</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${ list }" var="b">
 						<tr>
-							<td>${b.boardNo }</td>
-							<td>${b.boardTitle }</td>
-							<td>${b.boardWriter }</td>
-							<td>${b.boardEnrollDate }</td>
-							<td>${b.boardCount }</td>
+							<td class="haveContent">${b.boardNo }</td>
+							<td class="haveContent">${b.boardTitle }</td>
+							<td class="haveContent">${b.boardWriter }</td>
+							<td class="haveContent">${b.boardEnrollDate }</td>
+							<td class="haveContent">${b.boardCount }</td>
 						</tr>
 						</c:forEach>
 						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
@@ -391,10 +393,24 @@
 	$(function(){
 		$(".boardTable>tbody>tr").click(function(){
 			var bno = $(this).children().eq(0).text();
-				
-			location.href="detail.bo?bno=" + bno;
+			console.log();
+			if($.trim(bno).length > 0){
+				location.href="detail.bo?bno=" + bno;
+			}
 		});
 	});
+	
+	/* var hover1 = $('.boardTable>tbody>tr');
+	hover1.hover(function(){
+	  if($.trim($(this).children().eq(0).text()).length > 0){
+	  	hover1.css('cursor','pointer');
+	  	$(".boardTable tr:hover td").css('background-color', 'rgb(224, 224, 224)');
+	  }
+	},
+	function(){
+	  hover1.css('cursor','default');
+	  $(".boardTable tr:hover td").css('background-color', 'rgba(224, 224, 224, 0.12)');
+	}); */
 	
 	$('.disabled').click(function () {return false;});
 	</script>

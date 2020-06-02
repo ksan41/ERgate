@@ -58,7 +58,17 @@
 			</if>
 		 order by board_no desc
 	</select>
-	
+	<update id="increaseCount" parameterType="_int">
+    	update board
+    	   set board_count = board_count + 1
+    	 where board_no = #{bno} and board_status = 'Y'  
+    </update>
+    
+    <select id="selectBoard" parameterType="_int" resultMap="boardResultSet">
+    	select *
+    	  from board
+    	 where board_no=#{bno}
+    </select>
 </mapper>
 
 

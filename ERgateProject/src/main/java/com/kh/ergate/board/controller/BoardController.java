@@ -66,7 +66,7 @@ public class BoardController {
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", slist);
-		model.addAttribute("sc", 1);
+		model.addAttribute("sc", 1);	// 검색된 값인지 일반 게시글 리스트인지 구별하기 위한 값 반환 (sc가 1이면 검색결과, sc라는 키값이 없으면 일반 글목록)
 		return "board/boardList";
 	}
 	
@@ -76,10 +76,12 @@ public class BoardController {
 		int result = bodService.increaseCount(bno);
 	
 		if(result > 0) {
-			Board b = bodService.selectBoard(bno); mv.addObject("b", b);
-			mv.setViewName("board/boardDetailView");
+			Board b = bodService.selectBoard(bno); 
+			mv.addObject("b", b);
+			mv.setViewName("board/boardDetail");
 		}else { // 게시글 상세조회 실패
-			mv.addObject("msg", "게시글 상세조회 실패!"); mv.setViewName("common/errorPage");
+			mv.addObject("msg", "게시글 상세조회 실패!"); 
+			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}

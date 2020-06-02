@@ -46,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	@Override
 	public Board selectBoard(int bno) {
-		return bodDao.selectboard(sqlSession, bno);
+		return bodDao.selectBoard(sqlSession, bno);
 	}
 	
 	

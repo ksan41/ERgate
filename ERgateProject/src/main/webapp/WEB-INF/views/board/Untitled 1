@@ -15,7 +15,7 @@ com.kh.ergate
 
 *controller
  ---게시판 리스트조회용(list.bo)---selectBoardList(int currentPage,Model model)
- --- 게시판 검색용(search.bo) --- searchBoardList(String condition,String keyword,Model model)
+ ---게시판 검색용(search.bo) --- searchBoardList(String condition,String keyword,Model model)
  게시판 상세조회용(detail.bo)---selectBoard(int bno,Model model)
  게시판 작성폼(enrollForm.bo)---enrollForm()
  게시판 등록용(insert.bo)--- insertBoard(Board,HttpServletRequest,Model,HttpSession,MultipartFile)
@@ -33,8 +33,8 @@ com.kh.ergate
  파일 삭제용 ---deleteFile(String,HttpServletRequest)
 
 *service
- --- 게시판 리스트조회용---selectBoardList(int currentPage)
-  ---게시판 검색용 --- searchBoardList(String condition,String keyword)
+ ---게시판 리스트조회용---selectBoardList(int currentPage)
+ ---게시판 검색용 --- searchBoardList(String condition,String keyword)
   게시판 상세조회용---selectBoard(int bno)
   게시판 등록용--- insertBoard(Board)
   게시판수정용---updateBoard(Board)

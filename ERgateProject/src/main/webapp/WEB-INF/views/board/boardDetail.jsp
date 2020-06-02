@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <!-- 사내 게시판 상세페이지 -->
@@ -241,16 +243,19 @@
 		<div class="contentArea">
 			<h4 style="margin-left: 1230px;">사내게시판 상세</h4>
 			<div id="boardDetail">
-				<h3>사내게시판 제목</h3>
+				<h3>${b.boardTitle }</h3>
 				<h4>
-					No.195 | 케빈 | 2020/05/01 | 70
-					</h3>
+					${b.boardNo } | ${b.boardWriter } | ${b.boardEnrollDate } | ${b.boardCount }
+					</h4>
 					<hr>
 					<br> <br>
-					<div id="boardContent">사내게시판 내용</div>
-					<b style="position: absolute; bottom: 0px; margin-bottom: 20px;">
-						첨부파일 : <a href="#">첨부파일.jpg</a>
-					</b>
+					<div id="boardContent">${b.boardContent }</div>
+					<c:if test="${b.boardFileFlag eq 'Y' }">
+						<b style="position: absolute; bottom: 0px; margin-bottom: 20px;">
+							첨부파일 : <a href="#">첨부파일.jpg</a>
+						</b>
+					</c:if>					
+					
 			</div>
 			<br>
 			<div id="btnArea">
