@@ -94,11 +94,7 @@ public class BoardController {
 	@RequestMapping(value="detailFile.bo", produces="application/json; charset=utf-8")
 	public String fileList(int refBoardNo) {
 		
-		ArrayList<BoardAttachment> list = new ArrayList<>();
-		list.add(new BoardAttachment(1, "saysay.jpg", "20200505192345.jpg", "B", 30, "C:/ERgate/ERgateProject/src/main/webapp/resources/uploadFiles/board"));
-		
-		
-		
+		ArrayList<BoardAttachment> list = bodService.fileList(refBoardNo);
 		return new Gson().toJson(list);
 	}
 	

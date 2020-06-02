@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ergate.board.model.dao.BoardDao;
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
@@ -44,12 +45,16 @@ public class BoardServiceImpl implements BoardService {
 	public int increaseCount(int bno) {
 		return bodDao.increaseCount(sqlSession, bno);
 	}
+	
 	@Override
 	public Board selectBoard(int bno) {
 		return bodDao.selectBoard(sqlSession, bno);
 	}
 	
-	
+	@Override
+	public ArrayList<BoardAttachment> fileList(int refBoardNo) {
+		return bodDao.fileList(sqlSession, refBoardNo);
+	}
 	
 	
 	@Override
@@ -68,6 +73,8 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 	
 	

@@ -3,6 +3,7 @@ package com.kh.ergate.board.model.service;
 import java.util.ArrayList;
 
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
@@ -25,8 +26,8 @@ public interface BoardService {
 	int increaseCount(int bno);
 	// 3_2. 해당 게시글 조회용 서비스
 	Board selectBoard(int bno);
-	
-	
+	// 3_3. 해당 게시글 파일 조회용 서비스
+	ArrayList<BoardAttachment> fileList(int refBoardNo);
 	
 	
 	
@@ -41,6 +42,7 @@ public interface BoardService {
 	
 	// 5. 게시글 수정용 서비스
 	int updateBoard(Board b);
+	
 	
 	
 	

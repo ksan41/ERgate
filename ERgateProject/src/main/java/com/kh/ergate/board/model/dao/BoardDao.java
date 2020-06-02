@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.board.model.vo.Board;
+import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
@@ -43,8 +44,13 @@ public class BoardDao {
 	public int increaseCount(SqlSessionTemplate sqlSession, int bno) { 
 		return sqlSession.update("boardMapper.increaseCount", bno); 
 	}
+	
 	public Board selectBoard(SqlSessionTemplate sqlSession, int bno) { 
 		return sqlSession.selectOne("boardMapper.selectBoard", bno); 
+	}
+
+	public ArrayList<BoardAttachment> fileList(SqlSessionTemplate sqlSession, int refBoardNo) {
+		return (ArrayList)sqlSession.selectList("boardMapper.fileList", refBoardNo);
 	}
 	
 	
