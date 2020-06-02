@@ -839,14 +839,14 @@
 		<!-- 위에까지 캘린더 부분 -->
 		
 		
-		<!-- 모달 내용(예약하기 부분) -->
+		<!-- 모달 (예약하기 부분) -->
 		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
 			<div class="modal-content">
 				<table class="reservationContent">
 					<tr>
 						<td id="r1">신청자</td>
-						<td id="r2">케빈</td>
+						<td id="r2">${ loginUser.empName }</td>
 					</tr>
 					<tr>
 						<td id="r1">사용기간</td>
@@ -898,7 +898,7 @@
 			<!-- 예약/취소 버튼 -->
 			<div class="btns">
 				<button id="reservBtn" type="submit">예약하기</button>
-				<button id="resetBtn" type="reset">취소</button>
+				<button id="resetBtn" type="reset" onClick="history.go(0)">취소</button>
 			</div>
 		</div>
 
@@ -988,7 +988,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="mcTdContent"><button class="mcBtn" type="button">예약 취소</button></td>
+						<td class="mcTdContent"><button class="mcBtn" type="button" onClick="history.go(0)">예약 취소</button></td>
 					</tr>
 				</table>
 

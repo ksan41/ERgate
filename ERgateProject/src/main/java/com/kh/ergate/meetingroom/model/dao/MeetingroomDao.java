@@ -13,7 +13,7 @@ import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 public class MeetingroomDao {
 
 	public int statusListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("MeetingroomMapper.statusListCount");
+		return sqlSession.selectOne("meetingroomMapper.statusListCount");
 	}
 	
 	public ArrayList<Meetingroom> statusList(SqlSessionTemplate sqlSession, PageInfo pi){

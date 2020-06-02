@@ -36,6 +36,7 @@ public interface MeetingroomService {
 
 	// 회의실 총 개수 조회용 서비스
 		int statusListCount();
+		
 	 //회의실 예약현황 리스트 조회용--- statusList(Meetingroom)
 		ArrayList<Meetingroom> statusList(PageInfo pi);
 		
