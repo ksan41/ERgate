@@ -7,6 +7,6 @@
 		  FROM SIGN_DOCUMENT
         WHERE SIGN_STATUS != 0 AND
               TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') <= DRAFT_DATE AND
-              LAST_DAY(SYSDATE) >= DRAFT_DATE;
+              LAST_DAY(SYSDATE) >= DRAFT_DATE
 	</select>
 </mapper>
