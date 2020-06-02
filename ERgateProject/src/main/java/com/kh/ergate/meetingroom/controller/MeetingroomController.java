@@ -77,7 +77,7 @@ public class MeetingroomController {
 		ArrayList<Meetingroom> list = mrService.selectMtroomDetail();
 		
 		model.addAttribute("list", list);
-		System.out.println(list);
+		
 		
 		return "meetingroom/meetingroomManagement";
 		
