@@ -37,7 +37,13 @@
 		  from meetingroom_reservation
 		 where mtrm_reserv_status='Y'
 	</select>
-
+	
+	  <select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
+		select *
+		  from meetingroom
+		 where mtrm_status = 'Y'
+	</select>
+	
 
 
 

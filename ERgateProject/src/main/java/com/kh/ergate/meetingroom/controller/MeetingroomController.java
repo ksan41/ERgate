@@ -32,24 +32,22 @@ public class MeetingroomController {
 	public String statusList(int currentPage, Model model) {
 		
 		
-		  int listCount = mrService.statusListCount();
-		  
-		  System.out.println(listCount);
-			
-			  PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-			  
-			  ArrayList<MeetingroomReservation> list = mrService.statusList(pi);
-			  
-			  model.addAttribute("pi", pi); model.addAttribute("list", list);
-			  
-			  System.out.println(list);
-			 
+		int listCount = mrService.statusListCount();
+
+		System.out.println(listCount);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+
+		ArrayList<MeetingroomReservation> list = mrService.statusList(pi);
+
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+
 		return "meetingroom/meetingroomReservationList";
 	}
 	
 	@RequestMapping("currentStatus.me")
 	public String currentStatus(Model model) {
-		
 		
 		
 		return "meetingroom/meetingroomCurrentStatus";
@@ -79,6 +77,7 @@ public class MeetingroomController {
 		ArrayList<Meetingroom> list = mrService.selectMtroomDetail();
 		
 		model.addAttribute("list", list);
+		System.out.println(list);
 		
 		return "meetingroom/meetingroomManagement";
 		

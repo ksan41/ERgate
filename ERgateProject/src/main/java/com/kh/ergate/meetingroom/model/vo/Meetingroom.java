@@ -19,5 +19,5 @@ public class Meetingroom{
 	private String mtrmLocation;	//회의실위치
 	private int mtrmCapacity;		//수용인원수
 	private String mtrmImage;		//회의실 이미지
-	
+	private String mtrmStatus;		//회의실노출여부
 }
