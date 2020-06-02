@@ -224,7 +224,7 @@
 
 /* 파일테이블 */
 .fileTable {
-	text-align:center;
+	text-align:left;
 }
 .fileTable tr:nth-child(1) td:nth-child(1) b {
 	margin-left:1px;
@@ -280,7 +280,7 @@
 						</tr>
 						<tr>
 							<td colspan="8">
-										<div class="fileWrap" style="display:none;">
+										<div class="fileWrap" style="display:none;" style="text-align:left;">
 								        <div id="dropZone" style="width: 1140px; height: 100px; border: 1px solid lightgray;">
 								            <table id="fileListTable" width="100%" border="0px">
 								                <tbody id="fileTableTbody">
@@ -307,7 +307,7 @@
 							var value = "";
 							for(var i in list){
 								value += "<tr>" +
-											"<td>" + "<a href='"+"${pageContext.servletContext.contextPath }/resources/uploadFiles/board/"+list[i].changeName+"' download>"+ list[i].originName +"</a>" +"</td>" +
+											"<td>" + "<a href='"+"${pageContext.servletContext.contextPath }/resources/uploadFiles/board/"+list[i].changeName+"' download=" +list[i].originName+ ">"+ list[i].originName +"</a>" +"</td>" +
 										 "<tr>";
 							}
 							$("#fileListTable tbody").html(value);

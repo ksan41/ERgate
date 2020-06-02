@@ -15,6 +15,15 @@
 		<result column="board_file_flag" property="boardFileFlag"/>
 	</resultMap>
 	
+	<resultMap id="attachResultSet" type="BoardAttachment">
+		<id column="attahcment_no" property="attachmentNo"/>
+		<result column="origin_name" property="originName"/>
+		<result column="change_name" property="changeName"/>
+		<result column="board_type" property="boardType"/>
+		<result column="ref_board_no" property="refBoardNo"/>
+		<result column="file_Path" property="filePath"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		select count(*)
 		  from board
@@ -69,6 +78,13 @@
     	  from board
     	 where board_no=#{bno}
     </select>
+    
+    <select id="fileList" parameterType="_int" resultMap="attachResultSet">
+		select * 
+		  from board_attachment
+		 where ref_board_no=#{refBoardNo}
+		 order by attachment_no desc
+	</select>
 </mapper>
 
 
