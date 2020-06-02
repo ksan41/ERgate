@@ -2,10 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="signMapper">
-<!-- 	<resultMap type="SignDocument" id="signDocResultSet">
-		<id column=""
-	
-	</resultMap> -->
+	<resultMap type="SignDocument" id="signDocResultSet">
+		<id column="DOCUMENT_NO" property="documentNo"/>
+		<result column="SIGN_TYPE_NO" property="signTypeNo"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="SIGN_TYPE_NAME" property="signTypeName"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="DEPT_TITLE" property="deptTitle"/>
+		<result column="SIGN_TITLE" property="signTitle"/>
+		<result column="SIGN_CONTENT" property="signContent"/>
+		<result column="DRAFT_DATE" property="draftDate"/>
+		<result column="DOC_STATUS" property="docStatus"/>
+		<result column="STATUS" property="status"/>
+		<result column="EXPENSE_STARTDATE" property="expenseStartDate"/>
+		<result column="EXPENSE_ENDDATE" property="expenseEndDate"/>
+		<result column="SIGN_STEP" property="signStep"/>
+		<result column="SIGN_STATUS" property="signStatus"/>
+		<result column="HOLIDAY_TYPE" property="holidayType"/>
+		<result column="HOLIDAY_START" property="holidayStart"/>
+		<result column="HOLIDAY_END" property="holidayEnd"/>
+		<result column="HOLIDAY_USECOUNT" property="holidayUsecount"/>
+	</resultMap>
 
 
 	<select id="selectElistCount" resultType="_int">
@@ -18,7 +35,16 @@
 	]]>
 	</select>
  	
-<!-- 	<select id="selectExpenseList" resultMap="">
-		
-	</select> -->
+	<select id="selectExpenseList" resultMap="signDocResultSet">
+	<![CDATA[
+		SELECT * 
+		  FROM SIGN_DOCUMENT
+		 WHERE STATUS ='Y' AND
+               SIGN_STATUS != 0 AND
+               SIGN_TYPE_NAME = '지출결의서' AND
+               TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') <= DRAFT_DATE AND
+              LAST_DAY(SYSDATE) >= DRAFT_DATE
+		 ORDER BY DRAFT_DATE DESC;
+	]]>	 
+	</select>
 </mapper>
