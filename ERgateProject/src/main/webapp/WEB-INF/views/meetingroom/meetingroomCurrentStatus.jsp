@@ -846,7 +846,7 @@
 				<table class="reservationContent">
 					<tr>
 						<td id="r1">신청자</td>
-						<td id="r2">${ loginUser.empName }</td>
+						<td id="r2">${ loginUser.empName }님</td>
 					</tr>
 					<tr>
 						<td id="r1">사용기간</td>
@@ -906,7 +906,7 @@
 		<!-- 모달(나의 예약 현황) -->
 		<div id="myReservation_open_modal" class="modal">
 			<div class="modal-title">나의 예약현황</div>
-			<div class="modal-content">
+			<div class="modal-content" id="mtrmCurrentInnerPage">
 			
 				<table class="mtrmCurrentInner">
 					<tr>
@@ -994,15 +994,35 @@
 
 			<!-- 페이징바 -->
 			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
+				
+                   <c:choose>
+                      <c:when test="${ pi.currentPage eq 1 }">
+                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                       </c:when>
+                       <c:otherwise>
+                          <li class="page-item "><a class="page-link" href="myReserve.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                  </c:otherwise>                   
+                   </c:choose>
+                    
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                       <c:choose>
+                          <c:when test="${ p eq pi.currentPage }">
+                             <li class="page-item disabled"><a class="page-link" href="#">${ p }</a></li>
+                          </c:when>
+                          <c:otherwise>
+                             <li class="page-item"><a class="page-link" href="myReserve.me?currentPage=${ p }">${ p }</a></li>
+                     </c:otherwise>                       
+                       </c:choose>
+                    </c:forEach>
+                
+                    <c:choose>
+                       <c:when test="${ pi.currentPage eq pi.maxPage }">
+                          <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                       </c:when>
+                       <c:otherwise>
+                          <li class="page-item"><a class="page-link" href="myReserve.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
+                  </c:otherwise>
+               </c:choose>                
 			</ul>
 			<!-- 페이징바 -->
 
@@ -1025,6 +1045,15 @@
 		$("#reservationBtn").on("click",function(){
 				$("#reservation").click();
 		});
+		
+		
+		$(function(){
+			$("#mtrmCurrentInnerPage tr").click(function(){
+				location.href="reserveDetail.me?mno" + $(this).children().eq(0).text();
+			});
+		});
+		
+		
 	</script>
 
 </body>

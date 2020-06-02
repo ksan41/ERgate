@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 public interface MeetingroomService {
 
@@ -29,6 +30,9 @@ public interface MeetingroomService {
 		
 	 //내 예약현황 리스트 조회용 --- myReserveList(String empId)
 		
+		ArrayList<MeetingroomReservation> myReserveList(PageInfo pi, String empId);
+		
+		
 	 //예약취소용---cancelReserve(int mtrmReservNo)
 		int cancelReserve(int mtrmReservNo);
 
@@ -38,7 +42,7 @@ public interface MeetingroomService {
 		int statusListCount();
 		
 	 //회의실 예약현황 리스트 조회용--- statusList(Meetingroom)
-		ArrayList<Meetingroom> statusList(PageInfo pi);
+		ArrayList<MeetingroomReservation> statusList(Meetingroom m, PageInfo pi);
 		
 		
 		

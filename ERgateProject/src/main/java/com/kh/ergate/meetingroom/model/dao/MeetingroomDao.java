@@ -25,5 +25,12 @@ public class MeetingroomDao {
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.statusList", null, rowBounds);
 		
 	}
+	
+	public Meetingroom selectMtroomDetail(SqlSessionTemplate sqlSession, String mtrmCode, Meetingroom m) {
+		
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMtroomDetail", mtrmCode, m);
+	}
+	
+
 
 }

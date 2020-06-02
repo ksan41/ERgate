@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.meetingroom.model.dao.MeetingroomDao;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 
 @Service("mrService")
@@ -51,10 +52,7 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 		return 0;
 	}
 
-	@Override
-	public int selectMtroomDetail(String mtrmCode, Meetingroom m) {
-		return 0;
-	}
+
 
 	@Override
 	public int updateMeetingroom(Meetingroom m) {
@@ -72,9 +70,22 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 		return mrDao.statusListCount(sqlSession);
 	}
 
+
+	// 내 예약현황리스트조회용
 	@Override
-	public ArrayList<Meetingroom> statusList(PageInfo pi) {
-		return mrDao.statusList(sqlSession, pi);
+	public ArrayList<MeetingroomReservation> myReserveList(PageInfo pi, String empId) {
+		return null;
+	}
+
+	// 회의실예약현황리스트조회용
+	@Override
+	public ArrayList<MeetingroomReservation> statusList(Meetingroom m, PageInfo pi) {
+		return null;
+	}
+
+	@Override
+	public int selectMtroomDetail(String mtrmCode, Meetingroom m) {
+		return mrDao.selectMtroomDetail(sqlSession, m);
 	}
 
 	

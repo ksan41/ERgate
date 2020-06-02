@@ -28,7 +28,6 @@
 		select count(*)
 		  from meetingroomReservation
 		 where mtrm_reserv_status='Y' 
-		  
 	</select>
 
 	<select id="statusList" resultMap="MeetingroomReservationResultSet">
