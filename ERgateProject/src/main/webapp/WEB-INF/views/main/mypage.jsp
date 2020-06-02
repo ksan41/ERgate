@@ -217,7 +217,16 @@
                         <td rowspan="2" id="mypageProfileArea">
                             <table id="mypageProfileTable">
                                 <tr>
-                                    <td><img id="mypageProfileImg" src="../../resources/siteImgs/profile_logo.png" width="150" height="150"></td>
+                                    <td>
+	                                    <c:choose>
+											<c:when test="${ empty loginUser.empImage }">
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="150" height="150">
+											</c:when>
+											<c:otherwise>
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${ loginUser.empImage }" width="150" height="150">
+											</c:otherwise>
+										</c:choose>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td ><button class="smallBtn">편집</button></td>

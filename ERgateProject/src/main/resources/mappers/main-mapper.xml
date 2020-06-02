@@ -28,9 +28,15 @@
 	</resultMap>
 	
 	<select id="loginMember" resultMap="employeeResultSet" parameterType="Employee">
-		SELECT * 
+		SELECT EMP_ID, RANK_CODE, DEPT_CODE, JOB_CODE, EMP_CODE, EMP_PWD, EMP_NAME, HIRE_DATE, 
+                       EMP_EXTENSION, EMP_FAX, EMP_COM_EMAIL, EMP_PRI_EMAIL, EMP_PHONE, EMP_ADDRESS, EMP_IMAGE,
+                       EMP_BIRTHDAY, RESIGN_FLAG, RESIGN_DATE, EMP_STATUS, RANK_TITLE, DEPT_TITLE, JOB_TITLE
 		  FROM EMPLOYEE
+              JOIN DEPARTMENT USING(DEPT_CODE)
+              JOIN RANK USING(RANK_CODE)
+              JOIN JOB USING(JOB_CODE)
 		 WHERE EMP_ID=#{empId}
+		 	   AND EMP_CODE IS NOT NULL
 		 	   AND RESIGN_FLAG='N'
 	</select>
 	

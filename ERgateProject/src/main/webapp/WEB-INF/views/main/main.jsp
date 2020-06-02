@@ -275,7 +275,11 @@
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2" id="mainDateArea">2020년 05월 20일</td>
+								<td colspan="2" id="mainDateArea">
+									<b id="calYear"></b>년 
+									<b id="calMonth"></b>월 
+									<b id="calDay"></b>일
+								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
@@ -499,24 +503,36 @@
 	
 	<!-- script 작성 영역 -->
 	<script>
+	
+	$(document).ready(function() {
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+
+		$("#calYear").text(year);
+		$("#calMonth").text(month);
+		$("#calDay").text(day);
+	});
+	
 	$(function(){
 		
 		$('.mainMailInnerContent').click(function(){
 			$(this).css("color", "rgb(26, 188, 156)");
-		})
+		});;
 		$('.mainMailInnerContent').click(function(){
 			$(this).css("font-weight", "550");
-		})
+		});
 		$('.mainSignInnerContent').click(function(){
 			$(this).css("color", "rgb(26, 188, 156)");
-		})
+		});
 		$('.mainSignInnerContent').click(function(){
 			$(this).css("font-weight", "550");
-		})
+		});
 		
 		$('.thDiv').click(function(){
 			$(this).css("border-bottom", "2px solid rgb(26, 188, 156)");
-		})
+		});
 		
 	});
 	

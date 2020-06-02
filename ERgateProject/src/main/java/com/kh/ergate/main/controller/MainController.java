@@ -36,7 +36,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping
+	@RequestMapping("logout.ma")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
@@ -85,6 +85,16 @@ public class MainController {
 	@RequestMapping("findPwd.ma")
 	public String findPwd() {
 		return "main/findPwdSuccess";
+	}
+	
+	@RequestMapping("mypage.ma")
+	public String mypage() {
+		return "main/mypage";
+	}
+	
+	@RequestMapping("main.ma")
+	public String mainPage() {
+		return "main/main";
 	}
 	
 	
