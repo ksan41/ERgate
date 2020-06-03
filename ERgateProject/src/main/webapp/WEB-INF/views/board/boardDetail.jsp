@@ -207,7 +207,7 @@
 	padding:15px;
 }
 #replyBtnArea{
-	width:160px;
+	width:200px;
 	height:20px;
 	margin-left:1020px;
 	margin-top:20px;
@@ -357,7 +357,11 @@
 			<br> <br> <br>
 		</div>
 	</div>
+	<input id="loginUserName" type="hidden" value="${loginUser.empName }">
 	<script>
+	
+	var loginUserName = $("#loginUserName").val();
+	
 	$(document).ready(function() { 
 		$(".listBtn").click(function(){
 			var pno=0; // 페이지 번호가 들어갈꺼임 (나중에 돌아올때 현재 페이지로 오기 위해서)
@@ -398,7 +402,7 @@
 			});
 		});
 		
-		
+			
 		
 			$.ajax({
 				url:"rlist.bo",
@@ -420,10 +424,15 @@
 								 	"<td id='reDate'>" + list[i].replyEnrollDate + "</td>" +
 								 "</tr>" +
 								 "<tr>" +
-								 "<td id='replyBtnArea'>" +
-								 	"<button class='smallBtn replyUpdateBtn'>수정</button>" +
-								 	"<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-								 "</td>" +
+								 "<td id='replyBtnArea'>";
+						if(loginUserName == list[i].replyWriter){
+						value += "<button class='smallBtn replyUpdateBtn'>수정</button>" +
+								 "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+								 "<button class='smallBtn replyInsertBtn'>답글</button>";
+						}else {
+						value += "<button class='smallBtn replyInsertBtn'>답글</button>";
+						}
+						value += "</td>" +
 								 "</tr>" +
 								 "</table>" + 
 								 "<hr>" +
@@ -456,10 +465,15 @@
 													  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
 													  "</tr>" +
 													  "<tr>" +
-													  "<td id='replyBtnArea'>" +
-													  	"<button class='smallBtn replyUpdateBtn'>수정</button>" +
-													  	"<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-													  "</td>" +
+													  "<td id='replyBtnArea'>";
+											if(loginUserName == relist[i].replyWriter){
+											value2 += "<button class='smallBtn replyUpdateBtn'>수정</button>" +
+													  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+													  "<button class='smallBtn replyInsertBtn'>답글</button>";
+											}else {
+											value2 += "<button class='smallBtn replyInsertBtn'>답글</button>";
+											}
+											value2 += "</td>" +
 													  "</tr>" +
 													  "</table>" + 
 													  "<hr>" +
