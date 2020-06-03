@@ -405,7 +405,8 @@
 				data:{refBno:${b.boardNo}},
 				success:function(list){
 					var value = "";
-					var value2 = "";
+					var cnt = 0;
+					var num = [];
 					for(var i in list){
 						value += "<div style='width:1300px;height:110px;'>" +
 								 "<table class='replyContent'>" +
@@ -428,50 +429,61 @@
 								 "<hr>" +
 								 "</div>" +
 								 "<br>" + 
-								 "<div class='rereplyShow"+list[i].replyNo+"'>"+
+								 "<div class='rereplyShow"+list[i].replyNo+"' >"+
 								 "</div>";
-					
-						/* 대댓글. 위랑 헷깔리지 않기 */
-						$.ajax({
-							url:"relist.bo",
-							data:{refRno:list[i].replyNo},
-							success:function(relist){
-								value2 = "";
-								for(var i in relist){
-									value2 += "<div style='width:1300px;height:110px;'>" +
-											  "<table class='replyContent rereply'>" +
-											  "<tr>" +
-											 	"<td>" + relist[i].replyWriter + "</td>" +
-											  "</tr>" +
-											  "<tr>" +
-											  	"<td id='reContentWrap'>" + "<span id='reContent'>" + relist[i].replyContent + "</span>" + "</td>" +
-											  "</tr>" +
-											  "<tr>" +
-											  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
-											  "</tr>" +
-											  "<tr>" +
-											  "<td id='replyBtnArea'>" +
-											  	"<button class='smallBtn replyUpdateBtn'>수정</button>" +
-											  	"<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-											  "</td>" +
-											  "</tr>" +
-											  "</table>" + 
-											  "<hr>" +
-											  "</div>" +
-											  "<br>";
-								}
-								
-							},error:function(){
-								console.log("ajax 통신 실패");
-							}
-						});		 
+						num[cnt] = list[i].replyNo;
+						cnt = cnt + 1;
 					}
 					$(".replyShow").html(value);
-					$(".rereplyShow").html(value2);
+					
+					for(var i = 0; i < num.length-1; i++){
+					    (function(i) {
+					            $.ajax({
+					                url: "relist.bo",
+					                data:{refRno:num[i]},
+					                success:function(relist){
+					                	var value2 = "";
+										for(var i in relist){
+											if(relist){
+											value2 += "<div style='width:1300px;height:110px;'>" +
+													  "<table class='replyContent rereply'>" +
+													  "<tr>" +
+													 	"<td>" + "└"+ relist[i].replyWriter + "</td>" +
+													  "</tr>" +
+													  "<tr>" +
+													  	"<td id='reContentWrap'>" + "<span id='reContent'>" + relist[i].replyContent + "</span>" + "</td>" +
+													  "</tr>" +
+													  "<tr>" +
+													  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
+													  "</tr>" +
+													  "<tr>" +
+													  "<td id='replyBtnArea'>" +
+													  	"<button class='smallBtn replyUpdateBtn'>수정</button>" +
+													  	"<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+													  "</td>" +
+													  "</tr>" +
+													  "</table>" + 
+													  "<hr>" +
+													  "</div>" +
+													  "<br>";
+											}else {
+												console.log(relist);
+											}
+										}
+										console.log(value2);
+										$(".rereplyShow50").html(value2);
+					                 },
+					                 error: function(xhr,status,error){
+					                    console.log("에렁");
+					                 } 
+					            });
+					    })(i);
+					}
+
+					
 					},error:function(){
 						console.log("ajax 통신 실패");
 					}
-				});
 			});
 
 	});
