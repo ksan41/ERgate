@@ -353,8 +353,18 @@
 					<c:otherwise>
 						<c:forEach items="${list}" var="l">
 							<tr>
-								<td>진행중</td>
-								<td>${l.signTypeNo }</td>
+								<c:choose>
+									<c:when test="${l.signStatus eq 0 }">
+										<td>진행중</td>
+									</c:when>
+									<c:when test="${l.signStatus eq 1 }">
+										<td>결재완료</td>
+									</c:when>
+									<c:otherwise>
+										<td>미결</td>
+									</c:otherwise>
+								</c:choose>
+								<td>지출결의서</td>
 								<td>${l.documentNo }</td>
 								<td>${l.deptTitle }</td>
 								<td>${l.empName }</td>
