@@ -20,12 +20,12 @@ public class MainDao {
 		return sqlSession.selectOne("mainMapper.findPwd", e);
 	}
 	
-	public int updatePwd(SqlSessionTemplate sqlSession, String userPwd) {
-		return sqlSession.update("mainMapper.updatePwd", userPwd);
+	public int updatePwd(SqlSessionTemplate sqlSession, String empPwd) {
+		return sqlSession.update("mainMapper.updatePwd", empPwd);
 	}
 	
-	public int idCheck(SqlSessionTemplate sqlSession, String userId) {
-		return sqlSession.selectOne("mainMapper.idCheck", userId);
+	public int idCheck(SqlSessionTemplate sqlSession, String empId) {
+		return sqlSession.selectOne("mainMapper.idCheck", empId);
 	}
 	
 	public int insertRequest(SqlSessionTemplate sqlSession, Employee e) {

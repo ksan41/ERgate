@@ -58,7 +58,7 @@
 	
 	<update id="updatePwd" parameterType="string">
 		UPDATE EMPLOYEE
-		   SET EMP_PWD=#{userPwd}
+		   SET EMP_PWD=#{empPwd}
 		 WHERE EMP_ID=#{empId}
 		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
 		 	   AND RESIGN_FLAG='N'
@@ -67,14 +67,14 @@
 	<select id="idCheck" resultType="_int" parameterType="string">
 		SELECT COUNT(*)
 		  FROM EMPLOYEE
-		 WHERE EMP_ID=#{userId}
+		 WHERE EMP_ID=#{empId}
 	</select>
 	
 	<insert id="insertRequest" parameterType="Employee">
 		INSERT INTO EMPLOYEE
 		VALUES(#{empId}, NULL, NULL, NULL, NULL, #{empPwd}, #{empName}, 
 			   NULL, NULL, NULL, NULL, #{empPriEmail}, #{empPhone}, 
-			   #{empAddress}, #{empImage}, #{empBirthday}, NULL, NULL, NULL)
+			   #{empAddress}, NULL, #{empBirthday}, 'N', NULL, NULL)
 	</insert>
 	
 

@@ -37,6 +37,10 @@
     	width: 60px;
     	text-align: center;
     }
+    .loginTd a{
+    	text-decoration: none;
+    	color: black;
+    }
     .loginTd a:hover{
     	cursor: pointer;
     }

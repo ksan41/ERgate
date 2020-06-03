@@ -37,14 +37,14 @@ public class MainServiceImpl implements MainService {
 
 	// 비밀번호 수정용 서비스
 	@Override
-	public int updatePwd(String userPwd) {
-		return mDao.updatePwd(sqlSession, userPwd);
+	public int updatePwd(String empPwd) {
+		return mDao.updatePwd(sqlSession, empPwd);
 	}
 
 	// 아이디 중복확인용 서비스
 	@Override
-	public int idCheck(String userId) {
-		return mDao.idCheck(sqlSession, userId);
+	public int idCheck(String empId) {
+		return mDao.idCheck(sqlSession, empId);
 	}
 
 	// 계정등록용 서비스

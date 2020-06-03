@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -137,7 +138,7 @@
 </head>
 <body>
 	<div id="enrollOuter">
-	    <form action="">
+	    <form action="insertRequest.ma" method="post">
 	        <table id="enrollTable">
 	            <tr>
 	                <td colspan="2" style="text-align: center;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
@@ -147,12 +148,15 @@
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">아이디</td>
-	                <td><input id="enrollId" type="text"><button id="enrollIdCheckBtn" class="middleBtn">중복검사</button></td>
+	                <td>
+	                	<input name="empId" id="enrollId" type="text">
+	                	<button type="button" id="enrollIdCheckBtn" class="middleBtn" onclick="location.href='idCheck.ma'">중복검사</button>
+	                </td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">비밀번호</td>
 	                <td>
-	                	<input id="enrollPwd" type="password">
+	                	<input name="empPwd" id="enrollPwd" type="password">
 	                	<p style="font-size: 14px; color: gray;">8~15자 이내로 영문(대소문자 구분), 숫자, 특수기호 사용 가능</p>
 	                </td>
 	            </tr>
@@ -162,7 +166,7 @@
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">이름</td>
-	                <td><input id="enrollName" type="text"></td>
+	                <td><input name="empName" id="enrollName" type="text"></td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">프로필 사진</td>
@@ -170,30 +174,30 @@
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">생년월일</td>
-	                <td><input id="enrollBirth" type="text"></td>
+	                <td><input name="empBirthday" id="enrollBirth" type="date"></td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">휴대폰 번호</td>
-	                <td><input id="enrollPhone" type="text"></td>
+	                <td><input name="empPhone" id="enrollPhone" type="text"></td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">이메일 주소</td>
 	                <td>
-	                	<input id="enrollEmail1" type="text">
-						<input id="enrollEmail2" name="emailDomain" type="text" value="@gmail.com" readonly style="width: 180px">
+	                	<input name="empEmail1" id="enrollEmail1" type="text">
+						<input name="empEmail2" id="enrollEmail2" name="emailDomain" type="text" value="@gmail.com" readonly style="width: 180px">
 	                </td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">자택 주소</td>
-	                <td><button id="enrollAddressBtn" class="middleBtn">우편번호 찾기</button>
-	                	<input id="enrollAddress1" type="text" style="width: 100px"><br>
-	                    <input id="enrollAddress2" type="text" style="width: 450px"><br>
-	                    <input id="enrollAddress3" type="text" style="width: 450px" placeholder="나머지 주소">
+	                <td><button id="enrollAddressBtn" type="button" class="middleBtn">우편번호 찾기</button>
+	                	<input id="enrollAddress1" type="text" style="width: 100px" readonly><br>
+	                    <input name="empAddress1" id="enrollAddress2" type="text" style="width: 450px"><br>
+	                    <input name="empAddress2" id="enrollAddress3" type="text" style="width: 450px" placeholder="나머지 주소">
 	                </td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" align="center">
-	                	<button id="enrollSubmit" class="bigBtn">계정등록요청</button> &nbsp;&nbsp;
+	                	<button id="enrollSubmit" type="submit" class="bigBtn">계정등록요청</button> &nbsp;&nbsp;
 	                	<button id="enrollCancel" type="button" onclick="location.href='returnLogin.ma'" class="bigBtn">취소</button>
 	                </td>
 	            </tr>

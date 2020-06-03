@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,6 +116,8 @@
 		border-radius: 50%;
 		margin-top: 10px;
 		margin-bottom: 10px;
+		width: 150px;
+		height: 150px;
 	}
 	.smallBtn {
 		width: 60px;
@@ -220,20 +223,17 @@
                                     <td>
 	                                    <c:choose>
 											<c:when test="${ empty loginUser.empImage }">
-												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="150" height="150">
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png">
 											</c:when>
 											<c:otherwise>
-												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${ loginUser.empImage }" width="150" height="150">
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${ loginUser.empImage }">
 											</c:otherwise>
 										</c:choose>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td ><button class="smallBtn">편집</button></td>
-                                </tr>
-                                <tr>
                                     <td style="height:50px; font-size: 18px;">
-                                    	<span style="color:rgb(26, 188, 156); font-weight: 550;">ID </span> erkevin
+                                    	<span style="color:rgb(26, 188, 156); font-weight: 550;">ID </span> ${ loginUser.empId }
                                     </td>
                                 </tr>
                             </table>
@@ -274,8 +274,8 @@
                                     <td>새 비밀번호 확인</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="password" name="" id=""></td>
-                                    <td><input type="password" name="" id=""></td>
+                                    <td><input name="empPwd" type="password"></td>
+                                    <td><input type="password"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"><div class="mypageLine"></div></td>
@@ -295,31 +295,31 @@
                                     <td>부서</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" readonly></td>
-                                    <td><input type="text" name="" id="" readonly></td>
+                                    <td><input type="text" value="${ loginUser.empCode }" readonly></td>
+                                    <td><input type="text" value="${ loginUser.deptTitle }" readonly></td>
                                 </tr>
                                 <tr>
                                     <td>직급</td>
                                     <td>직책</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" readonly></td>
-                                    <td><input type="text" name="" id="" readonly></td>
+                                    <td><input type="text" value="${ loginUser.rankTitle }" readonly></td>
+                                    <td><input type="text" value="${ loginUser.jobTitle }" readonly></td>
                                 </tr>
                                 <tr>
                                     <td>내선 번호</td>
                                     <td>팩스 번호</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id=""></td>
-                                    <td><input type="text" name="" id=""></td>
+                                    <td><input type="text" value="${ loginUser.empExtension }"></td>
+                                    <td><input type="text" value="${ loginUser.empFax }"></td>
                                 </tr>
                                 <tr>
                                     <td>입사일</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id=""></td>
+                                    <td><input type="text" value="${ loginUser.hireDate }"></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -340,18 +340,18 @@
                                     <td>생년월일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id=""></td>
-                                    <td><input type="date"></td>
+                                    <td><input type="text" value="${ loginUser.empName }"></td>
+                                    <td><input type="date" value="${ loginUser.empBirthday }"></td>
                                 </tr>
                                 <tr>
                                     <td>휴대폰번호</td>
                                     <td>이메일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id=""></td>
+                                    <td><input type="text" value="${ loginUser.empPhone }"></td>
                                     <td>
-                                    	<input id="mypageEmail1" type="text" style="width: 180px">
-					                	<input id="mypageEmail2" name="emailDomain" type="text" value="@gmail.com" readonly style="width: 180px">
+                                    	<input value="${ loginUser.empPriEmail }" id="mypageEmail1" type="text" style="width: 180px">
+					                	<input value="@gmail.com" id="mypageEmail2" type="text" readonly style="width: 180px">
                                     </td>
                                 </tr>
                                 <tr>
@@ -361,7 +361,7 @@
                                     <td colspan="2">
                                     	<button id="mypageAddressBtn" class="middleBtn">우편번호찾기</button>
                                     	<input type="text" style="width: 100px" readonly>
-                                    	<input type="text" style="width: 370px" readonly> <br>
+                                    	<input type="text" style="width: 370px" value="${ loginUser.empAddress }"> <br>
                                     	<input type="text" style="width: 650px">
                                     </td>
                                 </tr>
