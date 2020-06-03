@@ -382,45 +382,84 @@
 			<br>
 			<!-- 페이징바 -->
 			<c:if test="${!empty pi}">
-				<ul class="pagingBar">
-					<li><a href="expenseList.si?currentPage=1" class="pageNoClick">&lt;&lt;</a></li>
-					<c:choose>
-						<c:when test="${pi.currentPage eq 1 }">
-							<li><a href="#" class="pageNoClick">&lt;</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a href="expenseList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
-						</c:otherwise>
-					</c:choose>
-					<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-						<c:choose>
-							<c:when test="${pi.currentPage eq p }">
-								<li><span>${p}</span>
-							</c:when>
-							<c:otherwise>
-								<li><a href="expenseList.si?currentPage=${p}">${p}</a></li>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-
-					<c:choose>
-						<c:when test="${pi.currentPage eq pi.maxPage }">
-							<li><a href="#" class="pageNoClick">&gt;</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a
-								href="expenseList.si?currentPage=${pi.currentPage + 1 }">&gt;</a></li>
-						</c:otherwise>
-					</c:choose>
-					<li><a href="expenseList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
-				</ul>
-				<!-- 페이징바 -->
+				<c:choose>
+					<c:when test="${empty sds }">
+						<ul class="pagingBar">
+							<li><a href="expenseList.si?currentPage=1">&lt;&lt;</a></li>
+							<c:choose>
+								<c:when test="${pi.currentPage eq 1 }">
+									<li><a href="#" class="pageNoClick">&lt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="expenseList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
+								</c:otherwise>
+							</c:choose>
+							<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+								<c:choose>
+									<c:when test="${pi.currentPage eq p }">
+										<li><span>${p}</span>
+									</c:when>
+									<c:otherwise>
+										<li><a href="expenseList.si?currentPage=${p}">${p}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+	
+							<c:choose>
+								<c:when test="${pi.currentPage eq pi.maxPage }">
+									<li><a href="#" class="pageNoClick">&gt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="expenseList.si?currentPage=${pi.currentPage + 1 }">&gt;</a></li>
+								</c:otherwise>
+							</c:choose>
+							<li><a href="expenseList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
+						</ul>
+						<!-- 페이징바 -->
+					</c:when>
+					<c:otherwise>
+						<ul class="pagingBar">
+							<li><a href="expenseListM.si?currentPage=1?year=${sds.year }?month=${sds.month}">&lt;&lt;</a></li>
+							<c:choose>
+								<c:when test="${pi.currentPage eq 1 }">
+									<li><a href="#" class="pageNoClick">&lt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="expenseListM.si?currentPage=${pi.currentPage -1 }?year=${sds.year }?month=${sds.month}">&lt;</a></li>
+								</c:otherwise>
+							</c:choose>
+							<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+								<c:choose>
+									<c:when test="${pi.currentPage eq p }">
+										<li><span>${p}</span>
+									</c:when>
+									<c:otherwise>
+										<li><a href="expenseListM.si?currentPage=${p}?year=${sds.year }?month=${sds.month}">${p}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+	
+							<c:choose>
+								<c:when test="${pi.currentPage eq pi.maxPage }">
+									<li><a href="#" class="pageNoClick">&gt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="expenseListM.si?currentPage=${pi.currentPage + 1 }?year=${sds.year }?month=${sds.month}">&gt;</a></li>
+								</c:otherwise>
+							</c:choose>
+							<li><a href="expenseListM.si?currentPage=${pi.maxPage }?year=${sds.year }?month=${sds.month}">&gt;&gt;</a></li>
+						</ul>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
-			
-			
-				
 
-			
+
+
+
 		</div>
 	</div>
 
