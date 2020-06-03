@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,11 +155,7 @@ h2, h3 {
 /* input창 스타일 */
 
 /* textarea스타일 */
-.textArea {
-	border: 1px solid lightgray;
-	border-radius: 3px;
-	resize: none;
-}
+
 
 #signInfo3 {
 	width: 700px;
@@ -213,9 +211,11 @@ h2, h3 {
 		<div class="popup-title">기안상세</div>
 		<div class="popup-content">
 			<h1>지출결의서</h1>
-			<div id="btnArea">
-				<button class="bigBtn" id="signSubmit" style="margin-left:150px;">결재</button>
-			</div>
+			<c:if test="${sd.signStatus eq 0 }">
+				<div id="btnArea">
+					<button class="bigBtn" id="signSubmit" style="margin-left:150px;">결재</button>
+				</div>
+			</c:if>
 			<br>
 			<form id="signForm" action="#" method="get">
 				<table id="signInfo1">
@@ -227,16 +227,16 @@ h2, h3 {
 					</tr>
 					<tr>
 						<th>기안자</th>
-						<td>김기철</td>
+						<td>${sd.empName }</td>
 						<th>문서번호</th>
-						<td>00000</td>
+						<td>${sd.documentNo }</td>
 					</tr>
 					<tr>
 						<th>기안일시</th>
-						<td>2020/05/10</td>
+						<td>${sd.draftDate }</td>
 						<th>지출기간</th>
-						<td><input class="inputs" name="" type="date" value="2020-05-01"> ~ <input
-							name="" class="inputs" type="date" value="2020-05-15"></td>
+						<td><input class="inputs" name="" type="date" value="${sd.expenseStartDate }"> ~ <input
+							name="" class="inputs" type="date" value="${sd.expenseEndDate }"></td>
 					</tr>
 				</table>
 				<br>
@@ -295,7 +295,7 @@ h2, h3 {
 					<thead>
 						<tr>
 							<th width="120">제목</th>
-							<td><input class="inputs" type="text" style="width: 100%;" value="인사부 05/01~05/15 지출결의서"></td>
+							<td><input class="inputs" type="text" style="width: 100%;" value="${sd.signTitle }"></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
@@ -319,44 +319,9 @@ h2, h3 {
 					</thead>
 				</table>
 
-				<!-- 테이블값 가져올 el -->
-				<c:set var="contentVal" scope="page" />
-				<input type="hidden" name="contentTable">
+				
 				<table id="contentTable">
-					<thead>
-						<tr>
-							<th width="150">사용일시</th>
-							<th width="280">사용처</th>
-							<th>지출사유</th>
-							<th width="150">사용금액(원)</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><input class="inputVal" type="text" value="2020/05/01"></td>
-							<td><input class="inputVal" type="text" value="내동생고기"></td>
-							<td><input class="inputVal" type="text" value="인사부 5월 회식"></td>
-							<td><input class="inputVal" type="text" value="650000"></td>
-						</tr>
-						<tr>
-							<td><input class="inputVal" type="text" value="2020/05/04"></td>
-							<td><input class="inputVal" type="text" value="드럼오피스"></td>
-							<td><input class="inputVal" type="text" value="복사용지 구매"></td>
-							<td><input class="inputVal" type="text" value="25000"></td>
-						</tr>
-						<tr>
-							<td><input class="inputVal" type="text" value="2020/05/10"></td>
-							<td><input class="inputVal" type="text" value="사부웨이"></td>
-							<td><input class="inputVal" type="text" value="인사부 야근식비"></td>
-							<td><input class="inputVal" type="text" value="60000"></td>
-						</tr>
-						<tr>
-							<td><input class="inputVal" type="text" value="2020/05/15"></td>
-							<td><input class="inputVal" type="text" value="사부웨이"></td>
-							<td><input class="inputVal" type="text" value="인사부 야근식비"></td>
-							<td><input class="inputVal" type="text" value="35000"></td>
-						</tr>
-					</tbody>
+					${sd.signContent }					
 				</table>
 
 			</form>
@@ -406,6 +371,8 @@ h2, h3 {
 
 							//resize
 							window.resizeTo(strWidth, strHeight);
+							
+							
 						});
 	</script>
 
