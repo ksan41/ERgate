@@ -435,14 +435,15 @@
 						cnt = cnt + 1;
 					}
 					$(".replyShow").html(value);
-					
-					for(var i = 0; i < num.length-1; i++){
+					var clsname = [];
+					for(var i = 0; i < num.length; i++){
 					    (function(i) {
 					            $.ajax({
 					                url: "relist.bo",
 					                data:{refRno:num[i]},
 					                success:function(relist){
 					                	var value2 = "";
+					                	
 										for(var i in relist){
 											if(relist){
 											value2 += "<div style='width:1300px;height:110px;'>" +
@@ -466,12 +467,11 @@
 													  "<hr>" +
 													  "</div>" +
 													  "<br>";
+											$(".rereplyShow" + relist[i].refRno).html(value2);
 											}else {
-												console.log(relist);
+												console.log("빈거");
 											}
 										}
-										console.log(value2);
-										$(".rereplyShow50").html(value2);
 					                 },
 					                 error: function(xhr,status,error){
 					                    console.log("에렁");
