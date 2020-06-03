@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.sign.model.service.SignServiceImpl;
+import com.kh.ergate.sign.model.vo.SignAttachment;
 import com.kh.ergate.sign.model.vo.SignDateSearch;
 import com.kh.ergate.sign.model.vo.SignDocument;
 import com.kh.ergate.sign.model.vo.Signer;
@@ -37,6 +38,8 @@ public class SignController {
 		  sdd.setSignTypeNo(signTypeNo);
 		  
 		  SignDocument sd = siService.signDetail(sdd);
+		  
+		  ArrayList<SignAttachment> saList = siService.signDetailAttachment(sdd);
 		  
 		  model.addAttribute("sd",sd);
 		  return "sign/signDetailExpense";

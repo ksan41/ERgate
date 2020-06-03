@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.sign.model.dao.SignDao;
+import com.kh.ergate.sign.model.vo.SignAttachment;
 import com.kh.ergate.sign.model.vo.SignDateSearch;
 import com.kh.ergate.sign.model.vo.SignDocument;
 import com.kh.ergate.sign.model.vo.Signer;
@@ -31,6 +32,12 @@ public class SignServiceImpl implements SignService{
 		return siDao.signDetail(sqlSession,sdd);
 	}
 
+	@Override
+	public ArrayList<SignAttachment> signDetailAttachment(SignDocument sdd) {
+		return siDao.signDetailAttachment(sqlSession,sdd);
+	}
+	
+	
 	@Override
 	public ArrayList<SignDocument> ongoingList(String month, SignDocument sd) {
 		// TODO Auto-generated method stub
@@ -99,6 +106,7 @@ public class SignServiceImpl implements SignService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 

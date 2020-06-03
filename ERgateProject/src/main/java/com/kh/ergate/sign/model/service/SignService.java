@@ -3,6 +3,7 @@ package com.kh.ergate.sign.model.service;
 import java.util.ArrayList;
 
 import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.sign.model.vo.SignAttachment;
 import com.kh.ergate.sign.model.vo.SignDateSearch;
 import com.kh.ergate.sign.model.vo.SignDocument;
 import com.kh.ergate.sign.model.vo.Signer;
@@ -14,6 +15,9 @@ public interface SignService {
 	
 	//결재상세 요청용
 	public SignDocument signDetail(SignDocument sd);
+	
+	//결재상세-첨부파일 요청용
+	public ArrayList<SignAttachment> signDetailAttachment(SignDocument sdd);
 	
 	//진행결재함요청용
 	public ArrayList<SignDocument> ongoingList(String month,SignDocument sd);

@@ -82,4 +82,10 @@
 		  	AND SIGN_TYPE_NO = 0
 		  </if>
 	</select>
+	
+	<select id="signAttachmentList" parameterType="SignDocument" resultType="SignAttachment">
+		SELECT *
+		  FROM SIGN_ATTACHMENT
+		WHERE REF_DOC_NO = #{documentNo}
+	</select>
 </mapper>

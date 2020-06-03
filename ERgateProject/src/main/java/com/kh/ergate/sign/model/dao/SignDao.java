@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.sign.model.vo.SignAttachment;
 import com.kh.ergate.sign.model.vo.SignDateSearch;
 import com.kh.ergate.sign.model.vo.SignDocument;
 
@@ -39,5 +40,9 @@ public class SignDao {
 	
 	public SignDocument signDetail(SqlSessionTemplate sqlSession,SignDocument sdd) {
 		return sqlSession.selectOne("signMapper.signDetail",sdd);
+	}
+	
+	public ArrayList<SignAttachment> signDetailAttachment(SqlSessionTemplate sqlSession,SignDocument sdd){
+		return (ArrayList)sqlSession.selectList("signMapper.signAttachmentList",sdd);
 	}
 }
