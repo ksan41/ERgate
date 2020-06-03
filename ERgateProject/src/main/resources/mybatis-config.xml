@@ -15,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="com.kh.ergate.main.model.vo.Job" alias="Job"/>
       <typeAlias type="com.kh.ergate.board.model.vo.Board" alias="Board" />
       <typeAlias type="com.kh.ergate.board.model.vo.Reply" alias="Reply" />
+      <typeAlias type="com.kh.ergate.board.model.vo.ReReply" alias="ReReply" />
       <typeAlias type="com.kh.ergate.board.model.vo.BoardAttachment" alias="BoardAttachment" />
       <typeAlias type="com.kh.ergate.meetingroom.model.vo.Meetingroom" alias="Meetingroom"/>
       <typeAlias type="com.kh.ergate.meetingroom.model.vo.MeetingroomReservation" alias="MeetingroomReservation"/>

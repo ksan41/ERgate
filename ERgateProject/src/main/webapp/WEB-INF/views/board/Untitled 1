@@ -111,3 +111,57 @@ com.kh.ergate
   메일삭제용---deleteMail(SqlSessionTemplate,int mailNo)
   메일전송용---sendMail(SqlSessionTemplate,Mail)
 
+
+
+
+					
+
+					
+				<!-- 댓글1개 영역 -->
+				<div style="width:1300px;height:110px;">
+					<table class="replyContent">
+						<tr>
+							<td>개발 1팀 케빈 </td>
+						</tr>
+						<tr>
+							<td id="reContentWrap"><span id="reContent">댓글 내용</span> </td>
+						</tr>
+						<tr>
+							<td id="reDate">2020.05.10 13:11</td>
+						</tr>
+						<tr>
+							<td>
+								<button class="smallBtn replyUpdateBtn">수정</button>
+								<button class="smallBtn replyDeleteBtn" style="background: rgb(190, 190, 190);">삭제</button>							
+							</td>
+						</tr>
+					</table>
+					<hr>
+				</div>
+				<br>
+				
+				
+				
+				
+				<!-- 대댓글 1개영역 -->
+				<div style="width:1300px;height:110px;">
+					<table class="replyContent rereply">
+						<tr>
+							<td>└ 개발 1팀 케빈 </td>
+						</tr>
+						<tr>
+							<td id="reContentWrap"><span id="reContent">댓글 내용</span> </td>
+						</tr>
+						<tr>
+							<td id="reDate" style="font-size:14px; color:lightgray;">2020.05.10 13:11</td>
+						</tr>
+						<tr>
+							<td>
+								<button class="smallBtn replyUpdateBtn">답글</button>						
+							</td>
+						</tr>
+					</table>
+					<hr>
+				</div>
+				<br>
+				
