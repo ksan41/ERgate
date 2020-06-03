@@ -435,17 +435,15 @@
 						cnt = cnt + 1;
 					}
 					$(".replyShow").html(value);
-					var clsname = [];
-					for(var i = 0; i < num.length; i++){
+					
+					for(var i = 0; i < num.length; i++){ // 게시글에 딸려있는 리플 갯수만큼 num[]에 리플 번호를 담아놨음. 
 					    (function(i) {
 					            $.ajax({
 					                url: "relist.bo",
-					                data:{refRno:num[i]},
+					                data:{refRno:num[i]}, // 여기로 댓글 번호를 넘김 (대댓글은 댓글 번호를 참조로 하고 있음)(num변수가 배열이니까 배열 길이만큼 반복해서 controller로 넘김)
 					                success:function(relist){
 					                	var value2 = "";
-					                	
-										for(var i in relist){
-											if(relist){
+										for(var i in relist){ // 같은 리플에 대댓글이 여러개일수도 있으니까 for문을 돌림 (보통은 1개지만)
 											value2 += "<div style='width:1300px;height:110px;'>" +
 													  "<table class='replyContent rereply'>" +
 													  "<tr>" +
@@ -467,14 +465,13 @@
 													  "<hr>" +
 													  "</div>" +
 													  "<br>";
-											$(".rereplyShow" + relist[i].refRno).html(value2);
-											}else {
-												console.log("빈거");
-											}
+											$(".rereplyShow" + relist[i].refRno).html(value2); 
+											// 여기서 리소스 낭비가 좀 있음, value2에 있는 값을 뿌려주는건데, 뿌려지는 구문이 for문 안에 있기 때문에 '댓글 1개'뿌린 상태에서 
+											// '댓글 2개'를 다시 덮어씌워버림, 처음부터 댓글 2개를 한꺼번에 뿌리는걸 해야되는데 그걸 못하겠음(rereplyShow + replist[i].refRno 이기 때문에..)
+											// 일단 리소스는 낭비되지만, 결과는 제대로 나옴 (향후 수정해야하는 부분)
 										}
-					                 },
-					                 error: function(xhr,status,error){
-					                    console.log("에렁");
+					                 },error: function(){
+					                    console.log("ajax 통신 실패");
 					                 } 
 					            });
 					    })(i);
