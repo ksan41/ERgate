@@ -1,11 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String contextPath = request.getContextPath();
+
+	boolean saveId = false;
+	String userIdSaved = "";
+	Cookie[] cookies = request.getCookies();	
+	
+
+	if(cookies != null){
+		for(Cookie c : cookies){
+			if("saveId".equals(c.getName())){
+				userIdSaved = c.getValue();
+				saveId = true;
+			}
+		}
+	}
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>loginIndex</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 /* ==========페이지영역========== */
 
@@ -113,14 +132,14 @@
 	            </tr>
 	            <tr>
 	                <td class="loginTd" style="font-size: 20px;">ID</td>
-	                <td><input id="loginId" name="empId" type="text"></td>
+	                <td><input id="loginId" name="empId" type="text" required value="<%= saveId ? userIdSaved : "" %>"></td>
 	            </tr>
 	            <tr>
 	                <td class="loginTd" style="font-size: 20px;">PW</td>
 	                <td><input id="loginPwd" name="empPwd" type="password"></td>
 	            </tr>
 	            <tr>
-	            	<td colspan="2" class="loginTd"><input id="loginSaveId" type="checkbox"><label id="loginSaveIdLabel" for="">아이디 저장 &nbsp;</label></td>
+	            	<td colspan="2" class="loginTd"><input id="loginSaveId" type="checkbox" name="saveId" <% if(saveId){ %> checked="checked"<%} %>><label id="loginSaveIdLabel" for="">아이디 저장 &nbsp;</label></td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" class="loginTd"><button type="submit" id="loginBtn" class="bigBtn">로그인</button></td>

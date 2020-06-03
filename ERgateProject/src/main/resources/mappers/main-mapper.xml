@@ -17,6 +17,7 @@
 		<result column="EMP_PRI_EMAIL" property="empPriEmail"/>
 		<result column="EMP_PHONE" property="empPhone"/>
 		<result column="EMP_ADDRESS" property="empAddress"/>
+		<result column="EMP_ADDRESS_DETAIL" property="empAddressDetail"/>
 		<result column="EMP_IMAGE" property="empImage"/>
 		<result column="EMP_BIRTHDAY" property="empBirthday"/>
 		<result column="RESIGN_FLAG" property="resignFlag"/>
@@ -28,9 +29,9 @@
 	</resultMap>
 	
 	<select id="loginMember" resultMap="employeeResultSet" parameterType="Employee">
-		SELECT EMP_ID, RANK_CODE, DEPT_CODE, JOB_CODE, EMP_CODE, EMP_PWD, EMP_NAME, HIRE_DATE, 
-                       EMP_EXTENSION, EMP_FAX, EMP_COM_EMAIL, EMP_PRI_EMAIL, EMP_PHONE, EMP_ADDRESS, EMP_IMAGE,
-                       EMP_BIRTHDAY, RESIGN_FLAG, RESIGN_DATE, EMP_STATUS, RANK_TITLE, DEPT_TITLE, JOB_TITLE
+		SELECT EMP_ID, RANK_CODE, DEPT_CODE, JOB_CODE, EMP_CODE, EMP_PWD, EMP_NAME, HIRE_DATE, EMP_EXTENSION, 
+			   EMP_FAX, EMP_COM_EMAIL, EMP_PRI_EMAIL, EMP_PHONE, EMP_ADDRESS, EMP_ADDRESS_DETAIL, EMP_IMAGE,
+               EMP_BIRTHDAY, RESIGN_FLAG, RESIGN_DATE, EMP_STATUS, RANK_TITLE, DEPT_TITLE, JOB_TITLE
 		  FROM EMPLOYEE
               JOIN DEPARTMENT USING(DEPT_CODE)
               JOIN RANK USING(RANK_CODE)
@@ -74,8 +75,22 @@
 		INSERT INTO EMPLOYEE
 		VALUES(#{empId}, NULL, NULL, NULL, NULL, #{empPwd}, #{empName}, 
 			   NULL, NULL, NULL, NULL, #{empPriEmail}, #{empPhone}, 
-			   #{empAddress}, NULL, #{empBirthday}, 'N', NULL, NULL)
+			   #{empAddress}, #{empAddressDetail}, NULL, #{empBirthday}, 'N', NULL, NULL)
 	</insert>
+	
+	<update id="updateMember" parameterType="Employee">
+		UPDATE EMPLOYEE
+		   SET EMP_PWD=#{empPwd},
+		   	   EMP_EXTENSION=#{empExtension},
+		   	   EMP_FAX=#{empFax},
+		   	   EMP_NAME=#{empName},
+		   	   EMP_BIRTHDAY=#{empBirthday},
+		   	   EMP_PHONE=#{empPhone},
+		   	   EMP_PRI_EMAIL=#{empPriEmail},
+		   	   EMP_ADDRESS=#{empAddress},
+		   	   EMP_ADDRESS_DETAIL=#{empAddressDetail}
+		 WHERE EMP_ID=#{empId}
+	</update>
 	
 
 </mapper>

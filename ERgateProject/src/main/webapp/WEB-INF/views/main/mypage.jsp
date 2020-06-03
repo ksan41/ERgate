@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>mypage</title>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 /* ==========페이지영역========== */
 
@@ -195,7 +196,13 @@
 </style>   
 </head>
 <body>
-	<!-- 이곳에 메뉴바 include -->
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
 	
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp" />
@@ -214,7 +221,7 @@
 		<div class="contentArea">
             <!-- 내용 작성 영역 입니다-->
 
-            <form action="">
+            <form action="update.ma" method="post">
                 <table id="mypageTable">
                     <tr>
                         <td rowspan="2" id="mypageProfileArea">
@@ -274,8 +281,15 @@
                                     <td>새 비밀번호 확인</td>
                                 </tr>
                                 <tr>
-                                    <td><input name="empPwd" type="password"></td>
-                                    <td><input type="password"></td>
+                                    <td>
+                                    	<input name="empPwd" type="password" id="newPwd">
+                                    	<div id="pwdCaution" class="caution"></div>
+                                    	
+                                    </td>
+                                    <td>
+                                    	<input type="password" id="newPwdCheck">
+                                    	<div id="pwdCheckCaution" class="caution"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"><div class="mypageLine"></div></td>
@@ -311,15 +325,15 @@
                                     <td>팩스 번호</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${ loginUser.empExtension }"></td>
-                                    <td><input type="text" value="${ loginUser.empFax }"></td>
+                                    <td><input name="empExtension" type="text" value="${ loginUser.empExtension }" placeholder="000-0000-0000"></td>
+                                    <td><input name="empFax" type="text" value="${ loginUser.empFax }" placeholder="000-0000-0000"></td>
                                 </tr>
                                 <tr>
                                     <td>입사일</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${ loginUser.hireDate }"></td>
+                                    <td><input type="text" value="${ loginUser.hireDate }" placeholder="YYYY/MM/DD"></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -340,17 +354,17 @@
                                     <td>생년월일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${ loginUser.empName }"></td>
-                                    <td><input type="date" value="${ loginUser.empBirthday }"></td>
+                                    <td><input name="empName" type="text" value="${ loginUser.empName }" required></td>
+                                    <td><input name="empBirthday" type="text" value="${ loginUser.empBirthday }" placeholder="YYYY/MM/DD"></td>
                                 </tr>
                                 <tr>
                                     <td>휴대폰번호</td>
                                     <td>이메일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${ loginUser.empPhone }"></td>
+                                    <td><input name="empPhone" type="text" value="${ loginUser.empPhone }" placeholder="000-0000-0000"></td>
                                     <td>
-                                    	<input value="${ loginUser.empPriEmail }" id="mypageEmail1" type="text" style="width: 180px">
+                                    	<input name="empEmail" value="${ loginUser.empPriEmail }" id="mypageEmail1" type="text" style="width: 180px">
 					                	<input value="@gmail.com" id="mypageEmail2" type="text" readonly style="width: 180px">
                                     </td>
                                 </tr>
@@ -359,10 +373,10 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                    	<button id="mypageAddressBtn" class="middleBtn">우편번호찾기</button>
-                                    	<input type="text" style="width: 100px" readonly>
-                                    	<input type="text" style="width: 370px" value="${ loginUser.empAddress }"> <br>
-                                    	<input type="text" style="width: 650px">
+                                    	<button id="mypageAddressBtn" class="middleBtn" type="button" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
+                                    	<input name="empAddress" type="text" value="${ loginUser.empAddress }" id="sample6_address" placeholder="주소" style="width: 520px"> <br>
+                                    	<input name="empAddressDetail" type="text" value="${ loginUser.empAddressDetail }" id="sample6_detailAddress" placeholder="상세주소" style="width: 650px">
+                                    	<input type="hidden" id="sample6_postcode"><input type="hidden" id="sample6_extraAddress">
                                     </td>
                                 </tr>
                             </table>
@@ -371,12 +385,64 @@
                     <tr>
                         <td colspan="2" id="mypageBtnArea">
                         	<button id="mypageSubmitBtn" class="bigBtn" type="submit">수정</button>
-                        	<button id="mypageCancelBtn" class="bigBtn">취소</button>
+                        	<button id="mypageCancelBtn" class="bigBtn" type="button">취소</button>
                         </td>
                     </tr>
                 </table>
+                <input type="hidden" name="empId" value="${ loginUser.empId }">
             </form>
 		</div>
 	</div>
+		
+	<script>
+	    function sample6_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById("sample6_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("sample6_detailAddress").focus();
+	            }
+	        }).open();
+	    }
+	</script>
+	
 </body>
 </html>

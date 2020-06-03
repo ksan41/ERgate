@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -243,8 +244,13 @@
 </style>   
 </head>
 <body>
-	<!-- 이곳에 메뉴바 include -->
-	
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+		
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp" />
 

@@ -32,7 +32,7 @@ public class MainController {
 			return "main/main";
 		}else {
 			session.setAttribute("msg", "로그인에 실패하였습니다. 알맞은 아이디와 비밀번호를 입력해주세요.");
-			return "redirect:/";
+			return "redirect:returnLogin.ma";
 		}
 	}
 	
@@ -47,20 +47,12 @@ public class MainController {
 	
 	// 계정등록 
 	@RequestMapping("insertRequest.ma")
-	public String insertRequest(Employee e, String empEmail1, String empEmail2, String empAddress1, String empAddress2, HttpSession session) {
+	public String insertRequest(Employee e, String empEmail, HttpSession session) {
 		
 		String encPwd = bcryptPasswordEncoder.encode(e.getEmpPwd());
 		e.setEmpPwd(encPwd);
 		
-		String empEmail = empEmail1 + empEmail2;
-		e.setEmpPriEmail(empEmail);
-		
-		String empAddress = empAddress1 + empAddress2;
-		e.setEmpAddress(empAddress);
-		
-		System.out.println(e.getEmpPriEmail());
-		System.out.println(e.getEmpAddress());
-		
+		e.setEmpPriEmail(empEmail + "@gmail.com");
 		
 		int result = mService.insertRequest(e);
 		if(result > 0) {
@@ -84,6 +76,26 @@ public class MainController {
 			return "fail";
 		}else {
 			return "success";
+		}
+	}
+	
+	
+	// 회원정보 수정
+	@RequestMapping("update.ma")
+	public String updateMember(Employee e, String empEmail, HttpSession session) {
+		
+		String encPwd = bcryptPasswordEncoder.encode(e.getEmpPwd());
+		e.setEmpPwd(encPwd);
+		
+		e.setEmpPriEmail(empEmail + "@gmail.com");
+		
+		int result = mService.updateMember(e);
+		if(result > 0) {
+			session.setAttribute("msg", "개인 정보 수정이 성공적으로 완료되었습니다.");
+			return "redirect:main.ma";
+		}else {
+			session.setAttribute("msg", "개인 정보 수정에 실패하였습니다. 다시 시도해 주세요.");
+			return "redirect:mypage.ma";
 		}
 	}
 	

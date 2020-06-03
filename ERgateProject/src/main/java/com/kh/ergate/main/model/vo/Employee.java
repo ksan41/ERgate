@@ -29,6 +29,7 @@ public class Employee {
 	private String empPriEmail;
 	private String empPhone;
 	private String empAddress;
+	private String empAddressDetail;
 	private String empImage;
 	private String empBirthday;
 	private String resignFlag;
