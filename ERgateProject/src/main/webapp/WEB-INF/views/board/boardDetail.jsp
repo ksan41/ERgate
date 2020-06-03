@@ -430,35 +430,35 @@
 								 "<br>" + 
 								 "<div class='rereplyShow"+list[i].replyNo+"'>"+
 								 "</div>";
-								 
+					
 						/* 대댓글. 위랑 헷깔리지 않기 */
 						$.ajax({
 							url:"relist.bo",
 							data:{refRno:list[i].replyNo},
 							success:function(relist){
 								value2 = "";
-								for(var x in relist){
-									value += "<div style='width:1300px;height:110px;'>" +
-											 "<table class='replyContent'>" +
-											 "<tr>" +
-												"<td>" + list[i].replyWriter + "</td>" +
-											 "</tr>" +
-											 "<tr>" +
-											 	"<td id='reContentWrap'>" + "<span id='reContent'>" + list[i].replyContent + "</span>" + "</td>" +
-											 "</tr>" +
-											 "<tr>" +
-											 	"<td id='reDate'>" + list[i].replyEnrollDate + "</td>" +
-											 "</tr>" +
-											 "<tr>" +
-											 "<td id='replyBtnArea'>" +
-											 	"<button class='smallBtn replyUpdateBtn'>수정</button>" +
-											 	"<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-											 "</td>" +
-											 "</tr>" +
-											 "</table>" + 
-											 "<hr>" +
-											 "</div>" +
-											 "<br>";
+								for(var i in relist){
+									value2 += "<div style='width:1300px;height:110px;'>" +
+											  "<table class='replyContent rereply'>" +
+											  "<tr>" +
+											 	"<td>" + relist[i].replyWriter + "</td>" +
+											  "</tr>" +
+											  "<tr>" +
+											  	"<td id='reContentWrap'>" + "<span id='reContent'>" + relist[i].replyContent + "</span>" + "</td>" +
+											  "</tr>" +
+											  "<tr>" +
+											  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
+											  "</tr>" +
+											  "<tr>" +
+											  "<td id='replyBtnArea'>" +
+											  	"<button class='smallBtn replyUpdateBtn'>수정</button>" +
+											  	"<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+											  "</td>" +
+											  "</tr>" +
+											  "</table>" + 
+											  "<hr>" +
+											  "</div>" +
+											  "<br>";
 								}
 								
 							},error:function(){

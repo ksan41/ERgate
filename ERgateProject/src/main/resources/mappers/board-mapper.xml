@@ -33,6 +33,16 @@
 		<result column="reply_writer" property="replyWriter"/>
 	</resultMap>
 	
+	<resultMap id="rereplyResultSet" type="ReReply">
+		<id column="reply_no" property="replyNo"/>
+		<result column="emp_id" property="empId"/>
+		<result column="ref_rno" property="refRno"/>
+		<result column="reply_content" property="replyContent"/>
+		<result column="reply_enroll_date" property="replyEnrollDate"/>
+		<result column="reply_writer" property="replyWriter"/>
+		<result column="ref_bno" property="refBno"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		select count(*)
 		  from board
@@ -99,6 +109,13 @@
 		select * 
 		  from board_reply
 		 where ref_bno=#{refBno}
+		 order by reply_no desc
+	</select>
+	
+	<select id="rereplyList" parameterType="_int" resultMap="rereplyResultSet">
+		select * 
+		  from board_re_reply
+		 where ref_rno=#{refRno}
 		 order by reply_no desc
 	</select>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
+import com.kh.ergate.board.model.vo.ReReply;
 import com.kh.ergate.board.model.vo.Reply;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
@@ -56,6 +57,10 @@ public class BoardDao {
 
 	public ArrayList<Reply> replyList(SqlSessionTemplate sqlSession, int refBno) {
 		return (ArrayList)sqlSession.selectList("boardMapper.replyList", refBno);
+	}
+
+	public ArrayList<ReReply> rereplyList(SqlSessionTemplate sqlSession, int refRno) {
+		return (ArrayList)sqlSession.selectList("boardMapper.rereplyList", refRno);
 	}
 	
 	

@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 import com.kh.ergate.board.model.service.BoardService;
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
+import com.kh.ergate.board.model.vo.ReReply;
 import com.kh.ergate.board.model.vo.Reply;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
@@ -105,6 +106,14 @@ public class BoardController {
 	public String replyList(int refBno) {
 		
 		ArrayList<Reply> list = bodService.replyList(refBno);
+		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="relist.bo", produces="application/json; charset=utf-8")
+	public String rereplyList(int refRno) {
+		
+		ArrayList<ReReply> list = bodService.rereplyList(refRno);
 		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(list);
 	}
 	
