@@ -36,4 +36,8 @@ public class SignDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("signMapper.searchList",sds,rowBounds);
 	}
+	
+	public SignDocument signDetail(SqlSessionTemplate sqlSession,SignDocument sdd) {
+		return sqlSession.selectOne("signMapper.signDetail",sdd);
+	}
 }

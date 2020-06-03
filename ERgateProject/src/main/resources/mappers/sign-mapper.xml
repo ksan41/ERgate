@@ -73,4 +73,13 @@
               	AND SIGN_TYPE_NO = 0
               </if>
 	</select>
+	
+	<select id="signDetail" parameterType="SignDocument" resultMap="signDocResultSet">
+		SELECT *
+		  FROM SIGN_DOCUMENT
+		WHERE DOCUMENT_NO = #{documentNo}
+		  <if test="signTypeNo == 0">
+		  	AND DOCUMENT_NO = 0
+		  </if>
+	</select>
 </mapper>

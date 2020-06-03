@@ -251,21 +251,24 @@
 			
 	<script>
 		$(document).ready(function() {
+			// 기본적으로 문서 열었을때 오늘날짜 보여지도록 변수에 저장해둠
 			var date = new Date();
 			var year = date.getFullYear();
 			var month = date.getMonth() + 1;				
 			
+			// 날짜 변경시 갱신될 년월
 			var newYear = "<c:out value='${sds.year}'/>";
 			var newMonth = "<c:out value='${sds.month}'/>";		
 			
-			if(newYear != ""){
+			if(newYear != ""){ // 날짜 변경값 있을경우
 				$("#calYear").text(newYear);
 				$("#calMonth").text(newMonth);
-			}else{
+			}else{ // 처음 페이지 요청했을경우
 				$("#calYear").text(year);
 				$("#calMonth").text(month);
 			}
 			
+			// 이전버튼 눌렀을 경우
 			$("#arrowLeft").click(function() {
 				month = month - 1;
 				if (month < 1) {
@@ -294,7 +297,8 @@
 				$("#changeMonthForm").submit();
 
 			});
-
+			
+			// 다음버튼 눌렀을경우
 			$("#arrowRight").click(function() {
 				month = parseInt(month) + 1;
 				if (month > 12) {
@@ -344,6 +348,7 @@
 						<th>기안일시</th>
 					</tr>
 				</thead>
+				<tbody>
 				<c:choose>
 					<c:when test="${ empty list }">
 						<tr>
@@ -382,13 +387,24 @@
 							<td class="nonContent">&nbsp;</td>
 							<td class="nonContent">&nbsp;</td>
 							<td class="nonContent">&nbsp;</td>
-							<td class="nonContent">&nbsp;</td>
 						</tr>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-
+				</tbody>
 			</table>
+			
+			<script>
+				$(function(){
+					$(".boardTable>tbody tr").click(function(){
+						var documentNo = $(this).children().eq(2).text();					
+						window.open("signDetail.si?documentNo="+ documentNo + "&signTypeNo=0", "ddd",'_blank') ;
+						
+					});
+					
+				});
+			</script>
+			
 			<br>
 			<!-- 페이징바 -->
 			<c:if test="${!empty pi}">

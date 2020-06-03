@@ -27,8 +27,8 @@ public class SignServiceImpl implements SignService{
 	}
 
 	@Override
-	public SignDocument signDetail(SignDocument sd) {
-		return null;
+	public SignDocument signDetail(SignDocument sdd) {
+		return siDao.signDetail(sqlSession,sdd);
 	}
 
 	@Override

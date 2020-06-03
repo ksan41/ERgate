@@ -31,9 +31,15 @@ public class SignController {
 	  
 	  // 결재상세 요청용
 	  
-	  @RequestMapping("signDetail.si") public String signDetail(SignDocument sd,
-	  Model model) {
-	  
+	  @RequestMapping("signDetail.si") public String signDetail(String documentNo,String signTypeNo,SignDocument sdd, Model model) {
+		  
+		  sdd.setDocumentNo(Integer.parseInt(documentNo));
+		  sdd.setSignTypeNo(signTypeNo);
+		  
+		  SignDocument sd = siService.signDetail(sdd);
+		  
+		  model.addAttribute("sd",sd);
+		  return "sign/signDetailExpense";
 	  }
 	  
 	  // 진행결재함요청용
@@ -85,18 +91,13 @@ public class SignController {
 	  public String expenseListMonth(SignDateSearch sds, Integer currentPage, SignDocument sd, Model model) {
 		  
 		  sds.setCondition(1);
-		  System.out.println(sds);
 		  int listCount = siService.searchListCount(sds);
-		  System.out.println(listCount);
 		  
 		  
 		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage.intValue(), 5, 10);
 		  
 		  ArrayList<SignDocument> list = siService.searchList(pi,sds);
 		  
-		  System.out.println(list);
-		  
-			
 		  model.addAttribute("pi",pi); 
 		  model.addAttribute("sds",sds);
 		  model.addAttribute("list",list); 
