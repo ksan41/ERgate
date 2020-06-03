@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.sign.model.service.SignServiceImpl;
+import com.kh.ergate.sign.model.vo.SignDateSearch;
 import com.kh.ergate.sign.model.vo.SignDocument;
 import com.kh.ergate.sign.model.vo.Signer;
 
@@ -70,6 +71,9 @@ public class SignController {
 	  
 	  ArrayList<SignDocument> list = siService.expenseList(pi);
 	  
+	  SignDateSearch sds = null;
+	  
+	  model.addAttribute("sds",sds);
 	  model.addAttribute("pi", pi); 
 	  model.addAttribute("list", list);
 	  
@@ -77,9 +81,28 @@ public class SignController {
 	  
 	  // 지출결의내역 월선택용
 	  
-	  @RequestMapping("expenseListM.si") public String expenseListMonth(String
-	  month, SignDocument sd, Model model) {
-	  
+	  @RequestMapping("expenseListM.si") 
+	  public String expenseListMonth(SignDateSearch sds, Integer currentPage, SignDocument sd, Model model) {
+		  
+		  sds.setCondition(1);
+		  System.out.println(sds);
+		  int listCount = siService.searchListCount(sds);
+		  System.out.println(listCount);
+		  
+		  
+		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage.intValue(), 5, 10);
+		  
+		  ArrayList<SignDocument> list = siService.searchList(pi,sds);
+		  
+		  System.out.println(list);
+		  
+			
+		  model.addAttribute("pi",pi); 
+		  model.addAttribute("sds",sds);
+		  model.addAttribute("list",list); 
+		  
+		  return "sign/signExpenseList";
+			
 	  }
 	  
 	  // 외근&휴가내역요청용

@@ -226,8 +226,10 @@
 		</div>
 		<div class="contentArea">
 			<h2 style="display: inline-block; margin-left: 530px;">
-				<span id="arrowLeft" class="material-icons"> arrow_left </span> <b
-					id="calYear"></b>년 <b id="calMonth"></b>월
+				<span id="arrowLeft" class="material-icons"> arrow_left </span> 
+
+						<b id="calYear"></b>년 <b id="calMonth"></b>월
+				
 				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
 				<path
@@ -235,6 +237,93 @@
 				<path d="M0 0h24v24H0z" fill="none" /></svg>
 				<span id="arrowRight" class="material-icons"> arrow_right </span>
 			</h2>
+			
+			<form id="changeMonthForm" action="expenseListM.si" method="get">
+				<input type="hidden" name="year">
+				<input type="hidden" name="month">
+				<input type="hidden" name="currentPage" value="1">
+			</form>
+			
+	<script>
+		$(document).ready(function() {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;				
+			
+			var newYear = "<c:out value='${sds.year}'/>";
+			var newMonth = "<c:out value='${sds.month}'/>";		
+			
+			if(newYear != ""){
+				$("#calYear").text(newYear);
+				$("#calMonth").text(newMonth);
+			}else{
+				$("#calYear").text(year);
+				$("#calMonth").text(month);
+			}
+			
+			$("#arrowLeft").click(function() {
+				month = month - 1;
+				if (month < 1) {
+					month = 12;
+					year = year - 1;
+				}
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				
+				$("input[name=month]").attr("value",month);
+				$("input[name=year]").attr("value",year);
+				
+				if(newYear != ""){
+					newMonth = newMonth - 1;
+					if (newMonth < 1) {
+						newMonth = 12;
+						newYear = newYear - 1;
+					}
+					$("#calMonth").text(newMonth);
+					$("#calYear").text(newYear);
+					
+					$("input[name=month]").attr("value",newMonth);
+					$("input[name=year]").attr("value",newYear);
+				}
+				
+				$("#changeMonthForm").submit();
+
+			});
+
+			$("#arrowRight").click(function() {
+				month = parseInt(month) + 1;
+				if (month > 12) {
+					month = 1;
+					year = parseInt(year) + 1;
+				}
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				
+				$("input[name=month]").attr("value",month);
+				$("input[name=year]").attr("value",year);
+				
+				if(newYear != ""){
+					newMonth = parseInt(newMonth) + 1;
+					if (newMonth > 12) {
+						newMonth = 1;
+						newYear = parseInt(newYear) + 1;
+					}
+					$("#calMonth").text(newMonth);
+					$("#calYear").text(newYear);
+					
+					$("input[name=month]").attr("value",newMonth);
+					$("input[name=year]").attr("value",newYear);
+				}
+				
+				$("#changeMonthForm").submit();
+			});
+
+		});
+		
+		
+	</script>
+			
+			
 			<br> <br>
 
 			<table class="boardTable">
@@ -318,41 +407,6 @@
 		</div>
 	</div>
 
-	<script>
-		$(document).ready(function() {
-			var date = new Date();
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
 
-			$("#calYear").text(year);
-			$("#calMonth").text(month);
-
-			$("#arrowLeft").click(function() {
-				console.log("클릭");
-				month = month - 1;
-				if (month == 1) {
-					month = 12;
-					year = year - 1;
-				}
-				$("#calMonth").text(month);
-				$("#calYear").text(year);
-
-			});
-
-			$("#arrowRight").click(function() {
-				console.log("클릭");
-				month = month + 1;
-				if (month > 12) {
-					month = 1;
-					year = year + 1;
-				}
-				$("#calMonth").text(month);
-				$("#calYear").text(year);
-			});
-
-		});
-		
-		
-	</script>
 </body>
 </html>

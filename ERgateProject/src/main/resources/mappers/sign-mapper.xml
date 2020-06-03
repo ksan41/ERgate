@@ -47,4 +47,30 @@
 		 ORDER BY DRAFT_DATE DESC
 	]]>	 
 	</select>
+	
+	<select id="searchListCount" parameterType="com.kh.ergate.sign.model.vo.SignDateSearch" resultType="_int">
+		SELECT COUNT(*)
+		  FROM SIGN_DOCUMENT
+		WHERE EXTRACT(YEAR FROM DRAFT_DATE) = #{year} AND
+              EXTRACT(MONTH FROM DRAFT_DATE) = #{month}
+              <if test="condition == 0 ">
+              	AND EMP_ID = #{empId}
+              </if>
+              <if test="condition == 1">
+              	AND SIGN_TYPE_NO = 0
+              </if>
+	</select>
+	
+	<select id="searchList" parameterType="com.kh.ergate.sign.model.vo.SignDateSearch" resultMap="signDocResultSet">
+		SELECT *
+		  FROM SIGN_DOCUMENT
+		WHERE EXTRACT(YEAR FROM DRAFT_DATE) = #{year} AND
+              EXTRACT(MONTH FROM DRAFT_DATE) = #{month}
+              <if test="condition == 0 ">
+              	AND EMP_ID = #{empId}
+              </if>
+              <if test="condition == 1">
+              	AND SIGN_TYPE_NO = 0
+              </if>
+	</select>
 </mapper>
