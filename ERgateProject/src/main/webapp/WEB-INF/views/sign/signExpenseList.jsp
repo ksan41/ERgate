@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,6 +154,10 @@
 .boardTable tr:hover td {
 	background-color: rgb(224, 224, 224);
 	cursor: pointer;
+}
+
+.boardTable tr:hover .nonContent {
+	cursor : default;
 }
 
 /* 게시판 스타일 */
@@ -357,6 +362,18 @@
 								<td>${l.signTitle }</td>
 								<td>${l.draftDate }</td>
 							</tr>
+						</c:forEach>
+						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
+    						<tr>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+							<td class="nonContent">&nbsp;</td>
+						</tr>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
