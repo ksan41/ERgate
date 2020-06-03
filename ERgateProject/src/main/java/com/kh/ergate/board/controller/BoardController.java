@@ -18,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.ergate.board.model.service.BoardService;
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
+import com.kh.ergate.board.model.vo.Reply;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
@@ -98,7 +100,15 @@ public class BoardController {
 		return new Gson().toJson(list);
 	}
 	
-
+	@ResponseBody
+	@RequestMapping(value="rlist.bo", produces="application/json; charset=utf-8")
+	public String replyList(int refBno) {
+		
+		ArrayList<Reply> list = bodService.replyList(refBno);
+		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(list);
+	}
+	
+	
 	/*
 	 * @RequestMapping("enrollForm.bo") public String enrollForm() { return
 	 * "board/boardEnrollForm"; }

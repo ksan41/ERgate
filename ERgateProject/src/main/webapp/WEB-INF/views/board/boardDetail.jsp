@@ -175,6 +175,7 @@
 /* 작은버튼 스타일 */
 
 /* 댓글 영역 스타일 */
+.
 .replyContent{
 	width:100%;
 	min-height:50px;
@@ -216,7 +217,10 @@
 	float:left;
 	margin-right:5px;
 }
-
+#reDate {
+	font-size:14px; 
+	color:lightgray;
+}
 /*대댓글*/
 .rereply{
 	padding-left:50px;
@@ -292,35 +296,7 @@
 					</table>
 					</c:if>
 					
-			<script>
-			$(document).ready(function() {
-				$(".fileShow").click(function() {
-					if($(".fileWrap").is(":visible")){
-						$(".fileWrap").slideUp(100);
-					}else {
-						$(".fileWrap").slideDown(100);
-					}
-					$.ajax({
-						url:"detailFile.bo",
-						data:{refBoardNo:${b.boardNo}},
-						success:function(list){
-							var value = "";
-							for(var i in list){
-								value += "<tr>" +
-											"<td>" + "<a href='"+"${pageContext.servletContext.contextPath }/resources/uploadFiles/board/"+list[i].changeName+"' download=" +list[i].originName+ ">"+ list[i].originName +"</a>" +"</td>" +
-										 "<tr>";
-							}
-							$("#fileListTable tbody").html(value);
-						},error:function(){
-							console.log("ajax 통신 실패");
-							
-						}
-					});
-
-					
-				});
-			});
-			</script>					
+								
 					
 			</div>
 			<br>
@@ -352,134 +328,12 @@
 			<br><br><br><br><br>
 			
 			<div class="replyShow">
-				<!-- 댓글1개 영역 -->
-				<div style="width:1300px;height:110px;">
-					<table class="replyContent">
-						<tr>
-							<td>개발 1팀 케빈 </td>
-						</tr>
-						<tr>
-							<td id="reContentWrap"><span id="reContent">댓글 내용</span> </td>
-						</tr>
-						<tr>
-							<td id="reDate" style="font-size:14px; color:lightgray;">2020.05.10 13:11</td>
-						</tr>
-						<tr>
-							<td>
-								<button class="smallBtn replyUpdateBtn">수정</button>
-								<button class="smallBtn replyDeleteBtn" style="background: rgb(190, 190, 190);">삭제</button>							
-							</td>
-						</tr>
-					</table>
-					<hr>
-				</div>
-				<br>
-				<!-- 댓글 1개영역 -->
-				<div style="width:1300px;height:110px;">
-					<table class="replyContent rereply">
-						<tr>
-							<td>└ 개발 1팀 케빈 </td>
-						</tr>
-						<tr>
-							<td id="reContentWrap"><span id="reContent">댓글 내용</span> </td>
-						</tr>
-						<tr>
-							<td id="reDate" style="font-size:14px; color:lightgray;">2020.05.10 13:11</td>
-						</tr>
-						<tr>
-							<td>
-								<button class="smallBtn replyUpdateBtn">답글</button>						
-							</td>
-						</tr>
-					</table>
-					<hr>
-				</div>
-				<br>
-				<div style="width:1300px;height:110px;">
-					<table class="replyContent">
-						<tr>
-							<td>개발 1팀 케빈 </td>
-						</tr>
-						<tr>
-							<td id="reContentWrap"><span id="reContent">댓글 내용</span> </td>
-						</tr>
-						<tr>
-							<td id="reDate" style="font-size:14px; color:lightgray;">2020.05.10 13:11</td>
-						</tr>
-						<tr>
-							<td>
-								<button class="smallBtn replyUpdateBtn">답글</button>						
-							</td>
-						</tr>
-					</table>
-					<hr>
-				</div>
+			
+			
+				
+				
+				
 			</div>
-			
-			
-<!-- 			<br style="clear:both;">
-			<div style="height:10px;"></div>
-			<hr style="width:1340px; margin-left:0px;">
-			<div class="replyShow">
-				<div style="width:1200px; float:left;">
-					<table class="replyContent">
-						<tr>
-							<td>개발 1팀 케빈 </td>
-						</tr>
-						<tr>
-							<td id="reContentWrap"><span id="reContent">댓글 내용</span> </td>
-						</tr>
-						<tr>
-							<td id="reDate" style="font-size:14px; color:lightgray;">2020.05.10 13:11</td>
-						</tr>
-					</table>
-				</div>
-				<div class="userControl" style="width:100px; float:left; padding-bottom:10px;">
-					해당 table의 경우 작성자가 현재 로그인한 사용자와 일치할 경우에만 보이도록 if문 쓰게 될 것임
-					<table style="height:81px;">
-						<tr>
-							<td><button class="smallBtn replyUpdateBtn">수정</button></td>
-							<td><button class="smallBtn replyDeleteBtn" style="background: rgb(190, 190, 190);">삭제</button></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			
-			
-			<hr style="width:1340px; margin-left:0px; margin-top:10px; margin-bottom:0px;">
-			
-			
-			<br style="clear:both;">
-			<div style="height:10px;"></div>
-			<hr style="width:1340px; margin-left:0px;">
-			<div class="replyShow">
-				<div style="width:1240px; float:left;">
-					<table class="replyContent">
-						<tr>
-							<td>개발 1팀 케빈 </td>
-						</tr>
-						<tr>
-							<td id="reContentWrap"><span id="reContent">댓글 내용</span> </td>
-						</tr>
-						<tr>
-							<td id="reDate" style="font-size:14px; color:lightgray;">2020.05.10 13:11</td>
-						</tr>
-					</table>
-				</div>
-				<div class="userControl" style="width:100px; float:left; padding-bottom:10px;">
-					해당 table의 경우 작성자가 현재 로그인한 사용자와 일치할 경우에만 보이도록 if문 쓰게 될 것임
-					<table style="height:81px;">
-						<tr>
-							<td><button class="smallBtn replyUpdateBtn">답글</button></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			
-			
-			<hr style="width:1340px; margin-left:0px; margin-top:10px; margin-bottom:0px;">
-			 -->
-			
 			<br>
 
 			
@@ -503,7 +357,6 @@
 			<br> <br> <br>
 		</div>
 	</div>
-	
 	<script>
 	$(document).ready(function() { 
 		$(".listBtn").click(function(){
@@ -520,6 +373,66 @@
 			var bno=0; // 글번호가 들어갈꺼임 (무엇을 삭제할지 알아야되니까)
 			location.href="delete.bo?pno=" + bno;
 		});
+		
+		$(".fileShow").click(function() {
+			if($(".fileWrap").is(":visible")){
+				$(".fileWrap").slideUp(100);
+			}else {
+				$(".fileWrap").slideDown(100);
+			}
+			$.ajax({
+				url:"detailFile.bo",
+				data:{refBoardNo:${b.boardNo}},
+				success:function(list){
+					var value = "";
+					for(var i in list){
+						value += "<tr>" +
+									"<td>" + "<a href='"+"${pageContext.servletContext.contextPath }/resources/uploadFiles/board/"+list[i].changeName+"' download=" +list[i].originName+ ">"+ list[i].originName +"</a>" +"</td>" +
+								 "<tr>";
+					}
+					$("#fileListTable tbody").html(value);
+				},error:function(){
+					console.log("ajax 통신 실패");
+					
+				}
+			});
+		});
+		
+		
+		
+			$.ajax({
+				url:"rlist.bo",
+				data:{refBno:${b.boardNo}},
+				success:function(list){
+					var value = "";
+					for(var i in list){
+						value += "<div style='width:1300px;height:110px;'>" +
+								 "<table class='replyContent'>" +
+								 "<tr>" +
+									"<td>" + list[i].replyWriter + "</td>" +
+								 "</tr>" +
+								 "<tr>" +
+								 	"<td id='reContentWrap'>" + "<span id='reContent'>" + list[i].replyContent + "</span>" + "</td>" +
+								 "</tr>" +
+								 "<tr>" +
+								 	"<td id='reDate'>" + list[i].replyEnrollDate + "</td>" +
+								 "</tr>" +
+								 "<tr>" +
+								 "<td id='replyBtnArea'>" +
+								 	"<button class='smallBtn replyUpdateBtn'>수정</button>" +
+								 	"<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+								 "</td>" +
+								 "</tr>" +
+								 "</table>" + 
+								 "<hr>" +
+								 "</div>" +
+								 "<br>";
+					}
+					$(".replyShow").html(value);
+				},error:function(){
+					console.log("ajax 통신 실패");
+				}
+			});
 	});
 	
 	$(document).ready(function() { 

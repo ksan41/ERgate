@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
+import com.kh.ergate.board.model.vo.Reply;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 
@@ -28,7 +29,8 @@ public interface BoardService {
 	Board selectBoard(int bno);
 	// 3_3. 해당 게시글 파일 조회용 서비스
 	ArrayList<BoardAttachment> fileList(int refBoardNo);
-	
+	// 4-1. 해당 게시글 리플 조회용 서비스
+	ArrayList<Reply> replyList(int refBno);
 	
 	
 	

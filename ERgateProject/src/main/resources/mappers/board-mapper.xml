@@ -24,6 +24,15 @@
 		<result column="file_Path" property="filePath"/>
 	</resultMap>
 	
+	<resultMap id="replyResultSet" type="Reply">
+		<id column="reply_no" property="replyNo"/>
+		<result column="emp_id" property="empId"/>
+		<result column="ref_bno" property="refBno"/>
+		<result column="reply_content" property="replyContent"/>
+		<result column="reply_enroll_date" property="replyEnrollDate"/>
+		<result column="reply_writer" property="replyWriter"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		select count(*)
 		  from board
@@ -84,6 +93,13 @@
 		  from board_attachment
 		 where ref_board_no=#{refBoardNo}
 		 order by attachment_no desc
+	</select>
+	
+	<select id="replyList" parameterType="_int" resultMap="replyResultSet">
+		select * 
+		  from board_reply
+		 where ref_bno=#{refBno}
+		 order by reply_no desc
 	</select>
 </mapper>
 
