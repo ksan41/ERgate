@@ -848,6 +848,7 @@ p {
 			
 
 		<!-- 모달 (예약하기 부분) -->
+		<form action="reserveMtroom.me" method="post" onsubmit="">
 		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
 			<div class="modal-content">
@@ -872,13 +873,13 @@ p {
 					</tr>
 					<tr>
 						<td id="r1">회의실</td>
-						<td id="r2"><select name="meetingroom" class="inputs"
-							style="width: 120px">
+						<td id="r2"><select name="meetingroom" class="inputs" style="width: 120px">
 								<option selected>회의실 선택</option>
-								<option>5F 회의실1</option>
-								<option>5F 회의실2</option>
-								<option>5F 회의실3</option>
-								<option>6F회의실</option>
+								<option value="1">3F 회의실</option>
+								<option value="2">5F 회의실1</option>
+								<option value="3">5F 회의실2</option>
+								<option value="4">6F 회의실1</option>
+								<option value="5">6F 회의실2 </option>
 						</select> <br>
 							<button id="searchBtn1" class="searchBtn">가용회의실 검색</button> <br>
 							<input type="text" id="meetingroomBox" class="inputs"
@@ -905,10 +906,11 @@ p {
 
 			<!-- 예약/취소 버튼 -->
 			<div class="btns">
-				<button id="reservBtn" type="submit">예약하기</button>
+				<button id="reservBtn" type="submit" disabled>예약하기</button>
 				<button id="resetBtn" type="reset" onClick="history.go(0)">취소</button>
 			</div>
 		</div>
+		</form>
 
 
 		<!-- 모달(나의 예약 현황) -->
@@ -1066,7 +1068,7 @@ p {
 					function() {
 						location.href = "reserveDetail.me?mno"
 								+ $(this).children().eq(0).text();
-					});
+				});
 		});
 		
 		

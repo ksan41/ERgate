@@ -44,6 +44,12 @@
 		 where mtrm_status = 'Y'
 	</select>
 	
+	<insert id="reserveMtroom" parameterType="MeetingroomReservation">
+		insert into meetingroom_reservation 
+		values(#{mtrmReservNo}, #{empId}, #{mtrmCode}, #{mtrmName}, #{mtrmReservDate}, #{mtrmDeptTitle},
+			   #{mtrmStartDate}, #{mtrmStartTime}, #{mtrmEndDate}, #{mtrmEndTime}, #{mtrmPurpose}, 'Y')
+	
+	</insert>
 
 
 

@@ -17,7 +17,8 @@ public interface MeetingroomService {
 		int currentStatusDay(String day);
 		
 	 //회의실 예약용 ---reserveMtroom(MeetingroomReservation,ArrayList<String> empId)
-	
+		int reserveMtroom(MeetingroomReservation mr);
+		
 	 //참석자 팝업 조회용 ---selectPeople()
 		Meetingroom selectPeople();
 	

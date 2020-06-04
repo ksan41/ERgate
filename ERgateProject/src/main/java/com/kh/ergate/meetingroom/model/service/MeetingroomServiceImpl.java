@@ -94,6 +94,12 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 		return mrDao.selectMtroomDetail(sqlSession);
 	}
 
+	// 회의실 예약용
+	@Override
+	public int reserveMtroom(MeetingroomReservation mr) {
+		return mrDao.reserveMtroom(sqlSession, mr);
+	}
+
 	
 
 

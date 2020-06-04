@@ -5,6 +5,8 @@ package com.kh.ergate.meetingroom.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +25,31 @@ public class MeetingroomController {
 	@Autowired
 	private MeetingroomServiceImpl mrService;
 	
-	
+
 	/* 할 수 있는 부분부터 해서 주석 참고 바람*/
+	
+	@RequestMapping("reserveMtroom.me")
+	public String reserveMtroom(MeetingroomReservation mr, Model model, HttpSession session) {
+		
+		int result = mrService.reserveMtroom(mr);
+		
+		if(result > 0) {
+			
+			session.setAttribute("msg", "회의실 예약 성공");
+			return "redirect:/";
+			
+		}else {
+			
+			model.addAttribute("msg", "회의실 예약 실패");
+			return "";
+		}
+		
+		
+		
+	}
+
+	
+	
 	
 	// 회의실예약현황리스트조회용(statusList.me) --- statusList(Meetingroom,Model)
 
@@ -34,7 +59,7 @@ public class MeetingroomController {
 		
 		int listCount = mrService.statusListCount();
 
-		System.out.println(listCount);
+		//System.out.println(listCount);
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 
