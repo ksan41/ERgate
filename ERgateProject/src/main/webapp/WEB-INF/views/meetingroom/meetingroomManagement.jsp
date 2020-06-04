@@ -558,8 +558,8 @@
 	            </div>
 	                    <!-- 예약/취소 버튼 -->
 				<div class=btns>
-					<button class="mmSubmitBtn" type="submit">수정하기</button>
-					<button class="mmResetBtn" type="reset">삭제하기</button>
+					<button class="mmSubmitBtn" type="submit" onclick="postFormSubmit(1);">수정하기</button>
+					<button class="mmResetBtn" type="reset" onclick="postFormSubmit(2);">삭제하기</button>
 				</div>
 			</div>
 			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br> 
@@ -588,6 +588,20 @@
 			
 
 			
+		</script>
+		
+		<script>
+			function postFormSubmit(num){
+				if(num == 1){ // 수정하기 클릭 시
+					$("#postForm").attr("action","updateMtroom.me");
+				}else{ // 삭제하기 클릭 시
+					$("#postForm").attr("action", "deleteMtroom.me");
+				}
+				
+				$("#postForm").submit();
+					
+			}
+		
 		</script>
 
 </body>

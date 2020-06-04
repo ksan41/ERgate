@@ -5,6 +5,7 @@ package com.kh.ergate.meetingroom.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -114,12 +115,12 @@ public class MeetingroomController {
 	//회의실등록용(insertMtroom.me) ---insertMeetingroom(Meetingroom,Model)
 
 	@RequestMapping("insertMtroom.me")
-	public String insertMeetingroom(Meetingroom m, Model model){
+	public String insertMeetingroom(Meetingroom m, Model model, HttpServlet request){
 		
 		int result = mrService.insertMeetingroom(m);
 		System.out.println(m);
 		
-		model.addAttribute("m", m);
+		model.addAttribute("request", request);
 		
 		if(result > 0) { // 회의실 등록 성공
 			
