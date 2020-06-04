@@ -267,9 +267,15 @@ h2, h3 {
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left"><span>@앨리스 </span> <span>@레베카
-						</span> <span>@마리아 </span> <span>@존 </span> <span>@올리버 </span> <span>@샬롯
-						</span></td>
+						<td colspan="6" align="left">
+							<c:if test="${!empty sgList }">
+								<c:forEach var="sg" items="${sgList }">
+									<c:if test="${sg.signType eq 0 }">
+										<span>@${sg.empName } </span>
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</td>
 					</tr>
 				</table>
 

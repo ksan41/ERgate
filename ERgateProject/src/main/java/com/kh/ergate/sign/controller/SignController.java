@@ -41,6 +41,7 @@ public class SignController {
 		  ArrayList<Signer> sgList = siService.signDetailSigner(sdd);
 		  ArrayList<SignAttachment> saList = siService.signDetailAttachment(sdd);
 		  
+		  model.addAttribute("sgList",sgList);
 		  model.addAttribute("saList",saList);
 		  model.addAttribute("sd",sd);
 		  return "sign/signDetailExpense";
