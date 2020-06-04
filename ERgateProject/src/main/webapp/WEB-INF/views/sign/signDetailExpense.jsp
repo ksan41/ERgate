@@ -302,12 +302,22 @@ h2, h3 {
 							<td colspan="6"></td>
 						</tr>
 						<tr>
-							<td colspan="2" rowspan="2">
-								<div id="fileArea">
-									<a href="#">첨부파일1.jpg</a><br>
-									<a href="#">첨부파일2.pdf</a><br>
-								</div>
-							</td>
+							<c:choose>
+								<c:when test="${empty saList }">
+									<td colspan="2">
+										첨부된 파일이 없습니다.
+									</td>
+								</c:when>
+								<c:otherwise>
+									<td colspan="2" rowspan="2">
+										<div id="fileArea">
+											<c:forEach var="i" items="${saList }">
+												<a href="${pageContext.servletContext.contextPath}/resources/uploadFiles/sign/${i.changeName }" download="${i.originName }">${i.originName }</a><br>											
+											</c:forEach>
+										</div>
+									</td>								
+								</c:otherwise>
+							</c:choose>
 						</tr>
 						<tr></tr>
 						<tr>

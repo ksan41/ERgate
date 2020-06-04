@@ -32,7 +32,7 @@ public class SignController {
 	  
 	  // 결재상세 요청용
 	  
-	  @RequestMapping("signDetail.si") public String signDetail(String documentNo,String signTypeNo,SignDocument sdd, Model model) {
+	  @RequestMapping("signDetail.si") public String signDetail(String documentNo,String signTypeNo,SignDocument sdd,SignAttachment sat, Model model) {
 		  
 		  sdd.setDocumentNo(Integer.parseInt(documentNo));
 		  sdd.setSignTypeNo(signTypeNo);
@@ -41,6 +41,7 @@ public class SignController {
 		  
 		  ArrayList<SignAttachment> saList = siService.signDetailAttachment(sdd);
 		  
+		  model.addAttribute("saList",saList);
 		  model.addAttribute("sd",sd);
 		  return "sign/signDetailExpense";
 	  }

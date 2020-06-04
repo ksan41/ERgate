@@ -23,7 +23,15 @@
 		<result column="HOLIDAY_END" property="holidayEnd"/>
 		<result column="HOLIDAY_USECOUNT" property="holidayUsecount"/>
 	</resultMap>
-
+	
+	<resultMap type="SignAttachment" id="signAttResultSet">
+		<id column="FILE_NO" property="fileNo"/>
+		<result column="REF_DOC_NO" property="refDocNo" />
+		<result column="FILE_PATH" property="filePath" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+	</resultMap>
+	
 
 	<select id="selectElistCount" resultType="_int">
 	<![CDATA[
@@ -83,7 +91,7 @@
 		  </if>
 	</select>
 	
-	<select id="signAttachmentList" parameterType="SignDocument" resultType="SignAttachment">
+	<select id="signAttachmentList" parameterType="SignDocument" resultMap="signAttResultSet">
 		SELECT *
 		  FROM SIGN_ATTACHMENT
 		WHERE REF_DOC_NO = #{documentNo}
