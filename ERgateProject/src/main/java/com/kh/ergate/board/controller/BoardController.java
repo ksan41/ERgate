@@ -120,7 +120,9 @@ public class BoardController {
 	@RequestMapping(value="beforeAfter.bo", produces="application/json; charset=utf-8")
 	public String beforAfter(int refBoardNo) {
 		
-		ArrayList<Board> list = bodService.beforeAfter(refBoardNo);
+		ArrayList<Board> list = new ArrayList<>();
+		list.add(bodService.beforeB(refBoardNo));
+		list.add(bodService.afterB(refBoardNo));
 		return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(list);
 	}
 	

@@ -35,7 +35,9 @@ public interface BoardService {
 	// 4-2. 해당 게시글 대댓글 조회용 서비스
 	ArrayList<ReReply> rereplyList(int refRno);
 	// 5-1. 해당 게시글 다음글 / 이전글 조회용 서비스
-	ArrayList<Board> beforeAfter(int refBoardNo);
+	Board beforeB(int refBoardNo);
+	Board afterB(int refBoardNo);
+	
 	
 	// 2. 게시판 작성용 서비스
 	int insertBoard(Board b);

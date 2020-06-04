@@ -63,8 +63,11 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.rereplyList", refRno);
 	}
 
-	public ArrayList<Board> beforeAfter(SqlSessionTemplate sqlSession, int refBoardNo) {
-		return (ArrayList)sqlSession.selectList("boardMapper.beforeAfter", refBoardNo);
+	public Board beforeB(SqlSessionTemplate sqlSession, int refBoardNo) {
+		return sqlSession.selectOne("boardMapper.beforeB", refBoardNo);
+	}
+	public Board afterB(SqlSessionTemplate sqlSession, int refBoardNo) {
+		return sqlSession.selectOne("boardMapper.afterB", refBoardNo);
 	}
 	
 	

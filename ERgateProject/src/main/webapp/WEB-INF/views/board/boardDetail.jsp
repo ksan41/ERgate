@@ -526,6 +526,7 @@
             success:function(list){
             	var value1 = ""; // 이전글
             	var value2 = ""; // 다음글
+            	if(list.length==2){
             		if(list[0]){ // 이전글
             			value1 = list[0].boardTitle;
             			$(".beforeBoard").text(value1);
@@ -548,6 +549,9 @@
             			$(".afterBoard").text(value2);
             			afterBno = "N";
             		}
+            	}else {
+            		console.log("어떻게하지?");
+            	}
 	            },error: function(){
 	                console.log("ajax 통신 실패");
 	            } 

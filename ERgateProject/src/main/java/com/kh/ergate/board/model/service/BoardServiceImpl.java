@@ -69,8 +69,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public ArrayList<Board> beforeAfter(int refBoardNo) {
-		return bodDao.beforeAfter(sqlSession, refBoardNo);
+	public Board beforeB(int refBoardNo) {
+		return bodDao.beforeB(sqlSession, refBoardNo);
+	}
+	@Override
+	public Board afterB(int refBoardNo) {
+		return bodDao.afterB(sqlSession, refBoardNo);
 	}
 	
 	@Override
