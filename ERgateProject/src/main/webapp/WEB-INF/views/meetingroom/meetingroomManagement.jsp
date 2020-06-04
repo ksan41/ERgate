@@ -365,9 +365,9 @@
 			<a id="open_enroll" class="open-modal" href="#enroll" style="display: none;">모달</a> <br> 
 			
 			<div id="mtrmManageOuter">
-			
+			<c:forEach var="m" items="${ list }">
 				<table class="mtrmManageInner" >
-					<c:forEach var="m" items="${ list }">
+					
 						<tr>
 							<td rowspan="5" class="mmTdImg">
 								<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
@@ -383,9 +383,7 @@
 						<tr>
 							<td class="mmTdContent"><span class="mmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">2019-04-04</span></td>
 						</tr>
-						
-						
-					</c:forEach>
+					
 					
 						<tr>
 							<td class="mmTdContent">
@@ -394,79 +392,7 @@
 							</td>
 						</tr>
 				</table>
-				<table class="mtrmManageInner">
-					<tr>
-						<td rowspan="5" class="mmTdImg">
-							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-						</td>
-						<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 회의실1</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">회의실 위치</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 301호</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">수용인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">최대 6인</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">2019-04-04</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent">
-							<button class="mmBtn" type="button" onclick="open_modal2();">수정하기</button>
-							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
-						</td>
-					</tr>
-				</table>
-				
-				
-				<table class="mtrmManageInner">
-					<tr>
-						<td rowspan="5" class="mmTdImg">
-							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-						</td>
-						<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 회의실1</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">회의실 위치</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 301호</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">수용인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">최대 6인</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">2019-04-04</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent">
-							<button class="mmBtn" type="button" onclick="open_modal2();">수정하기</button>
-							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
-						</td>
-					</tr>
-				</table>
-				
-				<table class="mtrmManageInner">
-					<tr>
-						<td rowspan="5" class="mmTdImg">
-							<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-						</td>
-						<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 회의실1</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">회의실 위치</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">3층 301호</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">수용인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">최대 6인</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent"><span class="mmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">2019-04-04</span></td>
-					</tr>
-					<tr>
-						<td class="mmTdContent">
-							<button class="mmBtn" type="button" onclick="open_modal2();">수정하기</button>
-							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
-						</td>
-					</tr>
-				</table>
-				
+				</c:forEach>
 			</div>
 			
 

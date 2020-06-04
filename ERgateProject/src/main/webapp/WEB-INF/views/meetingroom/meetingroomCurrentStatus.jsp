@@ -848,7 +848,7 @@ p {
 			
 
 		<!-- 모달 (예약하기 부분) -->
-		<form action="reserveMtroom.me" method="post" onsubmit="">
+		<form action="reserveMtroom.me" method="post">
 		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
 			<div class="modal-content">
@@ -906,8 +906,8 @@ p {
 
 			<!-- 예약/취소 버튼 -->
 			<div class="btns">
-				<button id="reservBtn" type="submit" disabled>예약하기</button>
-				<button id="resetBtn" type="reset" onClick="history.go(0)">취소</button>
+				<button id="reservBtn" type="submit">예약하기</button>
+				<button id="resetBtn" type="reset" onclick="history.go(0)">취소</button>
 			</div>
 		</div>
 		</form>

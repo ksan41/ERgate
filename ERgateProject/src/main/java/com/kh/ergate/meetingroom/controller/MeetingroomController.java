@@ -34,7 +34,8 @@ public class MeetingroomController {
 	public String reserveMtroom(MeetingroomReservation mr, Model model, HttpSession session) {
 		
 		int result = mrService.reserveMtroom(mr);
-		
+		model.addAttribute("session", session);
+		System.out.println(mr);
 		if(result > 0) {
 			
 			session.setAttribute("msg", "회의실 예약 성공");
@@ -115,12 +116,12 @@ public class MeetingroomController {
 	//회의실등록용(insertMtroom.me) ---insertMeetingroom(Meetingroom,Model)
 
 	@RequestMapping("insertMtroom.me")
-	public String insertMeetingroom(Meetingroom m, Model model, HttpServlet request){
+	public String insertMeetingroom(Meetingroom m, Model model, HttpServletRequest httpServletRequest){
 		
 		int result = mrService.insertMeetingroom(m);
 		System.out.println(m);
 		
-		model.addAttribute("request", request);
+		model.addAttribute("httpServletRequest", httpServletRequest);
 		
 		if(result > 0) { // 회의실 등록 성공
 			
