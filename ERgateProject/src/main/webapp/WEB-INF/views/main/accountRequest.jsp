@@ -151,24 +151,27 @@
 	            <tr>
 	                <td class="enrollLabel">아이디</td>
 	                <td>
-	                	<input name="empId" id="enrollId" type="text"> <br>
-	                	<div id="checkResult" style="font-size:0.8em; padding-top:5px;"></div>
+	                	<input name="empId" id="enrollId" type="text" required> <br>
+	                	<div id="checkResult" style="font-size:0.8em; padding-top:5px;">&nbsp;</div>
 	                </td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">비밀번호</td>
 	                <td>
-	                	<input name="empPwd" id="enrollPwd" type="password">
-	                	<div></div>
+	                	<input name="empPwd" id="enrollPwd" type="password" required>
+	                	<div id="pwdCaution" class="caution" style="font-size:0.8em; padding-top:5px; margin-bottom: 10px;">&nbsp;</div>
 	                </td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">비밀번호 확인</td>
-	                <td><input id="enrollPwdCheck" type="password"></td>
+	                <td>
+	                	<input id="enrollPwdCheck" type="password" required>
+	                	<div id="pwdCheckCaution" style="font-size:0.8em; padding-top:5px;">&nbsp;</div>
+	                </td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">이름</td>
-	                <td><input name="empName" id="enrollName" type="text"></td>
+	                <td><input name="empName" id="enrollName" type="text" required></td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">프로필 사진</td>
@@ -176,11 +179,11 @@
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">생년월일</td>
-	                <td><input name="empBirthday" id="enrollBirth" type="text"></td>
+	                <td><input name="empBirthday" id="enrollBirth" type="text" placeholder="YYYY/MM/DD"></td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">휴대폰 번호</td>
-	                <td><input name="empPhone" id="enrollPhone" type="text"></td>
+	                <td><input name="empPhone" id="enrollPhone" type="text" placeholder="000-0000-0000"></td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">이메일 주소</td>
@@ -209,11 +212,9 @@
 	    </form>
     </div>
     
-    <script>
     
-    	// 아이디 중복체크를 아직 안하는 경우 : 메세지 보여지지 않음, 버튼 비활성화
-    	// 아이디 중복체크 후 사용 불가능한 아이디일 경우 : "중복 아이디 존재, 사용 불가능" 메세지 보여짐, 버튼 비활성화
-    	// 아이디 중복체크 후 사용 가능한 아이디일 경우 : "사용 가능한 아이디" 메세지 보여짐, 버튼 활성화
+	<!-- 아이디 중복검사 -->
+    <script>
 		function idCheckValidate(num){
     		
     		if(num == 1){ // 아이디 중복체크를 아직 안하는 경우 : 메세지 보여지지 않음, 버튼 비활성화
@@ -229,7 +230,6 @@
     			
     			$("#checkResult").css("color", "rgb(26, 188, 156)").text("사용 가능한 아이디입니다.");
     			$("#enrollSubmit").removeAttr("disabled");
-    		
     		}
     	}
     
@@ -238,7 +238,6 @@
     		var $idInput = $("#enrollForm input[name=empId]");
     		
     		$idInput.keyup(function(){
-    			
     			
     			if($idInput.val().length >= 5){ // 아이디 입력값이 5글자 이상되었을 때 본격적으로 중복체크
     				
@@ -264,12 +263,45 @@
     			
     		});
     	});
-    	
     </script>
     
-	<script>
 	
-    	// 다음 주소 검색 API
+	<!-- 비밀번호 유효성 검사 -->
+	<script>
+		var pwd1 = document.getElementById("enrollPwd");
+		var pwd2 = document.getElementById("enrollPwdCheck");
+		
+        regExp = /^[a-z\d!@#$%^&*]{8,15}$/i;
+		// 비밀번호 검사 : 특수문자(!@#$%^&*) 또는 영문자 또는 숫자 포함 총 8자~15자
+            
+        $(function(){
+        	
+            $("#enrollPwd").keyup(function(){
+            	
+            	if(!regExp.test(pwd1.value)){
+	                $("#pwdCaution").css("color", "red").text("영문자, 숫자 또는 특수문자 포함 총 8자~15자 이내로 입력해 주세요.");
+            	}else{
+            		$("#pwdCaution").css("color", "rgb(26, 188, 156)").text("사용 가능한 비밀번호입니다.");
+            	}
+            });
+        });
+       
+		$(function(){
+           	
+			$("#enrollPwdCheck").keyup(function(){
+               	
+				if(pwd1.value != pwd2.value){
+   	                $("#pwdCheckCaution").css("color", "red").text("입력한 비밀번호와 일치하는 값을 입력하세요.");
+               	}else{
+            		$("#pwdCheckCaution").css("color", "rgb(26, 188, 156)").text("입력한 비밀번호와 일치합니다.");
+            	}
+			});
+		});
+    </script>
+		
+		    
+   	<!-- 다음 주소 검색 API -->
+	<script>
 	    function sample6_execDaumPostcode() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {

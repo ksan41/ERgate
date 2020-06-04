@@ -70,6 +70,7 @@
 		border: 1px solid lightgray;
 		border-radius: 3px;
 		font-size: 16px;
+		margin-right: 60px;
     }
     #loginSaveId{
 		width: 22px;
@@ -93,9 +94,12 @@
 	}
 	#loginBtn{
 		background: rgb(26, 188, 156);
+		width: 280px;
 	}
 	#loginEnrollBtn{
-		background: rgb(190, 190, 190);
+		background: rgba(22, 160, 133, 0.39);
+		width: 120px;
+		border-radius: 30px;
 	}
 	/* 로그인 / 계정등록 버튼 */
 	
@@ -139,7 +143,11 @@
 	                <td><input id="loginPwd" name="empPwd" type="password"></td>
 	            </tr>
 	            <tr>
-	            	<td colspan="2" class="loginTd"><input id="loginSaveId" type="checkbox" name="saveId" <% if(saveId){ %> checked="checked"<%} %>><label id="loginSaveIdLabel" for="">아이디 저장 &nbsp;</label></td>
+	            	<td></td>
+	            	<td>
+	            		<input id="loginSaveId" type="checkbox" name="saveId" <% if(saveId){ %> checked="checked"<%} %>>
+	            		<label id="loginSaveIdLabel" for="loginSaveId">아이디 저장 &nbsp;</label>
+	            	</td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" class="loginTd"><button type="submit" id="loginBtn" class="bigBtn">로그인</button></td>
