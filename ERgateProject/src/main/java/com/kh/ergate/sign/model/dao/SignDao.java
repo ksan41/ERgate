@@ -10,6 +10,7 @@ import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.sign.model.vo.SignAttachment;
 import com.kh.ergate.sign.model.vo.SignDateSearch;
 import com.kh.ergate.sign.model.vo.SignDocument;
+import com.kh.ergate.sign.model.vo.Signer;
 
 @Repository("siDao")
 public class SignDao {
@@ -44,5 +45,9 @@ public class SignDao {
 	
 	public ArrayList<SignAttachment> signDetailAttachment(SqlSessionTemplate sqlSession,SignDocument sdd){
 		return (ArrayList)sqlSession.selectList("signMapper.signAttachmentList",sdd);
+	}
+	
+	public ArrayList<Signer> signDetailSigner(SqlSessionTemplate sqlSession,SignDocument sdd){
+		return (ArrayList)sqlSession.selectList("signMapper.signDetailSigner",sdd);
 	}
 }

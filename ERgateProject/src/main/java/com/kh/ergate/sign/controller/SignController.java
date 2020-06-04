@@ -38,7 +38,7 @@ public class SignController {
 		  sdd.setSignTypeNo(signTypeNo);
 		  
 		  SignDocument sd = siService.signDetail(sdd);
-		  
+		  ArrayList<Signer> sgList = siService.signDetailSigner(sdd);
 		  ArrayList<SignAttachment> saList = siService.signDetailAttachment(sdd);
 		  
 		  model.addAttribute("saList",saList);

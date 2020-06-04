@@ -19,6 +19,9 @@ public interface SignService {
 	//결재상세-첨부파일 요청용
 	public ArrayList<SignAttachment> signDetailAttachment(SignDocument sdd);
 	
+	//결재상세-결재자리스트 요청용
+	public ArrayList<Signer> signDetailSigner(SignDocument sdd);
+	
 	//진행결재함요청용
 	public ArrayList<SignDocument> ongoingList(String month,SignDocument sd);
 	

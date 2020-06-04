@@ -31,12 +31,20 @@ public class SignServiceImpl implements SignService{
 	public SignDocument signDetail(SignDocument sdd) {
 		return siDao.signDetail(sqlSession,sdd);
 	}
-
+	
+	
+	/*
+	 * 결재상세-첨부파일 리스트 요청용
+	 */
 	@Override
 	public ArrayList<SignAttachment> signDetailAttachment(SignDocument sdd) {
 		return siDao.signDetailAttachment(sqlSession,sdd);
 	}
 	
+	@Override
+	public ArrayList<Signer> signDetailSigner(SignDocument sdd) {
+		return siDao.signDetailSigner(sqlSession,sdd);
+	}
 	
 	@Override
 	public ArrayList<SignDocument> ongoingList(String month, SignDocument sd) {
@@ -106,6 +114,7 @@ public class SignServiceImpl implements SignService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 
