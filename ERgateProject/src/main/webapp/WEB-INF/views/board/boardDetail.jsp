@@ -240,6 +240,9 @@
 	margin-left:-10px;
 	margin-top:8px;
 }
+.fileShow:hover {
+	cursor:pointer;
+}
 /* 파일 첨부 관련 */
 
 </style>
@@ -274,7 +277,7 @@
 					<table class="fileTable">
 						<tr>
 							<td width="65">
-								<b>첨부파일</b>
+								<b class="fileShow">첨부파일</b>
 							</td>
 							<td>
 								<img class="fileShow"src="${pageContext.servletContext.contextPath }/resources/icons/save_alt.png" style="transform:translate(0,-2px) scale(0.5);" class="bigBtn fileShow">
@@ -339,20 +342,18 @@
 			
 			<br> <br>
 			<div class="bottomArea">
-				<div class="roundIcon">
-					<span class="material-icons">arrow_drop_up</span>
+				<div class="baShow2">
+					
 				</div>
-				<p style="display: inline;">다음글</p>
-				<p class="afterBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
-				<p align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px; text-align:left;">2020/05/10 | 엘리스</p>
 				<hr>
-				
-				<div class="roundIcon">
-					<span class="material-icons">arrow_drop_down</span>
+				<div class="baShow1">
+					<div class="roundIcon">
+						<span class="material-icons">arrow_drop_down</span>
+					</div>
+					<p style="display: inline;">이전글</p>
+					<p class="beforeBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
+					<p align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px; text-align:left;">2020/05/10 | 잭슨</p>
 				</div>
-				<p style="display: inline;">이전글</p>
-				<p class="beforeBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
-				<p align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px; text-align:left;">2020/05/10 | 잭슨</p>
 			</div>
 			<br> <br> <br>
 		</div>
@@ -510,16 +511,53 @@
 			location.href="replyDelete.bo?replyno=" + replyno;
 		});
 	});
-	
-	$(document).ready(function() { 
-		$(".afterBoard").click(function(){
-			var bno=0; // 현재 글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
-			location.href="detail.bo?bno=" + bno;
-		});
+	var afterBno = "";
+	var beforeBno = "";
+	$(document).ready(function() {
 		
-		$(".beforeBoard").click(function(){
-			var bno=0; // 현재 글번호가 들어갈꺼임 (무엇을 삭제할지 알아야되니까)
-			location.href="detail.bo?bno=" + bno;
+		$.ajax({
+            url: "beforeAfter.bo",
+            data:{refBoardNo:${b.boardNo}},
+            success:function(list){
+            	var value1 = ""; // 이전글
+            	var value2 = ""; // 다음글
+            		if(list[0]){ // 이전글
+            			console.log("1번글 있다!");
+            		}else {
+            			console.log("1번글이 비었다.");
+            		}
+            		if(list[1]){ // 다음글
+            			value2 += "<div class='roundIcon'>" +
+            					  "<span class='material-icons'>arrow_drop_up</span>" +
+            					  "</div>" +
+            					  "<p style='display: inline; margin-left: 5px;'>다음글</p>" +
+								  "<p class='afterBoard' style='display: inline-block; width: 960px; margin: 0px; margin-left: 50px;' onclick='afterB();'>"+ list[1].boardTitle +"</p>" +
+								  "<p align='right' style='display: inline-block; width: 200px; margin: 0px; margin-left: 10px; text-align:left;'>"+list[1].boardEnrollDate+ " | " +list[1].boardWriter+ "</p>"
+						$(".baShow2").html(value2);
+						afterBno = list[1].boardNo;
+            		}else {
+            			value2 += "<div class='roundIcon'>" +
+			  					  "<span class='material-icons'>arrow_drop_up</span>" +
+			  					  "</div>" +
+			  					  "<p style='display: inline; margin-left: 5px;'>다음글</p>" +
+								  "<p class='afterBoard' style='display: inline-block; width: 960px; margin: 0px; margin-left: 50px;'>"+ "다음글이 없습니다" +"</p>" +
+								  "<p align='right' style='display: inline-block; width: 200px; margin: 0px; margin-left: 10px; text-align:left;'></p>"
+						$(".baShow2").html(value2);
+            			afterBno = -1;
+            		}
+            },error: function(){
+                console.log("ajax 통신 실패");
+            } 
+        });
+		$(document).ready(function() {
+			$(".afterBoard").click(function(){
+					location.href="detail.bo?bno=" + afterBno + "&currentPage=" + currentPage;
+			});
+			
+			$(".beforeBoard").click(function(){
+				var bno=0; // 현재 글번호가 들어갈꺼임 (무엇을 삭제할지 알아야되니까)
+				location.href="detail.bo?bno=" + bno;
+			});
 		});
 		/*	이전글 다음글 가져오는건 아래의 쿼리문을 참조하도록 하자 (다음글 번호, 이전글 번호 를 가져오기가 복잡하니 현재 글 번호를 통해 다음, 이전글 번호 알아내자)
 			SELECT * FROM BOARD

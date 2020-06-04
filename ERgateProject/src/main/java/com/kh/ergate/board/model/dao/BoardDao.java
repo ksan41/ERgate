@@ -62,6 +62,10 @@ public class BoardDao {
 	public ArrayList<ReReply> rereplyList(SqlSessionTemplate sqlSession, int refRno) {
 		return (ArrayList)sqlSession.selectList("boardMapper.rereplyList", refRno);
 	}
+
+	public ArrayList<Board> beforeAfter(SqlSessionTemplate sqlSession, int refBoardNo) {
+		return (ArrayList)sqlSession.selectList("boardMapper.beforeAfter", refBoardNo);
+	}
 	
 	
 	

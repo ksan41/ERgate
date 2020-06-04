@@ -67,7 +67,11 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<ReReply> rereplyList(int refRno) {
 		return bodDao.rereplyList(sqlSession, refRno);
 	}
-
+	
+	@Override
+	public ArrayList<Board> beforeAfter(int refBoardNo) {
+		return bodDao.beforeAfter(sqlSession, refBoardNo);
+	}
 	
 	@Override
 	public int insertBoard(com.kh.ergate.board.model.vo.Board b) {
@@ -85,6 +89,8 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 	
 

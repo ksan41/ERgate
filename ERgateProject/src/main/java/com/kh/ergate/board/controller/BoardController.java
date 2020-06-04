@@ -116,7 +116,13 @@ public class BoardController {
 		ArrayList<ReReply> list = bodService.rereplyList(refRno);
 		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(list);
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="beforeAfter.bo", produces="application/json; charset=utf-8")
+	public String beforAfter(int refBoardNo) {
+		
+		ArrayList<Board> list = bodService.beforeAfter(refBoardNo);
+		return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(list);
+	}
 	
 	/*
 	 * @RequestMapping("enrollForm.bo") public String enrollForm() { return
