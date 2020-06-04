@@ -82,10 +82,10 @@
 
 /* 콘텐츠영역 */
 .contentArea {
-	margin-top: 50px;
+	margin-top: 20px;
 	margin-left: 100px;
 	width: 1600px;
-	height: auto;
+	height: 1000px;
 	float: left;
 }
 /* 콘텐츠영역 */
@@ -98,6 +98,9 @@ html, body {
 	overflow-y: auto;
 	font-family: "Nanum Gothic", serif;
 	overflow-x: hidden;
+}
+.subBtns{
+	margin-top:0px;
 }
 
 #reservationBtn {
@@ -124,7 +127,7 @@ html, body {
 	font-size: 18px;
 	font-weight: 550;
 	margin-top: -33px;
-	margin-left: 1000px;
+	margin-left: 750px;
 	float: left;
 	text-decoration: none;
 }
@@ -483,7 +486,7 @@ p {
 		</div>
 		<div class="contentArea">
 
-			<h2 style="display: inline-block; margin-left: 530px;">
+			<h2 style="display: inline-block; margin-left: 330px;">
 				<span id="arrowLeft" class="material-icons"> arrow_left </span> <b
 					id="calYear"></b>년 <b id="calMonth"></b>월
 
@@ -577,242 +580,271 @@ p {
 
 				});
 			</script>
-			<button id="reservationBtn">예약하기</button>
-			<a id="reservation" class="open-modal" href="#open_reservation"
-				style="display: none;">모달</a> <br> <a id="myReservation"
-				class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
+			<div class="subBtns">
+				<button id="reservationBtn">예약하기</button>
+				<a id="reservation" class="open-modal" href="#open_reservation" style="display: none;">모달</a> <br>
+				<a id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
+			</div>
 
 
-			
-
-		</div>
-		
 		<!-- 예약하기(main) 부분 -->
-			<h1> 예약하기 </h1>
-				<div class="resource_layout">
-		<div style="float:left;">
-		<!-- 시간 table  -->
-			<table class="table_time" cellpadding="0" cellspacing="0">
-				<tr>
-					<th style="height:73px">시간</th>
-				</tr>
-                 <tr class=""><td>07:00</td></tr>
-                 <tr class=""><td>08:00</td></tr>
-                 <tr class=""><td>09:00</td></tr>
-                 <tr class=""><td>10:00</td></tr>
-                 <tr class=""><td>11:00</td></tr>
-                 <tr class=""><td>12:00</td></tr>
-                 <tr class=""><td>13:00</td></tr>
-                 <tr class=""><td>14:00</td></tr>
-                 <tr class=""><td>15:00</td></tr>
-                 <tr class=""><td>16:00</td></tr>
-                 <tr class=""><td>17:00</td></tr>
-                 <tr class=""><td>18:00</td></tr>
-                 <tr class=""><td>19:00</td></tr>
-             
-			</table>
+	
+		<div class="resource_layout">
+			<div style="float: left;">
+				<!-- 시간 table  -->
+				<table class="table_time" cellpadding="0" cellspacing="0">
+					<tr>
+						<th style="height: 73px">시간</th>
+					</tr>
+					<tr class="">
+						<td>07:00</td>
+					</tr>
+					<tr class="">
+						<td>08:00</td>
+					</tr>
+					<tr class="">
+						<td>09:00</td>
+					</tr>
+					<tr class="">
+						<td>10:00</td>
+					</tr>
+					<tr class="">
+						<td>11:00</td>
+					</tr>
+					<tr class="">
+						<td>12:00</td>
+					</tr>
+					<tr class="">
+						<td>13:00</td>
+					</tr>
+					<tr class="">
+						<td>14:00</td>
+					</tr>
+					<tr class="">
+						<td>15:00</td>
+					</tr>
+					<tr class="">
+						<td>16:00</td>
+					</tr>
+					<tr class="">
+						<td>17:00</td>
+					</tr>
+					<tr class="">
+						<td>18:00</td>
+					</tr>
+					<tr class="">
+						<td>19:00</td>
+					</tr>
+
+				</table>
+			</div>
+			<!-- 회의실 table -->
+
+			<div class="table_resource_box" style="float: left; width: 800px">
+				<table class="table_resource" id="mtrmSC"  style="float: left;" cellpadding="0"
+					cellspacing="0">
+					<tr>
+						<th><p>3층회의실</p></th>
+						<th><p>3층회의실2</p></th>
+						<th><p>5층회의실</p></th>
+						<th><p>5층회의실2</p></th>
+						<th><p>6층회의실</p></th>
+					</tr>
+					<tr id="07:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="07:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="08:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="08:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="09:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="09:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="10:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="10:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="11:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="11:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="12:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="12:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="13:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="13:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="14:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="14:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="15:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="15:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="16:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="16:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="17:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="17:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="18:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="18:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="19:00" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+					<tr id="19:30" class="">
+						<td name="000010"><p></p></td>
+						<td name="000011"><p></p></td>
+						<td name="000013"><p></p></td>
+						<td name="rooma0"><p></p></td>
+						<td name="roomb0"><p></p></td>
+					</tr>
+
+
+
+				</table>
+			</div>
 		</div>
-		<!-- 회의실 table -->
-		
-		<div class="table_resource_box" style="float:left; width:800px">
-			<table class="table_resource" style="float:left; " cellpadding="0" cellspacing="0">
-				<tr>
-					<th><p>3층회의실</p></th>
-					<th><p>3층회의실2</p></th>
-					<th><p>5층회의실</p></th>
-					<th><p>5층회의실2</p></th>
-					<th><p>6층회의실</p></th>
-				</tr>
-				<tr id="07:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="07:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="08:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="08:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="09:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="09:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="10:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="10:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="11:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="11:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="12:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="12:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="13:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="13:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="14:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="14:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="15:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="15:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="16:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="16:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="17:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="17:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="18:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="18:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="19:00" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-				<tr id="19:30" class="">
-					<td name="000010"><p></p></td>
-					<td name="000011"><p></p></td>
-					<td name="000013"><p></p></td>
-					<td name="rooma0"><p></p></td>
-					<td name="roomb0"><p></p></td>
-				</tr>
-			
-				
-				
-			</table>
-		</div>
-	</div>
-		
+
 		<!-- 위에까지 예약하기(main) 부분 -->
+			
+
+		</div>
+
+		
 			
 
 		<!-- 모달 (예약하기 부분) -->
@@ -1035,6 +1067,17 @@ p {
 						location.href = "reserveDetail.me?mno"
 								+ $(this).children().eq(0).text();
 					});
+		});
+		
+		
+		
+	</script>
+	<script>
+		$(function(){
+			$("#mtrmSC").click(function(){
+				window.open('meetingroomCurrentStatusPopup.jsp','popup_name','_blank');
+			});
+			
 		});
 	</script>
 
