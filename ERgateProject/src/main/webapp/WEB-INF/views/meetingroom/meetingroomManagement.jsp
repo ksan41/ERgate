@@ -485,40 +485,41 @@
 			<div class="modal-title">회의실 등록</div>
 			<div class="modal-content">
 			<a class="open-modal" href="#modal-form"></a>
-			
-				<div>
-					<table class="meetingroomModalTable">
-						<tr>
-							<td class="mmName">회의실명</td>
-							<td class="mmName2"><input class="mmModalInput" type="text"></td>
-						</tr>
-
-						<tr>
-							<td class="mmLocation">회의실 위치</td>
-							<td class="mmLocation2"><input class="mmModalInput" type="text"></td>
-						</tr>
-
-						<tr>
-							<td class="mmPersonnel">최대 수용인원</td>
-							<td class="mmPersonnel2"><input class="mmModalInput" type="text"></td>
-						</tr>
-
-						<tr>
-							<td class="mmImgEnroll">회의실 이미지</td>
-							<td class="mmImgEnroll2">
-								<img id="mmImgEnroll" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
-							</td>
-						</tr>
-
-
-					</table>
-				</div>
-				<!-- 예약/취소 버튼 -->
-				<div class=btns>
-					<button class="mmSubmitBtn" type="submit">등록하기</button>
-					<button class="mmResetBtn" type="reset">삭제하기</button>
-				</div>
-
+				<form id="enrollMtrm" method="post" action="insertMtroom.me" enctype="multipart/form-data">
+					<div>
+					
+						<table class="meetingroomModalTable">
+							<tr>
+								<td class="mmName">회의실명</td>
+								<td class="mmName2"><input class="mmModalInput" type="text"></td>
+							</tr>
+	
+							<tr>
+								<td class="mmLocation">회의실 위치</td>
+								<td class="mmLocation2"><input class="mmModalInput" type="text"></td>
+							</tr>
+	
+							<tr>
+								<td class="mmPersonnel">최대 수용인원</td>
+								<td class="mmPersonnel2"><input class="mmModalInput" type="text"></td>
+							</tr>
+	
+							<tr>
+								<td class="mmImgEnroll">회의실 이미지</td>
+								<td class="mmImgEnroll2">
+									<img id="mmImgEnroll" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
+								</td>
+							</tr>
+	
+	
+						</table>
+					</div>
+					<!-- 예약/취소 버튼 -->
+					<div class=btns>
+						<button class="mmSubmitBtn" type="submit">등록하기</button>
+						<button class="mmResetBtn" type="reset">삭제하기</button>
+					</div>
+				</form>
 
 			</div>
 		</div>

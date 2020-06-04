@@ -49,7 +49,7 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 
 	@Override
 	public int insertMeetingroom(Meetingroom m) {
-		return 0;
+		return mrDao.insertMeetingroom(sqlSession, m);
 	}
 
 

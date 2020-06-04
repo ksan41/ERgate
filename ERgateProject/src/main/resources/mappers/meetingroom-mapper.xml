@@ -46,11 +46,15 @@
 	
 	<insert id="reserveMtroom" parameterType="MeetingroomReservation">
 		insert into meetingroom_reservation 
-		values(#{mtrmReservNo}, #{empId}, #{mtrmCode}, #{mtrmName}, #{mtrmReservDate}, #{mtrmDeptTitle},
+		values(seq_mreserv_no.nextval, #{empId}, #{mtrmCode}, #{mtrmName}, #{mtrmReservDate}, #{mtrmDeptTitle},
 			   #{mtrmStartDate}, #{mtrmStartTime}, #{mtrmEndDate}, #{mtrmEndTime}, #{mtrmPurpose}, 'Y')
 	
 	</insert>
-
+	
+	<insert id="insertMeetingroom" parameterType="Meetingroom">
+		insert into meetingroom
+		values(seq_mroom_no.nextval , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y')	
+	</insert>
 
 
 </mapper>

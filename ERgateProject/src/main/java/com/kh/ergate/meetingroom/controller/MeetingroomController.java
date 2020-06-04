@@ -110,9 +110,22 @@ public class MeetingroomController {
 	
 	}
 	
-	@RequestMapping("test.me")
-	public String selectTest() {
-		return"meetingroom/test";
+	//회의실등록용(insertMtroom.me) ---insertMeetingroom(Meetingroom,Model)
+
+	@RequestMapping("insertMtroom.me")
+	public String insertMeetingroom(Meetingroom m, Model model){
+		
+		int result = mrService.insertMeetingroom(m);
+		System.out.println(m);
+		if(result > 0) { // 회의실 등록 성공
+			
+			return "redirect:mtroomDetail.me?currentPage=1";
+		
+			
+		}else { // 회의글 등록 실패
+			
+			return "";
+		}
 	}
 	
 

@@ -35,6 +35,11 @@ public class MeetingroomDao {
 	public int reserveMtroom(SqlSessionTemplate sqlSession, MeetingroomReservation mr) {
 		return sqlSession.selectOne("meetingroomMapper.reserveMtroom");
 	}
+	
+	public int insertMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
+		return sqlSession.selectOne("meetingroomMapper.insertMeetingroom");
+	}
+
 
 
 }
