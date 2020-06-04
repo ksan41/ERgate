@@ -18,4 +18,5 @@ public class Signer {
 	private int signTurn; //결재순서
 	private int signType; //결재종류
 	private String signed; //결재여부 (기본'N')
+	private String jobTitle; //결재자 직급
 }

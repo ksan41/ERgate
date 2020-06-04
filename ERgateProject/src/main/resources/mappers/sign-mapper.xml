@@ -39,6 +39,7 @@
 		<result column="SIGN_TURN" property="signTurn"/>
 		<result column="SIGN_TYPE" property="signType"/>
 		<result column="SIGNED" property="signed"/>
+		<result column="JOB_TITLE" property="jobTitle"/>
 	</resultMap>
 
 	<select id="selectElistCount" resultType="_int">
@@ -106,8 +107,10 @@
 	</select>
 	
 	<select id="signDetailSigner" parameterType="SignDocument" resultMap="signSgResultSet">
-		SELECT *
-		  FROM SIGNER
-		WHERE DOCUMENT_NO = #{documentNo}  
+		SELECT J.JOB_TITLE,S.DOCUMENT_NO,S.EMP_ID,S.EMP_NAME,S.SIGN_TURN,S.SIGN_TYPE,S.SIGNED
+		  FROM SIGNER S
+		  JOIN EMPLOYEE E ON(S.EMP_ID=E.EMP_ID)
+		  JOIN JOB J ON(E.JOB_CODE=J.JOB_CODE)
+		 WHERE S.DOCUMENT_NO = #{documentNo} 
 	</select>
 </mapper>
