@@ -32,6 +32,14 @@
 		<result column="CHANGE_NAME" property="changeName" />
 	</resultMap>
 	
+	<resultMap type="Signer" id="signSgResultSet">
+		<result column="DOCUMENT_NO" property="documentNo"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="SIGN_TURN" property="signTurn"/>
+		<result column="SIGN_TYPE" property="signType"/>
+		<result column="SIGNED" property="signed"/>
+	</resultMap>
 
 	<select id="selectElistCount" resultType="_int">
 	<![CDATA[
@@ -95,5 +103,11 @@
 		SELECT *
 		  FROM SIGN_ATTACHMENT
 		WHERE REF_DOC_NO = #{documentNo}
+	</select>
+	
+	<select id="signDetailSigner" parameterType="SignDocument" resultMap="signSgResultSet">
+		SELECT *
+		  FROM SIGNER
+		WHERE DOCUMENT_NO = #{documentNo}  
 	</select>
 </mapper>
