@@ -184,7 +184,7 @@
     padding-top: 10px;
     height: 35px; 
 }
-.rank_code, .job_code{
+.dept_rank_code{
     color: rgb(188, 188, 188);
 }
 .empList a{
@@ -332,14 +332,14 @@
 		            <ul class="group_tree">
 		                <li>
 		                    <input type="checkbox" id="root">
-		                    <label for="root"> ERgate</label>
+		                    <label for="root" class="deptList" key="all"> ERgate</label>
 		                    <ul>
-		                        <li><a href="#"> 임원</a></li>
-		                        <li><a href="#"> 개발팀</a></li>
-		                        <li><a href="#"> 회계팀</a></li>
-		                        <li><a href="#"> 기술팀</a></li>
-		                        <li><a href="#"> 총무팀</a></li>
-		                        <li><a href="#"> 인사팀</a></li>
+		                        <li class="deptList" key="D0">임원</li>
+		                        <li class="deptList" key="D1">개발팀</li>
+		                        <li class="deptList" key="D2">회계팀</li>
+		                        <li class="deptList" key="D3">기술팀</li>
+		                        <li class="deptList" key="D4">총무팀</li>
+		                        <li class="deptList" key="D5">인사팀</li>
 		                    </ul>
 		                </li>
 		            </ul>
@@ -357,7 +357,7 @@
 		        </div>
 		        <div class="profile_area" style="overflow: auto;">
 		            <div class="profile_up">
-		                <div class="profile_img">
+		                <%-- <div class="profile_img">
 		                    <img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">
 		                </div>
 		                <div class="profile_name">
@@ -365,11 +365,11 @@
 		                    <button class="smallBtn">회의중</button><br><br>
 		                    <div> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></div>
 		                    <div class="dept_mail">qwertyadsf@gmail.com</div>
-		                </div>
+		                </div> --%>
 		            </div><br><br>
 		            <div class="profile_down" align="center">
 		                <table id="profile_list" align="center">
-		                    <tr>
+		                   <!--  <tr>
 		                        <th>사원번호</th>
 		                        <td>3456789</td>
 		                    </tr>
@@ -408,7 +408,7 @@
 		                	<tr>
 		                        <th>자택주소</th>
 		                        <td>서울시 마포구 서교동 홍익로 2길 35</td>
-		                    </tr>
+		                    </tr> -->
 		                </table>
 		            </div>
 		        </div> <!-- 오른쪽 영역 끝 -->
@@ -422,8 +422,97 @@
 	<script>
 	$(function(){
 		selectNoList();
+
+		/* 조직도 부서별 사원 조회 */
+		$(".deptList").click(function(){
+			keyword =$(this).attr("key");
+			
+			$.ajax({
+				url: "deptEmpList.gr",
+				type: "post",
+				data:{"keyword":keyword}, 
+				async: false,
+				success: function(eList){
+				 	console.log(eList);
+					var value = "";
+					
+					if(eList.length == 0){ // 리스트가 비어있을 경우
+		            	value = "<li>조회된 사원이 없습니다.</li>";
+					}else{ // 리스트가 비어있지 않을 경우
+		            	console.log(eList[0]);
+						for(var i in eList){
+							
+							var empName = eList[i].empName;
+							var empRank = eList[i].rankTitle;
+							var empJob = eList[i].jobTitle;
+							
+							value += '<li key="'+ eList[i].empId +'" onclick="empPrf();">' + empName +empRank + empJob +'</li>';
+							
+						}
+						$(".empList_area").html(value);
+					} 
+					
+				},
+				error:function(){
+					console.log("조직도 부서별 사원 리스트 조회 실패");
+				}
+			});
+		});
+
 	});
 	
+	
+	/* 조직도 사원 프로필 조회 */
+	function empPrf(){
+		console.log(window.event.target.getAttribute("key"));
+		empId = window.event.target.getAttribute("key");
+		
+		$.ajax({
+			url: "empProfile.gr",
+			type: "post",
+			data:{"empId":empId}, 
+			async: false,
+			success: function(empPrf){
+				
+				var valueUp="";
+				valueUp +=
+						'<div class="profile_img">' +
+			                '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">' +
+			            '</div>' +
+			            '<div class="profile_name">' +
+			                '<div class="dept_name">'+ empPrf.empName +'</div>' +
+			                '<button class="smallBtn">'+ '회의중' +'</button><br><br>' +
+			                '<div class="dept_rank_code">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
+			                '<div class="dept_mail">' + empPrf.empComEmail + '</div>' +
+			            '</div>'
+							
+				$(".profile_up").html(valueUp);
+				
+			 	var valueDown="";
+			 	valueDown +=
+		 				 '<tr><th>사원번호</th><td>'+ empPrf.empCode + '</td></tr>' +
+			             '<tr><th>입사일</th><td>'+ empPrf.hireDate + '</td></tr>' +
+			             '<tr><th>아이디</th><td>' + empPrf.empId + '</td></tr>' +
+			             '<tr><th>생년월일</th><td>' + empPrf.empBirthday + '</td></tr>' + 
+			             '<tr><th>휴대폰 번호</th><td>' + empPrf.empPhone + '</td></tr>' +
+			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
+						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
+			             '<tr><th>부서명</th><td>' + empPrf.deptTitle + '</td></tr>' +
+			             '<tr><th>직급/직책</th><td>' + empPrf.rankTitle + '/' + empPrf.jobTitle + '</td></tr>' +
+			         	 '<tr><th>자택주소</th><td>' + empPrf.empAddress + '</td></tr>'
+			 	
+				$("#profile_list").html(valueDown);
+				
+			},
+			error:function(){
+				console.log("조직도 사원 프로필 조회 실패");
+			}
+		});
+	}
+	
+	
+	
+	/* 조직도 전체 리스트 조회 - 조직도 페이지 첫 화면 */
 	function selectNoList(){		
 			
 		$.ajax({
@@ -444,7 +533,7 @@
 						var empRank = list[i].rankTitle;
 						var empJob = list[i].jobTitle;
 						
-						value += '<li>' + empName +empRank + empJob +'</li>';
+						value += '<li key="'+ list[i].empId +'" onclick="empPrf();">' + empName +empRank + empJob +'</li>';
 					}
 					$(".empList_area").html(value);
 				}

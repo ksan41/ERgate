@@ -23,21 +23,35 @@ public class GroupController {
 		return "group/groupList";
 	}
 	
+	// 조직도 전제 사원 조회
 	@ResponseBody
 	@RequestMapping(value="empList.gr", produces="application/json; charset=utf-8")
-	public String selectEmpList(Model model) {
+	public String selectEmpList() {
 		
 		ArrayList<Employee> list = grService.selectEmpList();
-		System.out.println(list);
-		model.addAttribute("list", list);
 		return new Gson().toJson(list);
 	}
 	
+	// 조직도 부서별 사원 조회
 	@ResponseBody
-	@RequestMapping(value="empProfile.gr" )
-	public Employee selectEmpProfile(String empId, Model model) {
+	@RequestMapping(value="deptEmpList.gr", produces="application/json; charset=utf-8")
+	public String selectDeptEmpList(String keyword) {
 		
-		return grService.selectEmpProfile(empId);
+		ArrayList<Employee> array = grService.selectDeptEmpList(keyword);
+		return new Gson().toJson(array);
+	}
+	
+	// 조직도 사원 프로필 조회 (오른쪽 영역)
+	@ResponseBody
+	@RequestMapping(value="empProfile.gr", produces="application/json; charset=utf-8" )
+	public String selectEmpProfile(String empId) {
+		
+		System.out.println("c"+empId);
+		Employee empPrf = grService.selectEmpProfile(empId);
+		
+		System.out.println(grService.selectEmpProfile(empId));
+		
+		return new Gson().toJson(empPrf);
 	}
  
 }

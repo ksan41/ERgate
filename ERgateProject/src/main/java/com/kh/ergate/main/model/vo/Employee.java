@@ -25,7 +25,7 @@ public class Employee {
 	private Date hireDate;
 	private String empExtension;
 	private String empFax;
-	private String EmpComEmail;
+	private String empComEmail;
 	private String empPriEmail;
 	private String empPhone;
 	private String empAddress;

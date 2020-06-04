@@ -2,6 +2,8 @@ package com.kh.ergate.group.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.ui.Model;
+
 import com.kh.ergate.main.model.vo.Employee;
 
 public interface GroupService {
@@ -9,8 +11,12 @@ public interface GroupService {
 	// 조직도 리스트 요청용 (가운데 부분) 
 	ArrayList<Employee> selectEmpList();
 	
-	// 조직도 리스트 사원 프로필 요청용
+	// 조직도 리스트 사원 프로필 요청용 (오른쪽 영역)
 	Employee selectEmpProfile(String empId);
+
+	// 조직도 부서별 사원 조회
+	ArrayList<Employee> selectDeptEmpList(String keyword);
+
 	
 //	// 사원 검색 요청용
 //	Employee searchGroupList(String condition,String keyword);

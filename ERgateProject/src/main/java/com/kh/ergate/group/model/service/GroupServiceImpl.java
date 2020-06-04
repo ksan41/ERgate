@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.kh.ergate.group.model.dao.GroupDao;
 import com.kh.ergate.main.model.vo.Employee;
@@ -22,6 +23,11 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public ArrayList<Employee> selectEmpList() {
 		return grDao.selectEmpList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Employee> selectDeptEmpList(String keyword) {
+		return grDao.selectDeptEmpList(sqlSession, keyword);
 	}
 
 	@Override
