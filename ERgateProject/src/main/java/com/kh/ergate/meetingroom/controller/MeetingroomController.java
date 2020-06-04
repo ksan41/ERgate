@@ -5,6 +5,7 @@ package com.kh.ergate.meetingroom.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,9 @@ public class MeetingroomController {
 		
 		int result = mrService.insertMeetingroom(m);
 		System.out.println(m);
+		
+		model.addAttribute("m", m);
+		
 		if(result > 0) { // 회의실 등록 성공
 			
 			return "redirect:mtroomDetail.me?currentPage=1";

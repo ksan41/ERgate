@@ -37,7 +37,7 @@ public class MeetingroomDao {
 	}
 	
 	public int insertMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
-		return sqlSession.selectOne("meetingroomMapper.insertMeetingroom");
+		return sqlSession.selectOne("meetingroomMapper.insertMeetingroom", m);
 	}
 
 
