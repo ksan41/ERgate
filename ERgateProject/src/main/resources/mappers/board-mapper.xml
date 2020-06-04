@@ -118,6 +118,29 @@
 		 where ref_rno=#{refRno}
 		 order by reply_no desc
 	</select>
+	
+	<select id="beforeAfter" parameterType="_int" resultMap="boardResultSet">
+		 <![CDATA[
+		select b.* from
+		(select rownum, b.board_no, b.board_title, b.board_writer, b.board_enroll_date 
+		 from board b
+		 where board_no in 
+		(select board_no from board 
+		 where board_no > #{refBoardNo})
+		and rownum = 1
+		and b.board_status = 'Y'
+		order by board_no asc) b
+		union
+		select b2.* from
+		(select rownum, b.board_no, b.board_title, b.board_writer, b.board_enroll_date from board b
+		where board_no in 
+		(select board_no from board
+		 where board_no < #{refBoardNo})
+		and rownum = 1
+		and b.board_status = 'Y'
+		order by board_no desc) b2
+		]]>
+	</select>
 </mapper>
 
 

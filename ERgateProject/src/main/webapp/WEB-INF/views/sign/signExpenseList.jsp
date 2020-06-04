@@ -157,7 +157,7 @@
 }
 
 .boardTable tr:hover .nonContent {
-	cursor : default;
+	pointer-events: none;
 }
 
 /* 게시판 스타일 */
@@ -380,6 +380,7 @@
 						</c:forEach>
 						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
     						<tr>
+							<td class="nonContent">&nbsp;</td>
 							<td class="nonContent">&nbsp;</td>
 							<td class="nonContent">&nbsp;</td>
 							<td class="nonContent">&nbsp;</td>
