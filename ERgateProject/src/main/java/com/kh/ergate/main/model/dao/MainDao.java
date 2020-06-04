@@ -12,7 +12,7 @@ public class MainDao {
 		return sqlSession.selectOne("mainMapper.loginMember", e);
 	}
 	
-	public String findId(SqlSessionTemplate sqlSession, Employee e) {
+	public Employee findId(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.selectOne("mainMapper.findId", e);
 	}
 	
@@ -20,8 +20,8 @@ public class MainDao {
 		return sqlSession.selectOne("mainMapper.findPwd", e);
 	}
 	
-	public int updatePwd(SqlSessionTemplate sqlSession, String empPwd) {
-		return sqlSession.update("mainMapper.updatePwd", empPwd);
+	public int updatePwd(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.update("mainMapper.updatePwd", e);
 	}
 	
 	public int idCheck(SqlSessionTemplate sqlSession, String empId) {

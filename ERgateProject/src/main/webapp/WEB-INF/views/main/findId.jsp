@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,11 +134,21 @@
 </style>   
 </head>
 <body>
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+	
 	<div id="findIdOuter">
 	    <form action="findId.ma" method="post">
 	        <table id="findIdTable">
 	            <tr>
-	                <td colspan="2" style="text-align: center; height: 60px;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
+	                <td colspan="2" style="text-align: center; height: 60px;">
+	                	<img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png">
+	                </td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" id="findIdDescript">
@@ -150,18 +161,13 @@
 	            </tr>
 	            <tr>
 	                <td class="findIdLabel">이름</td>
-	                <td><input id="findIdName" type="text"></td>
+	                <td><input name="empName" id="findIdName" type="text" required></td>
 	            </tr>
 	            <tr>
 	                <td class="findIdLabel">이메일 주소</td>
 	                <td>
-	                	<input id="findIdEmail1" type="text">
-	                	<input id="findIdEmail2" name="emailDomain" type="text" list="emailDomain" placeholder="직접입력">
-					        <datalist id="emailDomain">
-					            <option>@naver.com</option>
-					            <option>@gmail.com</option>
-					            <option>@hanmail.net</option>
-					        </datalist>
+	                	<input name="empEmail" id="findIdEmail1" type="text" required>
+	                	<input id="findIdEmail2" type="text" value="@gmail.com" readonly>
 	                </td>
 	            </tr>
 	            <tr>
@@ -171,7 +177,9 @@
 	                </td>
 	            </tr>
 	            <tr>
-	                <td colspan="2" class="findIdTd"><button type="submit" id="findIdBtn" class="bigBtn">아이디 찾기</button></td>
+	                <td colspan="2" class="findIdTd">
+	                	<button type="submit" id="findIdBtn" class="bigBtn">아이디 찾기</button>
+	                </td>
 	            </tr>
 	        </table>
 	    </form>

@@ -140,7 +140,7 @@
 	            </tr>
 	            <tr>
 	                <td class="loginTd" style="font-size: 20px;">PW</td>
-	                <td><input id="loginPwd" name="empPwd" type="password"></td>
+	                <td><input id="loginPwd" name="empPwd" type="password" required></td>
 	            </tr>
 	            <tr>
 	            	<td></td>

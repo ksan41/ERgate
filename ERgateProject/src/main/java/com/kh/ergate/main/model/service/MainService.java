@@ -8,16 +8,16 @@ public interface MainService {
 	Employee loginMember(Employee e);
 	
 	// 아이디 찾기용 서비스
-	String findId(Employee e);
+	Employee findId(Employee e);
 	
 	// 비밀번호 찾기용 서비스
 	Employee findPwd(Employee e);
 	
 	// 비밀번호 수정용 서비스
-	int updatePwd(String userPwd);
+	int updatePwd(Employee e);
 	
 	// 아이디 중복확인용 서비스
-	int idCheck(String userId);
+	int idCheck(String empId);
 	
 	// 계정등록용 서비스
 	int insertRequest(Employee e);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,6 +116,14 @@
 </style>   
 </head>
 <body>
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+	
 	<div id="findIdOuter">
         <table id="findIdTable">
             <tr>
@@ -131,12 +140,12 @@
             </tr>
             <tr>
 				<td id="findIdSuccess">
-					가나다라마바사님의 아이디는 <br>
-					<span style="color: orange;">useruser01</span>입니다.
+					${ loginUser.empName }님의 아이디는 <br>
+					<span style="color: orange;">${ loginUser.empId }</span>입니다.
 				</td>
             </tr>
             <tr>
-                <td colspan="2" class="findIdTd"><button onclick="location.href='loginTest.ma'" id="findIdBtn" class="bigBtn">로그인하기</button></td>
+                <td colspan="2" class="findIdTd"><button onclick="location.href='logout.ma'" id="findIdBtn" class="bigBtn">로그인하기</button></td>
             </tr>
         </table>
 	</div>

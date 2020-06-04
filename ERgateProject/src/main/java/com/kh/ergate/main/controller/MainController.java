@@ -41,7 +41,7 @@ public class MainController {
 	@RequestMapping("logout.ma")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:returnLogin.ma";
 	}
 	
 	
@@ -102,17 +102,60 @@ public class MainController {
 	
 	// 아이디 찾기
 	@RequestMapping("findId.ma")
-	public String findId() {
-		return "main/findIdSuccess";
+	public String findId(Employee e, String empEmail, HttpSession session) {
+		
+		e.setEmpPriEmail(empEmail + "@gmail.com");
+		
+		Employee loginUser = mService.findId(e);
+		
+		if(loginUser != null) {
+			session.setAttribute("loginUser", loginUser);
+			return "main/findIdSuccess";
+		}else {
+			session.setAttribute("msg", "아이디 찾기에 실패하였습니다. 다시 시도해 주세요.");
+			return "redirect:findIdForm.ma";
+		}
+		
 	}
 	
 	
 	// 비밀번호 찾기
 	@RequestMapping("findPwd.ma")
-	public String findPwd() {
-		return "main/findPwdSuccess";
+	public String findPwd(Employee e, String empEmail, HttpSession session) {
+		
+		e.setEmpPriEmail(empEmail + "@gmail.com");
+		
+		Employee loginUser = mService.findPwd(e);
+		
+		if(loginUser != null) {
+			session.setAttribute("loginUser", loginUser);
+			return "main/findPwdSuccess";
+		}else {
+			session.setAttribute("msg", "비밀번호 찾기에 실패하였습니다. 다시 시도해 주세요.");
+			return "redirect:findPwdForm.ma";
+		}
+		
 	}
 	
+	
+	// 비밀번호 변경
+	@RequestMapping("updatePwd.ma")
+	public String updatePwd(String newPwd, HttpSession session) {
+		
+		Employee e = (Employee)session.getAttribute("loginUser");
+		
+		String encPwd = bcryptPasswordEncoder.encode(newPwd);
+		e.setEmpPwd(encPwd);
+		
+		int result = mService.updatePwd(e);
+		if(result > 0) {
+			session.setAttribute("msg", "비밀번호 변경이 성공적으로 완료되었습니다.");
+			return "redirect:returnLogin.ma";
+		}else {
+			session.setAttribute("msg", "비밀번호 변경에 실패하였습니다. 다시 시도해 주세요.");
+			return "redirect:findPwdForm.ma";
+		}
+	}
 	
 	
 	// ---------- 페이지 이동용 ----------

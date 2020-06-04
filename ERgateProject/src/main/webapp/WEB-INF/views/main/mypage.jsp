@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>mypage</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 다음 주소 검색 API -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 /* ==========페이지영역========== */

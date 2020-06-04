@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,6 +134,14 @@
 </style>   
 </head>
 <body>
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+	
 	<div id="findPwdOuter">
 	    <form action="findPwd.ma" method="post">
 	        <table id="findPwdTable">
@@ -150,18 +159,13 @@
 	            </tr>
 	            <tr>
 	                <td class="findPwdLabel">아이디</td>
-	                <td><input id="findPwdId" type="text"></td>
+	                <td><input name="empId" id="findPwdId" type="text" required></td>
 	            </tr>
 	            <tr>
 	                <td class="findPwdLabel">이메일 주소</td>
 	                <td>
-	                	<input id="findPwdEmail1" type="text">
-	                	<input id="findPwdEmail2" name="emailDomain" type="text" list="emailDomain" placeholder="직접입력">
-					        <datalist id="emailDomain">
-					            <option>@naver.com</option>
-					            <option>@gmail.com</option>
-					            <option>@hanmail.net</option>
-					        </datalist>
+	                	<input name="empEmail" id="findPwdEmail1" type="text" required>
+	                	<input id="findPwdEmail2" type="text" value="@gmail.com" readonly>
 	                </td>
 	            </tr>
 	            <tr>

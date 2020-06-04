@@ -41,30 +41,6 @@
 		 	   AND RESIGN_FLAG='N'
 	</select>
 	
-	<select id="findId" resultType="string" parameterType="Employee">
-		SELECT EMP_ID
-		  FROM EMPLOYEE
-		 WHERE EMP_NAME=#{empName}
-		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
-		 	   AND RESIGN_FLAG='N'
-	</select>
-	
-	<select id="findPwd" resultMap="employeeResultSet" parameterType="Employee">
-		SELECT *
-		  FROM EMPLOYEE
-		 WHERE EMP_ID=#{empId}
-		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
-		 	   AND RESIGN_FLAG='N'
-	</select>
-	
-	<update id="updatePwd" parameterType="string">
-		UPDATE EMPLOYEE
-		   SET EMP_PWD=#{empPwd}
-		 WHERE EMP_ID=#{empId}
-		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
-		 	   AND RESIGN_FLAG='N'
-	</update>
-	
 	<select id="idCheck" resultType="_int" parameterType="string">
 		SELECT COUNT(*)
 		  FROM EMPLOYEE
@@ -92,5 +68,28 @@
 		 WHERE EMP_ID=#{empId}
 	</update>
 	
-
+	<select id="findId" resultMap="employeeResultSet" parameterType="Employee">
+		SELECT *
+		  FROM EMPLOYEE
+		 WHERE EMP_NAME=#{empName}
+		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
+		 	   AND RESIGN_FLAG='N'
+	</select>
+	
+	<select id="findPwd" resultMap="employeeResultSet" parameterType="Employee">
+		SELECT *
+		  FROM EMPLOYEE
+		 WHERE EMP_ID=#{empId}
+		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
+		 	   AND RESIGN_FLAG='N'
+	</select>
+	
+	<update id="updatePwd" parameterType="Employee">
+		UPDATE EMPLOYEE
+		   SET EMP_PWD=#{empPwd}
+		 WHERE EMP_ID=#{empId}
+		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
+		 	   AND RESIGN_FLAG='N'
+	</update>
+	
 </mapper>

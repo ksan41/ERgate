@@ -25,7 +25,7 @@ public class MainServiceImpl implements MainService {
 
 	// 아이디 찾기용 서비스
 	@Override
-	public String findId(Employee e) {
+	public Employee findId(Employee e) {
 		return mDao.findId(sqlSession, e);
 	}
 
@@ -37,8 +37,8 @@ public class MainServiceImpl implements MainService {
 
 	// 비밀번호 수정용 서비스
 	@Override
-	public int updatePwd(String empPwd) {
-		return mDao.updatePwd(sqlSession, empPwd);
+	public int updatePwd(Employee e) {
+		return mDao.updatePwd(sqlSession, e);
 	}
 
 	// 아이디 중복확인용 서비스
