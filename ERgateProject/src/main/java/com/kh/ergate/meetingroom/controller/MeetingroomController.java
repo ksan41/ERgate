@@ -85,6 +85,11 @@ public class MeetingroomController {
 	
 	}
 	
+	@RequestMapping("test.me")
+	public String selectTest() {
+		return"meetingroom/test";
+	}
+	
 
 }
 
