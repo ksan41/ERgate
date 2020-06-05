@@ -848,36 +848,34 @@ p {
 			
 
 		<!-- 모달 (예약하기 부분) -->
-		<form action="reserveMtroom.me" method="post">
+		<form action="" id="reservationForm" name="reservationForm">
 		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
 			<div class="modal-content">
 				<table class="reservationContent">
 					<tr>
 						<td id="r1">신청자</td>
-						<td id="r2">${ loginUser.empName }님</td>
+						<td id="r2"><input type="hidden" name="empId" value="${ loginUser.empId }"><span>${ loginUser.empName }</span></td>
 					</tr>
 					<tr>
 						<td id="r1">사용기간</td>
 						<td id="r2">
-							<form name="" action="" method="post">
-								<input type="date" name="start-date" class="inputs" style="width: 140px">
-								<input type="time" name="start-time" class="inputs" style="width: 120px">
+								<input type="date" name="mtrmStartDate" class="inputs" style="width: 140px" value="2020-05-05">
+								<input type="time" name="mtrmStartTime" class="inputs" style="width: 120px">
 								<img
 									src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png"
 									id="minusImg"> 
-									<input type="date" name="end-date" class="inputs" style="width: 140px"> 
-									<input type="time" name="end-time" class="inputs" style="width: 120px">
-							</form>
+									<input type="date" name="mtrmEndDate" class="inputs" style="width: 140px" value="2020-05-05"> 
+									<input type="time" name="mtrmEndTime" class="inputs" style="width: 120px">
 						</td>
 					</tr>
 					<tr>
 						<td id="r1">회의실</td>
 						<td id="r2">
 						
-						<select name="meetingroom" class="inputs" style="width: 120px">
-								<option selected>회의실 선택</option>
-								<option value="1">3F 회의실</option>
+						<select name="mtrmCode" class="inputs" style="width: 120px">
+								<option>회의실 선택</option>
+								<option value="1" selected>3F 회의실</option>
 								<option value="2">5F 회의실1</option>
 								<option value="3">5F 회의실2</option>
 								<option value="4">6F 회의실1</option>
@@ -888,7 +886,7 @@ p {
 					</tr>
 					<tr>
 						<td id="r1">사용목적</td>
-						<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="purpose"></td>
+						<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="하하"></td>
 					</tr>
 					<tr>
 						<td id="r1">참석자(내부)</td>
@@ -903,10 +901,10 @@ p {
 					</tr>
 				</table>
 			</div>
-
+			
 			<!-- 예약/취소 버튼 -->
 			<div class="btns">
-				<button id="reservBtn" type="button" id="save-event">예약하기</button>
+				<button id="reservBtn" type="button">예약하기</button>
 				<button id="resetBtn" type="reset" onclick="history.go(0)">취소</button>
 			</div>
 		</div>
@@ -914,7 +912,7 @@ p {
 
 
 		<!-- 모달(나의 예약 현황) -->
-		<div id="myReservation_open_modal" class="modal">
+		<div id="myReservation_open_modal" clas="modal">
 				<c:choose>
 					<c:when test="${ !empty loginUser }">
 						<div class="modal-title">나의 예약현황</div>
@@ -925,10 +923,10 @@ p {
 										<td rowspan="5" class="mcTdImg"><img class="mcImg"
 											src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 										</td>
-										<td class="mcTdContent"><span class="mcContent1">${ mtrmName }</span></td>
+										<td class="mcTdContent"><span class="mcContent1">${ mr.mtrmName }</span></td>
 									</tr>
 									<tr>
-										<td class="mcTdContent"><span class="mcContent2">${ mtrmPurpose }</span></td>
+										<td class="mcTdContent"><span class="mcContent2">${ mr.mtrmPurpose }</span></td>
 									</tr>
 									<tr>
 										<td class="mcTdContent"><span class="mcContent3">${ mr.mtrmStartDate }${ mr.mtrmStartTime } ~ <br>
@@ -1049,21 +1047,32 @@ p {
 		});
 	
 		/* 예약하기 ajax*/
-		$.ajax({
-			type:"",
-			url:"",
-			data:{
+		
+		$(function(){
+			
+			 var queryString = $("form[name=reservationForm]").serialize() ;
+
+			
+			$("#reservBtn").click(function(){
+				console.log("ddd");
+				$.ajax({
+					url:"reserveMtroom.me",
+					data:queryString,
+					type:"post",
+					dataType:'json',
+					 error: function(xhr, status, error){
+			                alert(error);
+			            },
+			            success : function(json){
+			                alert(json)
+			            },
+
+
+				});
 				
-			},
-			success:function(){
-				
-			},error:function(){
-				console.log("예약하기 실패?,,,,")
-			}
+			});
+		});
 		
-		
-		
-		})
 	
 	</script>
 

@@ -1,18 +1,14 @@
 package com.kh.ergate.meetingroom.controller;
 
-
-
-
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
@@ -26,43 +22,38 @@ public class MeetingroomController {
 
 	@Autowired
 	private MeetingroomServiceImpl mrService;
-	
 
-	/* 할 수 있는 부분부터 해서 주석 참고 바람*/
-	
+	/* 할 수 있는 부분부터 해서 주석 참고 바람 */
+
+	// 회의실 예약용 
+	//회의실예약용(reserveMtroom.me) ---reserveMtroom(MeetingroomReservation,ArrayList<String> empId,Model model)
+
 	@RequestMapping("reserveMtroom.me")
-	public String reserveMtroom(MeetingroomReservation mr, Model model, HttpSession session) {
+	public String reserveMtroom(MeetingroomReservation mr) {
 		
+		
+		//System.out.println(mr);
+	//	int result = new mrService.reserveMtroom(MeetingroomReservation mr);
 		int result = mrService.reserveMtroom(mr);
-		model.addAttribute("session", session);
-		
-		if(result > 0) {
-			
-			session.setAttribute("msg", "회의실 예약 성공");
-			return "redirect:/";
-			
-		}else {
-			
-			model.addAttribute("msg", "회의실 예약 실패");
-			return "";
-		}
-		
-		
-		
+		return"";
 	}
 
-	
-	
-	
+	// 현재 예약 조회용
+	@RequestMapping("currentStatus.me")
+	public String currentStatus(Model model) {
+
+		return "meetingroom/meetingroomCurrentStatus";
+
+	}
+
 	// 회의실예약현황리스트조회용(statusList.me) --- statusList(Meetingroom,Model)
 
 	@RequestMapping("statusList.me")
 	public String statusList(int currentPage, Model model) {
-		
-		
+
 		int listCount = mrService.statusListCount();
 
-		//System.out.println(listCount);
+		// System.out.println(listCount);
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 
@@ -73,81 +64,60 @@ public class MeetingroomController {
 
 		return "meetingroom/meetingroomReservationList";
 	}
-	
-	@RequestMapping("currentStatus.me")
-	public String currentStatus(Model model) {
-		
-		
-		return "meetingroom/meetingroomCurrentStatus";
-		
-	}
 
-	//예약상세조회용
+	// 예약상세조회용
 	@RequestMapping("reserveDetail.me")
 	public String reserveDetail(int reservNo, Model model) {
-		
+
 		return "meetingroom/meetingroomCurrentStatus";
-		
+
 	}
-	
+
 	// 내 예약현황리스트조회용
 	@RequestMapping("myReserve.me")
 	public String myReserveList(String empId, MeetingroomReservation mr, Model model) {
-		
+
 		/*
 		 * int = mrService.myReserveList();
 		 * 
 		 * model.addAttribute("list", list);
 		 */
-		
+
 		return "meetingroom/meetingroomCurrentStatus";
-		
+
 	}
-	
-	// 회의실정보  조회용(mtroomDetail.me) ---selectMtroomDetail(String mtrmCode,Meetingroom,Model)
+
+	// 회의실정보 조회용(mtroomDetail.me) ---selectMtroomDetail(String
+	// mtrmCode,Meetingroom,Model)
 	@RequestMapping("mtroomDetail.me")
 	public String selectMtroomDetail(Meetingroom m, Model model) {
-		
+
 		ArrayList<Meetingroom> list = mrService.selectMtroomDetail();
-		
+
 		model.addAttribute("list", list);
-		
-		
+
 		return "meetingroom/meetingroomManagement";
-		
-		
-	
+
 	}
-	
-	//회의실등록용(insertMtroom.me) ---insertMeetingroom(Meetingroom,Model)
+
+	// 회의실등록용(insertMtroom.me) ---insertMeetingroom(Meetingroom,Model)
 
 	@RequestMapping("insertMtroom.me")
-	public String insertMeetingroom(Meetingroom m, Model model, HttpServletRequest httpServletRequest){
-		
+	public String insertMeetingroom(Meetingroom m, Model model, HttpServletRequest httpServletRequest) {
+
 		int result = mrService.insertMeetingroom(m);
 		System.out.println(m);
-		
+
 		model.addAttribute("httpServletRequest", httpServletRequest);
-		
-		if(result > 0) { // 회의실 등록 성공
-			
+
+		if (result > 0) { // 회의실 등록 성공
+
 			return "redirect:mtroomDetail.me?currentPage=1";
-		
-			
-		}else { // 회의글 등록 실패
-			
+
+		} else { // 회의글 등록 실패
+
 			return "";
 		}
 	}
-	
 
 }
-
-
-
-
-
-
-
-
-
