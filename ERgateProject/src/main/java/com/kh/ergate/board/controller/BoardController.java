@@ -126,6 +126,11 @@ public class BoardController {
 		return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(list);
 	}
 	
+	@RequestMapping("enrollForm.bo")
+	public String enrollForm() {
+		return "board/boardEnrollForm";
+	}
+	
 	/*
 	 * @RequestMapping("enrollForm.bo") public String enrollForm() { return
 	 * "board/boardEnrollForm"; }

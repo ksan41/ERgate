@@ -229,7 +229,7 @@
 		</div>
 		<div class="contentArea">
 
-			<button class="bigBtn">글쓰기</button>
+			<button class="bigBtn insertBoardBtn" onclick="location.href='enrollForm.bo'">글쓰기</button>
 
 			<!-- 검색바 -->
 			<form id="searchForm" action="search.bo" method="get">
@@ -386,11 +386,8 @@
 	</div>
 	
 	<script>
-	$(".insertBoardBtn").click(function(){
-		 location.href="insert.bo";
-	})
-	
-	$(function(){
+	$(document).ready(function() { 
+		
 		$(".boardTable>tbody>tr").click(function(){
 			var bno = $(this).children().eq(0).text();
 			console.log();
@@ -399,6 +396,7 @@
 			}
 		});
 	});
+	
 	
 	
 	$('.disabled').click(function () {return false;});

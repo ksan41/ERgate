@@ -393,7 +393,7 @@
                          // 확장자 체크
                          alert("등록 불가 확장자");
                          break; */
-                     if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'png', 'pdf', 'jpg', 'jpeg', 'gif', 'zip' ]) <= 0) {
+                     if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'pdf', 'jpeg', 'gif', 'zip' ]) <= 0) {
                          // 확장자 체크
                          /* alert("등록이 불가능한 파일 입니다.");
                          break; */
