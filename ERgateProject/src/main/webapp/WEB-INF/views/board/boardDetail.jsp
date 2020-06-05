@@ -515,6 +515,12 @@
 			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 삭제할지 알아야되니까)
 			location.href="replyDelete.bo?replyno=" + replyno;
 		});
+		$(document).on("click",".replyInsertBtn",function(){
+				console.log("안될께 뻔한걸"); // 댓글 "답글" 작동하는곳
+
+		});
+
+
 	});
 	
 	$(document).ready(function() {
