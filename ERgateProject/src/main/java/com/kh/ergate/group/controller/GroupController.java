@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.ergate.group.model.service.GroupService;
+import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
 
 @Controller
@@ -46,12 +47,19 @@ public class GroupController {
 	@RequestMapping(value="empProfile.gr", produces="application/json; charset=utf-8" )
 	public String selectEmpProfile(String empId) {
 		
-		System.out.println("c"+empId);
 		Employee empPrf = grService.selectEmpProfile(empId);
-		
-		System.out.println(grService.selectEmpProfile(empId));
-		
 		return new Gson().toJson(empPrf);
 	}
- 
+	
+	// 조직도 키워드 검색 
+	@ResponseBody
+	@RequestMapping(value="empListSearch.gr", produces="application/json; charset=utf-8" )
+	public String selectEmpListSearch(Search search) {
+		
+		
+		ArrayList<Employee> array = grService.selectEmpListSearch(search);
+		//System.out.println(array);
+		return new Gson().toJson(array);
+	}
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.ui.Model;
 
+import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
 
 public interface GroupService {
@@ -16,6 +17,9 @@ public interface GroupService {
 
 	// 조직도 부서별 사원 조회
 	ArrayList<Employee> selectDeptEmpList(String keyword);
+
+	// 조직도 키워드 검색 
+	ArrayList<Employee> selectEmpListSearch(Search search);
 
 	
 //	// 사원 검색 요청용

@@ -203,13 +203,18 @@ div{
 	font-weight: 600;
     cursor: pointer;
 }
-.dept_rank_code{
+.dept_rank_code1{
     color: rgb(188, 188, 188);
+    cursor: default;
 }
 .empList a{
     text-decoration: none;
     color: rgb(77, 77, 77);
     cursor: pointer;
+}
+.noEmpText{
+    color: rgb(77, 77, 77);
+    font-size: 17px;
 }
 
 /* profile_area */
@@ -284,7 +289,7 @@ div{
  /* 조직도 div 스타일 */
  
  /* 작은버튼 스타일 */
-.smallBtn {
+.smallBtn{
 	width: 60px;
 	height: 25px;
 	border: 1px solid rgb(26, 188, 156);
@@ -315,7 +320,35 @@ div{
 	
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp"/>
-	
+	<style>
+		 /* 작은버튼 스타일 */
+.smallBtn{
+	width: 60px;
+	height: 25px;
+	border: 1px solid rgb(26, 188, 156);
+	border-radius: 5px;
+	background: white; /* 회색 : rgb(190, 190, 190) */
+	color: rgb(26, 188, 156);
+	font-size: 12px; 
+	cursor:default !important;
+}
+
+.smallBtnGrey{
+	width: 60px;
+	height: 25px;
+	border: 1px solid rgb(188, 188, 188);
+	border-radius: 5px;
+	background: white; /* 회색 : rgb(190, 190, 190) */
+	color: rgb(188, 188, 188);
+	font-size: 12px;
+	cursor:default !important;
+}
+
+/* .smallBtn:hover {
+	cursor: pointer;
+} */
+/* 작은버튼 스타일 */
+	</style>
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -340,16 +373,19 @@ div{
 						<td id="rightArea">
 							<!-- 검색바 -->
 							<div class="searchBar">
-								<select>
-									<option>이름</option>
-									<option>직급</option>
-									<option>직책</option>
-									<option>부서</option>
-								</select> <input type="text" placeholder="이름/직급/직책/부서 검색">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+								
+								<select id="condition" name="condition">
+									<option value="empName">이름</option>
+									<option value="rankTitle">직급</option>
+									<option value="jobTitle">직책</option>
+									<option value="deptTitle">부서</option>
+								</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
+								<svg onclick="return searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 									fill="black" width="48px" height="48px">
 									<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
+								
+							
 							</div> 
 							<!-- 검색바 -->
 						</td>
@@ -464,7 +500,7 @@ div{
 					var value = "";
 					
 					if(eList.length == 0){ // 리스트가 비어있을 경우
-		            	value = "<li>조회된 사원이 없습니다.</li>";
+		            	value = '<span class="noEmpText">조회된 사원이 없습니다. </span>';
 					}else{ // 리스트가 비어있지 않을 경우
 		            	console.log(eList[0]);
 						for(var i in eList){
@@ -473,8 +509,7 @@ div{
 							var empRank = eList[i].rankTitle;
 							var empJob = eList[i].jobTitle;
 							
-							value += '<li key="'+ eList[i].empId +'" onclick="empPrf();">' + empName + '<span class="dept_rank_code">(' +empRank + '/' + empJob +')</span></li>';
-							
+							value += '<li>' + '<span key="'+ eList[i].empId +'" onclick="empPrf();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
 						}
 						$(".empList").html(value);
 					} 
@@ -500,13 +535,13 @@ div{
 			data:{"empId":empId}, 
 			async: false,
 			success: function(empPrf){
-				
+				console.log(empPrf.empImage);
 				var valueUp="";
 				valueUp +=
 					
 						'<div class="profile_img">';
 							
-						if(empPrf.empImage == null){
+						if(empPrf.empImage == undefined){
 								valueUp += '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
 							}else{
 									
@@ -531,8 +566,9 @@ div{
 			                } 
 			                
 							valueUp +=
-			                '<div class="dept_rank_code">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
-			                '<div><span class="dept_mail">' + empPrf.empComEmail + '</span></div>' +
+			                '<div class="dept_rank_code1">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
+			                '<div style="margin-top: 5px;""><span style="vertical-align:middle;"><img src="${pageContext.servletContext.contextPath}/resources/icons/mail.png" width="20px;"></span>'+
+			                '<span class="dept_mail">&nbsp;' + empPrf.empComEmail + '</span></div>' +
 			            '</div>'
 							
 				$(".profile_up").html(valueUp);
@@ -558,8 +594,7 @@ div{
 			}
 		});
 	}
-	
-	
+
 	
 	/* 조직도 전체 리스트 조회 - 조직도 페이지 첫 화면 */
 	function selectNoList(){		
@@ -573,7 +608,7 @@ div{
 				var value = "";
 				
 				if(list.length == 0){ // 리스트가 비어있을 경우
-	            	value = "<li>조회된 사원이 없습니다.</li>";
+	            	value = '<span class="noEmpText">조회된 사원이 없습니다. </span>';
 				}else{ // 리스트가 비어있지 않을 경우
 	            
 					for(var i in list){
@@ -582,7 +617,7 @@ div{
 						var empRank = list[i].rankTitle;
 						var empJob = list[i].jobTitle;
 						
-						value += '<li key="'+ list[i].empId +'" onclick="empPrf();">' + empName + '<span class="dept_rank_code">(' +empRank + '/' + empJob +')</span></li>';
+						value += '<li>' + '<span key="'+ list[i].empId +'" onclick="empPrf();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
 					
 					}
 					$(".empList").html(value);
@@ -592,6 +627,45 @@ div{
 				console.log("조직도 사원 리스트조회용 통신 실패");
 			}
 		});
+	}
+	
+	function searchEmpProfile(){
+		condition = $("#condition option:selected").val();
+		keyword = $("#keyword").val();
+		if(keyword==''){
+			alert("키워드를 입력하세요");
+			return;
+		}
+		$.ajax({
+			url:"empListSearch.gr",
+			type:"get",
+			data:{"condition":condition,
+				 "keyword":keyword},
+			success: function(list){
+			console.log(list);
+				var value = "";
+				
+				if(list.length == 0){ // 리스트가 비어있을 경우
+					value = '<br><span class="noEmpText">조회된 사원이 없습니다. </span>';
+				}else{ // 리스트가 비어있지 않을 경우
+	            
+					for(var i in list){
+						
+						var empName = list[i].empName;
+						var empRank = list[i].rankTitle;
+						var empJob = list[i].jobTitle;
+						
+						value += '<li>' + '<span key="'+ list[i].empId +'" onclick="empPrf();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
+					}
+				}
+				$(".empList").html(value);
+			},
+			error:function(){
+				console.log("조직도 사원 리스트조회용 통신 실패");
+			}
+			
+		})
+		
 	}
     </script>
 </body>
