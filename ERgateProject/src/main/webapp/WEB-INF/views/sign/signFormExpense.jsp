@@ -312,23 +312,29 @@ h2, h3 {
 				<button class="bigBtn" id="signSubmit">기안등록</button>
 			</div>
 			<br>
-			<form id="signForm" action="#" method="get">
+			<form id="signForm" name="signForm" enctype="multipart/form-data" method="get">
 				<table id="signInfo1">
 					<tr>
 						<th>기안부서</th>
-						<td width="400">인사부</td>
+						<td width="400">${loginUser.deptTitle }</td>
 						<th>문서분류</th>
 						<td width="400">지출결의서</td>
+						<input type="hidden" name="deptTitle" value="${loginUser.deptTitle }">
+						<input type="hidden" name="signTypeNo" value="0">
 					</tr>
 					<tr>
 						<th>기안자</th>
-						<td>김기철</td>
+						<td>${loginUser.empName }</td>
 						<th>문서번호</th>
-						<td>00000</td>
+						<td>
+							<c:if test="${!empty sd }">
+								${sd.documentNo }
+							</c:if>
+						</td>
 					</tr>
 					<tr>
 						<th>기안일시</th>
-						<td>2020/05/10</td>
+						<td><p id="toDate"></p></td>
 						<th>지출기간</th>
 						<td><input class="inputs" name="" type="date"> ~ <input
 							name="" class="inputs" type="date"></td>
@@ -364,9 +370,15 @@ h2, h3 {
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left"><span>@앨리스 </span> <span>@레베카
-						</span> <span>@마리아 </span> <span>@존 </span> <span>@올리버 </span> <span>@샬롯
-						</span></td>
+						<td colspan="6" align="left">
+							<c:if test="${!empty sgList }">
+								<c:forEach var="sg" items="${sgList }">
+									<c:if test="${sg.signType eq 0 }">
+										<span>@${sg.empName } </span>
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</td>
 					</tr>
 				</table>
 
@@ -392,7 +404,7 @@ h2, h3 {
 					<thead>
 						<tr>
 							<th width="120">제목</th>
-							<td><input class="inputs" type="text" style="width: 100%;"></td>
+							<td><input name="signTitle" class="inputs" type="text" style="width: 100%;"></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
@@ -432,7 +444,7 @@ h2, h3 {
 					삭제</button>
 				<br>
 				<br>
-
+				
 				<!-- 테이블값 가져올 el -->
 				<c:set var="contentVal" scope="page" />
 				<input type="hidden" name="contentTable">
@@ -458,7 +470,22 @@ h2, h3 {
 			</form>
 		</div>
 	</div>
+	
 	<script>
+		//오늘날짜 표시
+		$(document).ready(function(){
+			var n =  new Date();
+			var y = n.getFullYear();
+			var m = n.getMonth() + 1;
+			var d = n.getDate();
+			
+			$("#toDate").text(y+"/"+m+"/"+d);
+		});
+	
+	</script>
+	<script>
+	
+	
 	//테이블 행추가
 	$("#addTr").click(function(){
 		$("#contentTable tbody:last").append('<tr><td><input class="inputVal" type="text"></td><td><input class="inputVal" type="text"></td><td><input class="inputVal" type="text"></td><td><input class="inputVal" type="text"></td></tr>');
@@ -485,10 +512,11 @@ h2, h3 {
 	});
 	
 	
-<%-- 	//파일첨부관련
     $(document).ready(function() {
         $("#input_file").bind('change', function() {
             selectFile(this.files);
+            //this.files[0].size gets the size of your file.
+            //alert(this.files[0].size);
         });
     });
 
@@ -503,6 +531,8 @@ h2, h3 {
 				}
 			});
 	 });
+    
+    
     // 파일 리스트 번호
     var fileIndex = 0;
     // 등록할 전체 파일 사이즈
@@ -616,7 +646,7 @@ h2, h3 {
                     // 확장자 체크
                     alert("등록 불가 확장자");
                     break; */
-                if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'png', 'pdf', 'jpg', 'jpeg', 'gif', 'zip' ]) <= 0) {
+                if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'pdf', 'jpeg', 'gif', 'zip' ]) <= 0) {
                     // 확장자 체크
                     /* alert("등록이 불가능한 파일 입니다.");
                     break; */
@@ -649,10 +679,15 @@ h2, h3 {
 
     // 업로드 파일 목록 생성
     function addFileList(fIndex, fileName, fileSizeStr) {
+        /* if (fileSize.match("^0")) {
+            alert("start 0");
+        } */
+
         var html = "";
         html += "<tr id='fileTr_" + fIndex + "'>";
         html += "    <td id='dropZone' class='left' >";
         html += fileName + " (" + fileSizeStr +") " 
+                //+ "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'> 삭제</a>"
                 + "<span id='deleteBtn' class='material-icons' onclick='deleteFile(" + fIndex + "); return false;'>highlight_off</span>"
         html += "    </td>"
         html += "</tr>"
@@ -685,26 +720,27 @@ h2, h3 {
             $("fileListTable").hide();
         }
     }
-
+	
+    
     // 파일 등록
     function uploadFile() {
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
         	
-           var form = $('#signForm');
+           var form = $('#uploadForm');
            console.log(form[0]);
            var formData = new FormData(form[0]);
-           formData.append('noticeTitle', form[0].boardTitle.innerText);
-           formData.append('noticeContent', form[0].boardContent.innerText);
+           formData.append('boardTitle', form[0].boardTitle.innerText);
+           formData.append('boardContent', form[0].boardContent.innerText);
            for (var i = 0; i < uploadFileList.length; i++) {
                formData.append('files', fileList[uploadFileList[i]]);
            }
-           console.log(formData.getAll('noticeTitle'));
-           console.log(formData.getAll('noticeContent'));
+           console.log(formData.getAll('boardTitle'));
+           console.log(formData.getAll('boardContent'));
            console.log(formData.getAll('files'));
            
            $.ajax({
-               url : "<%= contextPath %>/testFileload.bo",
+               url : "insertDoc.si",
                data : formData,
                type : 'POST',
                enctype : 'multipart/form-data',
@@ -728,7 +764,8 @@ h2, h3 {
 				complete:function(){// complete : ajax 통신 성공여부와 상관없이 실행
 					console.log("무조건 호출!!");
 				}
-           }); --%>
+           });
+           
     }
 	
 	</script>
