@@ -133,8 +133,8 @@
                 <td id="findIdDescript">
 					<ul id="subMenuList">
 						<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-						<li><button class="subBtn subActive" onclick="location.href='findIdForm.ma'">아이디 찾기</button></li>
-						<li><button class="subBtn" onclick="location.href='findPwdForm.ma'">비밀번호 찾기</button></li>
+						<li><button class="subBtn subActive" type="button" onclick="location.href='findIdForm.ma'">아이디 찾기</button></li>
+						<li><button class="subBtn" type="button" onclick="location.href='findPwdForm.ma'">비밀번호 찾기</button></li>
 					</ul>
 				</td>
             </tr>
@@ -145,7 +145,9 @@
 				</td>
             </tr>
             <tr>
-                <td colspan="2" class="findIdTd"><button onclick="location.href='logout.ma'" id="findIdBtn" class="bigBtn">로그인하기</button></td>
+                <td colspan="2" class="findIdTd">
+                	<button onclick="location.href='logout.ma'" id="findIdBtn" class="bigBtn">로그인하기</button>
+                </td>
             </tr>
         </table>
 	</div>

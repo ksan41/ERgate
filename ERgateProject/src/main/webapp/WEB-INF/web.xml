@@ -33,6 +33,7 @@
 		<url-pattern>/</url-pattern>
 		<url-pattern>*.ma</url-pattern>
 		<url-pattern>*.me</url-pattern>
+		<url-pattern>*.ve</url-pattern>
 	</servlet-mapping>
 	
 	

@@ -152,8 +152,8 @@
 	                <td colspan="2" id="findPwdDescript">
 						<ul id="subMenuList">
 							<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-							<li><button class="subBtn" onclick="location.href='findIdForm.ma'">아이디 찾기</button></li>
-							<li><button class="subBtn subActive" onclick="location.href='findPwdForm.ma'">비밀번호 찾기</button></li>
+							<li><button class="subBtn" type="button" onclick="location.href='findIdForm.ma'">아이디 찾기</button></li>
+							<li><button class="subBtn subActive" type="button" onclick="location.href='findPwdForm.ma'">비밀번호 찾기</button></li>
 						</ul>
 					</td>
 	            </tr>
@@ -170,12 +170,14 @@
 	            </tr>
 	            <tr>
 		        	<td colspan="2" class="findPwdTd">
-		        		<button id="findPwdSendNoBtn" class="middleBtn">인증번호 발송</button>
+		        		<button id="findPwdSendNoBtn" type="button" class="middleBtn">인증번호 발송</button>
 	                	<input id="findPwdNo" type="text" placeholder="인증번호 입력">
 	                </td>
 	            </tr>
 	            <tr>
-	                <td colspan="2" class="findPwdTd"><button id="findPwdBtn" class="bigBtn">비밀번호 찾기</button></td>
+	                <td colspan="2" class="findPwdTd">
+	                	<button id="findPwdBtn" type="submit" class="bigBtn">비밀번호 찾기</button>
+	                </td>
 	            </tr>
 	        </table>
 	    </form>
