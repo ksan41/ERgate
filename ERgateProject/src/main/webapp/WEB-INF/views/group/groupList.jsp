@@ -344,15 +344,9 @@
 		                </li>
 		            </ul>
 		        </div>
-		        <div class="empList_area" style="overflow-y:scroll;">
+		        <div class="empList_area" style="overflow: auto;">
 		            <ul class="empList">
-		                <a href="#"><li><span>앨리스</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <!-- <a href="#"><li><span>리차드</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a href="#"><li><span>케빈</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a href="#"><li><span>김카카오</span> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></li></a>
-		                <a href="#"><li><span>최삼성</span> <span class="rank_code">(기술팀 /</span> <span class="job_code">팀원)</span></li></a>
-		                <a href="#"><li><span>박다음</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">대리)</span></li></a> -->
-		                
+		                <!-- <li>앨리스 <span class="dept_rank_code">(임원/대표이사)</span></li> -->
 		            </ul>
 		        </div>
 		        <div class="profile_area" style="overflow: auto;">
@@ -446,10 +440,10 @@
 							var empRank = eList[i].rankTitle;
 							var empJob = eList[i].jobTitle;
 							
-							value += '<li key="'+ eList[i].empId +'" onclick="empPrf();">' + empName +empRank + empJob +'</li>';
+							value += '<li key="'+ eList[i].empId +'" onclick="empPrf();">' + empName + '<span class="dept_rank_code">(' +empRank + '/' + empJob +')</span></li>';
 							
 						}
-						$(".empList_area").html(value);
+						$(".empList").html(value);
 					} 
 					
 				},
@@ -476,8 +470,19 @@
 				
 				var valueUp="";
 				valueUp +=
-						'<div class="profile_img">' +
-			                '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">' +
+					
+						'<div class="profile_img">';
+							
+						if(empPrf.empImage == null){
+								valueUp += '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
+							}else{
+									
+								valueUp += '사진 샘플데이터 넣으면 수정하기';
+							/* '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
+							 */
+							} 
+						
+						valueUp +=
 			            '</div>' +
 			            '<div class="profile_name">' +
 			                '<div class="dept_name">'+ empPrf.empName +'</div>'; 
@@ -543,9 +548,10 @@
 						var empRank = list[i].rankTitle;
 						var empJob = list[i].jobTitle;
 						
-						value += '<li key="'+ list[i].empId +'" onclick="empPrf();">' + empName +empRank + empJob +'</li>';
+						value += '<li key="'+ list[i].empId +'" onclick="empPrf();">' + empName + '<span class="dept_rank_code">(' +empRank + '/' + empJob +')</span></li>';
+					
 					}
-					$(".empList_area").html(value);
+					$(".empList").html(value);
 				}
 			},
 			error:function(){
