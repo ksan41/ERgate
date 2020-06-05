@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -131,10 +132,37 @@ public class BoardController {
 		return "board/boardEnrollForm";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="insert.bo", produces="application/json; charset=utf-8")
+	public String insertBoard(Board b, HttpServletRequest request, @RequestParam(name="files", required=false) MultipartFile files) {
+		
+		// request.setCharacterEncoding("utf-8"); Multipart생성 시 인코딩 하므로 필요음슴
+		// 업로드된 파일 담을 곳 알아내기 -> ajax로 넘어온 request객체 + savePath(저장할 경로) + 인코딩 타입(UTF-8) 지정해서 Multipart타입으로 request객체 변환하기
+		String resources = request.getSession().getServletContext().getRealPath("/resources"); 
+		String savePath = resources + "\\uploadFiles\\board\\";	
+		MultipartRequest multiRequest = (MultipartRequest)request; // 여기서 request -> MultiPartRequest로 바뀝니다.
+				
+		//제목 + 내용 찍어보기. 잘 찍힘 ㅇㅇ 근데 ajax에서 input 요소 담을 때 파일타입으로 담다보니 넘어올때 배열로 담겨서 옴
+		//배열에 차곡차곡 안담기고 배열의 [0]번 인덱스에 모든 내용이 다 담겨서 넘어옴, 그래서 title[0] 이런식으로 빼야함니다. 담을 때도 String title[] 이런식으로 변수 만들구요
+		String title[] = multiRequest.getParameterValues("boardTitle");		
+		String content[] = multiRequest.getParameterValues("boardContent");
+		String filename = multiRequest.getOriginalFileName("files");
+		
+		System.out.println("제목값은? : " + title[0]);
+		System.out.println("내용값은? : " + content[0]);
+		System.out.println("파일이름은? : " + filename);
+		//파일이름은 마지막에 올린것만 나오는데, 이거 구현하려면 jsp script단에서 수정해야댐
+		//근데 어차피 spring에서는 multipartFile이라고 다중파일 담아주는 객체 있으니까 거기서 맞게 고칠겁니다~
+				
+		int result = 1;	// 실제로 기능 구현할땐 여기에 DB에 insert 하고 반환된 int값을 넣어줘야함(ex: int result = new boardService().insertBoard(~~) 이런식으로?)
+				
+		//ajax로 요청했을땐 result값이 돌아와야 ajax에서 성공 / 실패 판단하니까 result를 돌려줘야함
+		PrintWriter out = response.getWriter();
+		out.print(result);
+	}
+	
 	/*
-	 * @RequestMapping("enrollForm.bo") public String enrollForm() { return
-	 * "board/boardEnrollForm"; }
-	 * 
+	
 	 * @RequestMapping("insert.bo") public String insertBoard(Board b,
 	 * HttpServletRequest request,
 	 * 

@@ -486,7 +486,7 @@
                 console.log(formData.getAll('files'));
                 
                 $.ajax({
-                    url : "<%= contextPath %>/testFileload.bo",
+                    url : "insert.bo",
                     data : formData,
                     type : 'POST',
                     enctype : 'multipart/form-data',
