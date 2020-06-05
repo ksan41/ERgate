@@ -227,19 +227,19 @@ h2, h3 {
 				<table id="signInfo1">
 					<tr>
 						<th>기안부서</th>
-						<td width="400">인사부</td>
+						<td width="400">${sd.deptTitle }</td>
 						<th>문서분류</th>
 						<td width="400">휴가계</td>
 					</tr>
 					<tr>
 						<th>기안자</th>
-						<td>김기철</td>
+						<td>${sd.empName }</td>
 						<th>문서번호</th>
-						<td>00000</td>
+						<td>${sd.documentNo }</td>
 					</tr>
 					<tr>
 						<th>기안일시</th>
-						<td>2020/04/28</td>
+						<td>${sd.draftDate }</td>
 						<td colspan="2" style="display:none;"></td>
 					</tr>
 				</table>
@@ -270,9 +270,15 @@ h2, h3 {
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left"><span>@앨리스 </span> <span>@레베카
-						</span> <span>@마리아 </span> <span>@존 </span> <span>@올리버 </span> <span>@샬롯
-						</span></td>
+						<td colspan="6" align="left">
+							<c:if test="${!empty sgList }">
+								<c:forEach var="sg" items="${sgList }">
+									<c:if test="${sg.signType eq 0 }">
+										<span>@${sg.empName } </span>
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</td>
 					</tr>
 				</table>
 
@@ -313,8 +319,8 @@ h2, h3 {
 						</tr>
 						<tr>
 							<th>기간</th>
-							<td align="left"><input class="inputs" name="" type="date" value="2020-05-01"> ~ <input
-								class="inputs" name="" type="date" value="2020-05-02"></td>
+							<td align="left"><input class="inputs" name="" type="date" value="${sd.holidayStart }"> ~ <input
+								class="inputs" name="" type="date" value="${sd.holidayEnd }"></td>
 							<th>사용일수</th>
 							<td align="left"><input type="text" class="inputs" value="1">
 								일</td>
@@ -322,18 +328,29 @@ h2, h3 {
 						<tr>
 							<th>제목</th>
 							<td colspan="3"><input class="inputs" type="text" style="width: 100%;"
-								value="김기철 05/01~05/02 연차"></td>
+								value="${sd.signTitle }"></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
 							<td colspan="3"></td>
 						</tr>
 						<tr>
-							<td colspan="4" rowspan="2">
-								<div id="fileArea">
-									<a href="#">첨부파일1.jpg</a><br>
-								</div>
-							</td>
+							<c:choose>
+								<c:when test="${empty saList }">
+									<td colspan="2">
+										첨부된 파일이 없습니다.
+									</td>
+								</c:when>
+								<c:otherwise>
+									<td colspan="2" rowspan="2">
+										<div id="fileArea">
+											<c:forEach var="i" items="${saList }">
+												<a href="${pageContext.servletContext.contextPath}/resources/uploadFiles/sign/${i.changeName }" download="${i.originName }">${i.originName }</a><br>											
+											</c:forEach>
+										</div>
+									</td>								
+								</c:otherwise>
+							</c:choose>
 						</tr>
 						<tr></tr>
 					</thead>
@@ -343,14 +360,15 @@ h2, h3 {
 				<c:set var="contentVal" scope="page" />
 				<input type="hidden" name="contentTable">
 				<table id="contentTable">
-						<tr>
+						${sd.signContent }
+						<!-- <tr>
 							<th>휴가사유</th>
 						</tr>
 						<tr>
 							<td rowspan="8" colspan="8">
 								<textarea id="signContent" cols="168" rows="24">연차사용</textarea>
 							</td>								
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 

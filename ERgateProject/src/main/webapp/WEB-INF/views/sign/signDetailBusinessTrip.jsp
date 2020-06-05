@@ -247,7 +247,7 @@ h2, h3 {
 					</tr>
 					<tr>
 						<th>기안일시</th>
-						<td>2020/04/28</td>
+						<td>${sd.draftDate }</td>
 						<td colspan="2" style="display:none;"></td>
 					</tr>
 				</table>
