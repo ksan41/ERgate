@@ -861,19 +861,21 @@ p {
 						<td id="r1">사용기간</td>
 						<td id="r2">
 							<form name="" action="" method="post">
-								<input type="date" class="inputs" style="width: 140px">
-								<input type="time" class="inputs" style="width: 120px">
+								<input type="date" name="start-date" class="inputs" style="width: 140px">
+								<input type="time" name="start-time" class="inputs" style="width: 120px">
 								<img
 									src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png"
-									id="minusImg"> <input type="date" class="inputs"
-									style="width: 140px"> <input type="time" class="inputs"
-									style="width: 120px">
+									id="minusImg"> 
+									<input type="date" name="end-date" class="inputs" style="width: 140px"> 
+									<input type="time" name="end-time" class="inputs" style="width: 120px">
 							</form>
 						</td>
 					</tr>
 					<tr>
 						<td id="r1">회의실</td>
-						<td id="r2"><select name="meetingroom" class="inputs" style="width: 120px">
+						<td id="r2">
+						
+						<select name="meetingroom" class="inputs" style="width: 120px">
 								<option selected>회의실 선택</option>
 								<option value="1">3F 회의실</option>
 								<option value="2">5F 회의실1</option>
@@ -882,31 +884,29 @@ p {
 								<option value="5">6F 회의실2 </option>
 						</select> <br>
 							<button id="searchBtn1" class="searchBtn">가용회의실 검색</button> <br>
-							<input type="text" id="meetingroomBox" class="inputs"
-							style="height: 30px" readonly></td>
+							<input type="text" id="meetingroomBox" class="inputs" style="height: 30px" readonly></td>
 					</tr>
 					<tr>
 						<td id="r1">사용목적</td>
-						<td id="r2"><input type="text" placeholder="내용을 입력하세요"
-							class="inputs"></td>
+						<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="purpose"></td>
 					</tr>
 					<tr>
 						<td id="r1">참석자(내부)</td>
-						<td id="r2"><button id="searchBtn2" class="searchBtn"
-								onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자
-								지정</button> <textarea cols="60" rows="4" id="partArea" readonly></textarea>
+						<td id="r2">
+							<button id="searchBtn2" class="searchBtn" onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자 지정</button> 
+							<textarea name="inside" cols="60" rows="4" id="partArea" readonly></textarea>
 						</td>
 					</tr>
 					<tr>
 						<td id="r3">참석자(외부)</td>
-						<td id="r4"><input type="text" class="inputs"></td>
+						<td id="r4"><input type="text" name="outside" class="inputs" name=""></td>
 					</tr>
 				</table>
 			</div>
 
 			<!-- 예약/취소 버튼 -->
 			<div class="btns">
-				<button id="reservBtn" type="submit">예약하기</button>
+				<button id="reservBtn" type="button" id="save-event">예약하기</button>
 				<button id="resetBtn" type="reset" onclick="history.go(0)">취소</button>
 			</div>
 		</div>
@@ -1081,6 +1081,25 @@ p {
 			});
 			
 		});
+	</script>
+	
+	<!-- 예약하기 모달 스크립트 -->
+	<script>
+		
+		$("#save-event").unbind();
+		
+		$("#save-event").click(function(){
+			
+			var name = $("#meetingroom").val();
+			var rPurpose = $("#purpose").val();
+			var inside = $("#inside").val();
+			var outside = $("#outside").val();
+			
+			
+			
+		});
+	
+	
 	</script>
 
 </body>
