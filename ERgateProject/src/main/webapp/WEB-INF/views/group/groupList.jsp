@@ -132,11 +132,13 @@
     float: left;
 }
 .profile_area{
-    width: 45%;
+    width: 641px;
     height: 100%;
     float: left;
 }
-
+div{
+	box-sizing:auto;
+}
 /* depList_area - 조직도 tree 스타일 */
 .group_tree, .group_tree ul{
     list-style: none;
@@ -183,6 +185,11 @@
 .empList li{
     padding-top: 10px;
     height: 35px; 
+    cursor: pointer;
+}
+.empList li:hover{
+	font-weight: 600;
+    cursor: pointer;
 }
 .dept_rank_code{
     color: rgb(188, 188, 188);
@@ -223,6 +230,11 @@
 }
 .dept_mail{
     color: rgb(188, 188, 188);
+    cursor: pointer;
+}
+.dept_mail:hover{
+    font-weight: 600;
+    color:grey;
 }
 .profile_down{
     width: 100%;
@@ -270,9 +282,19 @@
 	font-size: 12px;
 }
 
-.smallBtn:hover {
-	cursor: pointer;
+.smallBtnGrey{
+	width: 60px;
+	height: 25px;
+	border: 1px solid rgb(188, 188, 188);
+	border-radius: 5px;
+	background: white; /* 회색 : rgb(190, 190, 190) */
+	color: rgb(188, 188, 188);
+	font-size: 12px;
 }
+
+/* .smallBtn:hover {
+	cursor: pointer;
+} */
 /* 작은버튼 스타일 */
 </style>
 </head>
@@ -488,17 +510,18 @@
 			                '<div class="dept_name">'+ empPrf.empName +'</div>'; 
 			                
 			                switch(empPrf.empStatus){
-			                case 1 : valueUp += '<button class="smallBtn">'+ '휴가중' +'</button><br><br>'; break;
-			                case 2 : valueUp += '<button class="smallBtn">'+ '휴직' +'</button><br><br>'; break;
-			                case 3 : valueUp += '<button class="smallBtn">'+ '외근중' +'</button><br><br>'; break;
-			                case 4 : valueUp += '<button class="smallBtn">'+ '회의중' +'</button><br><br>'; break;
+			                case 0 : valueUp += '<button class="smallBtnGrey">'+ '비접속' +'</button><br><br>'; break;
+			                case 1 : valueUp += '<button class="smallBtnGrey">'+ '휴가중' +'</button><br><br>'; break;
+			                case 2 : valueUp += '<button class="smallBtnGrey">'+ '휴직' +'</button><br><br>'; break;
+			                case 3 : valueUp += '<button class="smallBtnGrey">'+ '외근중' +'</button><br><br>'; break;
+			                case 4 : valueUp += '<button class="smallBtnGrey">'+ '회의중' +'</button><br><br>'; break;
 			                case 5 : valueUp += '<button class="smallBtn">'+ '접속중' +'</button><br><br>'; break;
 			                default : ''; 
 			                } 
 			                
 							valueUp +=
 			                '<div class="dept_rank_code">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
-			                '<div class="dept_mail">' + empPrf.empComEmail + '</div>' +
+			                '<div><span class="dept_mail">' + empPrf.empComEmail + '</span></div>' +
 			            '</div>'
 							
 				$(".profile_up").html(valueUp);
