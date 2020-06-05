@@ -480,8 +480,18 @@
 			                '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">' +
 			            '</div>' +
 			            '<div class="profile_name">' +
-			                '<div class="dept_name">'+ empPrf.empName +'</div>' +
-			                '<button class="smallBtn">'+ '회의중' +'</button><br><br>' +
+			                '<div class="dept_name">'+ empPrf.empName +'</div>'; 
+			                
+			                switch(empPrf.empStatus){
+			                case 1 : valueUp += '<button class="smallBtn">'+ '휴가중' +'</button><br><br>'; break;
+			                case 2 : valueUp += '<button class="smallBtn">'+ '휴직' +'</button><br><br>'; break;
+			                case 3 : valueUp += '<button class="smallBtn">'+ '외근중' +'</button><br><br>'; break;
+			                case 4 : valueUp += '<button class="smallBtn">'+ '회의중' +'</button><br><br>'; break;
+			                case 5 : valueUp += '<button class="smallBtn">'+ '접속중' +'</button><br><br>'; break;
+			                default : ''; 
+			                } 
+			                
+							valueUp +=
 			                '<div class="dept_rank_code">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
 			                '<div class="dept_mail">' + empPrf.empComEmail + '</div>' +
 			            '</div>'
