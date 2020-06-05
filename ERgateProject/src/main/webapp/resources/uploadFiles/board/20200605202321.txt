@@ -1,0 +1,300 @@
+- 2001020212_16v4.3 인터페이스 구현 검증하기]   상급문제
+1. config.xml에서 domain.blog.Author 클래스를 Author 라는 별칭으로 사용하려고 할 때, 필요한 태그와 해당 태그의 속성에 값을 넣어서 작성하시오. (25점)    
+
+<typeAliases>
+	<typeAlias type="domain.blog.Author" alias="Author"/>
+</typeAliases>
+
+
+- 2001020212_16v4.3 인터페이스 구현 검증하기]   상급문제
+2.	
+MyBatis가 제공하는 동적 SQL 구문 중에서 자바의 if문과 같은 역할을 수행하는 if 구문을 사용하여 아래 명시된 내용을 처리하는 select 앨리먼트를 완성하시오. (25점)
+
+Select 앨리먼트 아이디 : findActiveBlogWithTitleLike
+반환자료형과 매개변수자료형 별칭 : Blog
+조회할 테이블명 : blog 의 모든 컬럼 조회
+객체의 필드명과 테이블의 컬럼명은 동일한 COMMAND 객체임.
+조건절의 공통조건 : state 컬럼값이 'ACTIVE'
+추가조건 : title 컬럼값이 널이 아니면 title 컬럼값 like 비교값
+
+
+
+<select id="findActiveBlogWithTitleLike" parameterType="Blog" resultMap="Blog">
+	SELECT *
+	FROM blog
+	WHERE state='ACTIVE'
+	<if test="title != null">
+		AND title LIKE #{title}
+	</if>
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+- 2001020212_16v4.2 인터페이스 기능 구현하기]   중급문제
+3.	SqlSession의 메소드 중, selectOne과 selectList의 차이점을 기솔하시오. (15점)
+
+selectOne() : 쿼리문의 실행결과가 오직 하나의 객체(한개의 행)만을 리턴할 때 사용
+selectList() : 쿼리문의 실행결과가 하나 이상, 얼마나 많은 객체가 리턴될지 모를때(ex: 검색 등) 사용
+
+
+
+
+
+
+- 2001020212_16v4.1 인터페이스 설계서 확인하기]   하급문제
+4.	insert, update, delete의 경우 resultType이나 resultMap을 사용하지 않는 이유를 기술하시오. (10점)
+
+insert / update / delete 구문의 경우, 쿼리문의 실행 결과가 오로지 '처리된 행의 갯수'로 리턴되기 때문에
+객체와 쿼리실행 결과와의 매핑이나, 객체 설정이 필요하지 않다. 동일한 결과값(int)만을 리턴하기 때문에 결과값의 자료형 설정이나 Mapping 없이 사용이 가능하다.
+
+
+
+
+
+
+
+
+- 2001020212_16v4.1 인터페이스 설계서 확인하기]   하급문제
+5.	
+SqlSession session = getSqlSessionFactory().openSession(true);
+
+일 때, true의 역할을 기술하시오. (10점)
+
+DB 쿼리문 중 DML 구문 중 insert / update / delete 실행 시 자동적으로 commit 하기 위한 autoCommit 파라미터 구문. 해당 true를 설정하게 되면 구문 실행 후 MyBatis가 자동적으로 커밋을 한다.
+
+
+
+
+
+
+
+
+
+
+
+- 2001020212_16v4.2 인터페이스 기능 구현하기]   중급문제
+6.	
+(scott/tiger 계정)DEPT 테이블의 모든 row를 출력하기 위해 다음과 같이 정의되어 있을 때, mapper xml 에 알맞은 앨리먼트를 작성하시오. (15점)
+
+Select 앨리먼트 아이디 : selectDept
+
+반환자료형과 매개변수자료형 별칭 : deptDto
+
+조회할 테이블명 : DEPT 의 모든 컬럼 조회
+
+객체의 필드명과 테이블의 컬럼명은 동일한 COMMAND 객체임.
+
+<select id="selectDept" parameterType="deptDto" resultMap="deptDto">
+	SELECT *
+	FROM DEPT
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MyBatis 동적 SQL 문을 사용하여 아래 구문에서 오류가 발생하는 부분을 해결한 구문을 작성하시오.
+
+<select id="findActiveBlogLike" resultType="Blog">
+
+SELECT * FROM BLOG WHERE
+
+<if test="state != null">
+
+state = #{state}
+
+</if>
+
+<if test="title != null">
+
+AND title like #{title}
+
+</if>
+
+<if test="author != null and author.name != null">
+
+AND author_name like #{author.name}
+
+</if>
+
+</select>
+
+
+오류1 : SELECT * FROM BLOG [WHERE] --> 조건문이 실행되기 전 WHERE절이 기록되어
+          만약 조건절에서 오류 발생 시 SELECT * FROM BLOG WHERE 이라는 불완전한 쿼리문이 실행됨
+해결1 : SELECT * FROM BLOG
+           <if test="state != null">
+	WHERE state = #{stats}
+            ...
+
+
+오류2 : <select id="findActiveBlogLike" resultType="Blog"> --> 해당 select 엘리먼트 선언부에 parameterType으로
+	전달된 매개변수가 없는데 #{state} 나 #{title}과 같은 파라메터 값을 참조하고 있음
+해결2 :  <select id="findActiveBlogLike" resultType="Blog" parameterType="Blog">
+
+
+최종 동적 SQL문
+<select id="findActiveBlogLike" resultType="Blog" parameterType="Blog">
+SELECT * FROM BLOG
+<if test="state != null">
+WHERE state = #{state}
+</if>
+
+<if test="title != null">
+AND title like #{title}
+</if>
+
+<if test="author != null and author.name != null">
+AND author_name like #{author.name}
+</if>
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(scott/tiger) DEPT table의 모든 데이터를 return하는 메소드가 다음과 같을 때, mybatis를 사용하여 같은 기능을 할 수 있도록 DeptDao 클래스의 selectList() 메소드를 deptmapper.xml 의 select 앨리먼트와 resultSet 결과를 매핑하는 resultMap 앨리먼트를 작성하시오.
+[작성 요구 조건]
+
+1) mapper.xml의 namespace : deptmapper
+
+2) mapper.xml select 엘리먼트의 id : selectList
+
+3) resultMap 앨리먼트 id : resultList
+
+4) vo 별칭 : DeptDto
+
+
+
+[[DeptDao 클래스의 selectList()]]
+public ArrayList<DeptDto> selectList(SqlSession sqlSession) {
+	return (ArrayList)sqlSession.selectList("deptmapper.selectList");
+}
+
+
+[[deptmapper.xml 의 내용]]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="deptmapper">
+
+   <resultMap id="resultList" type="DeptDto">
+      <id column="DEPTNO" property="deptNo"/>
+      <result column="DNAME" property="dName"/>
+      <result column="LOC" property="loc"/>
+   </resultMap>
+   
+      <select id="selectList" resultMap="resultList">
+         SELECT DEPTNO, DNAME, LOC FROM DEPT
+      </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mybatis-config.xml의 environment 앨리먼트에 아래의 요구사항들을 작성하여 완성하시오
+
+// environment 설정값 : id="oracledb"
+
+driver=oracle.jdbc.driver.OracleDriver
+
+url=jdbc:oracle:thin:@192.168.10.33:1521:xe
+
+username=kh
+
+password=kh
+
+
+	<environments default="oracledb"> --> // oracledb 라는 id의 environment를 기본 설정값으로 사용한다는 전제하에
+		<environment id="oracledb">
+			<transactionManager type="JDBC"/>
+			
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@192.168.10.33:1521:xe"/>
+				<property name="username" value="kh"/>
+				<property name="password" value="kh"/>
+			</dataSource>
+		</environment>		
+	</environments>
+
+
+
+
+
+
+

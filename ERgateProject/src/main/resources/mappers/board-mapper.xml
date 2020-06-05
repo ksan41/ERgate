@@ -143,6 +143,21 @@
 		order by board_no desc
 		]]>
 	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		insert into Board
+		values(seq_board_no.nextval, #{empId}, #{boardWriter}, #{boardTitle}, #{boardContent}, sysdate, sysdate, 0, 'Y', 'Y')
+	</insert>
+	
+	<insert id="insertBoardAttachment" parameterType="BoardAttachment">
+		insert into Board_Attachment 
+		values(seq_atboard_no.nextval, #{originName}, #{changeName}, 'B', seq_board_no.currval, #{filePath})
+	</insert>
+	
+	<update id="updateBoardFlag">
+		update Board set
+		board_file_flag = 'N'
+	</update>
 </mapper>
 
 

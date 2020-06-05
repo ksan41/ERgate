@@ -245,6 +245,8 @@
 						</td>
 					</tr>
 				</table>
+				<input type="hidden" name="boardWriter" value="${ loginUser.empName }">
+				<input type="hidden" name="empId" value="${ loginUser.empId }">
 			</form>
 			<br>
 			<div id="btnArea">
@@ -478,11 +480,15 @@
                 var formData = new FormData(form[0]);
                 formData.append('boardTitle', form[0].boardTitle.innerText);
                 formData.append('boardContent', form[0].boardContent.innerText);
+                formData.append('boardWriter', form[0].boardWriter.innerText);
+                formData.append('empId', form[0].boardWriter.innerText);
                 for (var i = 0; i < uploadFileList.length; i++) {
                     formData.append('files', fileList[uploadFileList[i]]);
                 }
                 console.log(formData.getAll('boardTitle'));
                 console.log(formData.getAll('boardContent'));
+                console.log(formData.getAll('boardWriter'));
+                console.log(formData.getAll('empId'));
                 console.log(formData.getAll('files'));
                 
                 $.ajax({
@@ -495,12 +501,12 @@
                     dataType : 'json',
                     cache : false,
                     success : function(result) {
-                        if (result.length > 0) {
-                            alert("성공");
-                            location.reload();
+                        if (result == 1) {
+                            alert("파일이 없는 성공");
+                            location.href="list.bo?currentPage=1";
                         } else {
-                            alert("성공");
-                            location.reload();
+                            alert("첨부파일 있는 성공");
+                            location.href="list.bo?currentPage=1";
                         }
                         
                     },
