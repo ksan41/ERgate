@@ -30,18 +30,20 @@ public interface BoardService {
 	Board selectBoard(int bno);
 	// 3_3. 해당 게시글 파일 조회용 서비스
 	ArrayList<BoardAttachment> fileList(int refBoardNo);
-	// 4-1. 해당 게시글 리플 조회용 서비스
+	// 3-4. 해당 게시글 리플 조회용 서비스
 	ArrayList<Reply> replyList(int refBno);
-	// 4-2. 해당 게시글 대댓글 조회용 서비스
+	// 3-5. 해당 게시글 대댓글 조회용 서비스
 	ArrayList<ReReply> rereplyList(int refRno);
-	// 5-1. 해당 게시글 다음글 / 이전글 조회용 서비스
+	// 3-6. 해당 게시글 다음글 / 이전글 조회용 서비스
 	Board beforeB(int refBoardNo);
 	Board afterB(int refBoardNo);
 	
-	
-	// 2. 게시판 작성용 서비스
+	// 4. 게시판 작성용서비스
 	int insertBoard(Board b);
-	
+	// 4-1. 게시판 첨부파일 서비스
+	int insertBoardAttachment(BoardAttachment bt);
+	// 4-2. 게시판 첨부파일 없는 게시글 flag 수정용 서비스
+	int updateBoardFlag();
 
 	
 	// 4. 게시글 삭제용 서비스
@@ -49,6 +51,8 @@ public interface BoardService {
 	
 	// 5. 게시글 수정용 서비스
 	int updateBoard(Board b);
+	
+	
 	
 	
 	

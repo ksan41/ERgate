@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>groupList</title>
+<title>groupList</title>  
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/icons/fontello_tree/css/fontello.css">
+
 <style>
 /* ==========페이지영역========== */
     .outer{
@@ -151,6 +153,7 @@ div{
 .group_tree *::before{
     width: 17px;
     height: 15px;
+    
     display: inline-block;
 }
 .group_tree a:before{
@@ -178,9 +181,18 @@ div{
     padding-top: 10px;
     height: 35px; 
 }
+
+.deptList{
+    cursor: pointer;
+}
+.deptList:hover{
+	font-weight: 600;
+}
+
 /* empList_area */
 .empList{
     list-style: none;
+    list-style-image:url('${pageContext.servletContext.contextPath }/resources/icons/person_icon.png');
 }
 .empList li{
     padding-top: 10px;
@@ -336,10 +348,9 @@ div{
 								</select> <input type="text" placeholder="이름/직급/직책/부서 검색">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 									fill="black" width="48px" height="48px">
-									<path
-										d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+									<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
-							</div>
+							</div> 
 							<!-- 검색바 -->
 						</td>
 					</tr>
@@ -356,12 +367,12 @@ div{
 		                    <input type="checkbox" id="root">
 		                    <label for="root" class="deptList" key="all"> ERgate</label>
 		                    <ul>
-		                        <li class="deptList" key="D0">임원</li>
-		                        <li class="deptList" key="D1">개발팀</li>
-		                        <li class="deptList" key="D2">회계팀</li>
-		                        <li class="deptList" key="D3">기술팀</li>
-		                        <li class="deptList" key="D4">총무팀</li>
-		                        <li class="deptList" key="D5">인사팀</li>
+		                        <li class="deptList" key="D0">└ 임원</li>
+		                        <li class="deptList" key="D1">└ 개발팀</li>
+		                        <li class="deptList" key="D2">└ 회계팀</li>
+		                        <li class="deptList" key="D3">└ 기술팀</li>
+		                        <li class="deptList" key="D4">└ 총무팀</li>
+		                        <li class="deptList" key="D5">└ 인사팀</li>
 		                    </ul>
 		                </li>
 		            </ul>

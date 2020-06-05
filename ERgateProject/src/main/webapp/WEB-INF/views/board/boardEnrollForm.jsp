@@ -245,6 +245,8 @@
 						</td>
 					</tr>
 				</table>
+				<input type="hidden" name="boardWriter" value="${ loginUser.empName }">
+				<input type="hidden" name="empId" value="${ loginUser.empId }">
 			</form>
 			<br>
 			<div id="btnArea">
@@ -393,7 +395,7 @@
                          // 확장자 체크
                          alert("등록 불가 확장자");
                          break; */
-                     if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'pdf', 'jpeg', 'gif', 'zip' ]) <= 0) {
+                     if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'pdf', 'png', 'jpeg', 'gif', 'zip' ]) <= 0) {
                          // 확장자 체크
                          /* alert("등록이 불가능한 파일 입니다.");
                          break; */
@@ -478,12 +480,16 @@
                 var formData = new FormData(form[0]);
                 formData.append('boardTitle', form[0].boardTitle.innerText);
                 formData.append('boardContent', form[0].boardContent.innerText);
+                formData.append('boardWriter', form[0].boardWriter.innerText);
+                formData.append('empId', form[0].boardWriter.innerText);
                 for (var i = 0; i < uploadFileList.length; i++) {
                     formData.append('files', fileList[uploadFileList[i]]);
                 }
-                console.log(formData.getAll('boardTitle'));
+                /* console.log(formData.getAll('boardTitle'));
                 console.log(formData.getAll('boardContent'));
-                console.log(formData.getAll('files'));
+                console.log(formData.getAll('boardWriter'));
+                console.log(formData.getAll('empId'));
+                console.log(formData.getAll('files')); */
                 
                 $.ajax({
                     url : "insert.bo",
@@ -495,12 +501,12 @@
                     dataType : 'json',
                     cache : false,
                     success : function(result) {
-                        if (result.length > 0) {
-                            alert("성공");
-                            location.reload();
+                        if (result >= 1) {
+                            alert("게시글이 등록되었습니다.");
+                            location.href="list.bo?currentPage=1";
                         } else {
-                            alert("성공");
-                            location.reload();
+                            alert("게시글 등록에 실패하였습니다.");
+                            location.href="list.bo?currentPage=1";
                         }
                         
                     },

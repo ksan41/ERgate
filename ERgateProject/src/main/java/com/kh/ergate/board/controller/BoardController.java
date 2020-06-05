@@ -135,40 +135,63 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="insert.bo", produces="application/json; charset=utf-8")
-	public String insertBoard(MultipartHttpServletRequest form, @RequestParam("files") MultipartFile[] files) {
-		System.out.println(files.length);
+	public int insertBoard(MultipartHttpServletRequest form, @RequestParam(name="files", required=false) MultipartFile[] files) {
+		//System.out.println(files.length);
 		String title[] = form.getParameterValues("boardTitle");
 		String content[] = form.getParameterValues("boardContent");
-		System.out.println("제목값은? : " + title[0]); 
-		System.out.println("내용값은? : " + content[0]);
-		/*
-		 * // request.setCharacterEncoding("utf-8"); Multipart생성 시 인코딩 하므로 필요음슴 // 업로드된
-		 * 파일 담을 곳 알아내기 -> ajax로 넘어온 request객체 + savePath(저장할 경로) + 인코딩 타입(UTF-8) 지정해서
-		 * Multipart타입으로 request객체 변환하기 String resources =
-		 * request.getSession().getServletContext().getRealPath("/resources"); String
-		 * savePath = resources + "\\uploadFiles\\board\\"; MultipartRequest
-		 * multiRequest = (MultipartRequest)request; // 여기서 request -> MultiPartRequest로
-		 * 바뀝니다.
-		 * 
-		 * //제목 + 내용 찍어보기. 잘 찍힘 ㅇㅇ 근데 ajax에서 input 요소 담을 때 파일타입으로 담다보니 넘어올때 배열로 담겨서 옴
-		 * //배열에 차곡차곡 안담기고 배열의 [0]번 인덱스에 모든 내용이 다 담겨서 넘어옴, 그래서 title[0] 이런식으로 빼야함니다. 담을
-		 * 때도 String title[] 이런식으로 변수 만들구요 String title[] =
-		 * multiRequest.getParameterValues("boardTitle"); String content[] =
-		 * multiRequest.getParameterValues("boardContent"); String filename =
-		 * multiRequest.getOriginalFileName("files");
-		 * 
-		 * System.out.println("제목값은? : " + title[0]); System.out.println("내용값은? : " +
-		 * content[0]); System.out.println("파일이름은? : " + filename); //파일이름은 마지막에 올린것만
-		 * 나오는데, 이거 구현하려면 jsp script단에서 수정해야댐 //근데 어차피 spring에서는 multipartFile이라고 다중파일
-		 * 담아주는 객체 있으니까 거기서 맞게 고칠겁니다~
-		 * 
-		 * int result = 1; // 실제로 기능 구현할땐 여기에 DB에 insert 하고 반환된 int값을 넣어줘야함(ex: int
-		 * result = new boardService().insertBoard(~~) 이런식으로?)
-		 * 
-		 * //ajax로 요청했을땐 result값이 돌아와야 ajax에서 성공 / 실패 판단하니까 result를 돌려줘야함 PrintWriter
-		 * out = response.getWriter(); out.print(result);
-		 */
-		return "ggg";
+		String writer[] = form.getParameterValues("boardWriter");
+		String empId[] = form.getParameterValues("empId");
+		//System.out.println("제목값은? : " + title[0]); 
+		//System.out.println("내용값은? : " + content[0]);
+		//System.out.println("이름은? : " + content[0]);
+		Board insertB = new Board();
+		insertB.setBoardTitle(title[0]);
+		insertB.setBoardContent(content[0]);
+		insertB.setBoardWriter(writer[0]);
+		insertB.setEmpId(empId[0]);
+		
+		int result = 0;
+		result = bodService.insertBoard(insertB);
+		if(files.length > 0) {
+			
+			for(int i=0; i<files.length; i++) {
+				String changeName = saveFile(files[i], form);
+				BoardAttachment bt = new BoardAttachment();
+				bt.setChangeName(changeName);
+				bt.setOriginName(files[i].getOriginalFilename());
+				result += bodService.insertBoardAttachment(bt);
+			}
+		}else {
+			result = bodService.updateBoardFlag();
+		}
+		
+		
+		return result;
+	}
+	
+	public String saveFile(MultipartFile file, HttpServletRequest request) {
+		
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "\\uploadFiles\\board\\";
+		
+		// 원본명 (aaa.jpg)
+		String originName = file.getOriginalFilename();
+		
+		// 수정명 (20200522202011.jpg)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 확장자 (String ext)
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".jpg"
+		
+		String changeName = currentTime + ext;
+		
+				
+		try {
+			file.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		return changeName;
 	}
 	
 	/*
@@ -186,8 +209,7 @@ public class BoardController {
 	 * // 현재 넘어온 파일이 있을 경우 서버에 업로드 후 원본명, 수정명 뽑아서 b 주섬주섬 담기
 	 * if(!file.getOriginalFilename().equals("")) {
 	 * 
-	 * // 서버에 파일 업로드 --> saveFile 메소드로 따로 빼서 정의할 것 String changeName =
-	 * saveFile(file, request);
+	 * // 서버에 파일 업로드 --> saveFile 메소드로 따로 빼서 정의할 것 String changeName = saveFile(file, request);
 	 * 
 	 * b.setOriginName(file.getOriginalFilename()); b.setChangeName(changeName);
 	 * 

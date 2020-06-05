@@ -22,9 +22,9 @@ public class MeetingroomReservation {
 	private String mtrmName;			// 회의실이름
 	private Date mtrmReservDate;		// 예약일자
 	private String mtrmDeptTitle;		// 예약자 부서명
-	private Date mtrmStartDate;		// 사용 시작일
+	private String mtrmStartDate;		// 사용 시작일
 	private String mtrmStartTime;		// 사용 시작시간
-	private Date mtrmEndDate;			// 사용 종료일
+	private String mtrmEndDate;			// 사용 종료일
 	private String mtrmEndTime;			// 사용종료시간
 	private String mtrmPurpose;			// 사용목적
 	private String mtrmReservStatus;	// 회의실예약노출여부

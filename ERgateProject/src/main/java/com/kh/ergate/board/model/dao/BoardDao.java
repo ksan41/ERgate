@@ -70,6 +70,19 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.afterB", refBoardNo);
 	}
 	
+	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertBoard", b);
+	}
+	public int insertBoardAttachment(SqlSessionTemplate sqlSession, BoardAttachment bt) {
+		return sqlSession.insert("boardMapper.insertBoardAttachment", bt);
+	}
+
+	public int updateBoardFlag(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("boardMapper.updateBoardFlag");
+	}
+
+	
+	
 	
 	
 	

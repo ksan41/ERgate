@@ -78,10 +78,23 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int insertBoard(com.kh.ergate.board.model.vo.Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertBoard(Board b) {
+		return bodDao.insertBoard(sqlSession, b);
 	}
+	
+	@Override
+	public int insertBoardAttachment(BoardAttachment bt) {
+		return bodDao.insertBoardAttachment(sqlSession, bt);
+	}
+	
+	@Override
+	public int updateBoardFlag() {
+		return bodDao.updateBoardFlag(sqlSession);
+	}
+	
+	
+	
+	
 
 	@Override
 	public int deleteBoard(int bno) {
@@ -93,6 +106,10 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+
+	
 
 	
 
