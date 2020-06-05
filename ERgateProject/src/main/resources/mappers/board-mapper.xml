@@ -109,7 +109,7 @@
 		select * 
 		  from board_reply
 		 where ref_bno=#{refBno}
-		 order by reply_no desc
+		 order by reply_no asc
 	</select>
 	
 	<select id="rereplyList" parameterType="_int" resultMap="rereplyResultSet">
