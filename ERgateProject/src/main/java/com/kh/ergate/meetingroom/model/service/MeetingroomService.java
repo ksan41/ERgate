@@ -31,7 +31,7 @@ public interface MeetingroomService {
 		
 	 //내 예약현황 리스트 조회용 --- myReserveList(String empId)
 		
-		ArrayList<MeetingroomReservation> myReserveList(PageInfo pi, String empId);
+		int myReserveList(String empId);
 		
 		
 	 //예약취소용---cancelReserve(int mtrmReservNo)

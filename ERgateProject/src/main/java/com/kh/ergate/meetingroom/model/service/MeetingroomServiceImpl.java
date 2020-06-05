@@ -84,8 +84,8 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 	
 	// 내 예약현황리스트조회용
 	@Override
-	public ArrayList<MeetingroomReservation> myReserveList(PageInfo pi, String empId) {
-		return null;
+	public int myReserveList(String empId) {
+		return mrDao.myReserveList(sqlSession, empId);
 	}
 
 

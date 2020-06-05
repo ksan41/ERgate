@@ -915,97 +915,37 @@ p {
 
 		<!-- 모달(나의 예약 현황) -->
 		<div id="myReservation_open_modal" class="modal">
-			<div class="modal-title">나의 예약현황</div>
-			<div class="modal-content" id="mtrmCurrentInnerPage">
-
-				<table class="mtrmCurrentInner">
-					<tr>
-						<td rowspan="5" class="mcTdImg"><img class="mcImg"
-							src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-						</td>
-						<td class="mcTdContent"><span class="mcContent1">3층
-								회의실1</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent2">팀 미팅</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent3">2020-05-05
-								09:00 <br> ~ 2020-05-05 12:00
-						</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><button class="mcBtn" type="button">예약
-								취소</button></td>
-					</tr>
-				</table>
-
-				<table class="mtrmCurrentInner">
-					<tr>
-						<td rowspan="5" class="mcTdImg"><img class="mcImg"
-							src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-						</td>
-						<td class="mcTdContent"><span class="mcContent1">3층
-								회의실1</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent2">팀 미팅</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent3">2020-05-05
-								09:00 <br> ~ 2020-05-05 12:00
-						</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><button class="mcBtn" type="button">예약
-								취소</button></td>
-					</tr>
-				</table>
-
-				<table class="mtrmCurrentInner">
-					<tr>
-						<td rowspan="5" class="mcTdImg"><img class="mcImg"
-							src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-						</td>
-						<td class="mcTdContent"><span class="mcContent1">3층
-								회의실1</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent2">팀 미팅</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent3">2020-05-05
-								09:00 <br> ~ 2020-05-05 12:00
-						</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><button class="mcBtn" type="button">예약
-								취소</button></td>
-					</tr>
-				</table>
-
-				<table class="mtrmCurrentInner">
-					<tr>
-						<td rowspan="5" class="mcTdImg"><img class="mcImg"
-							src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-						</td>
-						<td class="mcTdContent"><span class="mcContent1">3층
-								회의실1</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent2">팀 미팅</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><span class="mcContent3">2020-05-05
-								09:00 <br> ~ 2020-05-05 12:00
-						</span></td>
-					</tr>
-					<tr>
-						<td class="mcTdContent"><button class="mcBtn" type="button"
-								onClick="history.go(0)">예약 취소</button></td>
-					</tr>
-				</table>
-
+				<c:choose>
+					<c:when test="${ !empty loginUser }">
+						<div class="modal-title">나의 예약현황</div>
+						<div class="modal-content" id="mtrmCurrentInnerPage">
+							
+								<table class="mtrmCurrentInner">
+									<tr>
+										<td rowspan="5" class="mcTdImg"><img class="mcImg"
+											src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
+										</td>
+										<td class="mcTdContent"><span class="mcContent1">${ mtrmName }</span></td>
+									</tr>
+									<tr>
+										<td class="mcTdContent"><span class="mcContent2">${ mtrmPurpose }</span></td>
+									</tr>
+									<tr>
+										<td class="mcTdContent"><span class="mcContent3">${ mr.mtrmStartDate }${ mr.mtrmStartTime } ~ <br>
+										 ${ mr.mtrmEndDate }${ mr.mtrmEndTime }
+										</span></td>
+									</tr>
+									<tr>
+										<td class="mcTdContent"><button class="mcBtn" type="button">예약
+												취소</button></td>
+									</tr>
+								</table>
+								</div>
+							</c:when>
+							<c:otherwise>
+								
+							</c:otherwise>
+					</c:choose>
 				<!-- 페이징바 -->
 				<ul class="pagingBar">
 
@@ -1048,7 +988,7 @@ p {
 		</div>
 
 		<br> <br>
-	</div>
+
 
 	<!-- 모달용 스크립트 -->
 	<script>
@@ -1088,17 +1028,42 @@ p {
 		
 		$("#save-event").unbind();
 		
-		$("#save-event").click(function(){
+		$("#save-event").on('click',function(){
 			
 			var name = $("#meetingroom").val();
 			var rPurpose = $("#purpose").val();
 			var inside = $("#inside").val();
 			var outside = $("#outside").val();
 			
+			if(start-date > end - date){
+				alert('끝나는 날자가 앞설 수 없습니다.');
+				return false;
+			}
+			if(purpose === ''){
+				alert('예약목적 작성은 필수입니다.');
+				return false;
+			}
+			
 			
 			
 		});
 	
+		/* 예약하기 ajax*/
+		$.ajax({
+			type:"",
+			url:"",
+			data:{
+				
+			},
+			success:function(){
+				
+			},error:function(){
+				console.log("예약하기 실패?,,,,")
+			}
+		
+		
+		
+		})
 	
 	</script>
 

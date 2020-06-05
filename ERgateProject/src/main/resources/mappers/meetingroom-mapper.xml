@@ -56,5 +56,10 @@
 		values(seq_mroom_no.nextval , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y')	
 	</insert>
 
+	<select id="myReserveList" resultMap="MeetingroomReservationResultSet">
+		select *
+		  from meetingroom_reservation
+		 where emp_id = #{empId}
+	</select>
 
 </mapper>

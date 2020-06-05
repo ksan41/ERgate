@@ -35,7 +35,7 @@ public class MeetingroomController {
 		
 		int result = mrService.reserveMtroom(mr);
 		model.addAttribute("session", session);
-		System.out.println(mr);
+		
 		if(result > 0) {
 			
 			session.setAttribute("msg", "회의실 예약 성공");
@@ -92,13 +92,19 @@ public class MeetingroomController {
 	
 	// 내 예약현황리스트조회용
 	@RequestMapping("myReserve.me")
-	public String myReserveList(String empId, Meetingroom m, Model model) {
+	public String myReserveList(String empId, MeetingroomReservation mr, Model model) {
+		
+		/*
+		 * int = mrService.myReserveList();
+		 * 
+		 * model.addAttribute("list", list);
+		 */
 		
 		return "meetingroom/meetingroomCurrentStatus";
 		
 	}
 	
-	// 회의실정보상세조회용(mtroomDetail.me) ---selectMtroomDetail(String mtrmCode,Meetingroom,Model)
+	// 회의실정보  조회용(mtroomDetail.me) ---selectMtroomDetail(String mtrmCode,Meetingroom,Model)
 	@RequestMapping("mtroomDetail.me")
 	public String selectMtroomDetail(Meetingroom m, Model model) {
 		
