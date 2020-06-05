@@ -235,15 +235,15 @@ h2, h3 {
 				<table id="signInfo1">
 					<tr>
 						<th>기안부서</th>
-						<td width="400">마케팅부</td>
+						<td width="400">${sd.deptTitle }</td>
 						<th>문서분류</th>
 						<td width="400">외근신청서</td>
 					</tr>
 					<tr>
 						<th>기안자</th>
-						<td>김기철</td>
+						<td>${sd.empName }</td>
 						<th>문서번호</th>
-						<td>00000</td>
+						<td>${sd.documentNo }</td>
 					</tr>
 					<tr>
 						<th>기안일시</th>
@@ -278,9 +278,15 @@ h2, h3 {
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left"><span>@앨리스 </span> <span>@레베카
-						</span> <span>@마리아 </span> <span>@존 </span> <span>@올리버 </span> <span>@샬롯
-						</span></td>
+						<td colspan="6" align="left">
+							<c:if test="${!empty sgList }">
+								<c:forEach var="sg" items="${sgList }">
+									<c:if test="${sg.signType eq 0 }">
+										<span>@${sg.empName } </span>
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</td>
 					</tr>
 				</table>
 
@@ -306,19 +312,29 @@ h2, h3 {
 					<thead>
 						<tr>
 							<th width="120">제목</th>
-							<td><input class="inputs" type="text" style="width: 100%;" value="마케팅부 김기철 외 3명 외근신청"></td>
+							<td><input class="inputs" type="text" style="width: 100%;" value="${sd. signTitle}"></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
 							<td colspan="6"></td>
 						</tr>
 						<tr>
-							<td colspan="2" rowspan="2">
-								<div id="fileArea">
-									<a href="#">첨부파일1.jpg</a><br>
-									<a href="#">첨부파일2.pdf</a><br>
-								</div>
-							</td>
+							<c:choose>
+								<c:when test="${empty saList }">
+									<td colspan="2">
+										첨부된 파일이 없습니다.
+									</td>
+								</c:when>
+								<c:otherwise>
+									<td colspan="2" rowspan="2">
+										<div id="fileArea">
+											<c:forEach var="i" items="${saList }">
+												<a href="${pageContext.servletContext.contextPath}/resources/uploadFiles/sign/${i.changeName }" download="${i.originName }">${i.originName }</a><br>											
+											</c:forEach>
+										</div>
+									</td>								
+								</c:otherwise>
+							</c:choose>
 						</tr>
 						<tr></tr>
 						<tr>
@@ -334,7 +350,8 @@ h2, h3 {
 				<c:set var="contentVal" scope="page" />
 				<input type="hidden" name="contentTable">
 				<table id="contentTable">
-						<tr>
+						${sd.signContent}			
+						<!-- <tr>
 							<th width="160">출장기간</th>
 							<td><textarea cols="145" class="textareaStyle"> 2020/05/14 ~ 2020/05/14</textarea></td>
 						</tr>
@@ -357,7 +374,7 @@ h2, h3 {
 						<tr>
 							<th rowspan="3">비고</th>
 							<td rowspan="3"><textarea cols="145" class="textareaStyle">이후 정기적으로 면대면 회의 일정이 잡힐 수 있음.</textarea></td>
-						</tr>
+						</tr> -->
 				</table>
 
 			</form>
