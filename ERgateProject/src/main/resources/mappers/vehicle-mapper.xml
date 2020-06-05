@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="vehicleMapper">
+
+	<resultMap id="vehicleResultSet" type="Vehicle">
+		<id column="VHCL_CODE" property="vhclCode"/>
+		<result column="VHCL_MODEL" property="vhclModel"/>
+		<result column="VHCL_NO" property="vhclNo"/>
+		<result column="VHCL_CAPACITY" property="vhclCapacity"/>
+		<result column="VHCL_IMAGE" property="vhclImage"/>
+	</resultMap>
+	
+	<resultMap id="vehicleReservationResultSet" type="VehicleReservation">
+		<id column="VHCL_RESERVE_NO" property="vhclReservNo"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="VHCL_CODE" property="vhclCode"/>
+		<result column="VHCL_RESERVE_DATE" property="vhclReservDate"/>
+		<result column="DEPT_TITLE" property="deptTitle"/>
+		<result column="VHCL_START_DATE" property="vhclStartDate"/>
+		<result column="VHCL_START_TIME" property="vhclStartTime"/>
+		<result column="VHCL_END_DATE" property="vhclEndDate"/>
+		<result column="VHCE_END_TIME" property="vhclEndTime"/>
+		<result column="VHCL_PURPOSE" property="vhclPurpose"/>
+		<result column="VHCL_STATUS" property="vhclStatus"/>
+	</resultMap>
+	
 </mapper>
