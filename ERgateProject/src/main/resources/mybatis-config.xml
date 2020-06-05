@@ -23,6 +23,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="com.kh.ergate.sign.model.vo.SignDocument" alias="SignDocument" />
       <typeAlias type="com.kh.ergate.sign.model.vo.Signer" alias="Signer" />
       <typeAlias type="com.kh.ergate.vehicle.model.vo.Vehicle" alias="Vehicle"/>
+      <typeAlias type="com.kh.ergate.group.model.vo.Search" alias="Search" />
+      
    </typeAliases>
    
    
