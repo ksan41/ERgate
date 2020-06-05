@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
-	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,8 +155,6 @@ h2, h3 {
 /* input창 스타일 */
 
 /* textarea스타일 */
-
-
 #signInfo3 {
 	width: 700px;
 	height: 100px;
@@ -195,12 +193,12 @@ h2, h3 {
 	border: 1px solid white;
 }
 
-#fileArea{
-	width:1000px;
-	height:200px;
-	padding:5px;
-	border:1px solid lightgray;
-	text-align:left;
+#fileArea {
+	width: 1000px;
+	height: 200px;
+	padding: 5px;
+	border: 1px solid lightgray;
+	text-align: left;
 }
 </style>
 </head>
@@ -213,7 +211,7 @@ h2, h3 {
 			<h1>지출결의서</h1>
 			<c:if test="${sd.signStatus eq 0 }">
 				<div id="btnArea">
-					<button class="bigBtn" id="signSubmit" style="margin-left:150px;">결재</button>
+					<button class="bigBtn" id="signSubmit" style="margin-left: 150px;">결재</button>
 				</div>
 			</c:if>
 			<br>
@@ -221,7 +219,7 @@ h2, h3 {
 				<table id="signInfo1">
 					<tr>
 						<th>기안부서</th>
-						<td width="400">인사부</td>
+						<td width="400">${sd.deptTitle }</td>
 						<th>문서분류</th>
 						<td width="400">지출결의서</td>
 					</tr>
@@ -235,47 +233,46 @@ h2, h3 {
 						<th>기안일시</th>
 						<td>${sd.draftDate }</td>
 						<th>지출기간</th>
-						<td><input class="inputs" name="" type="date" value="${sd.expenseStartDate }"> ~ <input
-							name="" class="inputs" type="date" value="${sd.expenseEndDate }"></td>
+						<td><input class="inputs" name="" type="date"
+							value="${sd.expenseStartDate }"> ~ <input name=""
+							class="inputs" type="date" value="${sd.expenseEndDate }"></td>
 					</tr>
 				</table>
 				<br>
 				<table id="signInfo2">
 					<tr>
-						<th rowspan="2" width="120">결재라인
-						</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
+						<th rowspan="2" width="120">결재라인</th>
+						<c:forEach var="sg" items="${sgList }">
+							<c:if test="${sg.signType eq 1 }">
+								<th>${sg.jobTitle }</th>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<th></th>
+						</c:forEach>
 					</tr>
 					<tr>
-						<td width="150"><h2>1</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>2</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>3</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>4</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>5</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>6</h2>
-							<h3>전지현</h3></td>
+						<c:forEach var="sg" items="${sgList }">
+							<c:if test="${sg.signType eq 1 }">
+								<td width="150"><h2>${sg.signTurn}</h2>
+									<h3>${sg.empName }</h3></td>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<td width="150"><h2></h2>
+								<h3></h3></td>
+						</c:forEach>
+
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left">
-							<c:if test="${!empty sgList }">
+						<td colspan="6" align="left"><c:if test="${!empty sgList }">
 								<c:forEach var="sg" items="${sgList }">
 									<c:if test="${sg.signType eq 0 }">
 										<span>@${sg.empName } </span>
 									</c:if>
 								</c:forEach>
-							</c:if>
-						</td>
+							</c:if></td>
 					</tr>
 				</table>
 
@@ -283,25 +280,30 @@ h2, h3 {
 				<table id="checkArea">
 					<tr>
 						<th width="120"></th>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
+						<c:forEach var="sg" items="${sgList }" varStatus="status">
+							<c:if test="${sg.signType eq 1}">
+								<c:choose>
+									<c:when test="${sg.signed eq 'Y' }">
+										<td width="150"><span class="material-icons circle">
+										panorama_fish_eye </span></td>
+									</c:when>
+									<c:otherwise>
+										<td width="150"></td>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<td width="150"></td>
+						</c:forEach>
 					</tr>
 				</table>
 				<table id="signInfo3">
 					<thead>
 						<tr>
 							<th width="120">제목</th>
-							<td><input class="inputs" type="text" style="width: 100%;" value="${sd.signTitle }"></td>
+							<td><input class="inputs" type="text" style="width: 100%;"
+								value="${sd.signTitle }"></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
@@ -310,18 +312,19 @@ h2, h3 {
 						<tr>
 							<c:choose>
 								<c:when test="${empty saList }">
-									<td colspan="2">
-										첨부된 파일이 없습니다.
-									</td>
+									<td colspan="2">첨부된 파일이 없습니다.</td>
 								</c:when>
 								<c:otherwise>
 									<td colspan="2" rowspan="2">
 										<div id="fileArea">
 											<c:forEach var="i" items="${saList }">
-												<a href="${pageContext.servletContext.contextPath}/resources/uploadFiles/sign/${i.changeName }" download="${i.originName }">${i.originName }</a><br>											
+												<a
+													href="${pageContext.servletContext.contextPath}/resources/uploadFiles/sign/${i.changeName }"
+													download="${i.originName }">${i.originName }</a>
+												<br>
 											</c:forEach>
 										</div>
-									</td>								
+									</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>
@@ -335,9 +338,8 @@ h2, h3 {
 					</thead>
 				</table>
 
-				
-				<table id="contentTable">
-					${sd.signContent }					
+
+				<table id="contentTable">${sd.signContent }
 				</table>
 
 			</form>
@@ -349,8 +351,8 @@ h2, h3 {
 
 	<!-- 팝업창 자동 사이즈맞춤용 스크립트 -->
 	<script>
-	//모든 input요소 readonly처리
-	$('input').prop('readonly', true);
+		//모든 input요소 readonly처리
+		$('input').prop('readonly', true);
 
 		$(document)
 				.ready(
@@ -387,8 +389,7 @@ h2, h3 {
 
 							//resize
 							window.resizeTo(strWidth, strHeight);
-							
-							
+
 						});
 	</script>
 

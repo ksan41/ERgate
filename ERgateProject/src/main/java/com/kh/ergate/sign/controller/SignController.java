@@ -40,7 +40,17 @@ public class SignController {
 		  SignDocument sd = siService.signDetail(sdd);
 		  ArrayList<Signer> sgList = siService.signDetailSigner(sdd);
 		  ArrayList<SignAttachment> saList = siService.signDetailAttachment(sdd);
+		  int sgCnt = 0;
 		  
+		  for(Signer sg : sgList) {
+			  if(sg.getSignType() == 1) {
+				  sgCnt ++;
+			  }
+		  }
+		  
+		  //System.out.println(sgCnt);
+		  
+		  model.addAttribute("sgCnt",sgCnt);
 		  model.addAttribute("sgList",sgList);
 		  model.addAttribute("saList",saList);
 		  model.addAttribute("sd",sd);

@@ -111,6 +111,7 @@
 		  FROM SIGNER S
 		  JOIN EMPLOYEE E ON(S.EMP_ID=E.EMP_ID)
 		  JOIN JOB J ON(E.JOB_CODE=J.JOB_CODE)
-		 WHERE S.DOCUMENT_NO = #{documentNo} 
+		 WHERE S.DOCUMENT_NO = #{documentNo}
+		 ORDER BY SIGN_TURN 
 	</select>
 </mapper>
