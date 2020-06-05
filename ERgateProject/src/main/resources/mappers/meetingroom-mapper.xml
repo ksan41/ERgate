@@ -47,7 +47,7 @@
 	<insert id="reserveMtroom" parameterType="MeetingroomReservation">
 		insert into meetingroom_reservation 
 		values(seq_mreserv_no.nextval, #{empId}, #{mtrmCode}, #{mtrmName}, SYSDATE, #{mtrmDeptTitle},
-			   to_char(#{mtrmStartDate}, 'YYYY/MM/DD'), #{mtrmStartTime},  to_char(#{mtrmEndDate}, 'YYYY/MM/DD'), #{mtrmEndTime}, #{mtrmPurpose}, 'Y')
+			   #{mtrmStartDate}, #{mtrmStartTime},  #{mtrmEndDate}, #{mtrmEndTime}, #{mtrmPurpose}, 'Y')
 	
 	</insert>
 	

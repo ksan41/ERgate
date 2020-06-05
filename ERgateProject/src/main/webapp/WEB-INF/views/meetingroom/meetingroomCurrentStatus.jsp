@@ -848,10 +848,10 @@ p {
 			
 
 		<!-- 모달 (예약하기 부분) -->
-		<form action="" id="reservationForm" name="reservationForm">
 		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
 			<div class="modal-content">
+				<form action="" id="reservationForm" name="reservationForm">
 				<table class="reservationContent">
 					<tr>
 						<td id="r1">신청자</td>
@@ -860,12 +860,12 @@ p {
 					<tr>
 						<td id="r1">사용기간</td>
 						<td id="r2">
-								<input type="date" name="mtrmStartDate" class="inputs" style="width: 140px" value="2020-05-05">
+								<input type="date" name="mtrmStartDate" class="inputs" style="width: 140px" >
 								<input type="time" name="mtrmStartTime" class="inputs" style="width: 120px">
 								<img
 									src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png"
 									id="minusImg"> 
-									<input type="date" name="mtrmEndDate" class="inputs" style="width: 140px" value="2020-05-05"> 
+									<input type="date" name="mtrmEndDate" class="inputs" style="width: 140px"> 
 									<input type="time" name="mtrmEndTime" class="inputs" style="width: 120px">
 						</td>
 					</tr>
@@ -886,7 +886,7 @@ p {
 					</tr>
 					<tr>
 						<td id="r1">사용목적</td>
-						<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="하하"></td>
+						<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }"></td>
 					</tr>
 					<tr>
 						<td id="r1">참석자(내부)</td>
@@ -900,6 +900,7 @@ p {
 						<td id="r4"><input type="text" name="outside" class="inputs" name=""></td>
 					</tr>
 				</table>
+			</form>
 			</div>
 			
 			<!-- 예약/취소 버튼 -->
@@ -908,7 +909,6 @@ p {
 				<button id="resetBtn" type="reset" onclick="history.go(0)">취소</button>
 			</div>
 		</div>
-		</form>
 
 
 		<!-- 모달(나의 예약 현황) -->
@@ -1050,11 +1050,16 @@ p {
 		
 		$(function(){
 			
-			 var queryString = $("form[name=reservationForm]").serialize() ;
 
 			
 			$("#reservBtn").click(function(){
-				console.log("ddd");
+				
+				console.log($("form[name=reservationForm]"));
+				
+				
+			 	var queryString = $("form[name=reservationForm]").serialize() ;
+			 	console.log(queryString);
+				console.log("아아아");
 				$.ajax({
 					url:"reserveMtroom.me",
 					data:queryString,
