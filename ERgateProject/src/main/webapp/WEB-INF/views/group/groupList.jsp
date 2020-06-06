@@ -568,9 +568,11 @@ div{
 			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
 						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
 			             '<tr><th>부서명</th><td>' + empPrf.deptTitle + '</td></tr>' +
-			             '<tr><th>직급/직책</th><td>' + empPrf.rankTitle + '/' + empPrf.jobTitle + '</td></tr>' +
-			         	 '<tr><th>자택주소</th><td>' + empPrf.empAddress + '</td></tr>'
-			 	
+			             '<tr><th>직급/직책</th><td>' + empPrf.rankTitle + '/' + empPrf.jobTitle + '</td></tr>';
+             			
+			             if(empPrf.empId == '${loginUser.empId}'){
+			             	valueDown += '<tr><th>자택주소</th><td>' + empPrf.empAddress + '</td></tr>';
+			             }
 				$("#profile_list").html(valueDown);
 				
 			},

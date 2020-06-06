@@ -381,7 +381,7 @@ div{
 					<tr>
 						<td id="leftArea">
 							<!-- 인사팀만 보이는 버튼 -->
-							<button class="bigBtn" onclick="requestList.gr">승인대기</button>&nbsp;
+							<button class="bigBtn" onclick="location.href='requestList.gr';">승인대기</button>&nbsp;
 						</td>
 						<td id="rightArea">
 							<!-- 검색바 -->
