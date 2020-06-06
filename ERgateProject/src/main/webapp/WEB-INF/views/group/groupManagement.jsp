@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>groupManagement</title>
+<title>groupManagement</title>  
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/icons/fontello_tree/css/fontello.css">
+
 <style>
 /* ==========페이지영역========== */
     .outer{
@@ -70,21 +72,6 @@
     /* 콘텐츠영역 */
 
 /* ==========페이지영역========== */
-/* 큰버튼 스타일 */
-.bigBtn {
-	width: 140px;
-	height: 40px;
-	border: 0px;
-	border-radius: 5px;
-	background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
-	color: white;
-	font-size: 18px;
-}
-
-.bigBtn:hover {
-	cursor: pointer;
-}
-/* 큰버튼 스타일 */
 /* 상단 검색창 영역 스타일 */
 
 .bas {
@@ -97,7 +84,7 @@
 #rightArea {
 	text-align: right;
 }
-/* 상단 검색창 영역 스타일 */
+
 /* 검색창 스타일 */
 .searchBar>select {
 	height: 36px;
@@ -147,11 +134,13 @@
     float: left;
 }
 .profile_area{
-    width: 45%;
+    width: 641px;
     height: 100%;
     float: left;
 }
-
+div{
+	box-sizing:auto;
+}
 /* depList_area - 조직도 tree 스타일 */
 .group_tree, .group_tree ul{
     list-style: none;
@@ -164,6 +153,7 @@
 .group_tree *::before{
     width: 17px;
     height: 15px;
+    
     display: inline-block;
 }
 .group_tree a:before{
@@ -191,21 +181,40 @@
     padding-top: 10px;
     height: 35px; 
 }
+
+.deptList{
+    cursor: pointer;
+}
+.deptList:hover{
+	font-weight: 600;
+}
+
 /* empList_area */
 .empList{
     list-style: none;
+    list-style-image:url('${pageContext.servletContext.contextPath }/resources/icons/person_icon.png');
 }
 .empList li{
     padding-top: 10px;
     height: 35px; 
+    cursor: pointer;
 }
-.rank_code, .job_code{
+.empList li:hover{
+	font-weight: 600;
+    cursor: pointer;
+}
+.dept_rank_code1{
     color: rgb(188, 188, 188);
+    cursor: default;
 }
 .empList a{
     text-decoration: none;
     color: rgb(77, 77, 77);
     cursor: pointer;
+}
+.noEmpText{
+    color: rgb(77, 77, 77);
+    font-size: 17px;
 }
 
 /* profile_area */
@@ -238,6 +247,11 @@
 }
 .dept_mail{
     color: rgb(188, 188, 188);
+    cursor: pointer;
+}
+.dept_mail:hover{
+    font-weight: 600;
+    color:grey;
 }
 .profile_down{
     width: 100%;
@@ -265,36 +279,46 @@
     color: rgb(188, 188, 188);
     width: 40%;
 }
+
 #mypageProfileImg{
 	border-radius: 50%;
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
  /* 조직도 div 스타일 */
  
-  /* 작은버튼 스타일 */
-.smallBtn {
+ /* 작은버튼 스타일 */
+ /* 버튼 스타일 body 영역으로 옮김 - 스타일 우선순위 - 커서 디폴트 하기위해 */
+.smallBtnGreyUpdate{
+	border: 1px solid rgb(190, 190, 190);
+	background: rgb(190, 190, 190);
+	color: white;
 	width: 70px;
 	height: 25px;
 	border-radius: 5px;
 	font-size: 12px;
 }
+	
+/* .smallBtn:hover {
+	cursor: pointer;
+} */
+/* 작은버튼 스타일 */
+/* 큰버튼 스타일 */
+.bigBtn {
+	width: 140px;
+	height: 40px;
+	border: 0px;
+	border-radius: 5px;
+	background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
+	color: white;
+	font-size: 18px;
+}
 
-.smallBtn:hover {
+.bigBtn:hover {
 	cursor: pointer;
 }
-
-#emp_status{
-	border: 1px solid rgb(26, 188, 156);
-	background: white; /* 회색 : rgb(190, 190, 190) */
-	color: rgb(26, 188, 156);
-}
-#profile_update{
-	border: 1px solid rgb(190, 190, 190);
-	background: rgb(190, 190, 190);
-	color: white;
-}
-/* 작은버튼 스타일 */
+/* 큰버튼 스타일 */
 </style>
 </head>
 <body>
@@ -302,7 +326,36 @@
 	
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp"/>
-	
+	<style>
+		 /* 작은버튼 스타일 */
+		.smallBtn{
+			width: 70px;
+			height: 25px;
+			border: 1px solid rgb(26, 188, 156);
+			border-radius: 5px;
+			background: white; /* 회색 : rgb(190, 190, 190) */
+			color: rgb(26, 188, 156);
+			font-size: 12px; 
+			cursor:default !important;
+		}
+		
+		.smallBtnGrey{
+			width: 70px;
+			height: 25px;
+			border: 1px solid rgb(188, 188, 188);
+			border-radius: 5px;
+			background: white; /* 회색 : rgb(190, 190, 190) */
+			color: rgb(188, 188, 188);
+			font-size: 12px;
+			cursor:default !important;
+		}
+		
+		/* .smallBtn:hover {
+			cursor: pointer;
+		} */
+		/* 작은버튼 스타일 */
+
+	</style>
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -311,35 +364,42 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">조직도</button></li>
-				<li><button class="subBtn subActive">계정관리</button></li>
+				<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
+				<c:choose>
+					<c:when test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
+					</c:when>		
+				</c:choose>
 			</ul>
 		</div>
 		<div class="contentArea">
 		<!-- 내용 작성 영역 입니다-->
+		
 			<!-- 버튼과 검색바 같이 들어가는 DIV -->
 			<div btnAndSearch>
 				<table class="bas">
 					<tr>
-						<td id="leftArea"> 
+						<td id="leftArea">
 							<!-- 인사팀만 보이는 버튼 -->
-							<button class="bigBtn">승인대기</button>&nbsp;
+							<button class="bigBtn" onclick="requestList.gr">승인대기</button>&nbsp;
 						</td>
 						<td id="rightArea">
 							<!-- 검색바 -->
 							<div class="searchBar">
-								<select>
-									<option>이름</option>
-									<option>직급</option>
-									<option>직책</option>
-									<option>부서</option>
-								</select> <input type="text" placeholder="이름/직급/직책/부서 검색">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+								
+								<select id="condition" name="condition">
+									<option value="empName">이름</option>
+									<option value="rankTitle">직급</option>
+									<option value="jobTitle">직책</option>
+									<option value="deptTitle">부서</option>
+								</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
+								<svg onclick="return searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 									fill="black" width="48px" height="48px">
-									<path
-										d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+									<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
-							</div>
+								
+							
+							</div> 
 							<!-- 검색바 -->
 						</td>
 					</tr>
@@ -350,51 +410,43 @@
 		
 			<!-- 조직도 div -->
 		    <div class="groupMap_outer">
-		    	<!-- 왼쪽 영역 -->
 		        <div class="depList_area" style="overflow: auto;">
 		            <ul class="group_tree">
 		                <li>
 		                    <input type="checkbox" id="root">
-		                    <label for="root"> ERgate</label>
+		                    <label for="root" class="deptList" key="all"> ERgate</label>
 		                    <ul>
-		                        <li><a href="#"> 임원</a></li>
-		                        <li><a href="#"> 개발팀</a></li>
-		                        <li><a href="#"> 회계팀</a></li>
-		                        <li><a href="#"> 기술팀</a></li>
-		                        <li><a href="#"> 총무팀</a></li>
-		                        <li><a href="#"> 인사팀</a></li>
+		                        <li class="deptList" key="D0">└ 임원</li>
+		                        <li class="deptList" key="D1">└ 개발팀</li>
+		                        <li class="deptList" key="D2">└ 회계팀</li>
+		                        <li class="deptList" key="D3">└ 기술팀</li>
+		                        <li class="deptList" key="D4">└ 총무팀</li>
+		                        <li class="deptList" key="D5">└ 인사팀</li>
 		                    </ul>
 		                </li>
 		            </ul>
 		        </div>
-		        <!-- 가운데 영역 -->
 		        <div class="empList_area" style="overflow: auto;">
 		            <ul class="empList">
-		                <a href="#"><li><span>앨리스</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a href="#"><li><span>리차드</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a href="#"><li><span>케빈</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a href="#"><li><span>김카카오</span> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></li></a>
-		                <a href="#"><li><span>최삼성</span> <span class="rank_code">(기술팀 /</span> <span class="job_code">팀원)</span></li></a>
-		                <a href="#"><li><span>박다음</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">대리)</span></li></a>
-		                <a href="#"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
+		                <!-- <li>앨리스 <span class="dept_rank_code">(임원/대표이사)</span></li> -->
 		            </ul>
 		        </div>
-		        <!-- 오른쪽 영역 -->
 		        <div class="profile_area" style="overflow: auto;">
 		            <div class="profile_up">
-		                <div class="profile_img">
-		                    <img id="mypageProfileImg" src="../../resources/siteImg/profile_logo.png" width="140" height="140">
+		                <%-- <div class="profile_img">
+		                    <img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">
 		                </div>
 		                <div class="profile_name">
 		                    <div class="dept_name">앨리스</div>
-		                    <button id="emp_status" class="smallBtn">회의중</button>
+		                    <button class="smallBtn">회의중</button><br><br>
 		                    <button id="profile_update" class="smallBtn">수정하기</button><br><br>
 		                    <div> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></div>
 		                    <div class="dept_mail">qwertyadsf@gmail.com</div>
-		                </div>
+		                </div> --%>
 		            </div><br><br>
 		            <div class="profile_down" align="center">
-		                <table id="profile_list" align="center"> <tr>
+		                <table id="profile_list" align="center">
+		                   <!--  <tr>
 		                        <th>사원번호</th>
 		                        <td>3456789</td>
 		                    </tr>
@@ -433,12 +485,207 @@
 		                	<tr>
 		                        <th>자택주소</th>
 		                        <td>서울시 마포구 서교동 홍익로 2길 35</td>
-		                    </tr>
+		                    </tr> -->
 		                </table>
 		            </div>
-		        </div><!-- 오른쪽 영역 끝 -->
-		    </div><!-- groupMap_outer -->
-		</div><!-- contentArea -->
+		        </div> <!-- 오른쪽 영역 끝 -->
+		    </div> <!-- groupMap_outer -->
+		</div> <!-- contentArea -->
 	</div> <!-- outer -->
+	
+	
+	
+	<!-- empList - 사원리스트 조회 -->
+	<script>
+	$(function(){
+		selectNoList();
+
+		/* 조직도 부서별 사원 조회 */
+		$(".deptList").click(function(){
+			keyword =$(this).attr("key");
+			
+			$.ajax({
+				url: "deptEmpList.gr",
+				type: "post",
+				data:{"keyword":keyword}, 
+				async: false,
+				success: function(eList){
+				 	console.log(eList);
+					var value = "";
+					
+					if(eList.length == 0){ // 리스트가 비어있을 경우
+		            	value = '<span class="noEmpText">조회된 사원이 없습니다. </span>';
+					}else{ // 리스트가 비어있지 않을 경우
+		            	console.log(eList[0]);
+						for(var i in eList){
+							
+							var empName = eList[i].empName;
+							var empRank = eList[i].rankTitle;
+							var empJob = eList[i].jobTitle;
+							
+							value += '<li>' + '<span key="'+ eList[i].empId +'" onclick="empPrf();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
+						}
+						$(".empList").html(value);
+					} 
+					
+				},
+				error:function(){
+					console.log("조직도 부서별 사원 리스트 조회 실패");
+				}
+			});
+		});
+
+	});
+	
+	
+	/* 조직도 사원 프로필 조회 */
+	function empPrf(){
+		console.log(window.event.target.getAttribute("key"));
+		empId = window.event.target.getAttribute("key");
+		
+		$.ajax({
+			url: "empProfile.gr",
+			type: "post",
+			data:{"empId":empId}, 
+			async: false,
+			success: function(empPrf){
+				console.log(empPrf.empImage);
+				var valueUp="";
+				valueUp +=
+					
+						'<div class="profile_img">';
+							
+						if(empPrf.empImage == undefined){
+								valueUp += '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
+							}else{
+									
+								valueUp += '사진 샘플데이터 넣으면 수정하기';
+							/* '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
+							 */
+							} 
+						
+						valueUp +=
+			            '</div>' +
+			            '<div class="profile_name">' +
+			                '<div class="dept_name">'+ empPrf.empName +'</div>'; 
+			                
+			                switch(empPrf.empStatus){
+			                case 0 : valueUp += '<button class="smallBtnGrey">'+ '비접속' +'</button>'; break;
+			                case 1 : valueUp += '<button class="smallBtnGrey">'+ '휴가중' +'</button>'; break;
+			                case 2 : valueUp += '<button class="smallBtnGrey">'+ '휴직' +'</button>'; break;
+			                case 3 : valueUp += '<button class="smallBtnGrey">'+ '외근중' +'</button>'; break;
+			                case 4 : valueUp += '<button class="smallBtnGrey">'+ '회의중' +'</button>'; break;
+			                case 5 : valueUp += '<button class="smallBtn">'+ '접속중' +'</button>'; break;
+			                default : ''; 
+			                } 
+			                
+							valueUp +=
+							'&nbsp; <button id="profile_update" class="smallBtnGreyUpdate" onclick="empUpdate();">수정하기</button><br><br>' +
+			                '<div class="dept_rank_code1">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
+			                '<div style="margin-top: 5px;""><span style="vertical-align:middle;"><img src="${pageContext.servletContext.contextPath}/resources/icons/mail.png" width="20px;"></span>'+
+			                '<span class="dept_mail">&nbsp;' + empPrf.empComEmail + '</span></div>' +
+			            '</div>'
+							
+				$(".profile_up").html(valueUp);
+				
+			 	var valueDown="";
+			 	valueDown +=
+		 				 '<tr><th>사원번호</th><td>'+ empPrf.empCode + '</td></tr>' +
+			             '<tr><th>입사일</th><td>'+ empPrf.hireDate + '</td></tr>' +
+			             '<tr><th>아이디</th><td>' + empPrf.empId + '</td></tr>' +
+			             '<tr><th>생년월일</th><td>' + empPrf.empBirthday + '</td></tr>' + 
+			             '<tr><th>휴대폰 번호</th><td>' + empPrf.empPhone + '</td></tr>' +
+			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
+						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
+			             '<tr><th>부서명</th><td>' + empPrf.deptTitle + '</td></tr>' +
+			             '<tr><th>직급/직책</th><td>' + empPrf.rankTitle + '/' + empPrf.jobTitle + '</td></tr>' +
+			         	 '<tr><th>자택주소</th><td>' + empPrf.empAddress + '</td></tr>'
+			 	
+				$("#profile_list").html(valueDown);
+				
+			},
+			error:function(){
+				console.log("조직도 사원 프로필 조회 실패");
+			}
+		});
+	}
+
+	
+	/* 조직도 전체 리스트 조회 - 조직도 페이지 첫 화면 */
+	function selectNoList(){		
+			
+		$.ajax({
+			url: "empList.gr",
+			type: "post",
+			
+			success: function(list){
+				// console.log(list);
+				var value = "";
+				
+				if(list.length == 0){ // 리스트가 비어있을 경우
+	            	value = '<span class="noEmpText">조회된 사원이 없습니다. </span>';
+				}else{ // 리스트가 비어있지 않을 경우
+	            
+					for(var i in list){
+						
+						var empName = list[i].empName;
+						var empRank = list[i].rankTitle;
+						var empJob = list[i].jobTitle;
+						
+						value += '<li>' + '<span key="'+ list[i].empId +'" onclick="empPrf();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
+					
+					}
+					$(".empList").html(value);
+				}
+			},
+			error:function(){
+				console.log("조직도 사원 리스트조회용 통신 실패");
+			}
+		});
+	}
+	
+	function searchEmpProfile(){
+		condition = $("#condition option:selected").val();
+		keyword = $("#keyword").val();
+		if(keyword==''){
+			alert("키워드를 입력하세요");
+			return;
+		}
+		$.ajax({
+			url:"empListSearch.gr",
+			type:"get",
+			data:{"condition":condition,
+				 "keyword":keyword},
+			success: function(list){
+			console.log(list);
+				var value = "";
+				
+				if(list.length == 0){ // 리스트가 비어있을 경우
+					value = '<br><span class="noEmpText">조회된 사원이 없습니다. </span>';
+				}else{ // 리스트가 비어있지 않을 경우
+	            
+					for(var i in list){
+						
+						var empName = list[i].empName;
+						var empRank = list[i].rankTitle;
+						var empJob = list[i].jobTitle;
+						
+						value += '<li>' + '<span key="'+ list[i].empId +'" onclick="empPrf();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
+					}
+				}
+				$(".empList").html(value);
+			},
+			error:function(){
+				console.log("조직도 사원 리스트조회용 통신 실패");
+			}
+			
+		})
+		
+	}
+	
+	function empUpdate(){
+		location.href="empUpdate.gr"
+	}
+    </script>
 </body>
 </html>
