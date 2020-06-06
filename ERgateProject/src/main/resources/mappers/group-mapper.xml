@@ -105,4 +105,12 @@
 		 </choose>
 		order by emp_name		 
 	</select>
+	
+	<select id="selectRequestList" resultMap="employeeResultSet">
+		select emp_id, hire_date, emp_name, emp_phone
+		  from employee
+	   	 where dept_code is null
+	   	 order by hire_date
+	</select>
+	
 </mapper>

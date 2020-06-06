@@ -27,6 +27,9 @@ public class GroupDao {
 		return (ArrayList)sqlSession.selectList("groupMapper.selectEmpListSearch", search);
 	}
 	
+	public ArrayList<Employee> selectRequestList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("groupMapper.selectRequestList");
+	}
 	
 	
 	

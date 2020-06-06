@@ -40,6 +40,11 @@ public class GroupServiceImpl implements GroupService {
 		return grDao.selectEmpListSearch(sqlSession, search);
 	}
 
+	@Override
+	public ArrayList<Employee> selectRequestList() {
+		return grDao.selectRequestList(sqlSession);
+	}
+
 //	@Override
 //	public Employee searchGroupList(String condition, String keyword) {
 //		// TODO Auto-generated method stub

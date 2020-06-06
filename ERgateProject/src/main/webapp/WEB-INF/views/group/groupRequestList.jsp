@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,8 +134,6 @@
 </head>
 <body>
 	<!-- 이곳에 메뉴바 include -->
-	
-	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp"/>
 	
 	<div class="outer">
@@ -145,8 +144,10 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">조직도</button></li>
-				<li><button class="subBtn subActive">계정관리</button></li>
+					<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
+				<c:if  test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
+				</c:if>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -157,7 +158,7 @@
 					<tr>
 						<td id="leftArea"> 
 							<!-- 인사팀만 보이는 버튼 -->
-							<button class="bigBtn" style="background:rgb(26, 188, 156);">목록으로</button>&nbsp;
+							<button class="bigBtn" onclick="location.href='mgList.gr';" style="background:rgb(26, 188, 156);">목록으로</button>&nbsp;
 						</td>
 						<td id="rightArea">
 							<!-- 화면 구조 맞추기 위해 td 비워둠 -->
@@ -176,142 +177,19 @@
 						<th>계정명</th>
 						<th>이름</th>
 						<th>휴대폰 번호</th>
-						<th>비고</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-				<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
-								<tr>
-					<td>2020/03/02</td>
-					<td>Alice</td>
-					<td>앨리스</td>
-					<td>010-0000-0000</td>
-					<td>미승인</td>
-				</tr>
+				<tbody>
+			
+				<c:forEach var="list" items="${requestList}">
+					<tr>
+						<td>${ requestList[0].hireDate }</td>
+						<td>${ list.empId }</td>
+						<td>${ list.empName }</td>
+						<td>${ list.empPhone }</td>
+					</tr>
+				</c:forEach>
+				</tbody>
 			</table>
 			</div>
 			<!-- 게시판 -->

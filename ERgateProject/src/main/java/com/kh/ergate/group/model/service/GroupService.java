@@ -20,7 +20,11 @@ public interface GroupService {
 
 	// 조직도 키워드 검색 
 	ArrayList<Employee> selectEmpListSearch(Search search);
+	
+	// 승인대기리스트 조회요청용
+	ArrayList<Employee> selectRequestList();
 
+	
 	
 //	// 사원 검색 요청용
 //	Employee searchGroupList(String condition,String keyword);

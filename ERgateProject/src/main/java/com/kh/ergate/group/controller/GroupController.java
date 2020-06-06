@@ -33,12 +33,6 @@ public class GroupController {
 		return "group/groupManagement";
 	}
 	
-	// 승인대기리스트 조회요청용
-	@RequestMapping(value="requestList.gr")
-	public String selectRequestList() {
-		return "group/groupRequestList";
-	}
-	
 	// 사원 계정 수정 페이지 이동
 	@RequestMapping(value="empUpdate.gr")
 	public String updateGroupEmp() {
@@ -85,9 +79,18 @@ public class GroupController {
 		return new Gson().toJson(array);
 	}
 	
+	// 승인대기리스트 조회요청용
+	@RequestMapping(value="requestList.gr")
+	public String selectRequestList(Model model) {
+		
+		ArrayList<Employee> array = grService.selectRequestList();
+		model.addAttribute("requestList", array);
+		
+		return "group/groupRequestList";
+	}
 	
 	
-	
+
 	
 
 	
