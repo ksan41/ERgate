@@ -2,6 +2,7 @@ package com.kh.ergate.sign.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,12 +175,34 @@ public class SignController {
 	  @RequestMapping("approval.si") public String approvalPath() { return
 	  "sign/signApprovalPath"; }
 	  
-	  // 결재라인 등록요청용
 	  
-	  @RequestMapping("insertSigner.si") public String insertSigner(Signer si,
-	  Model model) {
-	  
+	  //결재라인등록팝업 요청용
+	  @RequestMapping("openSigner.si")
+	  public String openSigner(HttpSession session) {
+		  
+		  
+		  return "sign/signApprovalPath";
 	  }
+	  
+	  
+	  
+	  // 결재라인-결재자 등록요청용
+	  @RequestMapping("insertSigner.si") 
+	  public String insertSigner(HttpServletRequest request,Signer si,Model model)throws Exception {
+		 System.out.println("결재결재");
+		String[] list = request.getParameterValues("empId");	
+			  System.out.println(list);
+		  return "";
+	  }
+	  
+	  // 결재라인-수신참조자 등록요청용
+	  @RequestMapping("insertRef.si") 
+	  public String insertRef(Signer si, Model model) {
+		  System.out.println("참조참조");
+		  return "";
+	  }
+		  
+	  
 	  
 	  // 기안임시저장
 	  

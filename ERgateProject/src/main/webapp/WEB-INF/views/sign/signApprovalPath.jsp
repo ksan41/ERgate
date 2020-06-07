@@ -283,6 +283,21 @@ div {
 						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
 			<button class="bigBtn" id="signerSubmit" style="margin-left: 680px;">등록</button>
+			<script>
+				$(document).on("click","#signerSubmit",function(){
+					var v = $(".signSel tbody").text();
+					if(v==""){
+						alert("결재자는 1명 이상 존재해야 합니다.");
+						return false;
+					}else{
+						var test=$("form[name=insertSigner] tbody").html();
+						console.log(test);
+						//$("form[name=insertSigner]").submit();
+						//$("form[name=insertRef]").submit();
+					}
+				});
+			</script>
+			
 			</div>
 			<div id="wrap">
 				<!-- 좌측 조직도영역 -->
@@ -337,9 +352,9 @@ div {
 										<th width="40"></th>
 									</tr>
 								</thead>
-								<tbody>
-								
-								</tbody>
+								<form name="insertSigner" action="insertSigner.si" >
+									<tbody></tbody>
+								</form>
 							</table>
 						</div>	
 					</div>
@@ -359,8 +374,9 @@ div {
 										<th width="40"></th>
 									</tr>
 								</thead>
-								<tbody>
-								</tbody>
+								<form name="insertRef" action="insertRef.si">
+								<tbody></tbody>
+								</form>
 								</table>
 							</div>	
 						</div>
@@ -392,9 +408,10 @@ div {
 		});
 		
 		
+		// 결재자 추가
+		
 		var value1 = "";
 		
-		// 결재자 추가
 		$(document).on("click",".selSigner",function(){
 			
 			 $('.checkBox:checked').each(function() {
@@ -426,11 +443,12 @@ div {
 		
 		
 	</script>
+
 	<script>
 	
+	// 수신참조자 추가
 	var value2 = "";
 	
-	// 수신참조자 추가
 	$(document).on("click",".selRef",function(){
 		$('.checkBox:checked').each(function() {
 			var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
