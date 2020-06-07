@@ -7,11 +7,13 @@
 		<result column="VHCL_MODEL" property="vhclModel"/>
 		<result column="VHCL_NO" property="vhclNo"/>
 		<result column="VHCL_CAPACITY" property="vhclCapacity"/>
+		<result column="VHCL_ENROLL_DATE" property="vhclEnrollDate"/>
 		<result column="VHCL_IMAGE" property="vhclImage"/>
+		<result column="VHCL_STATUS" property="vhclStatus"/>
 	</resultMap>
 	
 	<resultMap id="vehicleReservationResultSet" type="VehicleReservation">
-		<id column="VHCL_RESERVE_NO" property="vhclReservNo"/>
+		<id column="VHCL_RESERVE_NO" property="vhclReserveNo"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="VHCL_CODE" property="vhclCode"/>
 		<result column="VHCL_RESERVE_DATE" property="vhclReservDate"/>
@@ -21,7 +23,71 @@
 		<result column="VHCL_END_DATE" property="vhclEndDate"/>
 		<result column="VHCE_END_TIME" property="vhclEndTime"/>
 		<result column="VHCL_PURPOSE" property="vhclPurpose"/>
-		<result column="VHCL_STATUS" property="vhclStatus"/>
+		<result column="VHCL_RESERVE_STATUS" property="vhclReserveStatus"/>
+		<result column="VHCL_MODEL" property="vhclModel"/>
+		<result column="VHCL_NO" property="vhclNo"/>
+		<result column="VHCL_IMAGE" property="vhclImage"/>
 	</resultMap>
+	
+	<select id="selectReserveListCount" resultType="_int">
+		SELECT COUNT(*)
+      	  FROM VEHICLE_RESERVATION
+      	 WHERE EMP_ID=#{empId}
+		 	   AND VHCL_RESERVE_STATUS='Y'
+	</select>
+	
+	<select id="myReserveVehicle" parameterType="string" resultMap="vehicleReservationResultSet">
+		SELECT VHCL_RESERVE_NO, EMP_ID, VHCL_CODE, VHCL_RESERVE_DATE, DEPT_TITLE, VHCL_START_DATE, VHCL_START_TIME, 
+			   VHCL_END_DATE, VHCL_END_TIME, VHCL_PURPOSE, VHCL_RESERVE_STATUS, VHCL_MODEL, VHCL_NO, VHCL_IMAGE
+		  FROM VEHICLE_RESERVATION
+		  JOIN VEHICLE USING(VHCL_CODE)
+		 WHERE EMP_ID=#{empId}
+		 	   AND VHCL_RESERVE_STATUS='Y'
+		 ORDER BY VHCL_RESERVE_DATE DESC
+	</select>
+	
+	<update id="cancelReserveVehicle" parameterType="string">
+		UPDATE VEHICLE_RESERVATION
+		   SET VHCL_RESERVE_STATUS='N'
+		 WHERE VHCL_RESERVE_NO=#{vhclReserveNo}
+	</update>
+	
+	<insert id="reserveVehicle" parameterType="VehicleReservation">
+		INSERT INTO VEHICLE_RESERVATION
+		VALUES(SEQ_VRESERV_NO.NEXTVAL, #{empId}, #{vhclCode}, SYSDATE, #{deptTitle}, #{vhclStartDate}, #{vhclStartTime},
+			   #{vhclEndDate}, #{vhclEndTime}, #{vhclPurpose}, 'Y')
+	</insert>
+	
+	<select id="selectVehicleListCount" resultType="_int">
+		SELECT COUNT(*)
+      	  FROM VEHICLE
+      	 WHERE VHCL_STATUS='Y'
+	</select>
+	
+	<select id="selectVehicleList" resultMap="vehicleResultSet">
+		SELECT *
+		  FROM VEHICLE
+		 WHERE VHCL_STATUS='Y'
+	</select>
+	
+	<insert id="insertVehicle" parameterType="Vehicle">
+		INSERT INTO VEHICLE
+		VALUES(SEQ_VEHICLE_NO.NEXTVAL, #{vhclModel}, #{vhclNo}, #{vhclCapacity}, SYSDATE, NULL, 'Y')
+	</insert>
+	
+	<update id="updateVehicle" parameterType="Vehicle">
+		UPDATE VEHICLE
+		   SET VHCL_MODEL=#{vhclModel},
+		   	   VHCL_NO=#{vhclNo},
+		   	   VHCL_CAPACITY=#{vhclCapacity},
+		   	   VHCL_IMAGE=NULL
+		 WHERE VHCL_CODE=#{vhclCode}
+	</update>
+	
+	<update id="deleteVehicle" parameterType="Vehicle">
+		UPDATE VEHICLE
+		   SET VHCL_STATUS='N'
+		 WHERE VHCL_CODE=#{vhclCode}
+	</update>
 	
 </mapper>

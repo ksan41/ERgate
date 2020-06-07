@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.vehicle.model.dao.VehicleDao;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
@@ -20,6 +21,18 @@ public class VehicleServiceImpl implements VehicleService {
 	@Autowired
 	private VehicleDao vDao;
 	
+	
+	// 나의 예약 현황 총 개수 조회용 서비스
+	@Override
+	public int selectReserveListCount() {
+		return vDao.selectReserveListCount(sqlSession);
+	}
+	
+	// 내 예약 조회용 서비스
+	@Override
+	public ArrayList<VehicleReservation> myReserveVehicle(Employee e, PageInfo pi) {
+		return vDao.myReserveVehicle(sqlSession, e, pi);
+	}
 	
 	// 차량 예약 현황 조회용 서비스 (일별)
 	@Override
@@ -35,20 +48,20 @@ public class VehicleServiceImpl implements VehicleService {
 
 	// 차량 예약 취소용 서비스
 	@Override
-	public int cancelReserveVehicle(VehicleReservation vr) {
-		return vDao.cancelReserveVehicle(sqlSession, vr);
-	}
-
-	// 내 예약 조회용 서비스
-	@Override
-	public ArrayList<VehicleReservation> myReserveVehicle(String empId, PageInfo pi) {
-		return vDao.myReserveVehicle(sqlSession, empId, pi);
+	public int cancelReserveVehicle(String vhclReserveNo) {
+		return vDao.cancelReserveVehicle(sqlSession, vhclReserveNo);
 	}
 
 	// 차량 예약 현황 조회용 서비스 (월별) - 관리자
 	@Override
 	public ArrayList<VehicleReservation> reserveVehicleList(String month, PageInfo pi) {
 		return vDao.reserveVehicleList(sqlSession, month, pi);
+	}
+	
+	// 차량 리스트 총 개수 조회용 서비스
+	@Override
+	public int selectVehicleListCount() {
+		return vDao.selectVehicleListCount(sqlSession);
 	}
 
 	// 차량 리스트 조회용 서비스 - 관리자
@@ -80,5 +93,5 @@ public class VehicleServiceImpl implements VehicleService {
 	public int deleteVehicle(Vehicle v) {
 		return vDao.deleteVehicle(sqlSession, v);
 	}
-	
+
 }

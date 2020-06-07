@@ -7,11 +7,22 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 
 @Repository("vDao")
 public class VehicleDao {
+	
+	public int selectReserveListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("vehicleMapper.selectReserveListCount");
+	}
+	
+	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, Employee e, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("vehicleMapper.myReserveVehicle", e, rowBounds);
+	}
 	
 	public ArrayList<VehicleReservation> selectCurrentStatus(SqlSessionTemplate sqlSession, String currentDate) {
 		return (ArrayList)sqlSession.selectList("vehicleMapper.selectCurrentStatus", currentDate);
@@ -21,20 +32,18 @@ public class VehicleDao {
 		return sqlSession.insert("vehicleMapper.reserveVehicle", vr);
 	}
 	
-	public int cancelReserveVehicle(SqlSessionTemplate sqlSession, VehicleReservation vr) {
-		return sqlSession.update("vehicleMapper.cancelReserveVehicle", vr);
-	}
-	
-	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, String empId, PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("vehicleMapper.myReserveVehicle", empId, rowBounds);
+	public int cancelReserveVehicle(SqlSessionTemplate sqlSession, String vhclReserveNo) {
+		return sqlSession.update("vehicleMapper.cancelReserveVehicle", vhclReserveNo);
 	}
 	
 	public ArrayList<VehicleReservation> reserveVehicleList(SqlSessionTemplate sqlSession, String month, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("vehicleMapper.reserveVehicleList", month, rowBounds);
+	}
+	
+	public int selectVehicleListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("vehicleMapper.selectVehicleListCount");
 	}
 	
 	public ArrayList<Vehicle> selectVehicleList(SqlSessionTemplate sqlSession, PageInfo pi) {

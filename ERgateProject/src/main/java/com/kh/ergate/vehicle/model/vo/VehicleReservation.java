@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class VehicleReservation {
 	
-	private int vhclReservNo;
+	private int vhclReserveNo;
 	private String empId;
 	private String vhclCode;
 	private Date vhclReservDate;
@@ -26,5 +26,9 @@ public class VehicleReservation {
 	private String vhclEndTime;
 	private String vhclPurpose;
 	private String vhclStatus;
+	
+	private String vhclModel;
+	private String vhclNo;
+	private String vhclImage;
 
 }

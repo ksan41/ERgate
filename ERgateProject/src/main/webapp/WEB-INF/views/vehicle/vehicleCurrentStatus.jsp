@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -341,6 +342,14 @@
 </head>
 <body>
 
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+
+
 	<!-- 메뉴바 -->
 
 	<div class="outer">
@@ -351,176 +360,165 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn subActive">업무차량 예약</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='currentStatus.ve'">업무차량 예약</button></li>
+				
+				<c:if test="${ loginUser.deptTitle eq '총무팀' }">
+					<li><button class="subBtn" style="width: 170px" onclick="location.href='reserveList.ve'">업무차량 예약현황</button></li>
+					<li><button class="subBtn" onclick="location.href='vehicleList.ve?currentPage=1'">업무차량 관리</button></li>
+				</c:if>
+				
 			</ul>
 		</div>
 		<div class="contentArea">
 
 			<button id="reservationBtn">예약하기</button>
-			<a  id="reservation" class="open-modal" href="#open_reservation" style="display: none;">모달</a> <br> 
-			<a  id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
+			<a id="reservation" class="open-modal" href="#open_reservation" style="display: none;">모달</a> <br> 
+			<a id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
 
 		</div>
 
-		<!-- 캘린더 api 쓸거임 -->
-
-		<!-- 모달~모달~ 핵어렵 -->
-		<!-- 모달 내용(예약하기 부분) -->
+		<!-- 모달 (예약하기) -->
 		<div id="open_reservation" class="modal" style="height: 600px;">
 			<div class="modal-title">업무차량 예약</div>
-			<div class="modal-content">
-				<table class="reservationContent">
-					<tr>
-						<td id="r1">신청자</td>
-						<td id="r2">케빈</td>
-					</tr>
-					<tr>
-						<td id="r1">사용기간</td>
-						<td id="r2">
-							<form name="" action="" method="post">
-								<input type="date" class="inputs" style="width:140px">
-								<input type="time" class="inputs" style="width:120px">
+			<form action="reserve.ve" action="post">
+				<div class="modal-content">
+					<table class="reservationContent">
+						<input type="hidden" name="empId" value="${ loginUser.empId }"/>
+						<input type="hidden" name="deptTitle" value="${ loginUser.deptTitle }"/>
+						<tr>
+							<td id="r1">신청자</td>
+							<td id="r2">${ loginUser.empName }</td>
+						</tr>
+						<tr>
+							<td id="r1">사용기간</td>
+							<td id="r2">
+								<input name="vhclStartDate" type="date" class="inputs" style="width:140px" required>
+								<input name="vhclStartTime" type="time" class="inputs" style="width:120px" required>
 								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-								<input type="date" class="inputs" style="width:140px">
-								<input type="time" class="inputs" style="width:120px">
-							</form>
-						</td>
-					</tr>
-					<tr>
-						<td id="r1">업무차량</td>
-						<td id="r2">
-							<select id="vehicleSelect" name="vehicle" class="inputs" style="width:180px; height:33px;">
-								<option selected>업무차량 선택</option>
-								<option>그랜저 33허 3333</option>
-								<option>소나타 33허 3333</option>
-								<option>카니발 33허 3333</option>
-								<option>스타렉스 33허 3333</option>
-								<option>스파크 33허 3333</option>
-							</select>
-							<button id="searchBtn1" class="searchBtn">가용차량 검색</button> 
-							<br>
-							<span style="color:gray; font-size:14px;">차량을 선택하고 추가 정보를 확인하세요.</span>
-							<br> 
-							<textarea cols="60" rows="4" id="partArea" readonly></textarea>
-						</td>
-					</tr>
-					<tr>
-						<td id="r1">사용목적</td>
-						<td id="r2">
-							<input type="text" placeholder="내용을 입력하세요" class="inputs">
-						</td>
-					</tr>
-				</table>
-			</div>
-
-			<!-- 예약/취소 버튼 -->
-			<div class="btns">
-				<button id="reservBtn" type="submit">예약하기</button>
-				<button id="resetBtn" type="reset">취소</button>
-			</div>
+								<input name="vhclEndDate" type="date" class="inputs" style="width:140px" required>
+								<input name="vhclEndTime" type="time" class="inputs" style="width:120px" required>
+							</td>
+						</tr>
+						<tr>
+							<td id="r1">업무차량</td>
+							<td id="r2">
+								<select id="vehicleSelect" name="vhclCode" class="inputs" style="width:180px; height:33px;" required>
+									<option disabled selected>업무차량 선택</option>
+									<option value="111">그랜저 33허 3333</option>
+									<option value="112">소나타 33허 3333</option>
+									<option value="113">카니발 33허 3333</option>
+									<option value="114">스타렉스 33허 3333</option>
+									<option value="115">스파크 33허 3333</option>
+								</select>
+								<button id="searchBtn1" class="searchBtn">가용차량 검색</button> 
+								<br>
+								<span style="color:gray; font-size:14px;">차량을 선택하고 추가 정보를 확인하세요.</span>
+								<br> 
+								<textarea cols="60" rows="4" id="partArea" readonly></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td id="r1">사용목적</td>
+							<td id="r2">
+								<input name="vhclPurpose" type="text" placeholder="내용을 입력하세요" class="inputs" required>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<div class="btns">
+					<button id="reservBtn" type="submit">예약하기</button>
+					<button id="resetBtn" type="reset">취소</button>
+				</div>
+			</form>
 		</div>
 
 
-		<!-- 모달(나의 예약 현황) -->
+		<!-- 모달 (나의 예약 현황) -->
 		<div id="myReservation_open_modal" class="modal">
 			<div class="modal-title">나의 예약현황</div>
 			<div class="modal-content">
 			
+			<c:forEach items="${ list }" var="vr">
+			
 				<table class="vhclCurrentInner">
 					<tr>
 						<td rowspan="5" class="vcTdImg">
-							<img class="vcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
+							<img class="vcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/${ vr.vhclImage }">
 						</td>
-						<td class="vcTdContent"><span class="vcContent1">그랜저 33허 3333</span></td>
+						<td class="vcTdContent"><span class="vcContent1">${ vr.vhclModel } ${ vr.vhclNo }</span></td>
 					</tr>
 					<tr>
-						<td class="vcTdContent"><span class="vcContent2">외근</span></td>
+						<td class="vcTdContent"><span class="vcContent2">${ vr.vhclPurpose }</span></td>
 					</tr>
 					<tr>
 						<td class="vcTdContent">
-							<span class="vcContent3">2020-05-05 09:00 <br>
-							 ~ 2020-05-05 12:00</span>
+							<span class="vcContent3">${ vr.vhclStartDate } ${ vr.vhclStartTime } <br>
+							 ~ ${ vr.vhclEndDate } ${ vr.vhclEndTime }</span>
 						</td>
 					</tr>
 					<tr>
-						<td class="vcTdContent"><button class="vcBtn" type="button">예약 취소</button></td>
+						<td class="vcTdContent">
+						
+						<!-- 오늘 날짜와 비교하는 조건문 주기 -->
+							<button class="vcBtn" type="button" onclick="location.href='cancelReserve.ve?vhclReserveNo=${ vr.vhclReserveNo }'">예약 취소</button>
+							
+						</td>
 					</tr>
 				</table>
 				
-				<table class="vhclCurrentInner">
-					<tr>
-						<td rowspan="5" class="vcTdImg">
-							<img class="vcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
-						</td>
-						<td class="vcTdContent"><span class="vcContent1">그랜저 33허 3333</span></td>
-					</tr>
-					<tr>
-						<td class="vcTdContent"><span class="vcContent2">외근</span></td>
-					</tr>
-					<tr>
-						<td class="vcTdContent">
-							<span class="vcContent3">2020-05-05 09:00 <br>
-							 ~ 2020-05-05 12:00</span>
-						</td>
-					</tr>
-					<tr>
-						<td class="vcTdContent"><button class="vcBtn" type="button">예약 취소</button></td>
-					</tr>
-				</table>
-				
-				<table class="vhclCurrentInner">
-					<tr>
-						<td rowspan="5" class="vcTdImg">
-							<img class="vcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
-						</td>
-						<td class="vcTdContent"><span class="vcContent1">그랜저 33허 3333</span></td>
-					</tr>
-					<tr>
-						<td class="vcTdContent"><span class="vcContent2">외근</span></td>
-					</tr>
-					<tr>
-						<td class="vcTdContent">
-							<span class="vcContent3">2020-05-05 09:00 <br>
-							 ~ 2020-05-05 12:00</span>
-						</td>
-					</tr>
-					<tr>
-						<td class="vcTdContent"><button class="vcBtn" type="button">예약 취소</button></td>
-					</tr>
-				</table>
-				
-				<table class="vhclCurrentInner">
-					<tr>
-						<td rowspan="5" class="vcTdImg">
-							<img class="vcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
-						</td>
-						<td class="vcTdContent"><span class="vcContent1">그랜저 33허 3333</span></td>
-					</tr>
-					<tr>
-						<td class="vcTdContent"><span class="vcContent2">외근</span></td>
-					</tr>
-					<tr>
-						<td class="vcTdContent">
-							<span class="vcContent3">2020-05-05 09:00 <br>
-							 ~ 2020-05-05 12:00</span>
-						</td>
-					</tr>
-					<tr>
-						<td class="vcTdContent"><button class="vcBtn" type="button">예약 취소</button></td>
-					</tr>
-				</table>
+			</c:forEach>
 
 			<!-- 페이징바 -->
 			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
+				
+               	<c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+                		<li><a href="#">&lt;&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li><a href="myReserve.ve?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
+                    </c:otherwise>
+				</c:choose>
+				
+				<c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+                		<li><a href="#">&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li><a href="myReserve.ve?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
+                    </c:otherwise>
+				</c:choose>
+				
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                   	<c:choose>
+                   		<c:when test="${ p eq pi.currentPage }">
+		                    <li><span>${ p }</span></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li><a href="myReserve.ve?currentPage=${ p }">${ p }</a></li>
+		                </c:otherwise>
+					</c:choose>	                    
+				</c:forEach>
+
+                <c:choose>
+                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    <li><a href="#">&gt;</a></li>
+                   	</c:when>
+                   	<c:otherwise>
+	                    <li><a href="myReserve.ve?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
+	                </c:otherwise>
+                </c:choose>
+                
+                <c:choose>
+                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    <li><a href="#">&gt;&gt;</a></li>
+                   	</c:when>
+                   	<c:otherwise>
+	                    <li><a href="myReserve.ve?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
+	                </c:otherwise>
+                </c:choose>
+				
 			</ul>
 			<!-- 페이징바 -->
 
@@ -543,6 +541,10 @@
 		$("#reservationBtn").on("click",function(){
 				$("#reservation").click();
 		});
+		
+		
+		/* 취소버튼 클릭 시 모달 닫히는 기능 추가하기 */
+		
 	</script>
 
 </body>

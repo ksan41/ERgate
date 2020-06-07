@@ -17,6 +17,7 @@ public class Vehicle {
 	private String vhclModel;
 	private String vhclNo;
 	private int vhclCapacity;
+	private String vhclEnrollDate;
 	private String vhclImage;
 
 }

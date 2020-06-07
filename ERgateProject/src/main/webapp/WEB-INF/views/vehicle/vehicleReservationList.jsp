@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -203,9 +204,9 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">업무차량 예약</button></li>
-				<li><button class="subBtn subActive" onclick="">업무차량 예약현황</button></li>
-				<li><button class="subBtn" onclick="open_modal();">업무차량 관리</button></li>
+				<li><button class="subBtn" onclick="location.href='currentStatus.ve'">업무차량 예약</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='reserveList.ve'">업무차량 예약현황</button></li>
+				<li><button class="subBtn" onclick="location.href='vehicleList.ve?currentPage=1'">업무차량 관리</button></li>
 			</ul>
 		</div>
 

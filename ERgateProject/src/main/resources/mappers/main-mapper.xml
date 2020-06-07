@@ -28,6 +28,7 @@
 		<result column="JOB_TITLE" property="jobTitle"/>
 	</resultMap>
 	
+	
 	<select id="loginMember" resultMap="employeeResultSet" parameterType="Employee">
 		SELECT EMP_ID, RANK_CODE, DEPT_CODE, JOB_CODE, EMP_CODE, EMP_PWD, EMP_NAME, HIRE_DATE, EMP_EXTENSION, 
 			   EMP_FAX, EMP_COM_EMAIL, EMP_PRI_EMAIL, EMP_PHONE, EMP_ADDRESS, EMP_ADDRESS_DETAIL, EMP_IMAGE,

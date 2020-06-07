@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -344,6 +345,15 @@
 </style>
 </head>
 <body>
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+	
+
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -352,9 +362,9 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">업무차량 예약</button></li>
-				<li><button class="subBtn" style="width: 170px">업무차량 예약현황</button></li>
-				<li><button class="subBtn subActive" onclick="open_modal();">업무차량 관리</button></li>
+				<li><button class="subBtn" onclick="location.href='currentStatus.ve'">업무차량 예약</button></li>
+				<li><button class="subBtn" style="width: 170px" onclick="location.href='reserveList.ve'">업무차량 예약현황</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='vehicleList.ve?currentPage=1'">업무차량 관리</button></li>
 				
 			</ul>
 		</div>
@@ -365,21 +375,35 @@
 			
 			<div id="vhclManageOuter">
 			
+			<c:forEach items="${ list }" var="v">
+			
 				<table class="vhclManageInner">
 					<tr>
 						<td rowspan="5" class="vmTdImg">
-							<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
+							<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/${ v.vhclImage }">
 						</td>
-						<td class="vmTdContent"><span class="vmLabel">차종</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">그랜저</span></td>
+						<td class="vmTdContent">
+							<span class="vmLabel">차종</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.vhclModel }</span>
+						</td>
 					</tr>
 					<tr>
-						<td class="vmTdContent"><span class="vmLabel">차량 번호</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">33허 3333</span></td>
+						<td class="vmTdContent">
+							<span class="vmLabel">차량 번호</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.vhclNo }</span>
+						</td>
 					</tr>
 					<tr>
-						<td class="vmTdContent"><span class="vmLabel">최대 탑승인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">5명</span></td>
+						<td class="vmTdContent">
+							<span class="vmLabel">최대 탑승인원</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.vhclCapacity }명</span>
+						</td>
 					</tr>
 					<tr>
-						<td class="vmTdContent"><span class="vmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">2019-04-04</span></td>
+						<td class="vmTdContent">
+							<span class="vmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.vhclEnrollDate }</span>
+						</td>
 					</tr>
 					<tr>
 						<td class="vmTdContent">
@@ -389,91 +413,60 @@
 					</tr>
 				</table>
 				
-				<table class="vhclManageInner">
-					<tr>
-						<td rowspan="5" class="vmTdImg">
-							<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
-						</td>
-						<td class="vmTdContent"><span class="vmLabel">차종</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">그랜저</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">차량 번호</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">33허 3333</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">최대 탑승인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">5명</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">2019-04-04</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent">
-							<button class="vmBtn" type="button" onclick="open_modal2();">수정하기</button>
-							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
-						</td>
-					</tr>
-				</table>
-				
-				<table class="vhclManageInner">
-					<tr>
-						<td rowspan="5" class="vmTdImg">
-							<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
-						</td>
-						<td class="vmTdContent"><span class="vmLabel">차종</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">그랜저</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">차량 번호</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">33허 3333</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">최대 탑승인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">5명</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">2019-04-04</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent">
-							<button class="vmBtn" type="button" onclick="open_modal2();">수정하기</button>
-							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
-						</td>
-					</tr>
-				</table>
-				
-				<table class="vhclManageInner">
-					<tr>
-						<td rowspan="5" class="vmTdImg">
-							<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
-						</td>
-						<td class="vmTdContent"><span class="vmLabel">차종</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">그랜저</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">차량 번호</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">33허 3333</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">최대 탑승인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">5명</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent"><span class="vmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vmContent">2019-04-04</span></td>
-					</tr>
-					<tr>
-						<td class="vmTdContent">
-							<button class="vmBtn" type="button" onclick="open_modal2();">수정하기</button>
-							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
-						</td>
-					</tr>
-				</table>
+			</c:forEach>
 				
 			</div>
 			
 			<!-- 페이징바 -->
 			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
+				
+               	<c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+                		<li><a href="#">&lt;&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li><a href="vehicleList.ve?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
+                    </c:otherwise>
+				</c:choose>
+				
+				<c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+                		<li><a href="#">&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li><a href="vehicleList.ve?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
+                    </c:otherwise>
+				</c:choose>
+				
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                   	<c:choose>
+                   		<c:when test="${ p eq pi.currentPage }">
+		                    <li><span>${ p }</span></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li><a href="vehicleList.ve?currentPage=${ p }">${ p }</a></li>
+		                </c:otherwise>
+					</c:choose>	                    
+				</c:forEach>
+
+                <c:choose>
+                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    <li><a href="#">&gt;</a></li>
+                   	</c:when>
+                   	<c:otherwise>
+	                    <li><a href="vehicleList.ve?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
+	                </c:otherwise>
+                </c:choose>
+                
+                <c:choose>
+                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    <li><a href="#">&gt;&gt;</a></li>
+                   	</c:when>
+                   	<c:otherwise>
+	                    <li><a href="vehicleList.ve?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
+	                </c:otherwise>
+                </c:choose>
+				
 			</ul>
 			<!-- 페이징바 -->
 			
@@ -486,20 +479,26 @@
 			<div class="modal-title">업무차량 등록</div>
 			<div class="modal-content">
 			<a class="open-modal" href="#modal-form"></a>
-			
+			<form action="insert.ve" method="post">
 				<div>
 					<table class="vehicleModalTable">
 						<tr>
 							<td class="vmName">차종</td>
-							<td class="vmName2"><input class="vmModalInput" type="text"></td>
+							<td class="vmName2">
+								<input name="vhclModel" class="vmModalInput" type="text">
+							</td>
 						</tr>
 						<tr>
 							<td class="vmLocation">차량 번호</td>
-							<td class="vmLocation2"><input class="vmModalInput" type="text"></td>
+							<td class="vmLocation2">
+								<input name="vhclNo" class="vmModalInput" type="text">
+							</td>
 						</tr>
 						<tr>
 							<td class="vmPersonnel">최대 탑승인원</td>
-							<td class="vmPersonnel2"><input class="vmModalInput" type="text"></td>
+							<td class="vmPersonnel2">
+								<input name="vhclCapacity" class="vmModalInput" type="text">
+							</td>
 						</tr>
 						<tr>
 							<td class="vmImgEnroll">차량 이미지</td>
@@ -514,7 +513,7 @@
 					<button class="vmSubmitBtn" type="submit">등록하기</button>
 					<button class="vmResetBtn" type="reset">삭제하기</button>
 				</div>
-
+			</form>
 			</div>
 		</div>
 		

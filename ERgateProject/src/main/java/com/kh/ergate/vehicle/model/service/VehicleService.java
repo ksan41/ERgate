@@ -3,10 +3,17 @@ package com.kh.ergate.vehicle.model.service;
 import java.util.ArrayList;
 
 import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 
 public interface VehicleService {
+	
+	// 나의 예약 현황 총 개수 조회용 서비스
+	int selectReserveListCount();
+	
+	// 내 예약 조회용 서비스
+	ArrayList<VehicleReservation> myReserveVehicle(Employee e, PageInfo pi);
 	
 	// 차량 예약 현황 조회용 서비스 (일별)
 	ArrayList<VehicleReservation> selectCurrentStatus(String currentDate);
@@ -15,13 +22,13 @@ public interface VehicleService {
 	int reserveVehicle(VehicleReservation vr);
 	
 	// 차량 예약 취소용 서비스
-	int cancelReserveVehicle(VehicleReservation vr);
-	
-	// 내 예약 조회용 서비스
-	ArrayList<VehicleReservation> myReserveVehicle(String empId, PageInfo pi);
+	int cancelReserveVehicle(String vhclReserveNo);
 	
 	// 차량 예약 현황 조회용 서비스 (월별) - 관리자
 	ArrayList<VehicleReservation> reserveVehicleList(String month, PageInfo pi);
+	
+	// 차량 리스트 총 개수 조회용 서비스
+	int selectVehicleListCount();
 	
 	// 차량 리스트 조회용 서비스 - 관리자
 	ArrayList<Vehicle> selectVehicleList(PageInfo pi);
