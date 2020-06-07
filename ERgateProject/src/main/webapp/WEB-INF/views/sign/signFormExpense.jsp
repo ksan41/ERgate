@@ -336,8 +336,8 @@ h2, h3 {
 						<th>기안일시</th>
 						<td><p id="toDate"></p></td>
 						<th>지출기간</th>
-						<td><input class="inputs" name="" type="date"> ~ <input
-							name="" class="inputs" type="date"></td>
+						<td><input class="inputs" name="expenseStartDate" type="date" required> ~ <input
+							name="expenseEndDate" class="inputs" type="date" required></td>
 					</tr>
 				</table>
 				<br>
@@ -382,29 +382,12 @@ h2, h3 {
 					</tr>
 				</table>
 
-				<!-- 결재완료시 체크될 부분 -->
-				<table id="checkArea">
-					<tr>
-						<th width="120"></th>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-					</tr>
-				</table>
+
 				<table id="signInfo3">
 					<thead>
 						<tr>
 							<th width="120">제목</th>
-							<td><input name="signTitle" class="inputs" type="text" style="width: 100%;"></td>
+							<td><input name="signTitle" class="inputs" type="text" style="width: 100%;" required></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
@@ -727,7 +710,7 @@ h2, h3 {
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
         	
-           var form = $('#uploadForm');
+           var form = $('#signForm');
            console.log(form[0]);
            var formData = new FormData(form[0]);
            formData.append('boardTitle', form[0].boardTitle.innerText);
