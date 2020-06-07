@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -307,7 +308,7 @@ div {
 						<table class="boardTable empList">
 							<thead>
 								<tr>
-									<th width="40"><input class="checkBox" type="checkbox" id="checkall"></th>
+									<th width="40"><input class="checkBoxAll" type="checkbox" id="checkall" style="zoom: 1.7;"></th>
 									<th>이름</th>
 									<th>부서</th>
 									<th width="120">직책/직급</th>
@@ -336,18 +337,9 @@ div {
 										<th width="40"></th>
 									</tr>
 								</thead>
-								<tr>
-									<td>써니</td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
-								<tr>
-									<td>써니</td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
+								<tbody>
+								
+								</tbody>
 							</table>
 						</div>	
 					</div>
@@ -358,7 +350,7 @@ div {
 						<br><br>
 						<div id="signSelDiv">
 							<div style="width:100%;height:280px;overflow:auto;">
-								<table class="boardTable signSel">
+								<table class="boardTable refSel">
 								<thead>
 									<tr>
 										<th width="100">이름</th>
@@ -367,18 +359,8 @@ div {
 										<th width="40"></th>
 									</tr>
 								</thead>
-								<tr>
-									<td>써니</td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
-								<tr>
-									<td>써니</td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
+								<tbody>
+								</tbody>
 								</table>
 							</div>	
 						</div>
@@ -408,8 +390,74 @@ div {
 		$(document).on("click",".btnDel",function(){
 			$(this).parent().parent().remove();
 		});
+		
+		
+		var value1 = "";
+		
+		// 결재자 추가
+		$(document).on("click",".selSigner",function(){
+			
+			 $('.checkBox:checked').each(function() {
+				var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
+				var name = $(this).parent().parent().children(".name").clone().wrapAll("<div/>").parent().html();
+				var dept = $(this).parent().parent().children(".dept").clone().wrapAll("<div/>").parent().html();
+				var jobRank = $(this).parent().parent().children(".jobRank").clone().wrapAll("<div/>").parent().html();
+				
+			
+				var regExp = new RegExp($(this).parent().parent().children("input[name=empId]").val());
+		       	
+				//$(this).removeAttr("checked");
+				
+				if(regExp.test($(".signSel tbody").html())){
+					console.log("중복");
+					return false;
+				}
+				 
+				value1 += '<tr>' +  id + name + dept + jobRank
+		       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
+		       			+ '</tr>';
+		       			
+				$(".signSel tbody").append(value1);
+				value1="";
+		   });
+			
+			
+		});
+		
+		
 	</script>
+	<script>
 	
+	var value2 = "";
+	
+	// 수신참조자 추가
+	$(document).on("click",".selRef",function(){
+		$('.checkBox:checked').each(function() {
+			var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
+			var name = $(this).parent().parent().children(".name").clone().wrapAll("<div/>").parent().html();
+			var dept = $(this).parent().parent().children(".dept").clone().wrapAll("<div/>").parent().html();
+			var jobRank = $(this).parent().parent().children(".jobRank").clone().wrapAll("<div/>").parent().html();
+			
+		
+			var regExp = new RegExp($(this).parent().parent().children("input[name=empId]").val());
+	       	
+			//$(this).removeAttr("checked");
+			
+			if(regExp.test($(".refSel tbody").html())){
+				console.log("중복");
+				return false;
+			}
+			 
+			value2 += '<tr>' +  id + name + dept + jobRank
+	       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
+	       			+ '</tr>';
+	       			
+			$(".refSel tbody").append(value2);
+			value2="";
+		});
+		
+	});	
+	</script>
 	
 	
 	<script>
@@ -426,13 +474,13 @@ div {
 				data:{"keyword":keyword}, 
 				async: false,
 				success: function(eList){
-				 	console.log(eList);
+				 	//console.log(eList);
 					var value = "";
 					
 					if(eList.length == 0){ // 리스트가 비어있을 경우
 		            	value = '<td colspan="4">조회된 사원이 없습니다. </td>';
 					}else{ // 리스트가 비어있지 않을 경우
-		            	console.log(eList[0]);
+		            	//console.log(eList[0]);
 						for(var i in eList){
 							
 							var empName = eList[i].empName;
@@ -443,9 +491,9 @@ div {
 							
 							value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
 									 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
-									 '<td>'+empName + '</td>' +
-									 '<td>'+ empDept + '</td>' +
-									 '<td width="120">'+empJob+'/'+empRank+'</td></tr>';							 
+									 '<td class="name">'+empName + '</td>' +
+									 '<td class="dept">'+ empDept + '</td>' +
+									 '<td class="jobRank" width="120">'+empJob+'/'+empRank+'</td></tr>';							 
 							
 						}
 						$(".empList tbody").html(value);
