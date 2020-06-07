@@ -37,6 +37,16 @@
 	</servlet-mapping>
 	
 	
+	<!-- 이메일 인증번호 발송 관련 -->
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>
+	            classpath:spring/application-config.xml
+	            classpath:spring/email/email-config.xml
+	        </param-value>
+	</context-param>
+
+	
 	<!-- 한글 깨짐 방지용 인코딩 필터 등록 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
