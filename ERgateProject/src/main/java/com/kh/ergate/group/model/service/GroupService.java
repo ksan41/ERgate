@@ -27,8 +27,8 @@ public interface GroupService {
 	// 사원 계정 수정 요청 
 	int updateGroupEmp(Employee emp);
 
-	// 승인대기 상세 요청용
-	//Employee groupRequestDetail(String empId);
+	// 승인대기 사원 프로필 상세 요청용
+	Employee selectGroupRequestDetail(String empId);
 
 	// 사원 계정 수정용
 	//Employee updateGroupEmp(String empId);

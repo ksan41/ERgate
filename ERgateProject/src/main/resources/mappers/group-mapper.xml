@@ -116,11 +116,18 @@
 	   	 order by hire_date
 	</select>
 	
+	<!-- 조직도 승인대기 사원 프로필 조회용 -->
+	<select id="selectGroupRequestDetail" parameterType="string" resultMap="employeeResultSet">
+		select *
+		  from employee
+		 where emp_id=#{empId}
+	</select>
+	
 	<!-- 사원 계정 수정 요청 -->
 	<update id="updateGroupEmp" parameterType="Employee">
 		update employee
-		   set dept_code = #{deptCode}, 
-		   	   rank_code= #{rankCode}, 
+		   set dept_code=#{deptCode}, 
+		   	   rank_code=#{rankCode}, 
 		   	   job_code=#{jobCode}, 
 		   	   emp_extension=#{empExtension}, 
 		   	   emp_fax=#{empFax}

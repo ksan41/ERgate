@@ -86,12 +86,11 @@ public class GroupController {
 		return "group/groupRequestList";
 	}
 	
-	// 8. 승인대기 상세 페이지
+	// 8. 승인대기 사원 프로필 상세 요청용
 	@RequestMapping(value="requestDetail.gr")
-	public String groupRequestDetail(String empId, Model model) {
-		System.out.println(empId);
-		Employee empPrf = grService.selectEmpProfile(empId);
-		System.out.println(empPrf);
+	public String selectGroupRequestDetail(String empId, Model model) {
+
+		Employee empPrf = grService.selectGroupRequestDetail(empId);
 		model.addAttribute("empPrf", empPrf);
 		return "group/groupRequestDetail";
 	}
@@ -105,14 +104,12 @@ public class GroupController {
 		if(result>0) {
 			model.addAttribute("empPrfUpdateSuccess", emp);
 			session.setAttribute("msg", "계정을 승인했습니다.");
-			return "redirect:requestDetail.gr";
+			return "redirect:requestList.gr";
 		}else {
 			session.setAttribute("msg", "계정 승인을 실패하였습니다. 다시 시도해 주세요.");
 			return "group/groupRequestDetail";
 		}
-		
 	}
-	
 	
 	// 9. 사원 계정 수정 상세 페이지
 	@RequestMapping(value="groupProfileUpdateDetail.gr")

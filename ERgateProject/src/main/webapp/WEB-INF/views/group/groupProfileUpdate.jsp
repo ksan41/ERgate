@@ -265,8 +265,7 @@
 	
 			<!-- 마이페이지 - 메인페이지에서 가져온 것. -->
 			 <form action="groupProfileUpdate.gr">
-				<input type="hidden" name= "empId" value="${empPrf.empId}">
-				<input type="hidden" name="empName" value="${empPrf.empName}">
+				<input type="hidden" name="empId" value="${empPrf.empId}">
                 <table id="mypageTable">
                     <tr>
                         <td rowspan="3" id="mypageProfileArea">
@@ -383,7 +382,7 @@
                                     <td>생년월일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${empPrf.empName}" readonly></td>
+                                    <td><input type="text" name="empName" id="empName" value="${empPrf.empName}" readonly></td>
                                     <td><input type="text" value="${empPrf.empBirthday}" readonly></td>
                                 </tr>
                                 <tr>

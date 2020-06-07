@@ -243,9 +243,15 @@
 </style>
 </head>
 <body>
-<!-- 승인대기 상세페이지 -->
-	<!-- 이곳에 메뉴바 include -->
 	
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+
+<!-- 승인대기 상세페이지 -->
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp"/>
 	
@@ -256,19 +262,17 @@
 		</div>
 		<div class="subMenuArea">
 			<ul id="subMenuList">
-				<li><button class="subBtn subActive" onclick="location.href='groupList.gr'">조직도</button></li>
+				<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
 					<c:if test="${loginUser.deptCode eq 'D5' }">
-						<li><button class="subBtn" onclick="location.href='mgList.gr'">계정관리</button></li>
+						<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
 		        </c:if> 
 			</ul>
 		</div>
 		<div class="contentArea">
 		<!-- 내용 작성 영역 입니다-->
-			${ empPrf }
 			<!-- 마이페이지 - 메인페이지에서 가져온 것. -->
 			 <form action="requestEmp.gr">
-			 	<input type="hidden" name= "empId" value="${empPrf.empId}">
-				<input type="hidden" name="empName" value="${empPrf.empName}">
+			 	<input type="hidden" name="empId" value="${empPrf.empId}">
                 <table id="mypageTable">
                     <tr>
                         <td rowspan="3" id="mypageProfileArea">
@@ -322,7 +326,7 @@
 	                                        <option value="D2">회계팀</option>
 	                                        <option value="D3">기술팀</option>
 	                                        <option value="D4">총무팀</option>
-	                                        <option value="D5">인사팀</option>
+	                                        <option value="D5" selected>인사팀</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -343,7 +347,7 @@
                                             <option value="R7">과장</option>
                                             <option value="R8">대리</option>
                                             <option value="R9">주임</option>
-                                            <option value="R10">사원</option>
+                                            <option value="R10" selected>사원</option>
                                         </select>
                                     </td>
                                     <td>
@@ -351,7 +355,7 @@
                                             <option value="J0">COO</option>
                                             <option value="J1">본부장</option> 
                                             <option value="J2">팀장</option>
-                                            <option value="J3">팀원</option>
+                                            <option value="J3" selected>팀원</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -360,8 +364,8 @@
                                     <td>팩스 번호</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" placeholder="- 을 포함하여 입력하세요."></td>
-                                    <td><input type="text" name="" id="" placeholder="- 을 포함하여 입력하세요."></td>
+                                    <td><input type="text"  name="empExtension" id="empExtension" placeholder="- 을 포함하여 입력하세요."></td>
+                                    <td><input type="text" name="empFax" id="empFax" placeholder="- 을 포함하여 입력하세요."></td>
                                 </tr>
                                 <tr>
                                     <td>입사일</td>
@@ -389,7 +393,7 @@
                                     <td>생년월일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" value="${empPrf.empName}" readonly></td>
+                                    <td><input type="text" name="empName" id="empName" value="${empPrf.empName}" readonly></td>
                                     <td><input type="text" value="${empPrf.empBirthday}" readonly></td>
                                 </tr>
                                 <tr>
