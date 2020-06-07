@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> --%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -298,8 +299,11 @@ div{
 </style>
 </head>
 <body>
+
+
 		<!-- 이곳에 메뉴바 include -->
 		<jsp:include page="../common/menubar.jsp"/>
+		
 		<style>
 		/* 작은버튼 스타일 */
 		.smallBtn{
@@ -329,6 +333,8 @@ div{
 		} */
 		/* 작은버튼 스타일 */
 		</style>
+		
+		
 		<div class="outer">
 			<div class="topBar">
 				<!-- 메뉴명 -->
@@ -336,13 +342,10 @@ div{
 			</div>
 			<div class="subMenuArea">
 				<ul id="subMenuList">
-					<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-					<li><button class="subBtn subActive"  onclick="location.href='groupList.gr'">조직도</button></li>
-					<c:choose>
-						<c:when test="${loginUser.deptCode eq 'D5' }">
-						<li><button class="subBtn" onclick="location.href='mgList.gr'">계정관리</button></li>
-						</c:when>		
-					</c:choose>
+				<li><button class="subBtn subActive" onclick="location.href='groupList.gr'">조직도</button></li>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn" onclick="location.href='mgList.gr'">계정관리</button></li>
+	            </c:if> 
 				</ul>
 			</div>
 			<div class="contentArea">
@@ -380,6 +383,8 @@ div{
 			
 				<div style="height:10px;"></div>
 			
+			
+			
 				<!-- 조직도 div -->
 			    <div class="groupMap_outer">
 			        <div class="depList_area" style="overflow: auto;">
@@ -388,7 +393,7 @@ div{
 			                    <input type="checkbox" id="root">
 			                    <label for="root" class="deptList" key="all"> ERgate</label>
 			                    <ul>
-			                        <li class="deptList" key="D0">└ 임원</li>
+			                      <li class="deptList" key="D0">└ 임원</li>
 			                        <li class="deptList" key="D1">└ 개발팀</li>
 			                        <li class="deptList" key="D2">└ 회계팀</li>
 			                        <li class="deptList" key="D3">└ 기술팀</li>

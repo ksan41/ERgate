@@ -143,7 +143,6 @@
 		</div>
 		<div class="subMenuArea">
 			<ul id="subMenuList">
-				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 					<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
 				<c:if  test="${loginUser.deptCode eq 'D5' }">
 					<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
