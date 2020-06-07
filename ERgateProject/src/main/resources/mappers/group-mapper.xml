@@ -61,7 +61,7 @@
 	 		<when test="keyword.equals('D4')">
 	 			and dept_code='D4'
 	 		</when>
-	 		<when test="keyword.equals('D4')">
+	 		<when test="keyword.equals('D5')">
 	 			and dept_code='D5'
 	 		</when>
 	 	</choose>
