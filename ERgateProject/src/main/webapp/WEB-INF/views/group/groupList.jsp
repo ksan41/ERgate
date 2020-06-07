@@ -1,87 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> --%>    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>groupList</title>  
+<title>groupList</title>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/icons/fontello_tree/css/fontello.css">
 
 <style>
 /* ==========페이지영역========== */
-    .outer{
-        padding-left: 320px;
-        float: left;
-        width: 100%;
-        min-height: 100%;
-        background-color: rgba(224, 224, 224, 0.12);
-    }
-    .topBar {
-        background-color:rgba(22, 160, 133, 0.39);
-        width: 100%;
-        height: 50px;
-        color: white;
-        font-size: 25px;
-        box-sizing: border-box;
-        padding-top: 10px;
-        padding-left: 30px;
-        font-weight: 500;
-    }
+.outer {
+	padding-left: 320px;
+	float: left;
+	width: 100%;
+	min-height: 100%;
+	background-color: rgba(224, 224, 224, 0.12);
+}
 
-    /* 서브메뉴바 영역 */
-    .subMenuArea{
-        background-color: white;
-        width: 100%;
-        height: 70px;
-    }
-    #subMenuList{margin: 0;list-style:none;padding-left: 0;}
-    #subMenuList li{
-        margin-top: 10px;
-        margin-left: 20px;
-        float:left;
-        text-decoration-style: none;
-    }
-    /* 서브메뉴바 영역 */
+.topBar {
+	background-color: rgba(22, 160, 133, 0.39);
+	width: 100%;
+	height: 50px;
+	color: white;
+	font-size: 25px;
+	box-sizing: border-box;
+	padding-top: 10px;
+	padding-left: 30px;
+	font-weight: 500;
+}
 
-    /* 서브메뉴바 메뉴버튼(기본) */
-    .subBtn{
-        border:0;
-        width:150px;
-        height:50px;
-        font-size: 19px;
-        color:rgb(127, 127, 127);
-        background-color: white;
-        border-radius: 25px;
-    }
-    .subBtn:hover{cursor: pointer;}
-    /* 서브메뉴바 메뉴버튼(기본) */
-    /* 서브메뉴바 메뉴버튼(현재페이지일때) */
-    .subActive{
-        border:4px solid rgb(26, 188, 156);
-    }
-    /* 서브메뉴바 메뉴버튼(현재페이지일때) */
+/* 서브메뉴바 영역 */
+.subMenuArea {
+	background-color: white;
+	width: 100%;
+	height: 70px;
+}
 
-    /* 콘텐츠영역 */
-    .contentArea {
-        margin-top: 50px;
-        margin-left:100px;
-        width:1600px;
-        height:auto;
-        float:left;
-    }
-    /* 콘텐츠영역 */
+#subMenuList {
+	margin: 0;
+	list-style: none;
+	padding-left: 0;
+}
+
+#subMenuList li {
+	margin-top: 10px;
+	margin-left: 20px;
+	float: left;
+	text-decoration-style: none;
+}
+/* 서브메뉴바 영역 */
+
+/* 서브메뉴바 메뉴버튼(기본) */
+.subBtn {
+	border: 0;
+	width: 150px;
+	height: 50px;
+	font-size: 19px;
+	color: rgb(127, 127, 127);
+	background-color: white;
+	border-radius: 25px;
+}
+
+.subBtn:hover {
+	cursor: pointer;
+}
+/* 서브메뉴바 메뉴버튼(기본) */
+/* 서브메뉴바 메뉴버튼(현재페이지일때) */
+.subActive {
+	border: 4px solid rgb(26, 188, 156);
+}
+/* 서브메뉴바 메뉴버튼(현재페이지일때) */
+
+/* 콘텐츠영역 */
+.contentArea {
+	margin-top: 50px;
+	margin-left: 100px;
+	width: 1600px;
+	height: auto;
+	float: left;
+}
+/* 콘텐츠영역 */
 
 /* ==========페이지영역========== */
 /* 상단 검색창 영역 스타일 */
-
 .bas {
 	width: 1400px;
 	height: 50px;
 }
+
 #leftArea {
 	text-align: left;
 }
+
 #rightArea {
 	text-align: right;
 }
@@ -119,179 +131,203 @@
 }
 /* 검색창 스타일 */
 
- /* 조직도 div 스타일 */
-.groupMap_outer{
-    border: 1px solid lightgrey;
-    width: 1400px;
-    height: 650px;
-    padding-left: 0px;
-    color: rgb(77, 77, 77);
-    font-size: 17px;
-}
-.depList_area, .empList_area{
-    border-right: 1px solid lightgrey;
-    width: 27%;
-    height: 100%;
-    float: left;
-}
-.profile_area{
-    width: 641px;
-    height: 100%;
-    float: left;
-}
-div{
-	box-sizing:auto;
-}
-/* depList_area - 조직도 tree 스타일 */
-.group_tree, .group_tree ul{
-    list-style: none;
-    padding-left: 17px;
-}
-.group_tree a{
-    text-decoration: none;
-    color: rgb(77, 77, 77);
-}
-.group_tree *::before{
-    width: 17px;
-    height: 15px;
-    
-    display: inline-block;
-}
-.group_tree a:before{
-    content: '└';
-    font-family: fontello;
-}
-.group_tree label{
-    cursor: pointer;
-}
-.group_tree label:before{
-    content:'\E802';
-    font-family: fontello;
-    color: gray;
-}
-.group_tree input[type="checkbox"]{
-    display: none;
-}
-.group_tree input[type="checkbox"]:checked~ul{
-    display: none;
-}
-.group_tree input[type="checkbox"]:checked+label:before{
-    content:'\E801';
-}
-.group_tree ul, .group_tree li{
-    padding-top: 10px;
-    height: 35px; 
+/* 조직도 div 스타일 */
+.groupMap_outer {
+	border: 1px solid lightgrey;
+	width: 1400px;
+	height: 650px;
+	padding-left: 0px;
+	color: rgb(77, 77, 77);
+	font-size: 17px;
 }
 
-.deptList{
-    cursor: pointer;
+.depList_area, .empList_area {
+	border-right: 1px solid lightgrey;
+	width: 27%;
+	height: 100%;
+	float: left;
 }
-.deptList:hover{
+
+.profile_area {
+	width: 641px;
+	height: 100%;
+	float: left;
+}
+
+div {
+	box-sizing: auto;
+}
+/* depList_area - 조직도 tree 스타일 */
+.group_tree, .group_tree ul {
+	list-style: none;
+	padding-left: 17px;
+}
+
+.group_tree a {
+	text-decoration: none;
+	color: rgb(77, 77, 77);
+}
+
+.group_tree *::before {
+	width: 17px;
+	height: 15px;
+	display: inline-block;
+}
+
+.group_tree a:before {
+	content: '└';
+	font-family: fontello;
+}
+
+.group_tree label {
+	cursor: pointer;
+}
+
+.group_tree label:before {
+	content: '\E802';
+	font-family: fontello;
+	color: gray;
+}
+
+.group_tree input[type="checkbox"] {
+	display: none;
+}
+
+.group_tree input[type="checkbox"]:checked ~ul {
+	display: none;
+}
+
+.group_tree input[type="checkbox"]:checked+label:before {
+	content: '\E801';
+}
+
+.group_tree ul, .group_tree li {
+	padding-top: 10px;
+	height: 35px;
+}
+
+.deptList {
+	cursor: pointer;
+}
+
+.deptList:hover {
 	font-weight: 600;
 }
 
 /* empList_area */
-.empList{
-    list-style: none;
-    list-style-image:url('${pageContext.servletContext.contextPath }/resources/icons/person_icon.png');
+.empList {
+	list-style: none;
+	list-style-image:url('${pageContext.servletContext.contextPath }/resources/icons/person_icon.png');
 }
-.empList li{
-    padding-top: 10px;
-    height: 35px; 
-    cursor: pointer;
+
+.empList li {
+	padding-top: 10px;
+	height: 35px;
+	cursor: pointer;
 }
-.empList li:hover{
+
+.empList li:hover {
 	font-weight: 600;
-    cursor: pointer;
+	cursor: pointer;
 }
-.dept_rank_code1{
-    color: rgb(188, 188, 188);
-    cursor: default;
+
+.dept_rank_code1 {
+	color: rgb(188, 188, 188);
+	cursor: default;
 }
-.empList a{
-    text-decoration: none;
-    color: rgb(77, 77, 77);
-    cursor: pointer;
+
+.empList a {
+	text-decoration: none;
+	color: rgb(77, 77, 77);
+	cursor: pointer;
 }
-.noEmpText{
-    color: rgb(77, 77, 77);
-    font-size: 17px;
+
+.noEmpText {
+	color: rgb(77, 77, 77);
+	font-size: 17px;
 }
 
 /* profile_area */
 /* .profile_area div{
     border: 1px solid tomato;
 } */
-.profile_up{
-    width: 100%;
-    height: 23%;
+.profile_up {
+	width: 100%;
+	height: 23%;
 }
-.profile_img{
-	margin-left:63px;
-	margin-top:20px;
-    width: 30%;
-    height: 100%;
-    float: left;
-}
-.profile_name{
-    margin: 20px;
-    margin-top: 30px;
-    width: 50%;
-    height: 70%;
-    float: left;
 
+.profile_img {
+	margin-left: 63px;
+	margin-top: 20px;
+	width: 30%;
+	height: 100%;
+	float: left;
 }
-.dept_name{
-    color: rgb(77, 77, 77);
-    margin-bottom: 15px;
-    font-size: 27px;
+
+.profile_name {
+	margin: 20px;
+	margin-top: 30px;
+	width: 50%;
+	height: 70%;
+	float: left;
 }
-.dept_mail{
-    color: rgb(188, 188, 188);
-    cursor: pointer;
+
+.dept_name {
+	color: rgb(77, 77, 77);
+	margin-bottom: 15px;
+	font-size: 27px;
 }
-.dept_mail:hover{
-    font-weight: 600;
-    color:grey;
+
+.dept_mail {
+	color: rgb(188, 188, 188);
+	cursor: pointer;
 }
-.profile_down{
-    width: 100%;
-    height: 75%;
+
+.dept_mail:hover {
+	font-weight: 600;
+	color: grey;
+}
+
+.profile_down {
+	width: 100%;
+	height: 75%;
 }
 
 /* profile_list 테이블 스타일 */
-#profile_list{
-    width: 80%;
-    border-top: 2px solid gray !important;
-    border-bottom: 2px solid gray !important;
+#profile_list {
+	width: 80%;
+	border-top: 2px solid gray !important;
+	border-bottom: 2px solid gray !important;
 }
+
 #profile_list, #profile_list td, #profile_list th {
 	border-width: 1px 0;
 	border-collapse: collapse;
-
 }
+
 #profile_list td, #profile_list th {
 	border-color: lightgray;
 	border-style: solid;
 	height: 50px;
 }
-#profile_list th{
-    font-weight: 400;
-    color: rgb(188, 188, 188);
-    width: 40%;
+
+#profile_list th {
+	font-weight: 400;
+	color: rgb(188, 188, 188);
+	width: 40%;
 }
 
-#mypageProfileImg{
+#mypageProfileImg {
 	border-radius: 50%;
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
- /* 조직도 div 스타일 */
- 
- /* 작은버튼 스타일 */
- /* 버튼 스타일 body 영역으로 옮김 - 스타일 우선순위 - 커서 디폴트 하기위해 */
-  
+/* 조직도 div 스타일 */
+
+/* 작은버튼 스타일 */
+/* 버튼 스타일 body 영역으로 옮김 - 스타일 우선순위 - 커서 디폴트 하기위해 */
+
 /* .smallBtn:hover {
 	cursor: pointer;
 } */
@@ -301,9 +337,9 @@ div{
 <body>
 
 
-		<!-- 이곳에 메뉴바 include -->
-		<jsp:include page="../common/menubar.jsp"/>
-		
+	<!-- 이곳에 메뉴바 include -->
+	<jsp:include page="../common/menubar.jsp" />
+	
 		<style>
 		/* 작은버튼 스타일 */
 		.smallBtn{
@@ -333,84 +369,81 @@ div{
 		} */
 		/* 작은버튼 스타일 */
 		</style>
-		
-		
-		<div class="outer">
-			<div class="topBar">
-				<!-- 메뉴명 -->
-				<span>조직도</span>
-			</div>
-			<div class="subMenuArea">
-				<ul id="subMenuList">
+
+
+	<div class="outer">
+		<div class="topBar">
+			<!-- 메뉴명 -->
+			<span>조직도</span>
+		</div>
+		<div class="subMenuArea">
+			<ul id="subMenuList">
 				<li><button class="subBtn subActive" onclick="location.href='groupList.gr'">조직도</button></li>
 				<c:if test="${loginUser.deptCode eq 'D5' }">
 					<li><button class="subBtn" onclick="location.href='mgList.gr'">계정관리</button></li>
 	            </c:if> 
-				</ul>
-			</div>
-			<div class="contentArea">
+			</ul>
+		</div>
+		<div class="contentArea">
 			<!-- 내용 작성 영역 입니다-->
-			
-				<!-- 버튼과 검색바 같이 들어가는 DIV -->
-				<div btnAndSearch>
-					<table class="bas">
-						<tr>
-							<td id="leftArea">
-								<!-- 화면 구조 맞추기 위해 td 만들고 비워둠 -->
-							</td>
-							<td id="rightArea">
-								<!-- 검색바 -->
-								<div class="searchBar">
-									
-									<select id="condition" name="condition">
-										<option value="empName">이름</option>
-										<option value="rankTitle">직급</option>
-										<option value="jobTitle">직책</option>
-										<option value="deptTitle">부서</option>
-									</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
-									<svg onclick="return searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+
+			<!-- 버튼과 검색바 같이 들어가는 DIV -->
+			<div class="btnAndSearch">
+				<table class="bas">
+					<tr>
+						<td id="leftArea">
+							<!-- 화면 구조 맞추기 위해 td 만들고 비워둠 -->
+						</td>
+						<td id="rightArea">
+							<!-- 검색바 -->
+							<div class="searchBar">
+
+								<select id="condition" name="condition">
+									<option value="empName">이름</option>
+									<option value="rankTitle">직급</option>
+									<option value="jobTitle">직책</option>
+									<option value="deptTitle">부서</option>
+								</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
+								<svg onclick="return searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 										fill="black" width="48px" height="48px">
 										<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 										<path d="M0 0h24v24H0z" fill="none" /></svg>
-									
-								
-								</div> 
-								<!-- 검색바 -->
-							</td>
-						</tr>
-					</table>
+
+
+							</div> <!-- 검색바 -->
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div style="height: 10px;"></div>
+
+
+
+			<!-- 조직도 div -->
+			<div class="groupMap_outer">
+				<div class="depList_area" style="overflow: auto;">
+					<ul class="group_tree">
+						<li><input type="checkbox" id="root"> <label
+							for="root" class="deptList" key="all"> ERgate</label>
+							<ul>
+								<li class="deptList" key="D0">└ 임원</li>
+								<li class="deptList" key="D1">└ 개발팀</li>
+								<li class="deptList" key="D2">└ 회계팀</li>
+								<li class="deptList" key="D3">└ 기술팀</li>
+								<li class="deptList" key="D4">└ 총무팀</li>
+								<li class="deptList" key="D5">└ 인사팀</li>
+							</ul></li>
+					</ul>
 				</div>
-			
-				<div style="height:10px;"></div>
-			
-			
-			
-				<!-- 조직도 div -->
-			    <div class="groupMap_outer">
-			        <div class="depList_area" style="overflow: auto;">
-			            <ul class="group_tree">
-			                <li>
-			                    <input type="checkbox" id="root">
-			                    <label for="root" class="deptList" key="all"> ERgate</label>
-			                    <ul>
-			                      <li class="deptList" key="D0">└ 임원</li>
-			                        <li class="deptList" key="D1">└ 개발팀</li>
-			                        <li class="deptList" key="D2">└ 회계팀</li>
-			                        <li class="deptList" key="D3">└ 기술팀</li>
-			                        <li class="deptList" key="D4">└ 총무팀</li>
-			                        <li class="deptList" key="D5">└ 인사팀</li>
-			                    </ul>
-			                </li>
-			            </ul>
-			        </div>
-			        <div class="empList_area" style="overflow: auto;">
-			            <ul class="empList">
-			                <!-- <li>앨리스 <span class="dept_rank_code">(임원/대표이사)</span></li> -->
-			            </ul>
-			        </div>
-			        <div class="profile_area" style="overflow: auto;">
-			            <div class="profile_up">
-			                <%-- <div class="profile_img">
+				<div class="empList_area" style="overflow: auto;">
+					<ul class="empList">
+						<!-- <li>앨리스 <span class="dept_rank_code">(임원/대표이사)</span></li> -->
+					</ul>
+				</div>
+				<div class="profile_area" style="overflow: auto;">
+					<div class="profile_up">
+						<div class="profile_img">
 			                    <img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">
 			                </div>
 			                <div class="profile_name">
@@ -418,62 +451,28 @@ div{
 			                    <button class="smallBtn">회의중</button><br><br>
 			                    <div> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></div>
 			                    <div class="dept_mail">qwertyadsf@gmail.com</div>
-			                </div> --%>
-			            </div><br><br>
-			            <div class="profile_down" align="center">
-			                <table id="profile_list" align="center">
-			                   <!--  <tr>
-			                        <th>사원번호</th>
-			                        <td>3456789</td>
-			                    </tr>
-			                    <tr>
-			                        <th>입사일</th>
-			                        <td>2020/03/03</td>
-			                    </tr>
-			                    <tr>
-			                        <th>아이디</th>
-			                        <td>Alice</td>
-			                    </tr>
-			                    <tr>
-			                        <th>생년월일</th>
-			                        <td>1990/08/27</td>
-			                    </tr>
-			                    <tr>
-			                        <th>휴대폰 번호</th>
-			                        <td>010-0000-0000</td>
-			                    </tr>
-			                    <tr>
-			                        <th>내선번호</th>
-			                        <td>070-0000-0000</td>
-			                    </tr>
-								<tr>
-			                        <th>팩스번호</th>
-			                        <td>070-0000-0000</td>
-			                    </tr>	                    
-			                    <tr>
-			                        <th>부서명</th>
-			                        <td>기술팀</td>
-			                    </tr>
-			                    <tr>
-			                        <th>직급/직책</th>
-			                        <td>부장/팀장</td>
-			                    </tr>
-			                	<tr>
-			                        <th>자택주소</th>
-			                        <td>서울시 마포구 서교동 홍익로 2길 35</td>
-			                    </tr> -->
-			                </table>
-			            </div>
-			        </div> <!-- 오른쪽 영역 끝 -->
-			    </div> <!-- groupMap_outer -->
-			</div> <!-- contentArea -->
-		</div> <!-- outer -->
-	
-	
-	
+			                </div>
+					</div>
+					<br> <br>
+					<div class="profile_down" align="center">
+						<table id="profile_list" align="center">
+							
+						</table>
+					</div>
+				</div>
+				<!-- 오른쪽 영역 끝 -->
+			</div>
+			<!-- groupMap_outer -->
+		</div>
+		<!-- contentArea -->
+	</div>
+	<!-- outer -->
+
+
+
 	<!-- empList - 사원리스트 조회 -->
 	<script>
-	$(function(){
+	 $(function(){
 		selectNoList();
 
 		/* 조직도 부서별 사원 조회 */
@@ -570,8 +569,8 @@ div{
 			             '<tr><th>아이디</th><td>' + empPrf.empId + '</td></tr>' +
 			             '<tr><th>생년월일</th><td>' + empPrf.empBirthday + '</td></tr>' + 
 			             '<tr><th>휴대폰 번호</th><td>' + empPrf.empPhone + '</td></tr>' +
-			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
-						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
+			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
+						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
 			             '<tr><th>부서명</th><td>' + empPrf.deptTitle + '</td></tr>' +
 			             '<tr><th>직급/직책</th><td>' + empPrf.rankTitle + '/' + empPrf.jobTitle + '</td></tr>';
              			
