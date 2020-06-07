@@ -56,7 +56,6 @@ html, body {
 	border-radius: 3px;
 	font-family: inherit;
 	display: inline-block;
-	vertical-align: top;
 }
 
 .searchBar>input {
@@ -236,6 +235,28 @@ div {
 }
 /* 중간버튼 스타일 */
 
+/* 큰버튼 스타일 */
+.bigBtn {
+	width: 140px;
+	height: 40px;
+	border: 0px;
+	border-radius: 5px;
+	background: orange; /* 회색 : rgb(190, 190, 190) */
+	color: white;
+	font-size: 18px;
+	display: inline-block;
+}
+
+.bigBtn:hover {
+	cursor: pointer;
+}
+/* 큰버튼 스타일 */
+#btnArea {
+	margin-left: 910px;
+}
+
+
+
 .btnDel{
 	color:rgb(190, 190, 190);
 }
@@ -260,28 +281,30 @@ div {
 									<path
 						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
+			<button class="bigBtn" id="signerSubmit" style="margin-left: 680px;">등록</button>
 			</div>
-
 			<div id="wrap">
 				<!-- 좌측 조직도영역 -->
 				<div id="groupArea">
 					<ul class="group_tree">
-						<li><input type="checkbox" id="root"> <label
-							for="root"> ERgate</label>
-							<ul>
-								<li><a href="#"> 임원</a></li>
-								<li><a href="#"> 기술팀</a></li>
-								<li><a href="#"> 인사팀</a></li>
-								<li><a href="#"> 회계팀</a></li>
-								<li><a href="#"> 기술팀</a></li>
-							</ul></li>
+						<li><input type="checkbox" id="root"> 
+						<label for="root" class="deptList" key="all"> ERgate</label>
+							 <ul>
+			                        <li class="deptList" key="D0">└ 임원</li>
+			                        <li class="deptList" key="D1">└ 개발팀</li>
+			                        <li class="deptList" key="D2">└ 회계팀</li>
+			                        <li class="deptList" key="D3">└ 기술팀</li>
+			                        <li class="deptList" key="D4">└ 총무팀</li>
+			                        <li class="deptList" key="D5">└ 인사팀</li>
+			                    </ul>
+							</li>
 					</ul>
 				</div>
 
 				<!-- 중앙 리스트영역 -->
 				<div id="listArea">
 					<div style="width:100%;height:100%;overflow:auto;">
-						<table class="boardTable">
+						<table class="boardTable empList">
 							<thead>
 								<tr>
 									<th width="40"><input class="checkBox" type="checkbox" id="checkall"></th>
@@ -290,24 +313,9 @@ div {
 									<th width="120">직책/직급</th>
 								</tr>
 							</thead>
-							<tr>
-								<td><input name="chk" class="checkBox" type="checkbox"></td>
-								<td>써니</td>
-								<td>인사부</td>
-								<td>팀장/차장</td>
-							</tr>
-							<tr>
-								<td><input name="chk" class="checkBox" type="checkbox"></td>
-								<td>써니</td>
-								<td>인사부</td>
-								<td>팀장/차장</td>
-							</tr>
-							<tr>
-								<td><input name="chk" class="checkBox" type="checkbox"></td>
-								<td>써니</td>
-								<td>인사부</td>
-								<td>팀장/차장</td>
-							</tr>
+							<tbody>
+							<!-- 조회해온 사원정보 들어갈자리 -->
+							</tbody>
 						</table>
 					</div>	
 				</div>
@@ -315,7 +323,7 @@ div {
 				<!-- 우측 선택영역 -->
 				<div id="selectArea">
 					<div id="signArea">
-						<button class="middleBtn">선택추가</button>
+						<button class="middleBtn selSigner">선택추가</button>
 						<h2 style="display:inline-block;margin:0;">결재</h2>
 						<br><br>
 						<div style="width:100%;height:280px;overflow:auto;">
@@ -345,7 +353,7 @@ div {
 					</div>
 					
 					<div id="refArea">
-						<button class="middleBtn">선택추가</button>
+						<button class="middleBtn selRef">선택추가</button>
 						<h2 style="display:inline-block;margin:0;">수신/참조</h2>
 						<br><br>
 						<div id="signSelDiv">
@@ -401,7 +409,99 @@ div {
 			$(this).parent().parent().remove();
 		});
 	</script>
+	
+	
+	
+	<script>
+	$(function(){
+		selectNoList();
 
+		/* 조직도 부서별 사원 조회 */
+		$(".deptList").click(function(){
+			keyword =$(this).attr("key");
+			
+			$.ajax({
+				url: "deptEmpList.gr",
+				type: "post",
+				data:{"keyword":keyword}, 
+				async: false,
+				success: function(eList){
+				 	console.log(eList);
+					var value = "";
+					
+					if(eList.length == 0){ // 리스트가 비어있을 경우
+		            	value = '<td colspan="4">조회된 사원이 없습니다. </td>';
+					}else{ // 리스트가 비어있지 않을 경우
+		            	console.log(eList[0]);
+						for(var i in eList){
+							
+							var empName = eList[i].empName;
+							var empId = eList[i].empId;
+							var empRank = eList[i].rankTitle;
+							var empJob = eList[i].jobTitle;
+							var empDept = eList[i].deptTitle;
+							
+							value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
+									 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
+									 '<td>'+empName + '</td>' +
+									 '<td>'+ empDept + '</td>' +
+									 '<td width="120">'+empJob+'/'+empRank+'</td></tr>';							 
+							
+						}
+						$(".empList tbody").html(value);
+					} 
+					
+				},
+				error:function(){
+					console.log("조직도 부서별 사원 리스트 조회 실패");
+				}
+			});
+		});
+
+	});
+	/* 조직도 전체 리스트 조회 - 조직도 페이지 첫 화면 */
+	function selectNoList(){		
+			
+		$.ajax({
+			url: "empList.gr",
+			type: "post",
+			
+			success: function(list){
+				// console.log(list);
+				var value = "";
+				
+				if(list.length == 0){ // 리스트가 비어있을 경우
+	            	value = '<td colspan="4">조회된 사원이 없습니다. </td>';
+				}else{ // 리스트가 비어있지 않을 경우
+	            
+					for(var i in list){
+						
+						var empName = eList[i].empName;
+						var empId = eList[i].empId;
+						var empRank = eList[i].rankTitle;
+						var empJob = eList[i].jobTitle;
+						var empDept = eList[i].deptTitle;
+						
+						value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
+						 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
+						 '<td>'+empName + '</td>' +
+						 '<td>'+ empDept + '</td>' +
+						 '<td width="120">'+empJob+'/'+empRank+'</td></tr>';	
+					
+					}
+				
+					$(".empList tbody").html(value);
+				}
+			},
+			error:function(){
+				console.log("조직도 사원 리스트조회용 통신 실패");
+			}
+		});
+	}
+	</script>
+	
+	
+	
 	<!-- 팝업창 자동 사이즈맞춤용 스크립트 -->
 	<script>
 		$(document)
