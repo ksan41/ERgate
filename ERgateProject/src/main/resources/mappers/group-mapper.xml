@@ -76,12 +76,11 @@
 		  join job j on e.job_code=j.job_code
 		  join department d on e.dept_code=d.dept_code
 		 where emp_id=#{empId} and resign_flag='N'
-		 order by emp_name
 	</select>
 	
 	
 	
-	
+	<!-- 조직도 키워드 검색 -->
 	<select id="selectEmpListSearch" parameterType="Search" resultMap="employeeResultSet">
 			select emp_name, rank_title, job_title, emp_id, dept_title
 		  from employee e	
@@ -106,11 +105,14 @@
 		order by emp_name		 
 	</select>
 	
+	<!-- 조직도 승인대기 리스트 요청 -->
 	<select id="selectRequestList" resultMap="employeeResultSet">
 		select emp_id, hire_date, emp_name, emp_phone
 		  from employee
 	   	 where dept_code is null
 	   	 order by hire_date
 	</select>
+	
+	
 	
 </mapper>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,7 +144,7 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 					<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
-				<c:if  test="${loginUser.deptCode eq 'D5' }">
+				<c:if  test="${loginUser.deptCode eq 'D5'}">
 					<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
 				</c:if>
 			</ul>
@@ -152,7 +152,7 @@
 		<div class="contentArea">
 		<!-- 내용 작성 영역 입니다-->
 			<!-- 버튼과 검색바 같이 들어가는 DIV -->
-			<div btnAndSearch>
+			<div class="btnAndSearch">
 				<table class="bas">
 					<tr>
 						<td id="leftArea"> 
@@ -182,20 +182,27 @@
 			
 				<c:forEach var="list" items="${requestList}">
 					<tr>
-						<td>${ requestList[0].hireDate }</td>
-						<td>${ list.empId }</td>
-						<td>${ list.empName }</td>
-						<td>${ list.empPhone }</td>
+						<td>${requestList[0].hireDate}</td>
+						<td>${list.empId}</td>
+						<td>${list.empName}</td>
+						<td>${list.empPhone}</td>
 					</tr>
 				</c:forEach>
 				</tbody>
 			</table>
+			
+			<script>
+			 $(function(){
+                 $(".boardTable tbody tr").click(function(){
+                	 console.log('안');
+                    /* location.href="groupProfileUpdate.gr?empId=" + $(this).children().eq(1).text(); */
+                 })
+              });
+			</script>
+			
+			
 			</div>
-			<!-- 게시판 -->
-		
-		
-		
-		</div><!-- contentArea -->
-	</div><!-- outer -->
+		</div>
+	</div>
 </body>
 </html>

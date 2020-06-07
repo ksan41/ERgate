@@ -30,6 +30,14 @@ public class GroupDao {
 	public ArrayList<Employee> selectRequestList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("groupMapper.selectRequestList");
 	}
+
+//	public Employee updateGroupEmp(SqlSessionTemplate sqlSession, String empId) {
+//		return sqlSession.selectOne("groupMapper.updateGroupEmp", empId);
+//	}
+//
+//	public Employee groupRequestDetail(SqlSessionTemplate sqlSession, String empId) {
+//		return sqlSession.selectOne("groupMapper.groupRequestDetail", empId);
+//	}
 	
 	
 	

@@ -46,6 +46,16 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 //	@Override
+//	public Employee updateGroupEmp(String empId) {
+//		return grDao.updateGroupEmp(sqlSession, empId);
+//	}
+//
+//	@Override
+//	public Employee groupRequestDetail(String empId) {
+//		return grDao.groupRequestDetail(sqlSession, empId);
+//	}
+
+//	@Override
 //	public Employee searchGroupList(String condition, String keyword) {
 //		// TODO Auto-generated method stub
 //		return null;

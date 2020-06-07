@@ -21,29 +21,24 @@ public class GroupController {
 	
 	
 	// ------------- 페이지 이동 -------------
-	// 조직도리스트 요청용
+	// 1. 조직도리스트 요청용
 	@RequestMapping(value="groupList.gr")
 	public String selectGroupList(Model model) {
 		return "group/groupList";
 	}
 	
-	// 계정관리페이지 요청용
+	// 2. 계정관리페이지 요청용
 	@RequestMapping(value="mgList.gr")
-	public String electMgList() {
+	public String selectMgList() {
 		return "group/groupManagement";
 	}
 	
-	// 사원 계정 수정 페이지 이동
-	@RequestMapping(value="empUpdate.gr")
-	public String updateGroupEmp() {
-		return "group/groupProfileUpdate";
-	}
-	
+
 	
 	
 	
 	// ------------- 서비스 요청 -------------
-	// 조직도 전제 사원 조회
+	// 3. 조직도 전제 사원 조회
 	@ResponseBody
 	@RequestMapping(value="empList.gr", produces="application/json; charset=utf-8")
 	public String selectEmpList() {
@@ -52,7 +47,7 @@ public class GroupController {
 		return new Gson().toJson(list);
 	}
 	
-	// 조직도 부서별 사원 조회
+	// 4. 조직도 부서별 사원 조회
 	@ResponseBody
 	@RequestMapping(value="deptEmpList.gr", produces="application/json; charset=utf-8")
 	public String selectDeptEmpList(String keyword) {
@@ -61,7 +56,7 @@ public class GroupController {
 		return new Gson().toJson(array);
 	}
 	
-	// 조직도 사원 프로필 조회 (오른쪽 영역)
+	// 5. 조직도 사원 프로필 조회 (오른쪽 영역)
 	@ResponseBody
 	@RequestMapping(value="empProfile.gr", produces="application/json; charset=utf-8" )
 	public String selectEmpProfile(String empId) {
@@ -70,7 +65,7 @@ public class GroupController {
 		return new Gson().toJson(empPrf);
 	}
 	
-	// 조직도 키워드 검색 
+	// 6. 조직도 키워드 검색 
 	@ResponseBody
 	@RequestMapping(value="empListSearch.gr", produces="application/json; charset=utf-8" )
 	public String selectEmpListSearch(Search search) {
@@ -79,7 +74,7 @@ public class GroupController {
 		return new Gson().toJson(array);
 	}
 	
-	// 승인대기리스트 조회요청용
+	// 7. 승인대기리스트 조회요청용
 	@RequestMapping(value="requestList.gr")
 	public String selectRequestList(Model model) {
 		
@@ -89,6 +84,24 @@ public class GroupController {
 		return "group/groupRequestList";
 	}
 	
+	// 8. 승인대기 상세 페이지
+	@RequestMapping(value="requestDetail.gr")
+	public String groupRequestDetail(String empId, Model model) {
+		
+		Employee empPrf = grService.selectEmpProfile(empId);
+		model.addAttribute("empPrf", empPrf);
+		return "group/groupRequestDetail";
+	}
+	
+	// 9. 사원 계정 수정용
+	@RequestMapping(value="groupProfileUpdate.gr")
+	public String updateGroupEmp(String empId, Model model) {
+		
+		//System.out.println(empId);
+		Employee empPrf = grService.selectEmpProfile(empId);
+		model.addAttribute("empPrf", empPrf);
+		return "group/groupProfileUpdate";
+	}
 	
 
 	
