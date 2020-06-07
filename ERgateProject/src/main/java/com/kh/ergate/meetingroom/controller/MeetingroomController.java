@@ -104,17 +104,15 @@ public class MeetingroomController {
 	// 회의실등록용(insertMtroom.me) ---insertMeetingroom(Meetingroom,Model)
 
 	@RequestMapping("insertMtroom.me")
-	public String insertMeetingroom(Meetingroom m, Model model, HttpServletRequest httpServletRequest) {
-
-		int result = mrService.insertMeetingroom(m);
+	public String insertMeetingroom(Meetingroom m, HttpServletRequest request) {
 		System.out.println(m);
+		
+		int result = mrService.insertMeetingroom(m);
 
-		model.addAttribute("httpServletRequest", httpServletRequest);
-
-		if (result > 0) { // 회의실 등록 성공
+		if(result > 0) { // 회의실 등록 성공
 
 			return "redirect:mtroomDetail.me?currentPage=1";
-
+			//return "meetingroom/meetingroomManagement";
 		} else { // 회의글 등록 실패
 
 			return "";

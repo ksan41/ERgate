@@ -411,9 +411,7 @@
 			<div class="modal-title">회의실 등록</div>
 			<div class="modal-content">
 			<a class="open-modal" href="#modal-form"></a>
-				<form id="enrollMtrm" method="post" action="insertMtroom.me" enctype="multipart/form-data">
-					<div>
-					
+				<form id="enrollMtrm" method="post" action="insertMtroom.me">
 						<table class="meetingroomModalTable">
 							<tr>
 								<td class="mmName">회의실명</td>
@@ -439,13 +437,13 @@
 	
 	
 						</table>
-					</div>
+					</form>
 					<!-- 예약/취소 버튼 -->
 					<div class=btns>
 						<button class="mmSubmitBtn" type="submit">등록하기</button>
 						<button class="mmResetBtn" type="reset">삭제하기</button>
 					</div>
-				</form>
+				
 
 			</div>
 		</div>
@@ -531,6 +529,12 @@
 				$("#postForm").submit();
 					
 			}
+		
+		</script>
+		
+		<!-- 등록하기 ajax  -->
+		<script>
+		
 		
 		</script>
 
