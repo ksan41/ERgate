@@ -355,6 +355,14 @@ div{
 		/* 작은버튼 스타일 */
 
 	</style>
+	
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
+	
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -444,7 +452,12 @@ div{
 	<script>
 	$(function(){
 		selectNoList();
-
+		
+/* 		if( ${request.empPrfUpdateSuccess} != null){
+			updateEmpProfile();
+		} */
+		
+		
 		/* 조직도 부서별 사원 조회 */
 		$(".deptList").click(function(){
 			keyword =$(this).attr("key");
@@ -485,7 +498,7 @@ div{
 	
 	/* 조직도 사원 프로필 조회 */
 	function empPrf(){
-		console.log(window.event.target.getAttribute("key"));
+		
 		empId = window.event.target.getAttribute("key");
 		
 		$.ajax({
@@ -589,11 +602,13 @@ div{
 		});
 	}
 	
+	
+	/* 키워드 검색 */
 	function searchEmpProfile(){
 		condition = $("#condition option:selected").val();
 		keyword = $("#keyword").val();
 		if(keyword==''){
-			alert("키워드를 입력하세요");
+			alert("검색할 키워드를 입력해주세요.");
 			return;
 		}
 		$.ajax({
@@ -630,7 +645,7 @@ div{
 	
 	function empUpdate(){
 		//console.log(empId);	
-		location.href="groupProfileUpdate.gr?empId="+empId;
+		location.href="groupProfileUpdateDetail.gr?empId="+empId;
 	}
     </script>
 </body>

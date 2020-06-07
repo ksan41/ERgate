@@ -31,6 +31,10 @@ public class GroupDao {
 		return (ArrayList)sqlSession.selectList("groupMapper.selectRequestList");
 	}
 
+	public int updateGroupEmp(SqlSessionTemplate sqlSession, Employee emp) {
+		return sqlSession.update("groupMapper.updateGroupEmp", emp);
+	}
+
 //	public Employee updateGroupEmp(SqlSessionTemplate sqlSession, String empId) {
 //		return sqlSession.selectOne("groupMapper.updateGroupEmp", empId);
 //	}

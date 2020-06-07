@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -265,7 +266,9 @@
 		<!-- 내용 작성 영역 입니다-->
 			${ empPrf }
 			<!-- 마이페이지 - 메인페이지에서 가져온 것. -->
-			 <form action="">
+			 <form action="requestEmp.gr">
+			 	<input type="hidden" name= "empId" value="${empPrf.empId}">
+				<input type="hidden" name="empName" value="${empPrf.empName}">
                 <table id="mypageTable">
                     <tr>
                         <td rowspan="3" id="mypageProfileArea">
@@ -277,7 +280,7 @@
 												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png">
 											</c:when>
 											<c:otherwise>
-												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${ loginUser.empImage }">
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${empPrf.empImage}">
 											</c:otherwise>
 										</c:choose>
                                     </td>
@@ -287,7 +290,7 @@
                                 </tr>
                                 <tr>
                                     <td style="height:50px; font-size: 18px;">
-                                    	<span style="color:rgb(26, 188, 156); font-weight: 550;">ID </span> ${ empPrf.empId }
+                                    	<span style="color:rgb(26, 188, 156); font-weight: 550;">ID </span> ${empPrf.empId}
                                     </td>
                                 </tr>
                                 <tr>
@@ -311,9 +314,9 @@
                                     <td>부서</td>
                                 </tr>
                                 <tr>
-                                   <td><input type="text" name="" id="" readonly></td>
+                                   <td><input type="text" name="empCode" id="empCode" value="${empPrf.empCode}" readonly></td>
                                    <td>
-                                        <select name="deptTitle" id="deptTitle">
+                                        <select name="deptCode" id="deptTitle">
 	                                        <option value="D0">임원</option>
 	                                        <option value="D1">개발팀</option> 
 	                                        <option value="D2">회계팀</option>
@@ -329,7 +332,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select name="rankTitle" id="rankTitle">
+                                        <select name="rankCode" id="rankTitle">
                                             <option value="D0">대표</option>
                                             <option value="R1">부대표</option> 
                                             <option value="R2">전무</option>
@@ -344,7 +347,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="jobTitle" id="jobTitle">
+                                        <select name="jobCode" id="jobTitle">
                                             <option value="J0">COO</option>
                                             <option value="J1">본부장</option> 
                                             <option value="J2">팀장</option>
@@ -365,7 +368,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" value="2020/03/03" readonly></td>
+                                    <td><input type="text" name="hireDate" id="hireDate" value="${empPrf.hireDate}" readonly></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -386,17 +389,17 @@
                                     <td>생년월일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" value="김카카오" readonly></td>
-                                    <td><input type="text" value="1990/08/27" readonly></td>
+                                    <td><input type="text" name="" id="" value="${empPrf.empName}" readonly></td>
+                                    <td><input type="text" value="${empPrf.empBirthday}" readonly></td>
                                 </tr>
                                 <tr>
                                     <td>휴대폰번호</td>
                                     <td>이메일</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" value="010-7777-7777" readonly></td>
+                                    <td><input type="text" value="${empPrf.empPhone}" readonly></td>
                                     <td>
-                                    	<input id="mypageEmail1" type="text" style="width: 180px" readonly>
+                                    	<input id="mypageEmail1" type="text" style="width: 180px" value="${fn:substringBefore(empPrf.empPriEmail,'@')}" readonly>
 					                	<input id="mypageEmail2" name="emailDomain" type="text" value="@gmail.com" style="width: 180px" readonly>
                                     </td>
                                 </tr>
@@ -406,8 +409,8 @@
                                 <tr>
                                     <td colspan="2">
                                     	<button id="mypageAddressBtn" class="middleBtn" type="button" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
-                                    	<input name="empAddress" type="text" value="${empPrf.empAddress}" id="sample6_address" placeholder="주소" style="width: 520px"> <br>
-                                    	<input name="empAddressDetail" type="text" value="${empPrf.empAddressDetail}" id="sample6_detailAddress" placeholder="상세주소" style="width: 650px">
+                                    	<input name="empAddress" type="text" value="${empPrf.empAddress}" id="sample6_address" readonly style="width: 520px"> <br>
+                                    	<input name="empAddressDetail" type="text" value="${empPrf.empAddressDetail}" id="sample6_detailAddress" readonly style="width: 650px">
                                     	<input type="hidden" id="sample6_postcode"><input type="hidden" id="sample6_extraAddress">
                                     </td>
                                 </tr>
@@ -417,8 +420,8 @@
                     <tr>
                         <td colspan="2" id="mypageBtnArea">
                         	<button id="mypageSubmitBtn" class="bigBtn" type="submit">승인</button>
-                        	<button id="mypageCancelBtn" class="bigBtn">목록</button>
-                        	<button id="mypageCancelBtn" class="bigBtn">승인거절</button>
+                        	<button id="mypageCancelBtn" class="bigBtn" onclick="location.href='requestList.gr';">목록</button>
+                        	<button id="mypageCancelBtn" class="bigBtn" type="button" >승인거절</button>
                         </td>
                     </tr>
                 </table>

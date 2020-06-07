@@ -45,6 +45,11 @@ public class GroupServiceImpl implements GroupService {
 		return grDao.selectRequestList(sqlSession);
 	}
 
+	@Override
+	public int updateGroupEmp(Employee emp) {
+		return grDao.updateGroupEmp(sqlSession, emp);
+	}
+
 //	@Override
 //	public Employee updateGroupEmp(String empId) {
 //		return grDao.updateGroupEmp(sqlSession, empId);

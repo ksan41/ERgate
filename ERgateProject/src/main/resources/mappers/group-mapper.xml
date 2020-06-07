@@ -17,6 +17,7 @@
 		<result column="EMP_PRI_EMAIL" property="empPriEmail"/>
 		<result column="EMP_PHONE" property="empPhone"/>
 		<result column="EMP_ADDRESS" property="empAddress"/>
+		<result column="EMP_ADDRESS_DETAIL" property="empAddressDetail"/>
 		<result column="EMP_IMAGE" property="empImage"/>
 		<result column="EMP_BIRTHDAY" property="empBirthday"/>
 		<result column="RESIGN_FLAG" property="resignFlag"/>
@@ -115,6 +116,15 @@
 	   	 order by hire_date
 	</select>
 	
-	
-	
+	<!-- 사원 계정 수정 요청 -->
+	<update id="updateGroupEmp" parameterType="Employee">
+		update employee
+		   set dept_code = #{deptCode}, 
+		   	   rank_code= #{rankCode}, 
+		   	   job_code=#{jobCode}, 
+		   	   emp_extension=#{empExtension}, 
+		   	   emp_fax=#{empFax}
+		 where emp_id=#{empId}
+	</update>
+
 </mapper>

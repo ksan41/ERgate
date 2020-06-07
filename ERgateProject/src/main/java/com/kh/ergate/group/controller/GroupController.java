@@ -2,6 +2,8 @@ package com.kh.ergate.group.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,16 +89,34 @@ public class GroupController {
 	// 8. 승인대기 상세 페이지
 	@RequestMapping(value="requestDetail.gr")
 	public String groupRequestDetail(String empId, Model model) {
-		
+		System.out.println(empId);
 		Employee empPrf = grService.selectEmpProfile(empId);
 		System.out.println(empPrf);
 		model.addAttribute("empPrf", empPrf);
 		return "group/groupRequestDetail";
 	}
 	
-	// 9. 사원 계정 수정용
-	@RequestMapping(value="groupProfileUpdate.gr")
-	public String updateGroupEmp(String empId, Model model) {
+	//8_1. 계정 승인 요청 
+	@RequestMapping(value="requestEmp.gr")
+	public String groupRequestDetail(Employee emp, Model model, HttpSession session) {
+	
+		System.out.println(emp);
+		int result = grService.updateGroupEmp(emp);
+		if(result>0) {
+			model.addAttribute("empPrfUpdateSuccess", emp);
+			session.setAttribute("msg", "계정을 승인했습니다.");
+			return "redirect:requestDetail.gr";
+		}else {
+			session.setAttribute("msg", "계정 승인을 실패하였습니다. 다시 시도해 주세요.");
+			return "group/groupRequestDetail";
+		}
+		
+	}
+	
+	
+	// 9. 사원 계정 수정 상세 페이지
+	@RequestMapping(value="groupProfileUpdateDetail.gr")
+	public String updateGroupEmpDetail(String empId, Model model) {
 		
 		Employee empPrf = grService.selectEmpProfile(empId);
 		//System.out.println(empPrf);
@@ -104,6 +124,22 @@ public class GroupController {
 		return "group/groupProfileUpdate";
 	}
 	
+	//9_1. 사원 계정 수정 요청 
+	@RequestMapping("groupProfileUpdate.gr")
+	public String updateGroupEmp(Employee emp, Model model, HttpSession session) {
+		
+		//System.out.println(emp);
+		int result = grService.updateGroupEmp(emp);
+		if(result>0) {
+			model.addAttribute("empPrfUpdateSuccess", emp);
+			session.setAttribute("msg", "계정 등록 수정이 성공적으로 완료되었습니다.");
+			return "redirect:mgList.gr";
+		}else {
+			session.setAttribute("msg", "계정 등록 요청에 실패하였습니다. 다시 시도해 주세요.");
+			return "mgList.gr";
+		}
+		
+	}
 
 	
 
