@@ -30,6 +30,7 @@
 	<a href="list.bo?currentPage=1">사내게시판</a><br><br>
 	조직도 요청용(groupList)
 	<a href="groupList.gr">조직도</a><br><br>
+	<a href="mgList.gr">계정관리</a><br><br>
 	메일 요청용(mailInbox) <br>
 	<a href="mailbox.ml">메일</a><br><br>
 </body>

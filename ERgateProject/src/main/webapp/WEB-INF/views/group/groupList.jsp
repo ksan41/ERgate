@@ -437,27 +437,13 @@ div {
 					</ul>
 				</div>
 				<div class="empList_area" style="overflow: auto;">
-					<ul class="empList">
-						<!-- <li>앨리스 <span class="dept_rank_code">(임원/대표이사)</span></li> -->
-					</ul>
+					<ul class="empList"></ul>
 				</div>
 				<div class="profile_area" style="overflow: auto;">
-					<div class="profile_up">
-						<div class="profile_img">
-			                    <img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">
-			                </div>
-			                <div class="profile_name">
-			                    <div class="dept_name">앨리스</div>
-			                    <button class="smallBtn">회의중</button><br><br>
-			                    <div> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></div>
-			                    <div class="dept_mail">qwertyadsf@gmail.com</div>
-			                </div>
-					</div>
+					<div class="profile_up"></div>
 					<br> <br>
 					<div class="profile_down" align="center">
-						<table id="profile_list" align="center">
-							
-						</table>
+						<table id="profile_list" align="center"></table>
 					</div>
 				</div>
 				<!-- 오른쪽 영역 끝 -->

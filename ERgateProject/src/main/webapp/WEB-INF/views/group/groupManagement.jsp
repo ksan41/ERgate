@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -323,8 +324,6 @@ div{
 </head>
 <body>
 	<!-- 이곳에 메뉴바 include -->
-	
-	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp"/>
 	<style>
 		 /* 작은버튼 스타일 */
@@ -365,7 +364,7 @@ div{
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
-				<c:if  test="${loginUser.deptCode eq 'D5' }">
+				<c:if  test="${loginUser.deptCode eq 'D5'}">
 					<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
 				</c:if>
 			</ul>
@@ -374,7 +373,7 @@ div{
 		<!-- 내용 작성 영역 입니다-->
 		
 			<!-- 버튼과 검색바 같이 들어가는 DIV -->
-			<div btnAndSearch>
+			<div class="btnAndSearch">
 				<table class="bas">
 					<tr>
 						<td id="leftArea">
@@ -426,65 +425,13 @@ div{
 		        </div>
 		        <div class="empList_area" style="overflow: auto;">
 		            <ul class="empList">
-		                <!-- <li>앨리스 <span class="dept_rank_code">(임원/대표이사)</span></li> -->
 		            </ul>
 		        </div>
 		        <div class="profile_area" style="overflow: auto;">
 		            <div class="profile_up">
-		                <%-- <div class="profile_img">
-		                    <img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">
-		                </div>
-		                <div class="profile_name">
-		                    <div class="dept_name">앨리스</div>
-		                    <button class="smallBtn">회의중</button><br><br>
-		                    <button id="profile_update" class="smallBtn">수정하기</button><br><br>
-		                    <div> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></div>
-		                    <div class="dept_mail">qwertyadsf@gmail.com</div>
-		                </div> --%>
 		            </div><br><br>
 		            <div class="profile_down" align="center">
-		                <table id="profile_list" align="center">
-		                   <!--  <tr>
-		                        <th>사원번호</th>
-		                        <td>3456789</td>
-		                    </tr>
-		                    <tr>
-		                        <th>입사일</th>
-		                        <td>2020/03/03</td>
-		                    </tr>
-		                    <tr>
-		                        <th>아이디</th>
-		                        <td>Alice</td>
-		                    </tr>
-		                    <tr>
-		                        <th>생년월일</th>
-		                        <td>1990/08/27</td>
-		                    </tr>
-		                    <tr>
-		                        <th>휴대폰 번호</th>
-		                        <td>010-0000-0000</td>
-		                    </tr>
-		                    <tr>
-		                        <th>내선번호</th>
-		                        <td>070-0000-0000</td>
-		                    </tr>
-							<tr>
-		                        <th>팩스번호</th>
-		                        <td>070-0000-0000</td>
-		                    </tr>	                    
-		                    <tr>
-		                        <th>부서명</th>
-		                        <td>기술팀</td>
-		                    </tr>
-		                    <tr>
-		                        <th>직급/직책</th>
-		                        <td>부장/팀장</td>
-		                    </tr>
-		                	<tr>
-		                        <th>자택주소</th>
-		                        <td>서울시 마포구 서교동 홍익로 2길 35</td>
-		                    </tr> -->
-		                </table>
+		                <table id="profile_list" align="center"></table>
 		            </div>
 		        </div> <!-- 오른쪽 영역 끝 -->
 		    </div> <!-- groupMap_outer -->
@@ -547,7 +494,7 @@ div{
 			data:{"empId":empId}, 
 			async: false,
 			success: function(empPrf){
-				console.log(empPrf.empImage);
+			
 				var valueUp="";
 				valueUp +=
 					
@@ -593,8 +540,8 @@ div{
 			             '<tr><th>아이디</th><td>' + empPrf.empId + '</td></tr>' +
 			             '<tr><th>생년월일</th><td>' + empPrf.empBirthday + '</td></tr>' + 
 			             '<tr><th>휴대폰 번호</th><td>' + empPrf.empPhone + '</td></tr>' +
-			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
-						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
+			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
+						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
 			             '<tr><th>부서명</th><td>' + empPrf.deptTitle + '</td></tr>' +
 			             '<tr><th>직급/직책</th><td>' + empPrf.rankTitle + '/' + empPrf.jobTitle + '</td></tr>' +
 			         	 '<tr><th>자택주소</th><td>' + empPrf.empAddress + '</td></tr>'
@@ -682,7 +629,8 @@ div{
 	}
 	
 	function empUpdate(){
-		location.href="empUpdate.gr"
+		//console.log(empId);	
+		location.href="groupProfileUpdate.gr?empId="+empId;
 	}
     </script>
 </body>

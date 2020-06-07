@@ -24,6 +24,11 @@ public interface GroupService {
 	// 승인대기리스트 조회요청용
 	ArrayList<Employee> selectRequestList();
 
+	// 승인대기 상세 요청용
+	//Employee groupRequestDetail(String empId);
+
+	// 사원 계정 수정용
+	//Employee updateGroupEmp(String empId);
 	
 	
 //	// 사원 검색 요청용

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,6 +156,8 @@
 	border-radius: 50%;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	width: 140px;
+	height: 140px;
 }
 
 .smallBtn {
@@ -252,9 +256,10 @@
 		</div>
 		<div class="subMenuArea">
 			<ul id="subMenuList">
-				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">조직도</button></li>
-				<li><button class="subBtn subActive">계정관리</button></li>
+				<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
+				<c:if  test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
+				</c:if>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -267,7 +272,16 @@
                         <td rowspan="3" id="mypageProfileArea">
                             <table id="mypageProfileTable">
                                 <tr>
-                                    <td><img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImg/profile_logo.png" width="150" height="150"></td>
+                                    <td>
+                                    	 <c:choose>
+											<c:when test="${ empty loginUser.empImage }">
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png">
+											</c:when>
+											<c:otherwise>
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${ loginUser.empImage }">
+											</c:otherwise>
+										</c:choose>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td ><button class="smallBtn">편집</button></td>
