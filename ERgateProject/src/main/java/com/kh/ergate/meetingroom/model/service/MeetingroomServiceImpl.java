@@ -54,10 +54,7 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 
 
 
-	@Override
-	public int updateMeetingroom(Meetingroom m) {
-		return 0;
-	}
+	
 
 	@Override
 	public int deleteMeetingroom(int mtrmCode) {
@@ -100,7 +97,11 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 		return mrDao.reserveMtroom(sqlSession, mr);
 	}
 
-	
+	//회의실 수정용
+	@Override
+	public int updateMeetingroom(Meetingroom m) {
+		return mrDao.updateMeetingroom(sqlSession, m);
+	}
 
 
 	

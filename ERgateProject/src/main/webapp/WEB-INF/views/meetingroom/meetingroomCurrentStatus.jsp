@@ -912,7 +912,7 @@ p {
 
 
 		<!-- 모달(나의 예약 현황) -->
-		<div id="myReservation_open_modal" clas="modal">
+		<div id="myReservation_open_modal" class="modal">
 				<c:choose>
 					<c:when test="${ !empty loginUser }">
 						<div class="modal-title">나의 예약현황</div>
@@ -923,19 +923,18 @@ p {
 										<td rowspan="5" class="mcTdImg"><img class="mcImg"
 											src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 										</td>
-										<td class="mcTdContent"><span class="mcContent1">${ mr.mtrmName }</span></td>
+										<td class="mcTdContent"><span class="mcContent1"><input type="text" value="${ mtrmName }"></span></td>
 									</tr>
 									<tr>
-										<td class="mcTdContent"><span class="mcContent2">${ mr.mtrmPurpose }</span></td>
+										<td class="mcTdContent"><span class="mcContent2">${ mtrmPurpose }</span></td>
 									</tr>
 									<tr>
-										<td class="mcTdContent"><span class="mcContent3">${ mr.mtrmStartDate }${ mr.mtrmStartTime } ~ <br>
-										 ${ mr.mtrmEndDate }${ mr.mtrmEndTime }
+										<td class="mcTdContent"><span class="mcContent3">${ mtrmStartDate }${ mtrmStartTime } ~ <br>
+										 ${ mtrmEndDate }${ mtrmEndTime }
 										</span></td>
 									</tr>
 									<tr>
-										<td class="mcTdContent"><button class="mcBtn" type="button">예약
-												취소</button></td>
+										<td class="mcTdContent"><button class="mcBtn" type="button">예약취소</button></td>
 									</tr>
 								</table>
 								</div>

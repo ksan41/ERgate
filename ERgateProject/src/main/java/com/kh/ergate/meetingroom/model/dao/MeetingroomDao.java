@@ -44,5 +44,7 @@ public class MeetingroomDao {
 		return sqlSession.selectOne("meetingroomMapper.myReserveList", empId);
 	}
 
-
+	public int updateMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
+		return sqlSession.update("meetingroomMapper.updateMeetingroom", m);
+	}
 }

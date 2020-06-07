@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
@@ -33,7 +34,7 @@ public class MeetingroomController {
 		
 		
 		//System.out.println(mr);
-	//	int result = new mrService.reserveMtroom(MeetingroomReservation mr);
+		//int result = new mrService.reserveMtroom(MeetingroomReservation mr);
 		int result = mrService.reserveMtroom(mr);
 		return"";
 	}
@@ -119,5 +120,23 @@ public class MeetingroomController {
 			return "";
 		}
 	}
+	
+	// 회의실수정용(updateMtroom.me) ---updateMeetingroom(Meetingroom,Model)
+	
+	@RequestMapping("updateMtroom.me")
+	public String updateMeetingroom(Meetingroom m, HttpServletRequest request, Model model) {
+		
+		int result = mrService.updateMeetingroom(m);
+		
+		if(result > 0) {
+			
+			return "redirect:mtroomDetail.me?mno=";
+			
+		}else {
+			model.addAttribute("msg", "게시글 수정 실패");
+		}
+		
+	}
+	
 
 }

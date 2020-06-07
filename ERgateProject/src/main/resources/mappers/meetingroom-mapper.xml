@@ -61,5 +61,9 @@
 		  from meetingroom_reservation
 		 where emp_id = #{empId}
 	</select>
+	
+	<update id="updateMeetingroom">
+	
+	</update>
 
 </mapper>

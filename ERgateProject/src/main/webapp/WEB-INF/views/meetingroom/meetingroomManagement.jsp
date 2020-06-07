@@ -456,37 +456,41 @@
 		<div id="edit" class="modal">
 			<div class="modal-title">회의실 수정</div>
 			<div class="modal-content">
-	
-				<div>
-	                <table class="meetingroomModalTable">
-	                    <tr>
-								<td class="mmName">회의실 명</td>
-								<td class="mmName2"><input class="mmModalInput" type="text" value="3층 회의실1"></td>
-							</tr>
-	
-							<tr>
-								<td class="mmLocation">회의실 위치</td>
-								<td class="mmLocation2"><input class="mmModalInput" type="text" value="3층 301호"></td>
-							</tr>
-	
-							<tr>
-								<td class="mmPersonnel">최대 수용인원</td>
-								<td class="mmPersonnel2"><input class="mmModalInput" type="text" value="6명"></td>
-							</tr>
-	
-							<tr>
-								<td class="mmImgEnroll">회의실 이미지</td>
-								<td class="mmImgEnroll2">
-									<img id="mmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-								</td>
-							</tr>
-	                </table>
-	            </div>
-	                    <!-- 예약/취소 버튼 -->
-				<div class=btns>
-					<button class="mmSubmitBtn" type="submit" onclick="postFormSubmit(1);">수정하기</button>
-					<button class="mmResetBtn" type="reset" onclick="postFormSubmit(2);">삭제하기</button>
-				</div>
+				<form id="updataForm" method="post" action="updateMtroom.me" enctype="multipart/form-data">
+					<div>
+		                <table class="meetingroomModalTable">
+		                    <tr>
+									<td class="mmName">회의실 명</td>
+									<td class="mmName2"><input class="mmModalInput" type="text" name="mtrmName" value="${ m.mtrmName }"></td>
+								</tr>
+		
+								<tr>
+									<td class="mmLocation">회의실 위치</td>
+									<td class="mmLocation2"><input class="mmModalInput" type="text" name="mtrmLocation" value="${ m.mtrmLocation }"></td>
+								</tr>
+		
+								<tr>
+									<td class="mmPersonnel">최대 수용인원</td>
+									<td class="mmPersonnel2"><input class="mmModalInput" type="text" name="mtrmCapacity" value="${ m.mtrmCapacity }"></td>
+								</tr>
+		
+								<tr>
+									<td class="mmImgEnroll">회의실 이미지</td>
+									<td class="mmImgEnroll2">
+										
+										
+										
+										<img id="mmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
+									</td>
+								</tr>
+		                </table>
+		            </div>
+		                    <!-- 예약/취소 버튼 -->
+					<div class=btns>
+						<button class="mmSubmitBtn" type="submit" onclick="postFormSubmit(1);">수정하기</button>
+						<button class="mmResetBtn" type="reset" onclick="postFormSubmit(2);">삭제하기</button>
+					</div>
+				</form>
 			</div>
 			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br> 
 		</div>
