@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
 <html>
@@ -211,7 +211,7 @@
 }
 /* 우편번호 찾기 버튼 */
 
-/* 수정 / 취소 버튼 */
+/* 수정 취소 버튼 */
 .bigBtn {
 	width: 140px;
 	height: 40px;
@@ -238,14 +238,11 @@
 	background: rgb(190, 190, 190);
 }
 /* 수정 / 취소 버튼 */
-
 /* 마이페이지 - 메인페이지에서 가져온 것. */
 </style>
 </head>
 <body>
 <!-- 승인대기 상세페이지 -->
-	<!-- 이곳에 메뉴바 include -->
-	
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp"/>
 	
@@ -257,7 +254,7 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<li><button class="subBtn" onclick="location.href='groupList.gr'">조직도</button></li>
-				<c:if  test="${loginUser.deptCode eq 'D5' }">
+				<c:if test="${loginUser.deptCode eq 'D5'}">
 					<li><button class="subBtn subActive" onclick="location.href='mgList.gr'">계정관리</button></li>
 				</c:if>
 			</ul>
@@ -288,7 +285,7 @@
                                 </tr>
                                 <tr>
                                     <td style="height:50px; font-size: 18px;">
-                                    	<span style="color:rgb(26, 188, 156); font-weight: 550;">ID </span> erkevin
+                                    	<span style="color:rgb(26, 188, 156); font-weight: 550;">ID </span> ${empPrf.empId}
                                     </td>
                                 </tr>
                                 <tr>
@@ -312,7 +309,7 @@
                                     <td>부서</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" readonly></td>
+                                    <td><input type="text" name="empCode" id="empCode" value="${empPrf.empCode}" readonly></td>
                                     <td>
                                         <select name="deptTitle" id="deptTitle">
 	                                        <option value="D0">임원</option>
@@ -358,15 +355,15 @@
                                     <td>팩스 번호</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" placeholder="- 을 포함하여 입력하세요."></td>
-                                    <td><input type="text" name="" id="" placeholder="- 을 포함하여 입력하세요."></td>
+                                    <td><input type="text" name="empExtension" id="empExtension" value="${empPrf.empExtension}"></td>
+                                    <td><input type="text" name="empFax" id="empFax" value="${empPrf.empFax}"></td>
                                 </tr>
                                 <tr>
                                     <td>입사일</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="" id="" value="2020/03/03" readonly></td>
+                                    <td><input type="text" name="" id="" value="${empPrf.hireDate}" readonly></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -406,10 +403,10 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                    	<button id="mypageAddressBtn" class="middleBtn" type="button" readonly >우편번호찾기</button>
-                                    	<input type="text" style="width: 100px" readonly>
-                                    	<input type="text" style="width: 370px" readonly> <br>
-                                    	<input type="text" style="width: 650px" readonly>
+                                    	<button id="mypageAddressBtn" class="middleBtn" type="button" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
+                                    	<input name="empAddress" type="text" value="${empPrf.empAddress}" id="sample6_address" placeholder="주소" style="width: 520px"> <br>
+                                    	<input name="empAddressDetail" type="text" value="${empPrf.empAddressDetail}" id="sample6_detailAddress" placeholder="상세주소" style="width: 650px">
+                                    	<input type="hidden" id="sample6_postcode"><input type="hidden" id="sample6_extraAddress">
                                     </td>
                                 </tr>
                             </table>

@@ -89,6 +89,7 @@ public class GroupController {
 	public String groupRequestDetail(String empId, Model model) {
 		
 		Employee empPrf = grService.selectEmpProfile(empId);
+		System.out.println(empPrf);
 		model.addAttribute("empPrf", empPrf);
 		return "group/groupRequestDetail";
 	}
@@ -97,8 +98,8 @@ public class GroupController {
 	@RequestMapping(value="groupProfileUpdate.gr")
 	public String updateGroupEmp(String empId, Model model) {
 		
-		//System.out.println(empId);
 		Employee empPrf = grService.selectEmpProfile(empId);
+		//System.out.println(empPrf);
 		model.addAttribute("empPrf", empPrf);
 		return "group/groupProfileUpdate";
 	}

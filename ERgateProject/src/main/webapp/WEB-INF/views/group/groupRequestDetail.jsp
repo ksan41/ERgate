@@ -155,6 +155,8 @@
 	border-radius: 50%;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	width: 140px;
+	height: 140px;
 }
 
 .smallBtn {
@@ -261,7 +263,7 @@
 		</div>
 		<div class="contentArea">
 		<!-- 내용 작성 영역 입니다-->
-	
+			${ empPrf }
 			<!-- 마이페이지 - 메인페이지에서 가져온 것. -->
 			 <form action="">
                 <table id="mypageTable">
@@ -296,7 +298,7 @@
                         </td>
                     </tr>
                     
-
+				
 					<tr>
 						
 						<td>
@@ -403,10 +405,10 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                    	<button id="mypageAddressBtn" class="middleBtn" type="button" readonly >우편번호찾기</button>
-                                    	<input type="text" style="width: 100px" readonly>
-                                    	<input type="text" style="width: 370px" readonly> <br>
-                                    	<input type="text" style="width: 650px" readonly>
+                                    	<button id="mypageAddressBtn" class="middleBtn" type="button" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
+                                    	<input name="empAddress" type="text" value="${empPrf.empAddress}" id="sample6_address" placeholder="주소" style="width: 520px"> <br>
+                                    	<input name="empAddressDetail" type="text" value="${empPrf.empAddressDetail}" id="sample6_detailAddress" placeholder="상세주소" style="width: 650px">
+                                    	<input type="hidden" id="sample6_postcode"><input type="hidden" id="sample6_extraAddress">
                                     </td>
                                 </tr>
                             </table>

@@ -194,8 +194,7 @@
 			<script>
 			 $(function(){
                  $(".boardTable tbody tr").click(function(){
-                	 console.log('안');
-                    /* location.href="groupProfileUpdate.gr?empId=" + $(this).children().eq(1).text(); */
+                    location.href="requestDetail.gr?empId=" + $(this).children().eq(1).text();
                  })
               });
 			</script>
