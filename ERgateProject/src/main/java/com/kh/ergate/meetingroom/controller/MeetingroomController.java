@@ -122,7 +122,7 @@ public class MeetingroomController {
 	// 회의실수정용(updateMtroom.me) ---updateMeetingroom(Meetingroom,Model)
 	
 	@RequestMapping("updateMtroom.me")
-	public String updateMeetingroom(Meetingroom m, HttpServletRequest request, Model model) {
+	public String updateMeetingroom(Meetingroom m, Model model) {
 		
 		int result = mrService.updateMeetingroom(m);
 		
@@ -133,6 +133,7 @@ public class MeetingroomController {
 		}else {
 			model.addAttribute("msg", "게시글 수정 실패");
 		}
+		return null;
 		
 	}
 	

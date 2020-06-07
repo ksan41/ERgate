@@ -66,8 +66,8 @@
 		update meetingroom
 		   set mtrm_name=#{mtrmName},
 		   	   mtrm_location=#{mtrmLocation},
-		   	   mtrm_capacity=#{mtrmCapacity}
-		 
+		   	   mtrm_capacity=#{mtrmCapacity},
+		 where mtrm_code = #{mtrmCode}
 		   
 	</update>
 
