@@ -25,7 +25,7 @@ public class VehicleReservation {
 	private String vhclEndDate;
 	private String vhclEndTime;
 	private String vhclPurpose;
-	private String vhclStatus;
+	private String vhclReserveStatus;
 	
 	private String vhclModel;
 	private String vhclNo;
