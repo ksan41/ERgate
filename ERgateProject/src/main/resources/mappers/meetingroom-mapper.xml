@@ -63,7 +63,12 @@
 	</select>
 	
 	<update id="updateMeetingroom">
-	
+		update meetingroom
+		   set mtrm_name=#{mtrmName},
+		   	   mtrm_location=#{mtrmLocation},
+		   	   mtrm_capacity=#{mtrmCapacity}
+		 
+		   
 	</update>
 
 </mapper>
