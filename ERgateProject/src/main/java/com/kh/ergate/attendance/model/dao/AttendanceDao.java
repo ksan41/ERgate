@@ -1,5 +1,9 @@
 package com.kh.ergate.attendance.model.dao;
 
-public interface AttendanceDao {
+import org.springframework.stereotype.Repository;
 
+@Repository("atDao")
+public class AttendanceDao {
+
+	
 }
