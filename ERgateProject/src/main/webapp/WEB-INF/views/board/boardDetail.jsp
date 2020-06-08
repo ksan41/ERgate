@@ -334,13 +334,10 @@
 			
 			<!-- 답글 표시 영역 -->
 			<br><br><br><br><br>
-			
-			<div class="replyShow">
-			
-			
+			<div class="replyShowWrap" style="height:100%;">
+				<div class="replyShow">
 				
-				
-				
+				</div>
 			</div>
 			<br>
 
@@ -398,13 +395,13 @@
 			success:function(list){
 				var value = "";
 				for(var i in list){
-					value += "<div style='width:1300px;height:110px;'>" +
-							 "<table class='replyContent'>" +
+					value += "<div style='width:1300px;min-height:110px;'>" +
+							 "<table class='replyContent' style='height:100%;'>" +
 							 "<tr>" +
 								"<td><input type='hidden' class='replyNoZone'name='replyNo' value=" + list[i].replyNo + ">" + list[i].replyWriter + "</td>" +
 							 "</tr>" +
 							 "<tr>" +
-							 	"<td id='reContentWrap'>" + "<span id='reContent'>" + list[i].replyContent + "</span>" + "</td>" +
+							 	"<td id='reContentWrap'>" +"<div>" + "<span id='reContent'>" + list[i].replyContent + "</span>" + "</div>" + "</td>" +
 							 "</tr>" +
 							 "<tr>" +
 							 	"<td id='reDate'>" + list[i].replyEnrollDate + "</td>" +
@@ -500,7 +497,11 @@
 
 		}
 	
+	
+	
 	$(document).ready(function() { 
+		getReplyAllList();
+		
 		$(".listBtn").click(function(){
 			var pno=0; // 페이지 번호가 들어갈꺼임 (나중에 돌아올때 현재 페이지로 오기 위해서)
 			location.href="list.bo?currentPage=" + ${currentPage};
@@ -509,7 +510,7 @@
 			istRepl();
 			$(".replText").val("");
 		});
-		getReplyAllList();
+		
 		
 		$(".updateBtn").click(function(){
 			var bno=0; // 글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
@@ -540,16 +541,9 @@
 					$("#fileListTable tbody").html(value);
 				},error:function(){
 					console.log("ajax 통신 실패");
-					
 				}
 			});
 		});
-		
-			
-		
-			
-	$(document).ready(function() {
-		
 
 		$(".replyUpdateBtn").click(function(){
 			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
@@ -560,21 +554,33 @@
 			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 삭제할지 알아야되니까)
 			location.href="replyDelete.bo?replyno=" + replyno;
 		});
+		
 		$(document).on("click",".replyInsertBtn",function(){
 			var replyNo = $(this).parent().parent().parent().children().eq(0).find('input').val();
-			
-			
-			
 			if($(".rerepl" + replyNo ).is(":visible")){
 				$(".rerepl" + replyNo).slideUp(100);
 			}else {
 				$(".rerepl"+ replyNo).slideDown(100);
-				
 			}
-			
-			/* location.href="insertReReply.bo?replyNo=" + replyNo + "&replyWriter=" + replyWriter; */
 		});
 		
+		$(document).on("click",".replyUpdateBtn",function(){
+			var replyNo = $(this).parent().parent().parent().children().eq(0).find('input').val();
+			var replyContent =$(this).parent().parent().parent('tbody').children().eq(1).children().text();
+			var value = "";
+			var value2 = "";
+			value +="<div style='min-height:80px;'>" + 
+					"<textarea class='textArea replText' name='replyContent' cols='170' rows='5'>"+replyContent+"</textarea>" +
+					"</div>";
+			value2 +="<button class='smallBtn replyUpdateBtnLast'>수정</button>" +
+					 "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+					 "<button class='smallBtn replyInsertBtn'>답글</button>";
+			$(this).parent().parent().parent('tbody').children().eq(1).html(value);
+			$(this).parent().html(value2);
+		});
+		$(document).on("click",".replyUpdateBtnLast",function(){
+			console.log("이거 누르면 수정함!");
+		});
 		
 
 		$(document).on("click",".rereplBtn",function(){
@@ -635,12 +641,11 @@
  				}
             });
 		    
+		  });
+		
+		
 		});
-		
-		
-	});
 	
-	$(document).ready(function() {
 		var afterBno = "";
 		var beforeBno = "";
 		$.ajax({
@@ -695,9 +700,6 @@
 					console.log("여기는 어떻게");
 				}
 			});
-			
-		});
-	});
 	</script>
 	
 </body>
