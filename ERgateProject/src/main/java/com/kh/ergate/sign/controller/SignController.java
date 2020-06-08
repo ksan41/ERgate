@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
+import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.sign.model.service.SignServiceImpl;
 import com.kh.ergate.sign.model.vo.SignAttachment;
 import com.kh.ergate.sign.model.vo.SignDateSearch;
@@ -157,8 +158,29 @@ public class SignController {
 	  
 	  // 기안작성폼-지출결의서 요청용
 	  
-	  @RequestMapping("expenseForm.si") public String expenseForm(HttpSession
-	  session, Model model) { return "sign/signFormExpense"; }
+	  @RequestMapping("expenseForm.si") 
+	  public String expenseForm(HttpSession session, Model model) {
+		Employee loginUser = (Employee)session.getAttribute("loginUser");
+		//System.out.println(loginUser);
+		
+		// 임시저장중인 문서 없을 시 임의로 문서 생성
+		
+		SignDocument newSd = new SignDocument(); 
+		newSd.setSignTypeNo("0");
+		newSd.setEmpId(loginUser.getEmpId());
+		newSd.setSignTypeName("지출결의서"); 
+		newSd.setEmpName(loginUser.getEmpName());
+		newSd.setDeptTitle(loginUser.getDeptTitle());
+		
+		int result = siService.insertDocument(newSd);
+		
+		if(result>0) {
+			return "sign/signFormExpense"; 			
+		}else {
+			model.addAttribute("msg","요청 실패. 다시 시도해주세요");
+			return "";
+		}
+	  }
 	  
 	  // 기안작성폼-휴가계 요청용
 	  
@@ -191,7 +213,9 @@ public class SignController {
 	  public String insertSigner(HttpServletRequest request,Signer si,Model model)throws Exception {
 		 System.out.println("결재결재");
 		String[] list = request.getParameterValues("empId");	
-			  System.out.println(list);
+		for(int i=0;i<list.length;i++) {
+			System.out.println(list[i]);
+		}
 		  return "";
 	  }
 	  

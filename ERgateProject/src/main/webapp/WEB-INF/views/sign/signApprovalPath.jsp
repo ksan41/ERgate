@@ -271,18 +271,25 @@ div {
 		<div class="popup-content">
 			<!-- 검색바 -->
 			<div class="searchBar">
-				<select name="">
-					<option>이름</option>
-					<option>직급</option>
-					<option>직책</option>
-					<option>부서</option>
-				</select> <input type="text" placeholder="이름/직급/직책/부서 검색">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+				<select id="condition" name="condition">
+					<option value="empName">이름</option>
+					<optio value="rankTitle">직급</option>
+					<option value="jobTitle">직책</option>
+					<option value="deptTitle">부서</option>
+				</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
+				<svg  onclick="return searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 					fill="black" width="48px" height="48px">
 									<path
 						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
 			<button class="bigBtn" id="signerSubmit" style="margin-left: 680px;">등록</button>
+			
+			<form name="signDocTemp" action="insertDocTemp.si">
+			<input type="hidden" name="empId" value="${loginUser.empId}">
+			
+			
+			</form>
+			
 			<script>
 				$(document).on("click","#signerSubmit",function(){
 					var v = $(".signSel tbody").text();
@@ -290,9 +297,10 @@ div {
 						alert("결재자는 1명 이상 존재해야 합니다.");
 						return false;
 					}else{
-						var test=$("form[name=insertSigner] tbody").html();
-						console.log(test);
-						//$("form[name=insertSigner]").submit();
+						//var test=$("form[name=insertSigner]").html();
+						//console.log(test);
+						
+						$("form[name=insertSigner]").submit();
 						//$("form[name=insertRef]").submit();
 					}
 				});
@@ -343,19 +351,19 @@ div {
 						<h2 style="display:inline-block;margin:0;">결재</h2>
 						<br><br>
 						<div style="width:100%;height:280px;overflow:auto;">
+							<form name="insertSigner" action="insertSigner.si" >
 								<table id="signList" class="boardTable signSel">
-								<thead>
-									<tr>
-										<th width="100">이름</th>
-										<th>부서</th>
-										<th width="120">직책/직급</th>
-										<th width="40"></th>
-									</tr>
-								</thead>
-								<form name="insertSigner" action="insertSigner.si" >
+									<thead>
+										<tr>
+											<th width="100">이름</th>
+											<th>부서</th>
+											<th width="120">직책/직급</th>
+											<th width="40"></th>
+										</tr>
+									</thead>
 									<tbody></tbody>
-								</form>
-							</table>
+								</table>
+							</form>
 						</div>	
 					</div>
 					
@@ -365,6 +373,7 @@ div {
 						<br><br>
 						<div id="signSelDiv">
 							<div style="width:100%;height:280px;overflow:auto;">
+								<form name="insertRef" action="insertRef.si">
 								<table class="boardTable refSel">
 								<thead>
 									<tr>
@@ -374,10 +383,9 @@ div {
 										<th width="40"></th>
 									</tr>
 								</thead>
-								<form name="insertRef" action="insertRef.si">
 								<tbody></tbody>
-								</form>
 								</table>
+								</form>
 							</div>	
 						</div>
 						
@@ -436,8 +444,9 @@ div {
 		       			
 				$(".signSel tbody").append(value1);
 				value1="";
+				//var test1 = $(".signSel").html();
+			//console.log("출력!!!"+test1);
 		   });
-			
 			
 		});
 		
@@ -563,6 +572,52 @@ div {
 				console.log("조직도 사원 리스트조회용 통신 실패");
 			}
 		});
+	}
+	
+	function searchEmpProfile(){
+		condition = $("#condition option:selected").val();
+		keyword = $("#keyword").val();
+		if(keyword==''){
+			alert("키워드를 입력하세요");
+			return;
+		}
+		$.ajax({
+			url:"empListSearch.gr",
+			type:"get",
+			data:{"condition":condition,
+				 "keyword":keyword},
+			success: function(list){
+			console.log(list);
+				var value = "";
+				
+				if(list.length == 0){ // 리스트가 비어있을 경우
+					value = '<td colspan="4">조회된 사원이 없습니다. </td>';
+				}else{ // 리스트가 비어있지 않을 경우
+	            
+					for(var i in list){
+						
+
+						var empName = eList[i].empName;
+						var empId = eList[i].empId;
+						var empRank = eList[i].rankTitle;
+						var empJob = eList[i].jobTitle;
+						var empDept = eList[i].deptTitle;
+						
+						value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
+						 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
+						 '<td>'+empName + '</td>' +
+						 '<td>'+ empDept + '</td>' +
+						 '<td width="120">'+empJob+'/'+empRank+'</td></tr>';	
+					}
+				}
+				$(".empList tbody").html(value);
+			},
+			error:function(){
+				console.log("조직도 사원 리스트조회용 통신 실패");
+			}
+			
+		})
+		
 	}
 	</script>
 	
