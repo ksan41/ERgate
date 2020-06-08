@@ -370,12 +370,124 @@
 	<script>
 	
 	var loginUserName = $("#loginUserName").val();
+	var num = [];
+	var cnt = 0;
+	function getReplyAllList(){
+		$.ajax({
+			url:"rlist.bo",
+			data:{refBno:${b.boardNo}},
+			success:function(list){
+				var value = "";
+				for(var i in list){
+					value += "<div style='width:1300px;height:110px;'>" +
+							 "<table class='replyContent'>" +
+							 "<tr>" +
+								"<td><input type='hidden' class='replyNoZone'name='replyNo' value=" + list[i].replyNo + ">" + list[i].replyWriter + "</td>" +
+							 "</tr>" +
+							 "<tr>" +
+							 	"<td id='reContentWrap'>" + "<span id='reContent'>" + list[i].replyContent + "</span>" + "</td>" +
+							 "</tr>" +
+							 "<tr>" +
+							 	"<td id='reDate'>" + list[i].replyEnrollDate + "</td>" +
+							 "</tr>" +
+							 "<tr>" +
+							 "<td id='replyBtnArea'>";
+					if(loginUserName == list[i].replyWriter){
+					value += "<button class='smallBtn replyUpdateBtn'>수정</button>" +
+							 "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+							 "<button class='smallBtn replyInsertBtn'>답글</button>";
+					}else {
+					value += "<button class='smallBtn replyInsertBtn'>답글</button>";
+					}
+					value += "</td>" +
+							 "</tr>" +
+							 "<tr>" + 
+							 "</tr>" + 
+							 "</table>" +
+							 "<hr>" +
+							 "</div>" +
+							 "<br>" +
+							 "<div class='rerepl" + list[i].replyNo + "' style='display:none; height:130px;'>" +
+							 "<form action='' method='get' class='rereplyForm'>" +
+							 "<textarea class='textArea' cols='120' rows='5' placeholder='내용을 입력하세요.'>" +
+							 "</textarea>" +
+							 "<input type='hidden' class='replyWriter' name='replyWriter' value=''>" +
+							 "<input type='hidden' name='refRno' value=''>" +
+							 "<input type='hidden' class='empId' name='empId' value=''>" +
+							 "<br>" +
+							 "<div class='setNo'><input type='hidden' value='" + list[i].replyNo + "'>" + 
+							 "<button class='smallBtn rereplBtn' type='button' style='margin-top: 3px; background: rgb(190, 190, 190);'>등록</button>" +
+							 "</div>" +
+							 "</form>" +
+							  
+							 "</div>"+
+							 "<div class='rereplyShow"+list[i].replyNo+"' >"+
+							 "</div>";
+							 
+					num[cnt] = list[i].replyNo;
+					cnt = cnt + 1;
+				}
+				$(".replyShow").html(value);
+				
+				for(var i = 0; i < num.length; i++){ // 게시글에 딸려있는 리플 갯수만큼 num[]에 리플 번호를 담아놨음. 
+				    (function(i) {
+				            $.ajax({
+				                url: "relist.bo",
+				                data:{refRno:num[i]}, // 여기로 댓글 번호를 넘김 (대댓글은 댓글 번호를 참조로 하고 있음)(num변수가 배열이니까 배열 길이만큼 반복해서 controller로 넘김)
+				                success:function(relist){
+				                	var value2 = "";
+									for(var i in relist){ // 같은 리플에 대댓글이 여러개일수도 있으니까 for문을 돌림 (보통은 1개지만)
+										value2 += "<div class='re" + relist[i].replyNo + "' style='width:1300px;min-height:50px;'>" +
+												  "<table class='replyContent rereply'>" +
+												  "<tr>" +
+												 	"<td>" + "└"+ relist[i].replyWriter + "</td>" +
+												  "</tr>" +
+												  "<tr>" +
+												  	"<td id='reContentWrap'>" + "<span id='reContent'>" + relist[i].replyContent + "</span>" + "</td>" +
+												  "</tr>" +
+												  "<tr>" +
+												  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
+												  "</tr>";
+												  
+										if(loginUserName == relist[i].replyWriter){
+										value2 += "<tr>" +
+										  		  "<td id='replyBtnArea'>" +
+												  "<button class='smallBtn replyUpdateBtn'>수정</button>" +
+												  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>";
+												  "</td>" +
+												  "</tr>" +
+												  "</table>" +
+												  "<hr>";
+										}
+										value2 += "</table>" + 
+												  "<hr>";
+										$(".rereplyShow" + relist[i].refRno).html(value2); 
+										// 여기서 리소스 낭비가 좀 있음, value2에 있는 값을 뿌려주는건데, 뿌려지는 구문이 for문 안에 있기 때문에 '댓글 1개'뿌린 상태에서 
+										// '댓글 2개'를 다시 덮어씌워버림, 처음부터 댓글 2개를 한꺼번에 뿌리는걸 해야되는데 그걸 못하겠음(rereplyShow + replist[i].refRno 이기 때문에..)
+										// 일단 리소스는 낭비되지만, 결과는 제대로 나옴 (향후 수정해야하는 부분)
+									}
+				                 },error: function(){
+				                    console.log("ajax 통신 실패");
+				                 } 
+				            });
+				    })(i);
+				}
+
+				
+				},error:function(){
+					console.log("ajax 통신 실패");
+				}
+			});
+
+		}
 	
 	$(document).ready(function() { 
 		$(".listBtn").click(function(){
 			var pno=0; // 페이지 번호가 들어갈꺼임 (나중에 돌아올때 현재 페이지로 오기 위해서)
 			location.href="list.bo?currentPage=" + ${currentPage};
 		});
+		
+		getReplyAllList();
 		
 		$(".updateBtn").click(function(){
 			var bno=0; // 글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
@@ -413,116 +525,10 @@
 		
 			
 		
-			$.ajax({
-				url:"rlist.bo",
-				data:{refBno:${b.boardNo}},
-				success:function(list){
-					var value = "";
-					var cnt = 0;
-					var num = [];
-					for(var i in list){
-						value += "<div style='width:1300px;height:110px;'>" +
-								 "<table class='replyContent'>" +
-								 "<tr>" +
-									"<td><input type='hidden' class='replyNoZone'name='replyNo' value=" + list[i].replyNo + ">" + list[i].replyWriter + "</td>" +
-								 "</tr>" +
-								 "<tr>" +
-								 	"<td id='reContentWrap'>" + "<span id='reContent'>" + list[i].replyContent + "</span>" + "</td>" +
-								 "</tr>" +
-								 "<tr>" +
-								 	"<td id='reDate'>" + list[i].replyEnrollDate + "</td>" +
-								 "</tr>" +
-								 "<tr>" +
-								 "<td id='replyBtnArea'>";
-						if(loginUserName == list[i].replyWriter){
-						value += "<button class='smallBtn replyUpdateBtn'>수정</button>" +
-								 "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-								 "<button class='smallBtn replyInsertBtn'>답글</button>";
-						}else {
-						value += "<button class='smallBtn replyInsertBtn'>답글</button>";
-						}
-						value += "</td>" +
-								 "</tr>" +
-								 "<tr>" + 
-								 "</tr>" + 
-								 "</table>" +
-								 "<hr>" +
-								 "</div>" +
-								 "<br>" +
-								 "<div class='rerepl" + list[i].replyNo + "' style='display:none; height:130px;'>" +
-								 "<form action='' method='get' class='rereplyForm'>" +
-								 "<textarea class='textArea' cols='120' rows='5' placeholder='내용을 입력하세요.'>" +
-								 "</textarea>" +
-								 "<input type='hidden' class='replyWriter' name='replyWriter' value=''>" +
-								 "<input type='hidden' name='refRno' value=''>" +
-								 "<input type='hidden' class='empId' name='empId' value=''>" +
-								 "<br>" +
-								 "<div class='setNo'><input type='hidden' value='" + list[i].replyNo + "'>" + 
-								 "<button class='smallBtn rereplBtn' type='button' style='margin-top: 3px; background: rgb(190, 190, 190);'>등록</button>" +
-								 "</div>" +
-								 "</form>" +
-								  
-								 "</div>"+
-								 "<div class='rereplyShow"+list[i].replyNo+"' >"+
-								 "</div>";
-								 
-						num[cnt] = list[i].replyNo;
-						cnt = cnt + 1;
-					}
-					$(".replyShow").html(value);
-					
-					for(var i = 0; i < num.length; i++){ // 게시글에 딸려있는 리플 갯수만큼 num[]에 리플 번호를 담아놨음. 
-					    (function(i) {
-					            $.ajax({
-					                url: "relist.bo",
-					                data:{refRno:num[i]}, // 여기로 댓글 번호를 넘김 (대댓글은 댓글 번호를 참조로 하고 있음)(num변수가 배열이니까 배열 길이만큼 반복해서 controller로 넘김)
-					                success:function(relist){
-					                	var value2 = "";
-										for(var i in relist){ // 같은 리플에 대댓글이 여러개일수도 있으니까 for문을 돌림 (보통은 1개지만)
-											value2 += "<div class='re" + relist[i].replyNo + "' style='width:1300px;min-height:50px;'>" +
-													  "<table class='replyContent rereply'>" +
-													  "<tr>" +
-													 	"<td>" + "└"+ relist[i].replyWriter + "</td>" +
-													  "</tr>" +
-													  "<tr>" +
-													  	"<td id='reContentWrap'>" + "<span id='reContent'>" + relist[i].replyContent + "</span>" + "</td>" +
-													  "</tr>" +
-													  "<tr>" +
-													  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
-													  "</tr>";
-													  
-											if(loginUserName == relist[i].replyWriter){
-											value2 += "<tr>" +
-											  		  "<td id='replyBtnArea'>" +
-													  "<button class='smallBtn replyUpdateBtn'>수정</button>" +
-													  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>";
-													  "</td>" +
-													  "</tr>" +
-													  "</table>" +
-													  "<hr>";
-											}
-											value2 += "</table>" + 
-													  "<hr>";
-											$(".rereplyShow" + relist[i].refRno).html(value2); 
-											// 여기서 리소스 낭비가 좀 있음, value2에 있는 값을 뿌려주는건데, 뿌려지는 구문이 for문 안에 있기 때문에 '댓글 1개'뿌린 상태에서 
-											// '댓글 2개'를 다시 덮어씌워버림, 처음부터 댓글 2개를 한꺼번에 뿌리는걸 해야되는데 그걸 못하겠음(rereplyShow + replist[i].refRno 이기 때문에..)
-											// 일단 리소스는 낭비되지만, 결과는 제대로 나옴 (향후 수정해야하는 부분)
-										}
-					                 },error: function(){
-					                    console.log("ajax 통신 실패");
-					                 } 
-					            });
-					    })(i);
-					}
+			
+	$(document).ready(function() {
+		
 
-					
-					},error:function(){
-						console.log("ajax 통신 실패");
-					}
-			});
-
-	});
-	$(document).ready(function() { 
 		$(".replyUpdateBtn").click(function(){
 			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
 			location.href="replyUpdate.bo?replyno=" + replyno;
@@ -547,19 +553,9 @@
 			/* location.href="insertReReply.bo?replyNo=" + replyNo + "&replyWriter=" + replyWriter; */
 		});
 		
-		if(window.sessionStorage.getItem('name') != null){
-			var offtop = sessionStorage.getItem('name');
-			console.log(offtop);
-			$('html, body').animate({scrollTop : offtop}, 400);
-			sessionStorage.clear();
-		}else {
-			console.log("아무 값도 없다!!");
-			
-		}
-
+		
 
 		$(document).on("click",".rereplBtn",function(){
-			
 			var refRno = $(this).parent().find('input').val();
 			var replyWriter = "${loginUser.empName}";
 			var empId = "${loginUser.empId}";
@@ -603,11 +599,8 @@
 						}
 						value2 += "</table>";
 						$(".rereplyShow" + relist.refRno).html() + value2;
-						var offset = $(".rereplyShow" + relist.refRno).offset().top;
-						console.log(offset);
-						sessionStorage.setItem('name', offset);
-
-						location.reload();
+						
+						getReplyAllList();
 						
 	 					
 						
@@ -681,6 +674,7 @@
 				}
 			});
 			
+		});
 	});
 	</script>
 	
