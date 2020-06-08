@@ -21,17 +21,14 @@ import com.kh.ergate.meetingroom.model.service.MeetingroomServiceImpl;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
-//어노테이션을 통해 bean으로 등록(내부적으로 HandlerMapping이 됨)
+
 @Controller
 public class MeetingroomController {
 
 	@Autowired
 	private MeetingroomServiceImpl mrService;
 
-	/* 할 수 있는 부분부터 해서 주석 참고 바람 */
-
 	// 회의실 예약용 
-
 	@RequestMapping("reserveMtroom.me")
 	public String reserveMtroom(MeetingroomReservation mr, HttpSession session) {
 		
@@ -39,10 +36,10 @@ public class MeetingroomController {
 		
 		if(result > 0) {
 			session.setAttribute("msg", "성공적으로 예약되었습니다.");
-			return "redirect:myReserve.me?currentPage=1";
+			return "redirect:myReserve.me";
 		}else {
 			session.setAttribute("msg", "예약 실패하였습니다. 다시 시도해주세요");
-			return "redirect:myReserve.me?currentPage=1";
+			return "redirect:myReserve.me";
 		}
 	}
 
@@ -53,17 +50,14 @@ public class MeetingroomController {
 		return "meetingroom/meetingroomCurrentStatus";
 
 	}
-
-	// 회의실예약현황리스트조회용(statusList.me) --- statusList(Meetingroom,Model)
+	// 회의실 예약 현황 리스트 조회용
 
 	@RequestMapping("statusList.me")
 	public String statusList(int currentPage, Model model) {
 
 		int listCount = mrService.statusListCount();
 
-		// System.out.println(listCount);
-
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 
 		ArrayList<MeetingroomReservation> list = mrService.statusList(pi);
 
@@ -73,7 +67,7 @@ public class MeetingroomController {
 		return "meetingroom/meetingroomReservationList";
 	}
 
-	// 예약상세조회용
+	// 예약 상세 조회용
 	@RequestMapping("reserveDetail.me")
 	public String reserveDetail(int reservNo, Model model) {
 
@@ -82,22 +76,19 @@ public class MeetingroomController {
 	}
 
 	// 내 예약현황 리스트 조회용
-
-	//@ResponseBody
 	@RequestMapping(value="myReserve.me")
 	public void myReserveList(String empId, Model model, HttpSession session, HttpServletResponse response) throws JsonIOException, IOException {
 
 		  ArrayList<MeetingroomReservation> list = mrService.myReserveList(empId);
 		  
 		  model.addAttribute("list", list);
-		  System.out.println(list);
 		  
 		  response.setContentType("application/json; charset=utf-8");
 		  
 		  new Gson().toJson(list, response.getWriter());
 	}
 
-	// 회의실정보 조회용(mtroomDetail.me) ---selectMtroomDetail(String
+	// 회의실정보 조회용
 	@RequestMapping("mtroomDetail.me")
 	public String selectMtroomDetail(Meetingroom m, Model model) {
 
@@ -109,39 +100,37 @@ public class MeetingroomController {
 
 	}
 
-	// 회의실등록용(insertMtroom.me) ---insertMeetingroom(Meetingroom,Model)
-
+	// 회의실 등록용
 	@RequestMapping("insertMtroom.me")
-	public String insertMeetingroom(Meetingroom m, HttpServletRequest request) {
-		System.out.println(m);
+	public String insertMeetingroom(Meetingroom m, HttpSession session) {
 		
 		int result = mrService.insertMeetingroom(m);
 
-		if(result > 0) { // 회의실 등록 성공
+		if(result > 0) { 
+			session.setAttribute("msg", "성공적으로 회의실이 등록되었습니다.");
+			return "redirect:mtroomDetail.me";
 
-			return "redirect:mtroomDetail.me?currentPage=1";
-			//return "meetingroom/meetingroomManagement";
-		} else { // 회의글 등록 실패
-
-			return "";
+		} else {
+			session.setAttribute("msg", "회의실 등록에 실패하였습니다. 다시 시도해주세요");
+			return "redirect:mtroomDetail.me";
 		}
 	}
 	
-	// 회의실수정용(updateMtroom.me) ---updateMeetingroom(Meetingroom,Model)
-	
+	// 회의실수정용
 	@RequestMapping("updateMtroom.me")
-	public String updateMeetingroom(Meetingroom m, Model model) {
+	public String updateMeetingroom(Meetingroom m, HttpSession session) {
 		
 		int result = mrService.updateMeetingroom(m);
 		
 		if(result > 0) {
-			
-			return "redirect:mtroomDetail.me?mno=";
+			session.setAttribute("msg", "성공적으로 회의실 정보가 수정되었습니다.");
+			return "redirect:mtroomDetail.me";
 			
 		}else {
-			model.addAttribute("msg", "게시글 수정 실패");
+			session.setAttribute("msg", "회의실 정보 수정에 실패하였습니다. 다시 시도해주세요");
+			return "redirect:mtroomDetail.me";
 		}
-		return null;
+		
 		
 	}
 	

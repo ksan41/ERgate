@@ -972,27 +972,25 @@ p {
 					var value="";
 					for(var i in list){
 						value +="<tr>" +
-								"<td rowspan='5' class='mcTdImg'>" +
-									"<img class='mcImg' src='" + ${pageContext.servletContext.contextPath}+"/resources/siteImgs/" + list[i].mtrmImage + "'>" +
-								"</td>" +
-								"<td class='mcTdContent'>" 
-									+ "<span class='mcContent1'>" + "<input type'text' value='"+list[i].mtrmName+"'>" + "</span>" + 
-								"</td>"
-							"</tr>" +
-							"<tr>" +
-								"<td class='mcTdContent'>"+ "<span class='mcContent2'>" + list[i].mtrmPurpose + "</span>" + "</td>" +
-							"</tr>" +
-							"<tr>" +
-								"<td class='mcTdContent'>" + "<span class='mcContent3'>" + list[i].mtrmStartDate + list[i].mtrmStartTime
-										+ "~" + "<br>" + list[i].mtrmEndDate + list[i].mtrmEndTime +
-								"</span>" + "</td>" +
-							"</tr>" +
-							"<tr>" +
-								"<td class='mcTdContent'>"+
-									"<button class='mcBtn' type='button'>예약취소</button>" +
-								"</td>" +
-							"</tr>";
-							
+									"<td rowspan='5' class='mcTdImg'>" +
+										"<img class='mcImg' src='${pageContext.servletContext.contextPath}/resources/siteImgs/" + list[i].mtrmImage + "'>" +
+									"</td>" +
+									"<td class='mcTdContent'>" 
+										+ "<span class='mcContent1'>" + "<input type='text' value='"+list[i].mtrmName+"'>" + "</span>" + 
+									"</td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td class='mcTdContent'>"+ "<span class='mcContent2'>" + list[i].mtrmPurpose + "</span></td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td class='mcTdContent'>" + "<span class='mcContent3'>" + list[i].mtrmStartDate + list[i].mtrmStartTime + 
+										"~ <br>" + list[i].mtrmEndDate + list[i].mtrmEndTime +
+									"</span></td>" +
+								"</tr> <tr>" +
+									"<td class='mcTdContent'>"+
+										"<button class='mcBtn' type='button'>예약취소</button>" +
+									"</td>" +
+								"</tr>";
 					
 					}
 					$("#myReserv").html(value);
@@ -1020,17 +1018,14 @@ p {
 		/* 예약하기 ajax*/
 		
 		$(function(){
-			
 
-			
 			$("#reservBtn").click(function(){
 				
 				console.log($("form[name=reservationForm]"));
 				
-				
 			 	var queryString = $("form[name=reservationForm]").serialize() ;
 			 	console.log(queryString);
-				console.log("아아아");
+				
 				$.ajax({
 					url:"reserveMtroom.me",
 					data:queryString,

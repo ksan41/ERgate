@@ -353,8 +353,8 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">회의실 예약</button></li>
-				<li><button class="subBtn" style="width: 170px">회의실 예약현황</button></li>
+				<li><button class="subBtn" onclick="location.href='currentStatus.me'">회의실 예약</button></li>
+				<li><button class="subBtn" style="width: 170px" onclick="location.href='statusList.me'">회의실 예약현황</button></li>
 				<li><button class="subBtn subActive" onclick="open_modal();">회의실 관리</button></li>
 				
 			</ul>
@@ -365,23 +365,36 @@
 			<a id="open_enroll" class="open-modal" href="#enroll" style="display: none;">모달</a> <br> 
 			
 			<div id="mtrmManageOuter">
+			
 			<c:forEach var="m" items="${ list }">
+			
 				<table class="mtrmManageInner" >
 					
 						<tr>
 							<td rowspan="5" class="mmTdImg">
 								<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
 							</td>
-							<td class="mmTdContent"><span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">${ m.mtrmName }</span></td>
+							<td class="mmTdContent">
+								<span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="mmContent">${ m.mtrmName }</span>
+							</td>
 						</tr>
 						<tr>
-							<td class="mmTdContent"><span class="mmLabel">회의실 위치</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">${ m.mtrmLocation }</span></td>
+							<td class="mmTdContent">
+								<span class="mmLabel">회의실 위치</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="mmContent">${ m.mtrmLocation }</span>
+							</td>
 						</tr>
 						<tr>
-							<td class="mmTdContent"><span class="mmLabel">수용인원</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">${ m.mtrmCapacity }</span></td>
+							<td class="mmTdContent"><span class="mmLabel">수용인원</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="mmContent">${ m.mtrmCapacity }</span>
+							</td>
 						</tr>
 						<tr>
-							<td class="mmTdContent"><span class="mmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="mmContent">2019-04-04</span></td>
+							<td class="mmTdContent">
+								<span class="mmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="mmContent">${ m.mtrmEnrollDate }</span>
+							</td>
 						</tr>
 					
 					

@@ -20,4 +20,5 @@ public class Meetingroom{
 	private int mtrmCapacity;		//수용인원수
 	private String mtrmImage;		//회의실 이미지
 	private String mtrmStatus;		//회의실노출여부
+	private String mtrmEnrollDate;  //회의실 등록 날짜
 }

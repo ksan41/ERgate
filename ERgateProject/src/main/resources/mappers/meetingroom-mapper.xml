@@ -9,6 +9,7 @@
 		<result column="MTRM_CAPACITY" property="mtrmCapacity"/>
 		<result column="MTRM_IMAGE" property="mtrmImage"/>
 		<result column="MTRM_STATUS" property="mtrmStatus"/>
+		<result column="MTRM_ENROLL_DATE" property="mtrmEnrollDate"/>
 	</resultMap>
 	
 	<resultMap id="MeetingroomReservationResultSet" type="MeetingroomReservation" >
@@ -54,7 +55,7 @@
 	
 	<insert id="insertMeetingroom" parameterType="Meetingroom">
 		insert into meetingroom
-		values(seq_mroom_no.nextval , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y')	
+		values(seq_mroom_no.nextval , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y', sysdate)	
 	</insert>
 
 	<select id="selectRvListCount" resultType="_int">
