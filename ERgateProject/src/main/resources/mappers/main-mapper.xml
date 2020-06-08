@@ -48,6 +48,12 @@
 		 WHERE EMP_ID=#{empId}
 	</select>
 	
+	<select id="nameCheck" resultType="_int" parameterType="string">
+		SELECT COUNT(*)
+		  FROM EMPLOYEE
+		 WHERE EMP_NAME=#{empName}
+	</select>
+	
 	<insert id="insertRequest" parameterType="Employee">
 		INSERT INTO EMPLOYEE
 		VALUES(#{empId}, NULL, NULL, NULL, 'ER'||SEQ_EMPLOYEE_NO.NEXTVAL, #{empPwd}, #{empName}, 

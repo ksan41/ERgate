@@ -167,12 +167,15 @@
 	                <td class="enrollLabel">비밀번호 확인</td>
 	                <td>
 	                	<input id="enrollPwdCheck" type="password" required>
-	                	<div id="pwdCheckCaution" style="font-size:0.8em; padding-top:5px;">&nbsp;</div>
+	                	<div id="pwdCheckCaution" style="font-size:0.8em; padding-top:5px; margin-bottom: 10px;">&nbsp;</div>
 	                </td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">이름</td>
-	                <td><input name="empName" id="enrollName" type="text" required></td>
+	                <td>
+	                	<input name="empName" id="enrollName" type="text" required> <br>
+	                	<div id="checkResult2" style="font-size:0.8em; padding-top:5px; margin-bottom: 10px;">&nbsp;</div>
+	                </td>
 	            </tr>
 	            <tr>
 	                <td class="enrollLabel">프로필 사진</td>
@@ -240,7 +243,7 @@
     		
     		$idInput.keyup(function(){
     			
-    			if($idInput.val().length >= 5){ // 아이디 입력값이 5글자 이상되었을 때 본격적으로 중복체크
+    			if($idInput.val().length >= 3){
     				
     				$.ajax({
     					url:"idCheck.ma",
@@ -260,6 +263,58 @@
     				
     			}else{ // 중복체크 X
     				idCheckValidate(1);
+    			}
+    			
+    		});
+    	});
+    </script>
+    
+    <!-- 이름 중복검사 -->
+    <script>
+		function nameCheckValidate(num){
+    		
+    		if(num == 1){ // 이름 중복체크를 아직 안하는 경우 : 메세지 보여지지 않음, 버튼 비활성화
+    			
+    			$("#enrollSubmit").attr("disabled", true);
+    			
+    		}else if(num == 2){ // 이름 중복체크 후 사용 불가능한 이름일 경우 : "중복 이름 존재, 사용 불가능" 메세지 보여짐, 버튼 비활성화
+    			
+    			$("#checkResult2").css("color", "red").text("중복되는 이름이 존재합니다. 다른 이름을 입력해주세요.");
+    			$("#enrollSubmit").attr("disabled", "true");
+    			
+    		}else{ // 이름 중복체크 후 사용 가능한 이름일 경우 : "사용 가능한 이름" 메세지 보여짐, 버튼 활성화
+    			
+    			$("#checkResult2").css("color", "rgb(26, 188, 156)").text("사용 가능한 이름입니다.");
+    			$("#enrollSubmit").removeAttr("disabled");
+    		}
+    	}
+    
+    	$(function(){
+    		
+    		var $idInput = $("#enrollForm input[name=empName]");
+    		
+    		$idInput.keyup(function(){
+    			
+    			if($idInput.val().length >= 2){
+    				
+    				$.ajax({
+    					url:"nameCheck.ma",
+    					data:{empName:$idInput.val()},
+    					success:function(status){
+    						
+    						if(status == "fail"){ // 중복되는 이름 존재 == 사용 불가
+    							nameCheckValidate(2);
+    						}else{ // 중복되는 이름 없음 == 사용 가능
+    							nameCheckValidate(3);
+    						}
+    						
+    					},error:function(){
+    						console.log("이름 중복 체크용 ajax 통신 실패");
+    					}
+    				});
+    				
+    			}else{ // 중복체크 X
+    				nameCheckValidate(1);
     			}
     			
     		});

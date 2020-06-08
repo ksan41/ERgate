@@ -46,6 +46,12 @@ public class MainServiceImpl implements MainService {
 	public int idCheck(String empId) {
 		return mDao.idCheck(sqlSession, empId);
 	}
+	
+	// 이름 중복확인용 서비스
+	@Override
+	public int nameCheck(String empName) {
+		return mDao.nameCheck(sqlSession, empName);
+	}
 
 	// 계정등록용 서비스
 	@Override

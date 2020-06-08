@@ -36,14 +36,12 @@ public class MainController {
 		}
 	}
 	
-	
 	// 로그아웃
 	@RequestMapping("logout.ma")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
 		return "redirect:returnLogin.ma";
 	}
-	
 	
 	// 계정등록 
 	@RequestMapping("insertRequest.ma")
@@ -64,7 +62,6 @@ public class MainController {
 		}
 	}
 	
-	
 	// 아이디 중복검사
 	@ResponseBody
 	@RequestMapping("idCheck.ma")
@@ -79,7 +76,20 @@ public class MainController {
 		}
 	}
 	
-	
+	// 이름 중복검사
+	@ResponseBody
+	@RequestMapping("nameCheck.ma")
+	public String nameCheck(String empName) {
+		
+		int count = mService.nameCheck(empName);
+		
+		if(count > 0) {
+			return "fail";
+		}else {
+			return "success";
+		}
+	}
+		
 	// 회원정보 수정
 	@RequestMapping("update.ma")
 	public String updateMember(Employee e, String empEmail, HttpSession session) {
@@ -99,7 +109,6 @@ public class MainController {
 		}
 	}
 	
-	
 	// 아이디 찾기
 	@RequestMapping("findId.ma")
 	public String findId(Employee e, String empEmail, HttpSession session) {
@@ -118,7 +127,6 @@ public class MainController {
 		
 	}
 	
-	
 	// 비밀번호 찾기
 	@RequestMapping("findPwd.ma")
 	public String findPwd(Employee e, String empEmail, HttpSession session) {
@@ -136,7 +144,6 @@ public class MainController {
 		}
 		
 	}
-	
 	
 	// 비밀번호 변경
 	@RequestMapping("updatePwd.ma")

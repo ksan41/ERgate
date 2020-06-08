@@ -19,6 +19,9 @@ public interface MainService {
 	// 아이디 중복확인용 서비스
 	int idCheck(String empId);
 	
+	// 이름 중복확인용 서비스
+	int nameCheck(String empName);
+
 	// 계정등록용 서비스
 	int insertRequest(Employee e);
 	

@@ -28,6 +28,10 @@ public class MainDao {
 		return sqlSession.selectOne("mainMapper.idCheck", empId);
 	}
 	
+	public int nameCheck(SqlSessionTemplate sqlSession, String empName) {
+		return sqlSession.selectOne("mainMapper.nameCheck", empName);
+	}
+	
 	public int insertRequest(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.insert("mainMapper.insertRequest", e);
 	}
