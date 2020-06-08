@@ -363,13 +363,7 @@ div{
 		<c:remove var="msg" scope="session"/>
 	</c:if>
 	
-	<c:if test="${ !empty empId }">
-		<script>
-			console.log(empId);
-			empPrfUpdateSuccess(empId);
-		</script>
-		<c:remove var="empPrfUpdateSuccess" scope="session"/>
-	</c:if>
+	
 	
 	
 	<div class="outer">
@@ -728,5 +722,11 @@ div{
 		});
 	}
     </script>
+    <c:if test="${ !empty empId }">
+		<script>
+			empPrfUpdateSuccess('${empId}');
+		</script>
+		<c:remove var="empPrfUpdateSuccess" scope="session"/>
+	</c:if>
 </body>
 </html>
