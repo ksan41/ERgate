@@ -72,7 +72,7 @@
 	
 	<insert id="insertVehicle" parameterType="Vehicle">
 		INSERT INTO VEHICLE
-		VALUES(SEQ_VEHICLE_NO.NEXTVAL, #{vhclModel}, #{vhclNo}, #{vhclCapacity}, SYSDATE, NULL, 'Y')
+		VALUES(SEQ_VEHICLE_NO.NEXTVAL, #{vhclModel}, #{vhclNo}, #{vhclCapacity}, SYSDATE, #{vhclImage}, 'Y')
 	</insert>
 	
 	<update id="updateVehicle" parameterType="Vehicle">
@@ -80,7 +80,7 @@
 		   SET VHCL_MODEL=#{vhclModel},
 		   	   VHCL_NO=#{vhclNo},
 		   	   VHCL_CAPACITY=#{vhclCapacity},
-		   	   VHCL_IMAGE=NULL
+		   	   VHCL_IMAGE=#{vhclImage},
 		 WHERE VHCL_CODE=#{vhclCode}
 	</update>
 	

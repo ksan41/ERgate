@@ -444,7 +444,16 @@
 				<table class="vhclCurrentInner">
 					<tr>
 						<td rowspan="5" class="vcTdImg">
-							<img class="vcImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/${ vr.vhclImage }">
+						
+							<c:choose>
+								<c:when test="${ empty vr.vhclImage }">
+									<img class="vcImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/vhclLogo.png">
+								</c:when>
+								<c:otherwise>
+									<img class="vcImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/vehicle/${ vr.vhclImage }">
+								</c:otherwise>
+							</c:choose>
+							
 						</td>
 						<td class="vcTdContent"><span class="vcContent1">${ vr.vhclModel } ${ vr.vhclNo }</span></td>
 					</tr>
@@ -460,7 +469,7 @@
 					<tr>
 						<td class="vcTdContent">
 						
-						<!-- 오늘 날짜와 비교하는 조건문 주기 -->
+							<!-- 오늘 날짜와 비교하는 조건문 주기 -->
 							<button class="vcBtn" type="button" onclick="location.href='cancelReserve.ve?vhclReserveNo=${ vr.vhclReserveNo }'">예약 취소</button>
 							
 						</td>
@@ -542,8 +551,10 @@
 				$("#reservation").click();
 		});
 		
-		
 		/* 취소버튼 클릭 시 모달 닫히는 기능 추가하기 */
+		$("#resetBtn").on('click', function(){
+			$('#open_reservation').modal("hide");
+		});
 		
 	</script>
 

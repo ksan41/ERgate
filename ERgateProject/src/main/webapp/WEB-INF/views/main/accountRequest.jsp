@@ -141,7 +141,7 @@
 </head>
 <body>
 	<div id="enrollOuter">
-	    <form id="enrollForm" action="insertRequest.ma" method="post">
+	    <form id="enrollForm" action="insertRequest.ma" method="post" enctype="multipart/form-data">
 	        <table id="enrollTable">
 	            <tr>
 	                <td colspan="2" style="text-align: center;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
@@ -212,10 +212,48 @@
 	                </td>
 	            </tr>
 	        </table>
-	
+			<div id="fileArea">
+				<input type="file" name="uploadFile" id="fileInput" onchange="loadImg(this, 1);">
+			</div>
 	    </form>
     </div>
     
+    
+    <!-- 프로필 사진 첨부 -->
+    <script>
+		$(function(){
+			$("#fileArea").hide();
+			
+			$("#enrollImg").click(function(){
+				$("#fileInput").click();
+			});
+		});
+	
+		function loadImg(inputFile, num){
+			// inputFile : 현재 변화가 생긴 input type="file" 요소
+			// num : 몇번째 input요소인지 확인 후 해당 영역에 미리보기 하기위해
+			
+			// [참고] https://developer.mozilla.org/ko/docs/Web/API/FileReader
+			
+			// file이 존재할 경우 --> input 요소의 files 속성인 배열의 0번 인덱스에 담김
+			if(inputFile.files.length == 1){
+				// 0번 인덱스에 파일이 담긴 경우 (file이 존재할 경우)
+				
+				// 파일을 읽어들일 FileReader 객체 생성
+				var reader = new FileReader();
+				
+				// 파일을 읽어주는 메소드 --> 해당 파일을 읽어들이는 순간 해당 파일만의 고유한 url 부여 
+				reader.readAsDataURL(inputFile.files[0]);
+				
+				// 파일 읽기가 다 완료되었을 때 실행할 메소드 
+				reader.onload = function(e){
+					switch(num){
+						case 1: $("#enrollImg").attr("src", e.target.result); break;
+					}
+				};
+			}
+		}
+	</script>
     
 	<!-- 아이디 중복검사 -->
     <script>
@@ -320,7 +358,6 @@
     		});
     	});
     </script>
-    
 	
 	<!-- 비밀번호 유효성 검사 -->
 	<script>
@@ -354,7 +391,6 @@
 			});
 		});
     </script>
-		
 		    
    	<!-- 다음 주소 검색 API -->
 	<script>

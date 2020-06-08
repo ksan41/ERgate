@@ -58,7 +58,7 @@
 		INSERT INTO EMPLOYEE
 		VALUES(#{empId}, NULL, NULL, NULL, 'ER'||SEQ_EMPLOYEE_NO.NEXTVAL, #{empPwd}, #{empName}, 
 			   SYSDATE, NULL, NULL, NULL, #{empPriEmail}, #{empPhone}, 
-			   #{empAddress}, #{empAddressDetail}, NULL, #{empBirthday}, 'N', NULL, NULL)
+			   #{empAddress}, #{empAddressDetail}, #{empImage}, #{empBirthday}, 'N', NULL, NULL)
 	</insert>
 	
 	<update id="updateMember" parameterType="Employee">
@@ -67,6 +67,7 @@
 		   	   EMP_EXTENSION=#{empExtension},
 		   	   EMP_FAX=#{empFax},
 		   	   EMP_NAME=#{empName},
+		   	   EMP_IMAGE=#{empImage},
 		   	   EMP_BIRTHDAY=#{empBirthday},
 		   	   EMP_PHONE=#{empPhone},
 		   	   EMP_PRI_EMAIL=#{empPriEmail},

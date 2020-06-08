@@ -1,13 +1,20 @@
 package com.kh.ergate.vehicle.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
@@ -96,8 +103,17 @@ public class VehicleController {
 		return "vehicle/vehicleManagement";
 	}
 	
+	// 차량 등록
 	@RequestMapping("insert.ve")
-	public String insertVehicle(Vehicle v, HttpSession session) {
+	public String insertVehicle(Vehicle v, HttpSession session,
+								@RequestParam(name="uploadFile", required=false) MultipartFile file,
+								HttpServletRequest request, Model model) {
+		
+		if(!file.getOriginalFilename().equals("")) {
+			
+			String changeName = saveFile(file, request);
+			v.setVhclImage(changeName);
+		}
 		
 		int result = vService.insertVehicle(v);
 		
@@ -111,8 +127,21 @@ public class VehicleController {
 		
 	}
 	
+	// 차량 수정
 	@RequestMapping("update.ve")
-	public String updateVehicle(Vehicle v, HttpSession session) {
+	public String updateVehicle(Vehicle v, HttpSession session,
+			   					@RequestParam(name="reUploadFile", required=false) MultipartFile file,
+			   					HttpServletRequest request, Model model) {
+		
+		if(!file.getOriginalFilename().equals("")) {
+			
+			if(v.getVhclImage() != null) {
+				deleteFile(v.getVhclImage(), request);
+			}
+			
+			String changeName = saveFile(file, request);
+			v.setVhclImage(changeName);
+		}
 		
 		int result = vService.updateVehicle(v);
 		
@@ -126,6 +155,7 @@ public class VehicleController {
 		
 	}
 	
+	// 차량 삭제
 	@RequestMapping("delete.ve")
 	public String deleteVehicle(Vehicle v, HttpSession session) {
 		
@@ -140,9 +170,58 @@ public class VehicleController {
 		}
 		
 	}
-
 	
 	
 	// ---------- 페이지 이동용 ----------
+	
+	
+	
+	// ---------- 메소드 선언 ----------
+	
+	// 공유해서 쓸 수 있게끔 따로 정의해놓은 메소드
+	// 전달받은 파일을 서버에 업로드 시킨 후 수정명 리턴하는 메소드
+	public String saveFile(MultipartFile file, HttpServletRequest request) {
+		
+		// 파일을 업로드 시킬 폴더 경로 (String savePath)
+		String resources = request.getSession().getServletContext().getRealPath("resources"); // webapp 폴더의 resources 폴더까지의 물리적인 경로
+		String savePath = resources + "\\uploadFiles\\vehicle\\"; // 실제로 저장되어있는 폴더 (resources 폴더 안 경로)
+		
+		
+		// 원본명 (aaa.jpg)
+		String originName = file.getOriginalFilename();
+		
+		// 수정명
+		// 년월일시분초 (String currentTime)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 확장자 (String ext)
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".jpg"
+		
+		// 최종 수정명 (20200522202011.jpg)
+		String changeName = currentTime + ext;
+		
+		
+		// 서버에 파일을 업로드시키는 메소드
+		try {
+			file.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
+	
+	// 전달받은 파일명을 가지고 서버로부터 삭제하는 메소드
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		// (실행 후 리턴값 없음)
+		
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "\\uploadFiles\\vehicle\\";
+		
+		File deleteFile = new File(savePath + fileName); // 삭제하고자 하는 풀 경로(경로+파일명)
+		deleteFile.delete(); // 실제 서버의 파일 찾아 삭제 처리
+		
+	}
+	
 
 }

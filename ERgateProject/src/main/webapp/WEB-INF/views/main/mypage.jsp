@@ -224,7 +224,7 @@
 		<div class="contentArea">
             <!-- 내용 작성 영역 입니다-->
 
-            <form action="update.ma" method="post">
+            <form id="mypageForm" action="update.ma" method="post" enctype="multipart/form-data">
                 <table id="mypageTable">
                     <tr>
                         <td rowspan="2" id="mypageProfileArea">
@@ -356,7 +356,10 @@
                                     <td>생년월일</td>
                                 </tr>
                                 <tr>
-                                    <td><input name="empName" type="text" value="${ loginUser.empName }" required></td>
+                                    <td>
+                                    	<input name="empName" type="text" value="${ loginUser.empName }" required>
+                                    	<div id="checkResult2" style="font-size:0.8em; padding-top:5px; margin-bottom: 10px;">&nbsp;</div>
+                                    </td>
                                     <td><input name="empBirthday" type="text" value="${ loginUser.empBirthday }" placeholder="YYYY/MM/DD"></td>
                                 </tr>
                                 <tr>
@@ -392,10 +395,101 @@
                     </tr>
                 </table>
                 <input type="hidden" name="empId" value="${ loginUser.empId }">
+                <div id="fileArea">
+					<input type="file" name="reUploadFile" id="fileInput" onchange="loadImg(this, 1);">
+				</div>
             </form>
 		</div>
 	</div>
 	
+	    
+    <!-- 프로필 사진 첨부 -->
+    <script>
+		$(function(){
+			$("#fileArea").hide();
+			
+			$("#mypageProfileImg").click(function(){
+				$("#fileInput").click();
+			});
+		});
+	
+		function loadImg(inputFile, num){
+			// inputFile : 현재 변화가 생긴 input type="file" 요소
+			// num : 몇번째 input요소인지 확인 후 해당 영역에 미리보기 하기위해
+			
+			// [참고] https://developer.mozilla.org/ko/docs/Web/API/FileReader
+			
+			// file이 존재할 경우 --> input 요소의 files 속성인 배열의 0번 인덱스에 담김
+			if(inputFile.files.length == 1){
+				// 0번 인덱스에 파일이 담긴 경우 (file이 존재할 경우)
+				
+				// 파일을 읽어들일 FileReader 객체 생성
+				var reader = new FileReader();
+				
+				// 파일을 읽어주는 메소드 --> 해당 파일을 읽어들이는 순간 해당 파일만의 고유한 url 부여 
+				reader.readAsDataURL(inputFile.files[0]);
+				
+				// 파일 읽기가 다 완료되었을 때 실행할 메소드 
+				reader.onload = function(e){
+					switch(num){
+						case 1: $("#mypageProfileImg").attr("src", e.target.result); break;
+					}
+				};
+			}
+		}
+	</script>
+	    
+    <!-- 이름 중복검사 -->
+    <script>
+		function nameCheckValidate(num){
+    		
+    		if(num == 1){ // 이름 중복체크를 아직 안하는 경우 : 메세지 보여지지 않음, 버튼 비활성화
+    			
+    			$("#mypageSubmitBtn").attr("disabled", true);
+    			
+    		}else if(num == 2){ // 이름 중복체크 후 사용 불가능한 이름일 경우 : "중복 이름 존재, 사용 불가능" 메세지 보여짐, 버튼 비활성화
+    			
+    			$("#checkResult2").css("color", "red").text("중복되는 이름이 존재합니다. 다른 이름을 입력해주세요.");
+    			$("#mypageSubmitBtn").attr("disabled", "true");
+    			
+    		}else{ // 이름 중복체크 후 사용 가능한 이름일 경우 : "사용 가능한 이름" 메세지 보여짐, 버튼 활성화
+    			
+    			$("#checkResult2").css("color", "rgb(26, 188, 156)").text("사용 가능한 이름입니다.");
+    			$("#mypageSubmitBtn").removeAttr("disabled");
+    		}
+    	}
+    
+    	$(function(){
+    		
+    		var $idInput = $("#mypageForm input[name=empName]");
+    		
+    		$idInput.keyup(function(){
+    			
+    			if($idInput.val().length >= 2){
+    				
+    				$.ajax({
+    					url:"nameCheck.ma",
+    					data:{empName:$idInput.val()},
+    					success:function(status){
+    						
+    						if(status == "fail"){ // 중복되는 이름 존재 == 사용 불가
+    							nameCheckValidate(2);
+    						}else{ // 중복되는 이름 없음 == 사용 가능
+    							nameCheckValidate(3);
+    						}
+    						
+    					},error:function(){
+    						console.log("이름 중복 체크용 ajax 통신 실패");
+    					}
+    				});
+    				
+    			}else{ // 중복체크 X
+    				nameCheckValidate(1);
+    			}
+    			
+    		});
+    	});
+    </script>
 	
 	<!-- 비밀번호 유효성 검사 -->
 	<script>
@@ -429,7 +523,6 @@
 			});
 		});
     </script>
-		
 		
 	<!-- 다음 주소 검색 API -->
 	<script>

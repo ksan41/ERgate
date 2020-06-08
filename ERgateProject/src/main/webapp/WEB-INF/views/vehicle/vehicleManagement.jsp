@@ -248,7 +248,7 @@
 	.vmPersonnel2 {
 		border-bottom: 1px solid lightgray;
 	}
-	.vmImgEnroll {
+	.vmImgEnroll1 {
 		width: 200px;
 		height: 50px;
 		text-align: center;
@@ -380,7 +380,16 @@
 				<table class="vhclManageInner">
 					<tr>
 						<td rowspan="5" class="vmTdImg">
-							<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/${ v.vhclImage }">
+							
+							<c:choose>
+								<c:when test="${ empty v.vhclImage }">
+									<img class="vmImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/vhclLogo.png">
+								</c:when>
+								<c:otherwise>
+									<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/vehicle/${ v.vhclImage }">
+								</c:otherwise>
+								
+							</c:choose>
 						</td>
 						<td class="vmTdContent">
 							<span class="vmLabel">차종</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -472,14 +481,13 @@
 			
 		</div>
 
-	<!-- 모달팝업 (head부분에 링크들도 복사해주셔야합니다) 모달 사용시엔 메뉴바를 head맨 윗부분에 include해주셔야 합니다. -->
-	<!-- 모달 타겟. href의 #xxx와 모달영역의 id(xxx)가 한셋트입니다. 용도에 따라 href와 id는 변경해주세요.(여러개 가능) 모달타겟으로 쓸 요소에 class와 href 복사해주세요. -->
-
+		<!-- 모달팝업 (head부분에 링크들도 복사해주셔야합니다) 모달 사용시엔 메뉴바를 head맨 윗부분에 include해주셔야 합니다. -->
+		<!-- 모달 타겟. href의 #xxx와 모달영역의 id(xxx)가 한셋트입니다. 용도에 따라 href와 id는 변경해주세요.(여러개 가능) 모달타겟으로 쓸 요소에 class와 href 복사해주세요. -->
 		<div id="enroll" class="modal">
 			<div class="modal-title">업무차량 등록</div>
 			<div class="modal-content">
 			<a class="open-modal" href="#modal-form"></a>
-			<form action="insert.ve" method="post">
+			<form action="insert.ve" method="post" enctype="multipart/form-data">
 				<div>
 					<table class="vehicleModalTable">
 						<tr>
@@ -501,7 +509,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="vmImgEnroll">차량 이미지</td>
+							<td class="vmImgEnroll1">차량 이미지</td>
 							<td class="vmImgEnroll2">
 								<img id="vmImgEnroll" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/vhclLogo.png">
 							</td>
@@ -511,7 +519,11 @@
 				<!-- 예약/취소 버튼 -->
 				<div class=btns>
 					<button class="vmSubmitBtn" type="submit">등록하기</button>
-					<button class="vmResetBtn" type="reset">삭제하기</button>
+					<button class="vmResetBtn" type="reset">취소</button>
+				</div>
+				
+				<div id="fileArea">
+					<input type="file" name="uploadFile" id="fileInput" onchange="loadImg(this, 1);">
 				</div>
 			</form>
 			</div>
@@ -519,29 +531,38 @@
 		
 		
 		
-		<!-- 수정하기 부분 내용 -->
+		<!-- 수정하기 모달 -->
 		<div id="edit" class="modal">
 			<div class="modal-title">업무차량 수정</div>
 			<div class="modal-content">
-	
+			<form action="update.ve" method="post" enctype="multipart/form-data">
 				<div>
 	                <table class="vehicleModalTable">
 	                    <tr>
 							<td class="vmName">차종</td>
-							<td class="vmName2"><input class="vmModalInput" type="text" value="그랜저"></td>
+							<td class="vmName2"><input class="vmModalInput" type="text" value="${ v.vhclModel }"></td>
 						</tr>
 						<tr>
 							<td class="vmLocation">차량 번호</td>
-							<td class="vmLocation2"><input class="vmModalInput" type="text" value="33허 3333"></td>
+							<td class="vmLocation2"><input class="vmModalInput" type="text" value="${ v.vhclNo }"></td>
 						</tr>
 						<tr>
 							<td class="vmPersonnel">최대 탑승인원</td>
-							<td class="vmPersonnel2"><input class="vmModalInput" type="text" value="5명"></td>
+							<td class="vmPersonnel2"><input class="vmModalInput" type="text" value="${ v.vhclCapacity }"></td>
 						</tr>
 						<tr>
-							<td class="vmImgEnroll">차량 이미지</td>
+							<td class="vmImgEnroll1">차량 이미지</td>
 							<td class="vmImgEnroll2">
-								<img id="vmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/그랜저.jpg">
+								
+								<c:choose>
+									<c:when test="${ empty v.vhclImage }">
+										<img id="vmImgEdit" src="${pageContext.servletContext.contextPath }/resources/siteImgs/vhclLogo.png">
+									</c:when>
+									<c:otherwise>
+										<img id="vmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/vehicle/${ v.vhclImage }">
+									</c:otherwise>
+								</c:choose>
+								
 							</td>
 						</tr>
 	                </table>
@@ -552,32 +573,91 @@
 					<button class="vmResetBtn" type="reset">삭제하기</button>
 				</div>
 
+				<div id="fileArea2">
+					<input type="file" name="reUploadFile" id="fileInput2" onchange="loadImg2(this, 1);">
+				</div>
+			</form>
 			</div>
 			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br> 
 		</div>
 
 	</div>
-		
-		<!-- 모달용 스크립트 -->
-		<script>
-		
-			$('.open-modal').click(function() {
-				$(this).modal({
-					fadeDuration : 150
-				});
-
+	
+	
+    <!-- 사진 첨부 -->
+    <script>
+		$(function(){
+			$("#fileArea").hide();
+			
+			$("#vmImgEnroll").click(function(){
+				$("#fileInput").click();
 			});
-			
-			/* 등록하기 모달 여는 function */
-			function open_modal() {
-				$("#open_enroll").click();
-			};
-			
-			function open_modal2() {
-				$("#open_edit").click();
-			};
+		});
+	
+		function loadImg(inputFile, num){
 
-		</script>
+			if(inputFile.files.length == 1){
+				
+				var reader = new FileReader();
+				
+				reader.readAsDataURL(inputFile.files[0]);
+				
+				reader.onload = function(e){
+					switch(num){
+						case 1: $("#vmImgEnroll").attr("src", e.target.result); break;
+					}
+				};
+			}
+		}
+	</script>
+	
+	<!-- 사진 첨부 (수정) -->
+    <script>
+		$(function(){
+			$("#fileArea2").hide();
+			
+			$("#vmImgEdit").click(function(){
+				$("#fileInput2").click();
+			});
+		});
+	
+		function loadImg2(inputFile, num){
+
+			if(inputFile.files.length == 1){
+				
+				var reader = new FileReader();
+				
+				reader.readAsDataURL(inputFile.files[0]);
+				
+				reader.onload = function(e){
+					switch(num){
+						case 1: $("#vmImgEdit").attr("src", e.target.result); break;
+					}
+				};
+			}
+		}
+	</script>
+		
+	<!-- 모달용 스크립트 -->
+	<script>
+	
+		$('.open-modal').click(function() {
+			$(this).modal({
+				fadeDuration : 150
+			});
+
+		});
+		
+		/* 등록하기 모달 여는 function */
+		function open_modal() {
+			$("#open_enroll").click();
+		};
+		
+		function open_modal2() {
+			$("#open_edit").click();
+		};
+
+	</script>
 
 </body>
 </html>
