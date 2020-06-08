@@ -363,6 +363,15 @@ div{
 		<c:remove var="msg" scope="session"/>
 	</c:if>
 	
+	<c:if test="${ !empty empId }">
+		<script>
+			console.log(empId);
+			empPrfUpdateSuccess(empId);
+		</script>
+		<c:remove var="empPrfUpdateSuccess" scope="session"/>
+	</c:if>
+	
+	
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -453,10 +462,9 @@ div{
 	$(function(){
 		selectNoList();
 		
-/* 		if( ${request.empPrfUpdateSuccess} != null){
+/* 	if( ${request.empPrfUpdateSuccess} != null){
 			updateEmpProfile();
-		} */
-		
+	}*/
 		
 		/* 조직도 부서별 사원 조회 */
 		$(".deptList").click(function(){
@@ -501,6 +509,7 @@ div{
 		
 		empId = window.event.target.getAttribute("key");
 		
+		console.log(empId);
 		$.ajax({
 			url: "empProfile.gr",
 			type: "post",
@@ -643,10 +652,80 @@ div{
 		
 	}
 	
+	/* 수정하기 클릭시 넘어가는 수정요청 펑션 */
 	function empUpdate(){
-		//console.log(empId);
-		
 		location.href="groupProfileUpdateDetail.gr?empId="+empId;
+	}
+	
+	/* 수정후 화면에 출력할 ajax */
+	function empPrfUpdateSuccess(empId){
+		
+		console.log(empId);
+		$.ajax({
+			url: "empProfile.gr",
+			type: "post",
+			data:{"empId":empId}, 
+			async: false,
+			success: function(empPrf){
+			
+				var valueUp="";
+				valueUp +=
+					
+						'<div class="profile_img">';
+							
+						if(empPrf.empImage == undefined){
+								valueUp += '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
+							}else{
+									
+								valueUp += '사진 샘플데이터 넣으면 수정하기';
+							/* '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
+							 */
+							} 
+						
+						valueUp +=
+			            '</div>' +
+			            '<div class="profile_name">' +
+			                '<div class="dept_name">'+ empPrf.empName +'</div>'; 
+			                
+			                switch(empPrf.empStatus){
+			                case 0 : valueUp += '<button class="smallBtnGrey">'+ '비접속' +'</button>'; break;
+			                case 1 : valueUp += '<button class="smallBtnGrey">'+ '휴가중' +'</button>'; break;
+			                case 2 : valueUp += '<button class="smallBtnGrey">'+ '휴직' +'</button>'; break;
+			                case 3 : valueUp += '<button class="smallBtnGrey">'+ '외근중' +'</button>'; break;
+			                case 4 : valueUp += '<button class="smallBtnGrey">'+ '회의중' +'</button>'; break;
+			                case 5 : valueUp += '<button class="smallBtn">'+ '접속중' +'</button>'; break;
+			                default : ''; 
+			                } 
+			                
+							valueUp +=
+							'&nbsp; <button id="profile_update" class="smallBtnGreyUpdate" onclick="empUpdate();">수정하기</button><br><br>' +
+			                '<div class="dept_rank_code1">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
+			                '<div style="margin-top: 5px;""><span style="vertical-align:middle;"><img src="${pageContext.servletContext.contextPath}/resources/icons/mail.png" width="20px;"></span>'+
+			                '<span class="dept_mail">&nbsp;' + empPrf.empComEmail + '</span></div>' +
+			            '</div>'
+							
+				$(".profile_up").html(valueUp);
+				
+			 	var valueDown="";
+			 	valueDown +=
+		 				 '<tr><th>사원번호</th><td>'+ empPrf.empCode + '</td></tr>' +
+			             '<tr><th>입사일</th><td>'+ empPrf.hireDate + '</td></tr>' +
+			             '<tr><th>아이디</th><td>' + empPrf.empId + '</td></tr>' +
+			             '<tr><th>생년월일</th><td>' + empPrf.empBirthday + '</td></tr>' + 
+			             '<tr><th>휴대폰 번호</th><td>' + empPrf.empPhone + '</td></tr>' +
+			             '<tr><th>내선번호</th><td>' + empPrf.empExtension + '</td></tr>' +
+						 '<tr><th>팩스번호</th><td>' + empPrf.empFax + '</td></tr>' +	                    
+			             '<tr><th>부서명</th><td>' + empPrf.deptTitle + '</td></tr>' +
+			             '<tr><th>직급/직책</th><td>' + empPrf.rankTitle + '/' + empPrf.jobTitle + '</td></tr>' +
+			         	 '<tr><th>자택주소</th><td>' + empPrf.empAddress + '</td></tr>'
+			 	
+				$("#profile_list").html(valueDown);
+				
+			},
+			error:function(){
+				console.log("조직도 사원 프로필 조회 실패");
+			}
+		});
 	}
     </script>
 </body>
