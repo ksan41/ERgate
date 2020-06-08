@@ -522,9 +522,6 @@
 			});
 
 	});
-	function refreshMemList(){
-		location.reload(true);
-	}
 	$(document).ready(function() { 
 		$(".replyUpdateBtn").click(function(){
 			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
@@ -550,7 +547,19 @@
 			/* location.href="insertReReply.bo?replyNo=" + replyNo + "&replyWriter=" + replyWriter; */
 		});
 		
+		if(window.sessionStorage.getItem('name') != null){
+			var offtop = sessionStorage.getItem('name');
+			console.log(offtop);
+			$('html, body').animate({scrollTop : offtop}, 400);
+			sessionStorage.clear();
+		}else {
+			console.log("아무 값도 없다!!");
+			
+		}
+
+
 		$(document).on("click",".rereplBtn",function(){
+			
 			var refRno = $(this).parent().find('input').val();
 			var replyWriter = "${loginUser.empName}";
 			var empId = "${loginUser.empId}";
@@ -561,18 +570,6 @@
 			var form = $(".rereplyForm")[0];
 		    var formData = new FormData(form);
 		    formData.append("replyContent", replyContent);
-		    for (var key of formData.keys()) {
-
-		    	  console.log(key);
-
-		    	}
-
-		    	for (var value of formData.values()) {
-
-		    	  console.log(value);
-
-		    	}
-		    
 		    $.ajax({
                 url : "insertReReply.bo",
                 data : formData,
@@ -606,19 +603,26 @@
 						}
 						value2 += "</table>";
 						$(".rereplyShow" + relist.refRno).html() + value2;
-						refreshMemList();
-						fnMove();
+						var offset = $(".rereplyShow" + relist.refRno).offset().top;
+						console.log(offset);
+						sessionStorage.setItem('name', offset);
+
+						location.reload();
+						
+	 					
+						
                 },
                 error:function(){	// error : ajax 통신실패시 처리할 함수 지정
  					console.log("ajax 통신 실패!");
  				},
  				complete:function(){// complete : ajax 통신 성공여부와 상관없이 실행
- 					console.log("무조건 호출!!");
+ 					
  				}
             });
+		    
 		});
 		
-
+		
 	});
 	
 	$(document).ready(function() {
@@ -676,6 +680,7 @@
 					console.log("여기는 어떻게");
 				}
 			});
+			
 	});
 	</script>
 	
