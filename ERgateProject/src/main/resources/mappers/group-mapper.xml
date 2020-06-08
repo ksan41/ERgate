@@ -133,5 +133,12 @@
 		   	   emp_fax=#{empFax}
 		 where emp_id=#{empId}
 	</update>
+	
+	<!-- 계정승인 거절용 -->
+	<delete id="noUpdateGroupEmp">
+		delete from employee
+		where emp_id=#{empId}
+	</delete>
+	
 
 </mapper>

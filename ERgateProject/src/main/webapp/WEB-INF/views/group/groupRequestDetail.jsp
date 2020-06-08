@@ -321,6 +321,7 @@
                                    <td><input type="text" name="empCode" id="empCode" value="${empPrf.empCode}" readonly></td>
                                    <td>
                                         <select name="deptCode" id="deptTitle">
+                                        	<option>부서를 설정하세요</option>
 	                                        <option value="D0">임원</option>
 	                                        <option value="D1">개발팀</option> 
 	                                        <option value="D2">회계팀</option>
@@ -337,6 +338,7 @@
                                 <tr>
                                     <td>
                                         <select name="rankCode" id="rankTitle">
+                                        	<option>직급을 설정하세요</option>
                                             <option value="D0">대표</option>
                                             <option value="R1">부대표</option> 
                                             <option value="R2">전무</option>
@@ -352,6 +354,7 @@
                                     </td>
                                     <td>
                                         <select name="jobCode" id="jobTitle">
+                                        	<option>직책을 설정하세요</option>
                                             <option value="J0">COO</option>
                                             <option value="J1">본부장</option> 
                                             <option value="J2">팀장</option>
@@ -424,14 +427,14 @@
                     <tr>
                         <td colspan="2" id="mypageBtnArea">
                         	<button id="mypageSubmitBtn" class="bigBtn" type="submit">승인</button>
-                        	<button id="mypageCancelBtn" class="bigBtn" onclick="location.href='requestList.gr';">목록</button>
-                        	<button id="mypageCancelBtn" class="bigBtn" type="button" >승인거절</button>
+                        	<button id="mypageCancelBtn" class="bigBtn" type="button" onclick="location.href='requestList.gr';">목록</button>
+                        	<button id="mypageCancelBtn" class="bigBtn" type="button" onclick="location.href='noUpdate.gr?empId=${empPrf.empId}';">승인거절</button>
                         </td>
                     </tr>
                 </table>
             </form>
-
 		</div><!-- contentArea -->
 	</div><!-- outer -->
+
 </body>
 </html>

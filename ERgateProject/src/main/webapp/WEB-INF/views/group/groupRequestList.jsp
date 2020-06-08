@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -128,7 +128,10 @@
 	background-color: rgb(224, 224, 224);
 	cursor: pointer;
 }
-
+.pageNoClick{
+   pointer-events: none;
+   cursor: default;
+}
 /* 게시판 스타일 */
 </style>
 </head>
@@ -177,7 +180,7 @@
 			<!-- btnAndSearch - 버튼과 검색바 같이 들어가는 DIV 끝-->
 			<!-- 승인 대기 목록 게시판 -->
 			<div class="boardScroll" style="overflow: auto; width: 1400px; height: 400px;">
-			<table class="boardTable" style="overflow: auto;">
+			<table class="boardTable">
 				<thead>
 					<tr>
 						<th>신청 일시</th>
@@ -187,26 +190,41 @@
 					</tr>
 				</thead>
 				<tbody>
-			
-				<c:forEach var="list" items="${requestList}">
-					<tr>
-						<td>${requestList[0].hireDate}</td>
-						<td>${list.empId}</td>
-						<td>${list.empName}</td>
-						<td>${list.empPhone}</td>
-					</tr>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${empty requestList}">
+						<tr><td colspan="5" class="pageNoClick">승인 신청 대기 리스트가 없습니다.</td></tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="list" items="${requestList}">
+							<tr style="height:35px;">
+								<td>${list.hireDate}</td>
+								<td>${list.empId}</td>
+								<td>${list.empName}</td>
+								<td>${list.empPhone}</td>
+							</tr>
+							</c:forEach>
+							<c:forEach var="b" begin="1" end="${9-fn:length(requestList)}">
+	    						<tr>
+									<td class="pageNoClick">&nbsp;</td>
+									<td class="pageNoClick">&nbsp;</td>
+									<td class="pageNoClick">&nbsp;</td>
+									<td class="pageNoClick">&nbsp;</td>
+								</tr>
+							</c:forEach>
+							<script>
+								 $(function(){
+					                 $(".boardTable tbody tr").click(function(){
+					                    location.href="requestDetail.gr?empId=" + $(this).children().eq(1).text();
+					                 })
+					              });
+							</script>
+							
+						</c:otherwise>
+				</c:choose>
 				</tbody>
 			</table>
 			
-			<script>
-			 $(function(){
-                 $(".boardTable tbody tr").click(function(){
-                    location.href="requestDetail.gr?empId=" + $(this).children().eq(1).text();
-                 })
-              });
-			</script>
-			
+
 			
 			</div>
 		</div>
