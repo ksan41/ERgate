@@ -7,21 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.dao.MeetingroomDao;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
-
 @Service("mrService")
-public class MeetingroomServiceImpl implements MeetingroomService{
+public class MeetingroomServiceImpl implements MeetingroomService {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	@Autowired
 	private MeetingroomDao mrDao;
-	
-	
+
 	@Override
 	public int currentStatusList() {
 		return 0;
@@ -52,42 +51,25 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 		return mrDao.insertMeetingroom(sqlSession, m);
 	}
 
-
-
-	
-
 	@Override
 	public int deleteMeetingroom(int mtrmCode) {
 		return 0;
 	}
 
-	//회의실 예약현황 리스트 조회용-
+	// 회의실 예약현황 리스트 조회용-
 	@Override
 	public int statusListCount() {
 		return mrDao.statusListCount(sqlSession);
 	}
-
 
 	// 회의실예약현황리스트조회용
 	@Override
 	public ArrayList<MeetingroomReservation> statusList(PageInfo pi) {
 		return mrDao.statusList(sqlSession, pi);
 	}
-	
-	
-	
-	
-	
-	
-	// 내 예약현황리스트조회용
-	@Override
-	public int myReserveList(String empId) {
-		return mrDao.myReserveList(sqlSession, empId);
-	}
-
 
 	@Override
-	public ArrayList<Meetingroom> selectMtroomDetail(){
+	public ArrayList<Meetingroom> selectMtroomDetail() {
 		return mrDao.selectMtroomDetail(sqlSession);
 	}
 
@@ -97,12 +79,22 @@ public class MeetingroomServiceImpl implements MeetingroomService{
 		return mrDao.reserveMtroom(sqlSession, mr);
 	}
 
-	//회의실 수정용
+	// 회의실 수정용
 	@Override
 	public int updateMeetingroom(Meetingroom m) {
 		return mrDao.updateMeetingroom(sqlSession, m);
 	}
 
+	// 나의 예약 현황 총 개수 조회용 서비스
+	@Override
+	public int selectRvListCount() {
+		return mrDao.selectRvListCount(sqlSession);
+	}
 
-	
+	// 나의 예약 조회용 서비스
+	@Override
+	public ArrayList<MeetingroomReservation>myReserveList(String empId) {
+		return mrDao.myReserveList(sqlSession, empId);
+	}
+
 }

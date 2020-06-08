@@ -24,6 +24,7 @@
 		<result column="MTRM_END_TIME" property="mtrmEndTime"/>
 		<result column="MTRM_PURPOSE" property="mtrmPurpose"/>
 		<result column="MTRM_RESERV_STATUS" property="mtrmReservStatus"/>
+		<result column="MTRM_IMAGE" property="mtrmImage"/>
 	</resultMap>
 
 	<select id="statusListCount" resultType="_int">
@@ -56,19 +57,27 @@
 		values(seq_mroom_no.nextval , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y')	
 	</insert>
 
-	<select id="myReserveList" resultMap="MeetingroomReservationResultSet">
-		select *
-		  from meetingroom_reservation
-		 where emp_id = #{empId}
+	<select id="selectRvListCount" resultType="_int">
+		select count(*)
+          from meetingroom_reservation
+         where emp_id=#{empId}
+           and mtrm_reserv_status='Y'
+	</select>
+
+	<select id="myReserveList" parameterType="string" resultMap="MeetingroomReservationResultSet">
+		select mr.emp_id, m.mtrm_code, mr.mtrm_name, mr.mtrm_start_date, mr.mtrm_start_time, mr.mtrm_end_date, mr.mtrm_end_time, mr.mtrm_purpose, mr.mtrm_reserv_status, m.mtrm_image
+		  from meetingroom_reservation mr,
+		       meetingroom m
+		 where m.mtrm_code = mr.mtrm_code
+		   and emp_id = #{empId}
 	</select>
 	
-	<update id="updateMeetingroom">
+	<update id="updateMeetingroom" parameterType="Meetingroom">
 		update meetingroom
 		   set mtrm_name=#{mtrmName},
 		   	   mtrm_location=#{mtrmLocation},
-		   	   mtrm_capacity=#{mtrmCapacity},
+		   	   mtrm_capacity=#{mtrmCapacity}
 		 where mtrm_code = #{mtrmCode}
-		   
 	</update>
 
 </mapper>

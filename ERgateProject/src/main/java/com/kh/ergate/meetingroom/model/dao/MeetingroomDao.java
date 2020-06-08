@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
@@ -40,11 +41,20 @@ public class MeetingroomDao {
 		return sqlSession.insert("meetingroomMapper.insertMeetingroom", m);
 	}
 
-	public int myReserveList(SqlSessionTemplate sqlSession, String empId){
-		return sqlSession.selectOne("meetingroomMapper.myReserveList", empId);
+	public int selectRvListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("meetingroomMapper.selectRvListCount");
+	}
+	
+	public ArrayList<MeetingroomReservation> myReserveList(SqlSessionTemplate sqlSession, String empId){
+		//int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		//RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.myReserveList", empId);
 	}
 
 	public int updateMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
 		return sqlSession.update("meetingroomMapper.updateMeetingroom", m);
 	}
+	
+	
+	
 }

@@ -1,16 +1,20 @@
 package com.kh.ergate.meetingroom.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.meetingroom.model.service.MeetingroomServiceImpl;
@@ -27,16 +31,19 @@ public class MeetingroomController {
 	/* 할 수 있는 부분부터 해서 주석 참고 바람 */
 
 	// 회의실 예약용 
-	//회의실예약용(reserveMtroom.me) ---reserveMtroom(MeetingroomReservation,ArrayList<String> empId,Model model)
 
 	@RequestMapping("reserveMtroom.me")
-	public String reserveMtroom(MeetingroomReservation mr) {
+	public String reserveMtroom(MeetingroomReservation mr, HttpSession session) {
 		
-		
-		//System.out.println(mr);
-		//int result = new mrService.reserveMtroom(MeetingroomReservation mr);
 		int result = mrService.reserveMtroom(mr);
-		return"";
+		
+		if(result > 0) {
+			session.setAttribute("msg", "성공적으로 예약되었습니다.");
+			return "redirect:myReserve.me?currentPage=1";
+		}else {
+			session.setAttribute("msg", "예약 실패하였습니다. 다시 시도해주세요");
+			return "redirect:myReserve.me?currentPage=1";
+		}
 	}
 
 	// 현재 예약 조회용
@@ -56,7 +63,7 @@ public class MeetingroomController {
 
 		// System.out.println(listCount);
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
 
 		ArrayList<MeetingroomReservation> list = mrService.statusList(pi);
 
@@ -74,22 +81,23 @@ public class MeetingroomController {
 
 	}
 
-	// 내 예약현황리스트조회용
-	@RequestMapping("myReserve.me")
-	public String myReserveList(String empId, MeetingroomReservation mr, Model model) {
+	// 내 예약현황 리스트 조회용
 
-		/*
-		 * int = mrService.myReserveList();
-		 * 
-		 * model.addAttribute("list", list);
-		 */
+	//@ResponseBody
+	@RequestMapping(value="myReserve.me")
+	public void myReserveList(String empId, Model model, HttpSession session, HttpServletResponse response) throws JsonIOException, IOException {
 
-		return "meetingroom/meetingroomCurrentStatus";
-
+		  ArrayList<MeetingroomReservation> list = mrService.myReserveList(empId);
+		  
+		  model.addAttribute("list", list);
+		  System.out.println(list);
+		  
+		  response.setContentType("application/json; charset=utf-8");
+		  
+		  new Gson().toJson(list, response.getWriter());
 	}
 
 	// 회의실정보 조회용(mtroomDetail.me) ---selectMtroomDetail(String
-	// mtrmCode,Meetingroom,Model)
 	@RequestMapping("mtroomDetail.me")
 	public String selectMtroomDetail(Meetingroom m, Model model) {
 
