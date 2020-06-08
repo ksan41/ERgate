@@ -51,7 +51,7 @@
 	<insert id="insertRequest" parameterType="Employee">
 		INSERT INTO EMPLOYEE
 		VALUES(#{empId}, NULL, NULL, NULL, 'ER'||SEQ_EMPLOYEE_NO.NEXTVAL, #{empPwd}, #{empName}, 
-			   NULL, NULL, NULL, NULL, #{empPriEmail}, #{empPhone}, 
+			   SYSDATE, NULL, NULL, NULL, #{empPriEmail}, #{empPhone}, 
 			   #{empAddress}, #{empAddressDetail}, NULL, #{empBirthday}, 'N', NULL, NULL)
 	</insert>
 	
