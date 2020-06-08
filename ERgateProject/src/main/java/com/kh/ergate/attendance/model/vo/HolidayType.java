@@ -11,11 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class WorkTime {
-
-	private int workTimeCode;
-	private String arrive;
-	private String leave;
-	private String halfdayOff;
-	
+public class HolidayType {
+	private String holidayTypecode;
+	private String holidayType;
+	private String holidayCount;
 }
