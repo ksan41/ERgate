@@ -100,7 +100,10 @@ public class BoardServiceImpl implements BoardService {
 	public ReReply rereplyOne(int refRno) {
 		return bodDao.ReReplyOne(sqlSession, refRno);
 	}
-	
+	@Override
+	public int insertReply(Reply repl) {
+		return bodDao.insertReply(sqlSession, repl);
+	}
 
 	@Override
 	public int deleteBoard(int bno) {
@@ -112,6 +115,8 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 	
 

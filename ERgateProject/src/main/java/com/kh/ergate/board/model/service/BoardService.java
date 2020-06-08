@@ -50,7 +50,7 @@ public interface BoardService {
 	// 5-4. 게시판 대댓글 작성 서비스
 	int insertReReply(ReReply replForm);
 	ReReply rereplyOne(int refRno);
-	
+	int insertReply(Reply repl);
 	
 	
 	
@@ -60,6 +60,7 @@ public interface BoardService {
 	
 	// 5. 게시글 수정용 서비스
 	int updateBoard(Board b);
+	
 	
 	
 

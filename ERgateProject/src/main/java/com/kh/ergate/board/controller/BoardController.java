@@ -195,8 +195,15 @@ public class BoardController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="insertReply.bo", produces="application/json; charset=utf-8")
+	public int insertReply(Reply repl) {
+		int result = bodService.insertReply(repl);
+		return result;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="insertReReply.bo", produces="application/json; charset=utf-8")
-	public String insertBoard(ReReply replForm) {
+	public String insertReReply(ReReply replForm) {
 		int refRno = replForm.getRefRno();
 	
 		int result = bodService.insertReReply(replForm);
@@ -207,41 +214,6 @@ public class BoardController {
 	
 	
 	/*
-	
-	 * @RequestMapping("insert.bo") public String insertBoard(Board b,
-	 * HttpServletRequest request,
-	 * 
-	 * @RequestParam(name="uploadFile", required=false) MultipartFile file) {
-	 * 
-	 * //System.out.println(b); //System.out.println(file.getOriginalFilename()); //
-	 * 첨부파일 있을 경우 원본명 / 첨부파일 없을 경우 빈문자열
-	 * 
-	 * // 파일업로드 관련된 라이브러리 추가해야만 잘 담김!!
-	 * 
-	 * // 현재 넘어온 파일이 있을 경우 서버에 업로드 후 원본명, 수정명 뽑아서 b 주섬주섬 담기
-	 * if(!file.getOriginalFilename().equals("")) {
-	 * 
-	 * // 서버에 파일 업로드 --> saveFile 메소드로 따로 빼서 정의할 것 String changeName = saveFile(file, request);
-	 * 
-	 * b.setOriginName(file.getOriginalFilename()); b.setChangeName(changeName);
-	 * 
-	 * }
-	 * 
-	 * int result = bService.insertBoard(b);
-	 * 
-	 * if(result > 0) { // 게시글 작성 성공 --> 갱신된 리스트가 보여지는 게시글 리스트 페이지
-	 * 
-	 * 
-	 * return "redirect:list.bo?currentPage=1";
-	 * 
-	 * }else { // 게시글 작성 실패 // 메세지 return "common/errorPage"; }
-	 * 
-	 * 
-	 * }
-	 * 
-	 * 
-
-	 * 
 	 * @RequestMapping("delete.bo") public String deleteBoard(int bno, String
 	 * fileName, HttpServletRequest request, Model model) {
 	 * 

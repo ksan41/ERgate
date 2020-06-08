@@ -170,6 +170,11 @@
     	order by b.reply_no desc) 
     	where rownum=1
     </select>
+    
+    <insert id="insertReply" parameterType="Reply">
+		insert into Board_reply
+		values(seq_bre_no.nextval, #{empId}, #{refBno}, #{replyContent}, sysdate, #{replyWriter})
+	</insert>
 	
 </mapper>
 

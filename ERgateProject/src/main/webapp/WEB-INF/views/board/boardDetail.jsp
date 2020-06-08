@@ -316,16 +316,18 @@
 			
 			<!-- 답글 입력 영역 -->
 			<div class="replyWrap" style="width:100%;">
-			<form action="reply.bo" method="get">
+			<form class="istReplForm" action="" method="get">
 				<div class="replyArea" style="float:left;">
 					<!-- 텍스트에리어 -->
 					<!-- 용도에 따라 cols(가로) rows(세로) 적절히 변경-->
-					<textarea class="textArea" name="replyContent" cols="170" rows="5" placeholder="내용을 입력하세요."></textarea>
+					<textarea class="textArea replText" name="replyContent" cols="170" rows="5" placeholder="내용을 입력하세요."></textarea>
 					<!-- 텍스트에리어 -->
 				</div>
-				<input type="hidden" name="userNo" value="로그인한유저번호">
+				<input type="hidden" name="replyWriter" value="${loginUser.empName }">
+				<input type="hidden" name="empId" value="${loginUser.empId }">
+				<input type="hidden" name="refBno" value="${ b.boardNo }">
 				<div class="btnArea" style="float:left; height:81px;">
-					<button class="smallBtn" type="submit" style="margin-left:35px; margin-top:27px; background: rgb(190, 190, 190);">등록</button>
+					<button class="smallBtn istReplBtn" type="button" style="margin-left:35px; margin-top:27px; background: rgb(190, 190, 190);">등록</button>
 				</div>
 			</form>
 			</div>
@@ -368,7 +370,24 @@
 	</div>
 	<input id="loginUserName" type="hidden" value="${loginUser.empName }">
 	<script>
-	
+	function istRepl(){
+		var form = $(".istReplForm")[0];
+	    var formData = new FormData(form);
+	    $.ajax({
+            url : "insertReply.bo",
+            data : formData,
+            type : 'POST',
+            processData : false,
+            contentType : false,
+            dataType : 'json',
+            cache : false,
+            success : function(result) {
+					getReplyAllList();
+            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+					console.log("ajax 통신 실패!");
+			}
+        });
+	}
 	var loginUserName = $("#loginUserName").val();
 	var num = [];
 	var cnt = 0;
@@ -486,7 +505,10 @@
 			var pno=0; // 페이지 번호가 들어갈꺼임 (나중에 돌아올때 현재 페이지로 오기 위해서)
 			location.href="list.bo?currentPage=" + ${currentPage};
 		});
-		
+		$(".istReplBtn").click(function(){
+			istRepl();
+			$(".replText").val("");
+		});
 		getReplyAllList();
 		
 		$(".updateBtn").click(function(){

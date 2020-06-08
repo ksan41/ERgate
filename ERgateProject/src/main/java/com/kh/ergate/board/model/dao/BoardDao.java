@@ -89,6 +89,10 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.ReReply", refRno);
 	}
 
+	public int insertReply(SqlSessionTemplate sqlSession, Reply repl) {
+		return sqlSession.insert("boardMapper.insertReply", repl);
+	}
+
 	
 	
 	
