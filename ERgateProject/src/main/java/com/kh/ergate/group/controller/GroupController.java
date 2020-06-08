@@ -95,7 +95,7 @@ public class GroupController {
 		return "group/groupRequestDetail";
 	}
 	
-	//8_1. 계정 승인 요청 
+	// 8_1. 계정 승인 요청 
 	@RequestMapping(value="requestEmp.gr")
 	public String groupRequestDetail(Employee emp, Model model, HttpSession session) {
 	
@@ -121,7 +121,7 @@ public class GroupController {
 		return "group/groupProfileUpdate";
 	}
 	
-	//9_1. 사원 계정 수정 요청 
+	// 9_1. 사원 계정 수정 요청 
 	@RequestMapping("groupProfileUpdate.gr")
 	public String updateGroupEmp(Employee emp, Model model, HttpSession session) {
 		
@@ -138,7 +138,19 @@ public class GroupController {
 		
 	}
 
-	
+	// 10. 계정승인 거절용
+	@RequestMapping("noUpdate.gr")
+	public String noUpdateGroupEmp(String empId, HttpSession session) {
+		// System.out.println(empId);
+		int result = grService.noUpdateGroupEmp(empId);
+		if(result>0) {
+			session.setAttribute("msg", "계정 승인을 거절했습니다.");
+			return "redirect:requestList.gr";
+		} else {
+			session.setAttribute("msg", "계정 삭제에 실패하였습니다. 다시 시도해 주세요.");
+			return "requestList.gr";
+		}
+	}
 
 	
 	

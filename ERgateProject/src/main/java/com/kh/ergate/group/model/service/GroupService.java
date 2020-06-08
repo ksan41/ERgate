@@ -30,6 +30,9 @@ public interface GroupService {
 	// 승인대기 사원 프로필 상세 요청용
 	Employee selectGroupRequestDetail(String empId);
 
+	// 계정승인 거절용
+	int noUpdateGroupEmp(String empId);
+
 	// 사원 계정 수정용
 	//Employee updateGroupEmp(String empId);
 	
