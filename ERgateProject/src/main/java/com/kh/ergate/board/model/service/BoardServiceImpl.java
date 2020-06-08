@@ -92,8 +92,14 @@ public class BoardServiceImpl implements BoardService {
 		return bodDao.updateBoardFlag(sqlSession);
 	}
 	
-	
-	
+	@Override
+	public int insertReReply(ReReply replForm) {
+		return bodDao.ReReply(sqlSession, replForm);
+	}
+	@Override
+	public ReReply rereplyOne(int refRno) {
+		return bodDao.ReReplyOne(sqlSession, refRno);
+	}
 	
 
 	@Override
@@ -106,6 +112,10 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+
+	
 
 	
 

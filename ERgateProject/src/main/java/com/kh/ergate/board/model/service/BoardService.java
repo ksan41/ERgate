@@ -44,7 +44,16 @@ public interface BoardService {
 	int insertBoardAttachment(BoardAttachment bt);
 	// 4-2. 게시판 첨부파일 없는 게시글 flag 수정용 서비스
 	int updateBoardFlag();
-
+	
+	
+	// 5. 게시판 댓글 작성용 서비스
+	// 5-4. 게시판 대댓글 작성 서비스
+	int insertReReply(ReReply replForm);
+	ReReply rereplyOne(int refRno);
+	
+	
+	
+	
 	
 	// 4. 게시글 삭제용 서비스
 	int deleteBoard(int bno);
@@ -53,17 +62,6 @@ public interface BoardService {
 	int updateBoard(Board b);
 	
 	
-	
-	
-	
-	
-	
-	
-	// ----- ajax 후 ----
-	// 6. 해당 게시글에 딸려있는 댓글 리스트 조회용 서비스
-	
-	
-	// 7. 댓글 작성용 서비스
 
 }
 

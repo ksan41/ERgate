@@ -116,7 +116,7 @@
 		select * 
 		  from board_re_reply
 		 where ref_rno=#{refRno}
-		 order by reply_no desc
+		 order by reply_no asc
 	</select>
 	
 	<select id="afterB" parameterType="_int" resultMap="boardResultSet">
@@ -158,6 +158,19 @@
 		update Board set
 		board_file_flag = 'N'
 	</update>
+	
+	<insert id="insertReReply" parameterType="ReReply">
+		insert into Board_re_reply
+		values(seq_brere_no.nextval, #{empId}, #{refRno}, #{replyContent}, sysdate, #{replyWriter}, null)
+	</insert>
+	
+	<select id="ReReply" parameterType="_int" resultMap="rereplyResultSet">
+    	select * from 
+    	(select rownum,b.* from board_re_reply b where ref_rno=#{refRno} 
+    	order by b.reply_no desc) 
+    	where rownum=1
+    </select>
+	
 </mapper>
 
 

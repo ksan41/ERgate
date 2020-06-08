@@ -81,6 +81,14 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateBoardFlag");
 	}
 
+	public int ReReply(SqlSessionTemplate sqlSession, ReReply replForm) {
+		return sqlSession.insert("boardMapper.insertReReply", replForm);
+	}
+
+	public ReReply ReReplyOne(SqlSessionTemplate sqlSession, int refRno) {
+		return sqlSession.selectOne("boardMapper.ReReply", refRno);
+	}
+
 	
 	
 	

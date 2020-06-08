@@ -194,6 +194,18 @@ public class BoardController {
 		return changeName;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="insertReReply.bo", produces="application/json; charset=utf-8")
+	public String insertBoard(ReReply replForm) {
+		int refRno = replForm.getRefRno();
+	
+		int result = bodService.insertReReply(replForm);
+		ReReply rrepl = bodService.rereplyOne(refRno);
+		
+		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(rrepl);
+	}
+	
+	
 	/*
 	
 	 * @RequestMapping("insert.bo") public String insertBoard(Board b,

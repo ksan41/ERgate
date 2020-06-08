@@ -244,7 +244,10 @@
 	cursor:pointer;
 }
 /* 파일 첨부 관련 */
-
+.pageNoClick{
+   pointer-events: none;
+    cursor: default;
+}
 </style>
 </head>
 <body>
@@ -421,7 +424,7 @@
 						value += "<div style='width:1300px;height:110px;'>" +
 								 "<table class='replyContent'>" +
 								 "<tr>" +
-									"<td>" + list[i].replyWriter + "</td>" +
+									"<td><input type='hidden' class='replyNoZone'name='replyNo' value=" + list[i].replyNo + ">" + list[i].replyWriter + "</td>" +
 								 "</tr>" +
 								 "<tr>" +
 								 	"<td id='reContentWrap'>" + "<span id='reContent'>" + list[i].replyContent + "</span>" + "</td>" +
@@ -440,12 +443,29 @@
 						}
 						value += "</td>" +
 								 "</tr>" +
-								 "</table>" + 
+								 "<tr>" + 
+								 "</tr>" + 
+								 "</table>" +
 								 "<hr>" +
 								 "</div>" +
-								 "<br>" + 
+								 "<br>" +
+								 "<div class='rerepl" + list[i].replyNo + "' style='display:none; height:130px;'>" +
+								 "<form action='' method='get' class='rereplyForm'>" +
+								 "<textarea class='textArea' cols='120' rows='5' placeholder='내용을 입력하세요.'>" +
+								 "</textarea>" +
+								 "<input type='hidden' class='replyWriter' name='replyWriter' value=''>" +
+								 "<input type='hidden' name='refRno' value=''>" +
+								 "<input type='hidden' class='empId' name='empId' value=''>" +
+								 "<br>" +
+								 "<div class='setNo'><input type='hidden' value='" + list[i].replyNo + "'>" + 
+								 "<button class='smallBtn rereplBtn' type='button' style='margin-top: 3px; background: rgb(190, 190, 190);'>등록</button>" +
+								 "</div>" +
+								 "</form>" +
+								  
+								 "</div>"+
 								 "<div class='rereplyShow"+list[i].replyNo+"' >"+
 								 "</div>";
+								 
 						num[cnt] = list[i].replyNo;
 						cnt = cnt + 1;
 					}
@@ -459,7 +479,7 @@
 					                success:function(relist){
 					                	var value2 = "";
 										for(var i in relist){ // 같은 리플에 대댓글이 여러개일수도 있으니까 for문을 돌림 (보통은 1개지만)
-											value2 += "<div style='width:1300px;height:110px;'>" +
+											value2 += "<div class='re" + relist[i].replyNo + "' style='width:1300px;min-height:50px;'>" +
 													  "<table class='replyContent rereply'>" +
 													  "<tr>" +
 													 	"<td>" + "└"+ relist[i].replyWriter + "</td>" +
@@ -469,22 +489,20 @@
 													  "</tr>" +
 													  "<tr>" +
 													  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
-													  "</tr>" +
-													  "<tr>" +
-													  "<td id='replyBtnArea'>";
+													  "</tr>";
+													  
 											if(loginUserName == relist[i].replyWriter){
-											value2 += "<button class='smallBtn replyUpdateBtn'>수정</button>" +
-													  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-													  "<button class='smallBtn replyInsertBtn'>답글</button>";
-											}else {
-											value2 += "<button class='smallBtn replyInsertBtn'>답글</button>";
-											}
-											value2 += "</td>" +
+											value2 += "<tr>" +
+											  		  "<td id='replyBtnArea'>" +
+													  "<button class='smallBtn replyUpdateBtn'>수정</button>" +
+													  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>";
+													  "</td>" +
 													  "</tr>" +
-													  "</table>" + 
-													  "<hr>" +
-													  "</div>" +
-													  "<br>";
+													  "</table>" +
+													  "<hr>";
+											}
+											value2 += "</table>" + 
+													  "<hr>";
 											$(".rereplyShow" + relist[i].refRno).html(value2); 
 											// 여기서 리소스 낭비가 좀 있음, value2에 있는 값을 뿌려주는건데, 뿌려지는 구문이 for문 안에 있기 때문에 '댓글 1개'뿌린 상태에서 
 											// '댓글 2개'를 다시 덮어씌워버림, 처음부터 댓글 2개를 한꺼번에 뿌리는걸 해야되는데 그걸 못하겠음(rereplyShow + replist[i].refRno 이기 때문에..)
@@ -504,7 +522,9 @@
 			});
 
 	});
-	
+	function refreshMemList(){
+		location.reload(true);
+	}
 	$(document).ready(function() { 
 		$(".replyUpdateBtn").click(function(){
 			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
@@ -516,10 +536,88 @@
 			location.href="replyDelete.bo?replyno=" + replyno;
 		});
 		$(document).on("click",".replyInsertBtn",function(){
-				console.log("안될께 뻔한걸"); // 댓글 "답글" 작동하는곳
-
+			var replyNo = $(this).parent().parent().parent().children().eq(0).find('input').val();
+			
+			
+			
+			if($(".rerepl" + replyNo ).is(":visible")){
+				$(".rerepl" + replyNo).slideUp(100);
+			}else {
+				$(".rerepl"+ replyNo).slideDown(100);
+				
+			}
+			
+			/* location.href="insertReReply.bo?replyNo=" + replyNo + "&replyWriter=" + replyWriter; */
 		});
+		
+		$(document).on("click",".rereplBtn",function(){
+			var refRno = $(this).parent().find('input').val();
+			var replyWriter = "${loginUser.empName}";
+			var empId = "${loginUser.empId}";
+			var replyContent = $(this).parent().parent().find('textarea').val();
+			$("input[type=hidden][name=replyWriter]").val(replyWriter);
+			$("input[type=hidden][name=empId]").val(empId);
+			$("input[type=hidden][name=refRno]").val(refRno);
+			var form = $(".rereplyForm")[0];
+		    var formData = new FormData(form);
+		    formData.append("replyContent", replyContent);
+		    for (var key of formData.keys()) {
 
+		    	  console.log(key);
+
+		    	}
+
+		    	for (var value of formData.values()) {
+
+		    	  console.log(value);
+
+		    	}
+		    
+		    $.ajax({
+                url : "insertReReply.bo",
+                data : formData,
+                type : 'POST',
+                processData : false,
+                contentType : false,
+                dataType : 'json',
+                cache : false,
+                success : function(relist) {
+                	var value2 = "";
+				     value2 +=  "<div style='width:1300px;min-height:50px;'>" +
+							    "<table class='replyContent rereply'>" +
+							    "<tr>" +
+								"<td>" + "└"+ relist.replyWriter + "</td>" +
+								"</tr>" +
+								"<tr>" +
+								"<td id='reContentWrap'>" + "<span id='reContent'>" + relist.replyContent + "</span>" + "</td>" +
+								"</tr>" +
+								"<tr>" +
+								"<td id='reDate'>" + relist.replyEnrollDate + "</td>" +
+								"</tr>";
+								  
+						if(loginUserName == relist.replyWriter){
+						value2 += "<tr>" +
+						  		  "<td id='replyBtnArea'>" +
+								  "<button class='smallBtn replyUpdateBtn'>수정</button>" +
+								  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>";
+								  "</td>" +
+								  "</tr>" +
+								  "</table>";
+						}
+						value2 += "</table>";
+						$(".rereplyShow" + relist.refRno).html() + value2;
+						refreshMemList();
+						fnMove();
+                },
+                error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+ 					console.log("ajax 통신 실패!");
+ 				},
+ 				complete:function(){// complete : ajax 통신 성공여부와 상관없이 실행
+ 					console.log("무조건 호출!!");
+ 				}
+            });
+		});
+		
 
 	});
 	
