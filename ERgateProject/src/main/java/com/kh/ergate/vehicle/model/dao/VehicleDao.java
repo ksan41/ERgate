@@ -14,8 +14,8 @@ import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 @Repository("vDao")
 public class VehicleDao {
 	
-	public int selectReserveListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("vehicleMapper.selectReserveListCount");
+	public int selectReserveListCount(SqlSessionTemplate sqlSession, String empId) {
+		return sqlSession.selectOne("vehicleMapper.selectReserveListCount", empId);
 	}
 	
 	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, Employee e, PageInfo pi) {

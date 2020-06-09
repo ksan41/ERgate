@@ -479,56 +479,60 @@
 			</c:forEach>
 
 			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				
-               	<c:choose>
-                	<c:when test="${ pi.currentPage eq 1 }">
-                		<li><a href="#">&lt;&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<li><a href="myReserve.ve?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
-                    </c:otherwise>
-				</c:choose>
-				
-				<c:choose>
-                	<c:when test="${ pi.currentPage eq 1 }">
-                		<li><a href="#">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<li><a href="myReserve.ve?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
-                    </c:otherwise>
-				</c:choose>
-				
-                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                   	<c:choose>
-                   		<c:when test="${ p eq pi.currentPage }">
-		                    <li><span>${ p }</span></li>
+			<c:if test="${ pi.startPage eq 1 }">
+			
+				<ul class="pagingBar">
+					
+	               	<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                		<li><a href="#">&lt;&lt;</a></li>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<li><a href="myReserve.ve?currentPage=${ p }">${ p }</a></li>
+	                    	<li><a href="myReserve.ve?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
+	                    </c:otherwise>
+					</c:choose>
+					
+					<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                		<li><a href="#">&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li><a href="myReserve.ve?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
+	                    </c:otherwise>
+					</c:choose>
+					
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                   	<c:choose>
+	                   		<c:when test="${ p eq pi.currentPage }">
+			                    <li><span>${ p }</span></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li><a href="myReserve.ve?currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+						</c:choose>	                    
+					</c:forEach>
+	
+	                <c:choose>
+	                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li><a href="#">&gt;</a></li>
+	                   	</c:when>
+	                   	<c:otherwise>
+		                    <li><a href="myReserve.ve?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
 		                </c:otherwise>
-					</c:choose>	                    
-				</c:forEach>
-
-                <c:choose>
-                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    <li><a href="#">&gt;</a></li>
-                   	</c:when>
-                   	<c:otherwise>
-	                    <li><a href="myReserve.ve?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
-	                </c:otherwise>
-                </c:choose>
-                
-                <c:choose>
-                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    <li><a href="#">&gt;&gt;</a></li>
-                   	</c:when>
-                   	<c:otherwise>
-	                    <li><a href="myReserve.ve?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
-	                </c:otherwise>
-                </c:choose>
+	                </c:choose>
+	                
+	                <c:choose>
+	                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li><a href="#">&gt;&gt;</a></li>
+	                   	</c:when>
+	                   	<c:otherwise>
+		                    <li><a href="myReserve.ve?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
+		                </c:otherwise>
+	                </c:choose>
+					
+				</ul>
 				
-			</ul>
+			</c:if>
 			<!-- 페이징바 -->
 
 			</div>

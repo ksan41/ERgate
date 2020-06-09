@@ -24,8 +24,8 @@ public class VehicleServiceImpl implements VehicleService {
 	
 	// 나의 예약 현황 총 개수 조회용 서비스
 	@Override
-	public int selectReserveListCount() {
-		return vDao.selectReserveListCount(sqlSession);
+	public int selectReserveListCount(String empId) {
+		return vDao.selectReserveListCount(sqlSession, empId);
 	}
 	
 	// 내 예약 조회용 서비스

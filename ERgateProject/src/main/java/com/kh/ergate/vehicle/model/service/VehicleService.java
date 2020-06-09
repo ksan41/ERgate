@@ -10,7 +10,7 @@ import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 public interface VehicleService {
 	
 	// 나의 예약 현황 총 개수 조회용 서비스
-	int selectReserveListCount();
+	int selectReserveListCount(String empId);
 	
 	// 내 예약 조회용 서비스
 	ArrayList<VehicleReservation> myReserveVehicle(Employee e, PageInfo pi);

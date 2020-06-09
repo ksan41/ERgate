@@ -427,56 +427,60 @@
 			</div>
 			
 			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				
-               	<c:choose>
-                	<c:when test="${ pi.currentPage eq 1 }">
-                		<li><a href="#">&lt;&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<li><a href="vehicleList.ve?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
-                    </c:otherwise>
-				</c:choose>
-				
-				<c:choose>
-                	<c:when test="${ pi.currentPage eq 1 }">
-                		<li><a href="#">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<li><a href="vehicleList.ve?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
-                    </c:otherwise>
-				</c:choose>
-				
-                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                   	<c:choose>
-                   		<c:when test="${ p eq pi.currentPage }">
-		                    <li><span>${ p }</span></li>
+			<c:if test="${ pi.startPage eq 1 }">
+			
+				<ul class="pagingBar">
+					
+	               	<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                		<li><a href="#">&lt;&lt;</a></li>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<li><a href="vehicleList.ve?currentPage=${ p }">${ p }</a></li>
+	                    	<li><a href="vehicleList.ve?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
+	                    </c:otherwise>
+					</c:choose>
+					
+					<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                		<li><a href="#">&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li><a href="vehicleList.ve?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
+	                    </c:otherwise>
+					</c:choose>
+					
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                   	<c:choose>
+	                   		<c:when test="${ p eq pi.currentPage }">
+			                    <li><span>${ p }</span></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li><a href="vehicleList.ve?currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+						</c:choose>	                    
+					</c:forEach>
+	
+	                <c:choose>
+	                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li><a href="#">&gt;</a></li>
+	                   	</c:when>
+	                   	<c:otherwise>
+		                    <li><a href="vehicleList.ve?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
 		                </c:otherwise>
-					</c:choose>	                    
-				</c:forEach>
-
-                <c:choose>
-                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    <li><a href="#">&gt;</a></li>
-                   	</c:when>
-                   	<c:otherwise>
-	                    <li><a href="vehicleList.ve?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
-	                </c:otherwise>
-                </c:choose>
-                
-                <c:choose>
-                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    <li><a href="#">&gt;&gt;</a></li>
-                   	</c:when>
-                   	<c:otherwise>
-	                    <li><a href="vehicleList.ve?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
-	                </c:otherwise>
-                </c:choose>
+	                </c:choose>
+	                
+	                <c:choose>
+	                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li><a href="#">&gt;&gt;</a></li>
+	                   	</c:when>
+	                   	<c:otherwise>
+		                    <li><a href="vehicleList.ve?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
+		                </c:otherwise>
+	                </c:choose>
+					
+				</ul>
 				
-			</ul>
+			</c:if>
 			<!-- 페이징바 -->
 			
 		</div>
@@ -540,7 +544,7 @@
 	                <table class="vehicleModalTable">
 	                    <tr>
 							<td class="vmName">차종</td>
-							<td class="vmName2"><input class="vmModalInput" type="text" value="${ v.vhclModel }"></td>
+							<td class="vmName2"><input class="vmModalInput" type="text" value=""></td>
 						</tr>
 						<tr>
 							<td class="vmLocation">차량 번호</td>
@@ -653,7 +657,14 @@
 			$("#open_enroll").click();
 		};
 		
+		
+		/* 수정하기 모달 여는 function */
 		function open_modal2() {
+			
+			// ajax 요청 해서 현재 클릭한 요소의 차량 번호 넘겨서 조회한 후 
+			// 모달에 각 요소에다가 데이터 뿌리기
+			
+			
 			$("#open_edit").click();
 		};
 

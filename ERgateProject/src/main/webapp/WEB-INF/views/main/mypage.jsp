@@ -236,7 +236,7 @@
 												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png">
 											</c:when>
 											<c:otherwise>
-												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${ loginUser.empImage }">
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/main/${ loginUser.empImage }">
 											</c:otherwise>
 										</c:choose>
                                     </td>
@@ -285,7 +285,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                    	<input name="empPwd" type="password" id="newPwd">
+                                    	<input name="newPwd" type="password" id="newPwd">
                                     	<div id="pwdCaution" style="font-size:0.8em;">&nbsp;</div>
                                     </td>
                                     <td>
@@ -311,16 +311,16 @@
                                     <td>부서</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${ loginUser.empCode }" readonly></td>
-                                    <td><input type="text" value="${ loginUser.deptTitle }" readonly></td>
+                                    <td><input name="empCode" type="text" value="${ loginUser.empCode }" readonly></td>
+                                    <td><input name="deptTitle" type="text" value="${ loginUser.deptTitle }" readonly></td>
                                 </tr>
                                 <tr>
                                     <td>직급</td>
                                     <td>직책</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${ loginUser.rankTitle }" readonly></td>
-                                    <td><input type="text" value="${ loginUser.jobTitle }" readonly></td>
+                                    <td><input name="rankTitle" type="text" value="${ loginUser.rankTitle }" readonly></td>
+                                    <td><input name="jobTitle" type="text" value="${ loginUser.jobTitle }" readonly></td>
                                 </tr>
                                 <tr>
                                     <td>내선 번호</td>
@@ -335,7 +335,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="${ loginUser.hireDate }" placeholder="YYYY/MM/DD"></td>
+                                    <td><input name="hireDate" type="text" value="${ loginUser.hireDate }" placeholder="YYYY/MM/DD" readonly></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -357,8 +357,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                    	<input name="empName" type="text" value="${ loginUser.empName }" required>
-                                    	<div id="checkResult2" style="font-size:0.8em; padding-top:5px; margin-bottom: 10px;">&nbsp;</div>
+                                    	<input name="empName" type="text" value="${ loginUser.empName }" required readonly>
                                     </td>
                                     <td><input name="empBirthday" type="text" value="${ loginUser.empBirthday }" placeholder="YYYY/MM/DD"></td>
                                 </tr>
@@ -395,6 +394,7 @@
                     </tr>
                 </table>
                 <input type="hidden" name="empId" value="${ loginUser.empId }">
+                <input type="hidden" name="empPwd" value="${ loginUser.empPwd }"/>
                 <div id="fileArea">
 					<input type="file" name="reUploadFile" id="fileInput" onchange="loadImg(this, 1);">
 				</div>
@@ -438,58 +438,6 @@
 			}
 		}
 	</script>
-	    
-    <!-- 이름 중복검사 -->
-    <script>
-		function nameCheckValidate(num){
-    		
-    		if(num == 1){ // 이름 중복체크를 아직 안하는 경우 : 메세지 보여지지 않음, 버튼 비활성화
-    			
-    			$("#mypageSubmitBtn").attr("disabled", true);
-    			
-    		}else if(num == 2){ // 이름 중복체크 후 사용 불가능한 이름일 경우 : "중복 이름 존재, 사용 불가능" 메세지 보여짐, 버튼 비활성화
-    			
-    			$("#checkResult2").css("color", "red").text("중복되는 이름이 존재합니다. 다른 이름을 입력해주세요.");
-    			$("#mypageSubmitBtn").attr("disabled", "true");
-    			
-    		}else{ // 이름 중복체크 후 사용 가능한 이름일 경우 : "사용 가능한 이름" 메세지 보여짐, 버튼 활성화
-    			
-    			$("#checkResult2").css("color", "rgb(26, 188, 156)").text("사용 가능한 이름입니다.");
-    			$("#mypageSubmitBtn").removeAttr("disabled");
-    		}
-    	}
-    
-    	$(function(){
-    		
-    		var $idInput = $("#mypageForm input[name=empName]");
-    		
-    		$idInput.keyup(function(){
-    			
-    			if($idInput.val().length >= 2){
-    				
-    				$.ajax({
-    					url:"nameCheck.ma",
-    					data:{empName:$idInput.val()},
-    					success:function(status){
-    						
-    						if(status == "fail"){ // 중복되는 이름 존재 == 사용 불가
-    							nameCheckValidate(2);
-    						}else{ // 중복되는 이름 없음 == 사용 가능
-    							nameCheckValidate(3);
-    						}
-    						
-    					},error:function(){
-    						console.log("이름 중복 체크용 ajax 통신 실패");
-    					}
-    				});
-    				
-    			}else{ // 중복체크 X
-    				nameCheckValidate(1);
-    			}
-    			
-    		});
-    	});
-    </script>
 	
 	<!-- 비밀번호 유효성 검사 -->
 	<script>

@@ -66,7 +66,6 @@
 		   SET EMP_PWD=#{empPwd},
 		   	   EMP_EXTENSION=#{empExtension},
 		   	   EMP_FAX=#{empFax},
-		   	   EMP_NAME=#{empName},
 		   	   EMP_IMAGE=#{empImage},
 		   	   EMP_BIRTHDAY=#{empBirthday},
 		   	   EMP_PHONE=#{empPhone},

@@ -129,7 +129,7 @@ public class MainController {
 		
 	// 회원정보 수정
 	@RequestMapping("update.ma")
-	public String updateMember(Employee e, String empEmail, HttpSession session,
+	public String updateMember(Employee e, String newPwd, String empEmail, HttpSession session,
 							   @RequestParam(name="reUploadFile", required=false) MultipartFile file,
 							   HttpServletRequest request, Model model) {
 		
@@ -143,13 +143,18 @@ public class MainController {
 			e.setEmpImage(changeName);
 		}
 		
-		String encPwd = bcryptPasswordEncoder.encode(e.getEmpPwd());
-		e.setEmpPwd(encPwd);
+		if(!newPwd.equals("")) {
+			String encPwd = bcryptPasswordEncoder.encode(newPwd);
+			e.setEmpPwd(encPwd);
+		}else {
+			e.setEmpPwd(e.getEmpPwd());
+		}
 		
 		e.setEmpPriEmail(empEmail + "@gmail.com");
 		
 		int result = mService.updateMember(e);
 		if(result > 0) {
+			session.setAttribute("loginUser", mService.loginMember(e));
 			session.setAttribute("msg", "개인 정보 수정이 성공적으로 완료되었습니다.");
 			return "redirect:main.ma";
 		}else {

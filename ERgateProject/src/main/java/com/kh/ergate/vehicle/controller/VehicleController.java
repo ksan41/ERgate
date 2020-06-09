@@ -35,7 +35,7 @@ public class VehicleController {
 		
 		Employee e = (Employee)session.getAttribute("loginUser");
 		
-		int listCount = vService.selectReserveListCount();
+		int listCount = vService.selectReserveListCount(e.getEmpId());
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
 		
@@ -91,7 +91,7 @@ public class VehicleController {
 	@RequestMapping("vehicleList.ve")
 	public String selectVehicleList(int currentPage, Model model, HttpSession session) {
 
-		int listCount = vService.selectReserveListCount();
+		int listCount = vService.selectVehicleListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
 		
