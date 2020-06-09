@@ -277,35 +277,107 @@ div {
 					<option value="jobTitle">직책</option>
 					<option value="deptTitle">부서</option>
 				</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
-				<svg  onclick="return searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+				<svg  onclick="searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 					fill="black" width="48px" height="48px">
 									<path
 						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
-			<button class="bigBtn" id="signerSubmit" style="margin-left: 680px;">등록</button>
+			<button type="button" class="bigBtn" id="signerSubmit" style="margin-left: 680px;">등록</button>
 			
-			<form name="signDocTemp" action="insertDocTemp.si">
-			<input type="hidden" name="empId" value="${loginUser.empId}">
-			
-			
-			</form>
 			
 			<script>
 				$(document).on("click","#signerSubmit",function(){
+					
+					//opener.testConsole("zzzz");
+					//window.close();
+					
 					var v = $(".signSel tbody").text();
 					if(v==""){
 						alert("결재자는 1명 이상 존재해야 합니다.");
 						return false;
 					}else{
-						//var test=$("form[name=insertSigner]").html();
-						//console.log(test);
 						
-						$("form[name=insertSigner]").submit();
-						$("form[name=insertRef]").submit();
+						// 결재자 정보 부모화면에 출력
+						var n1 = $("#signList tbody tr").eq(0).children().eq(2).text();
+						opener.document.getElementById("n1").innerHTML=n1;
+						
+						var n2 = $("#signList tbody tr").eq(1).children().eq(2).text();
+						opener.document.getElementById("n2").innerHTML=n2;
+						
+						var n3 = $("#signList tbody tr").eq(2).children().eq(2).text();
+						opener.document.getElementById("n3").innerHTML=n3;
+						
+						var n4 = $("#signList tbody tr").eq(3).children().eq(2).text();
+						opener.document.getElementById("n4").innerHTML=n4;
+						
+						var n5 = $("#signList tbody tr").eq(4).children().eq(2).text();
+						opener.document.getElementById("n5").innerHTML=n5;
+						
+						var n6 = $("#signList tbody tr").eq(5).children().eq(2).text();
+						opener.document.getElementById("n6").innerHTML=n6;
+						
+						//결재자 아이디 배열에 담기
+						var signerId=new Array();
+						var cnt = $("#signList tbody input[name=empId]").length;
+						for(var i=0;i<cnt;i++){
+							signerId.push($("#signList tbody input[name=empId]").eq(i).val());
+						}
+						//결재자 이름 배열에 담기
+						var signerName=new Array();
+						cnt = $("#signList tbody input[name=empName]").length;
+						for(var i=0;i<cnt;i++){
+							signerName.push($("#signList tbody input[name=empName]").eq(i).val());
+						}
+
+						
+						opener.getSid(signerId);
+						opener.getSname(signerName);
+						
+						//결재자 직책 출력
+						var j1 = $("#signList tbody tr").eq(0).children().eq(4).text();
+						opener.document.getElementById("j1").innerHTML=j1;
+						
+						var j2 = $("#signList tbody tr").eq(1).children().eq(4).text();
+						opener.document.getElementById("j2").innerHTML=j2;
+						
+						var j3 = $("#signList tbody tr").eq(2).children().eq(4).text();
+						opener.document.getElementById("j3").innerHTML=j3;
+						
+						var j4 = $("#signList tbody tr").eq(3).children().eq(4).text();
+						opener.document.getElementById("j4").innerHTML=j4;
+						
+						var j5 = $("#signList tbody tr").eq(4).children().eq(4).text();
+						opener.document.getElementById("j5").innerHTML=j5;
+						
+						var j6 = $("#signList tbody tr").eq(5).children().eq(4).text();
+						opener.document.getElementById("j6").innerHTML=j6;
+						
+						
+						// 수신참조자이름 출력/변수에 담기
+						var refName=new Array();
+						cnt = $("#refList tbody input[name=empName]").length;
+						for(var i=0;i<cnt;i++){
+							refName.push($("#refList tbody input[name=empName]").eq(i).val());
+							opener.document.getElementById("refArea").innerHTML+= 
+										"@"+ $("#refList tbody input[name=empName]").eq(i).val()+" ";
+						}
+						
+						
+						// 수신참조자 아이디 변수에 담기
+						var refId=new Array();
+						cnt = $("#refList tbody input[name=empId]").length;
+						for(var i=0;i<cnt;i++){
+							refId.push($("#refList tbody input[name=empId]").eq(i).val());
+						}
+						
+						
+						opener.getRefId(refId);
+						opener.getRefName(refName);
+						
 					}
 				});
 			</script>
-			
+			 
 			</div>
 			<div id="wrap">
 				<!-- 좌측 조직도영역 -->
@@ -351,9 +423,7 @@ div {
 						<h2 style="display:inline-block;margin:0;">결재</h2>
 						<br><br>
 						<div style="width:100%;height:280px;overflow:auto;">
-							<form name="insertSigner" action="insertSigner.si" >
 								<table id="signList" class="boardTable signSel">
-								<input type="hidden" name="documentNo" value="${documentNo}">
 									<thead>
 										<tr>
 											<th width="100">이름</th>
@@ -364,7 +434,6 @@ div {
 									</thead>
 									<tbody></tbody>
 								</table>
-							</form>
 						</div>	
 					</div>
 					
@@ -374,9 +443,7 @@ div {
 						<br><br>
 						<div id="signSelDiv">
 							<div style="width:100%;height:280px;overflow:auto;">
-								<form name="insertRef" action="insertRef.si">
-								<input type="hidden" name="documentNo" value="${documentNo}">
-								<table class="boardTable refSel">
+								<table id="refList" class="boardTable refSel">
 								<thead>
 									<tr>
 										<th width="100">이름</th>
@@ -387,7 +454,6 @@ div {
 								</thead>
 								<tbody></tbody>
 								</table>
-								</form>
 							</div>	
 						</div>
 						
@@ -493,7 +559,7 @@ div {
 	
 	<script>
 	$(function(){
-		selectNoList();
+		//selectNoList();
 
 		/* 조직도 부서별 사원 조회 */
 		$(".deptList").click(function(){
@@ -539,46 +605,7 @@ div {
 		});
 
 	});
-	/* 조직도 전체 리스트 조회 - 조직도 페이지 첫 화면 */
-	function selectNoList(){		
-			
-		$.ajax({
-			url: "empList.gr",
-			type: "post",
-			
-			success: function(list){
-				// console.log(list);
-				var value = "";
-				
-				if(list.length == 0){ // 리스트가 비어있을 경우
-	            	value = '<td colspan="4">조회된 사원이 없습니다. </td>';
-				}else{ // 리스트가 비어있지 않을 경우
-	            
-					for(var i in list){
-						
-						var empName = eList[i].empName;
-						var empId = eList[i].empId;
-						var empRank = eList[i].rankTitle;
-						var empJob = eList[i].jobTitle;
-						var empDept = eList[i].deptTitle;
-						
-						value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
-						'<input type="hidden" name="empName" value="'+empName+'">' +
-						 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
-						 '<td>'+empName + '</td>' +
-						 '<td>'+ empDept + '</td>' +
-						 '<td width="120">'+empJob+'/'+empRank+'</td></tr>';	
-					
-					}
-				
-					$(".empList tbody").html(value);
-				}
-			},
-			error:function(){
-				console.log("조직도 사원 리스트조회용 통신 실패");
-			}
-		});
-	}
+	
 	
 	function searchEmpProfile(){
 		condition = $("#condition option:selected").val();
@@ -590,8 +617,8 @@ div {
 		$.ajax({
 			url:"empListSearch.gr",
 			type:"get",
-			data:{"condition":condition,
-				 "keyword":keyword},
+			data:{condition:condition,
+				 keyword:keyword},
 			success: function(list){
 			console.log(list);
 				var value = "";
@@ -601,13 +628,12 @@ div {
 				}else{ // 리스트가 비어있지 않을 경우
 	            
 					for(var i in list){
-						
 
-						var empName = eList[i].empName;
-						var empId = eList[i].empId;
-						var empRank = eList[i].rankTitle;
-						var empJob = eList[i].jobTitle;
-						var empDept = eList[i].deptTitle;
+						var empName = list[i].empName;
+						var empId = list[i].empId;
+						var empRank = list[i].rankTitle;
+						var empJob = list[i].jobTitle;
+						var empDept = list[i].deptTitle;
 						
 						value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
 						 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
