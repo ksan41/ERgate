@@ -70,16 +70,16 @@ public class VehicleServiceImpl implements VehicleService {
 		return vDao.selectVehicleList(sqlSession, pi);
 	}
 
-	// 차량 상세 조회용 서비스 - 관리자
-	@Override
-	public Vehicle selectVehicleDetail(Vehicle v) {
-		return vDao.selectVehicleDetail(sqlSession, v);
-	}
-
 	// 차량 등록용 서비스 - 관리자
 	@Override
 	public int insertVehicle(Vehicle v) {
 		return vDao.insertVehicle(sqlSession, v);
+	}
+	
+	// 차량 상세 조회용 서비스 - 관리자
+	@Override
+	public Vehicle selectVehicle(String vhclCode) {
+		return vDao.selectVehicle(sqlSession, vhclCode);
 	}
 
 	// 차량 수정용 서비스 - 관리자

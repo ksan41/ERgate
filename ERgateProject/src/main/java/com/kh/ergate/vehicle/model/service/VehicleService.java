@@ -33,11 +33,11 @@ public interface VehicleService {
 	// 차량 리스트 조회용 서비스 - 관리자
 	ArrayList<Vehicle> selectVehicleList(PageInfo pi);
 	
-	// 차량 상세 조회용 서비스 - 관리자
-	Vehicle selectVehicleDetail(Vehicle v);
-	
 	// 차량 등록용 서비스 - 관리자
 	int insertVehicle(Vehicle v);
+	
+	// 차량 상세 조회용 서비스 - 관리자
+	Vehicle selectVehicle(String vhclCode);
 	
 	// 차량 수정용 서비스 - 관리자
 	int updateVehicle(Vehicle v);

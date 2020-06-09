@@ -52,8 +52,8 @@ public class VehicleDao {
 		return (ArrayList)sqlSession.selectList("vehicleMapper.selectVehicleList", null, rowBounds);
 	}
 	
-	public Vehicle selectVehicleDetail(SqlSessionTemplate sqlSession, Vehicle v) {
-		return sqlSession.selectOne("vehicleMapper.selectVehicleDetail", v);
+	public Vehicle selectVehicle(SqlSessionTemplate sqlSession, String vhclCode) {
+		return sqlSession.selectOne("vehicleMapper.selectVehicle", vhclCode);
 	}
 	
 	public int insertVehicle(SqlSessionTemplate sqlSession, Vehicle v) {

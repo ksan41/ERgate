@@ -211,7 +211,7 @@
 		padding-left: 10px;
 		font-size: 16px;
 	}
-	.vmName, .vmLocation, .vmPersonnel, .vmImgEnroll{
+	.vmName, .vmLocation, .vmPersonnel, .vmImgEnroll1{
 		background-color: #eeee;
 	}
 	.vmName {
@@ -310,12 +310,18 @@
 	
 /* ==========회의실 수정 모달========== */
 
+	#pagingArea {
+		width: 100%;
+		height: auto;
+		border: 1px solid red;
+		text-align: center;
+	}
 
 	/* 페이징바 스타일 */
 	.pagingBar {
 		list-style: none;
 		margin-top: 50px;
-		margin-left: 400px;
+		margin-left: 450px;
 	}
 	.pagingBar li {
 		float: left;
@@ -416,10 +422,11 @@
 					</tr>
 					<tr>
 						<td class="vmTdContent">
-							<button class="vmBtn" type="button" onclick="open_modal2();">수정하기</button>
+							<button id="editVehicle" class="vmBtn" type="button" onclick="open_modal2();">수정하기</button>
 							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
 						</td>
 					</tr>
+					<input type="hidden" id="vhclCode" name="vhclCode" value="${ v.vhclCode }"/>
 				</table>
 				
 			</c:forEach>
@@ -483,10 +490,13 @@
 			</c:if>
 			<!-- 페이징바 -->
 			
+			
 		</div>
 
 		<!-- 모달팝업 (head부분에 링크들도 복사해주셔야합니다) 모달 사용시엔 메뉴바를 head맨 윗부분에 include해주셔야 합니다. -->
 		<!-- 모달 타겟. href의 #xxx와 모달영역의 id(xxx)가 한셋트입니다. 용도에 따라 href와 id는 변경해주세요.(여러개 가능) 모달타겟으로 쓸 요소에 class와 href 복사해주세요. -->
+		
+		<!-- 등록하기 모달 -->
 		<div id="enroll" class="modal">
 			<div class="modal-title">업무차량 등록</div>
 			<div class="modal-content">
@@ -539,20 +549,26 @@
 		<div id="edit" class="modal">
 			<div class="modal-title">업무차량 수정</div>
 			<div class="modal-content">
-			<form action="update.ve" method="post" enctype="multipart/form-data">
+			<form action="" method="post" id="updateModalForm" enctype="multipart/form-data">
 				<div>
 	                <table class="vehicleModalTable">
 	                    <tr>
 							<td class="vmName">차종</td>
-							<td class="vmName2"><input class="vmModalInput" type="text" value=""></td>
+							<td class="vmName2">
+								<input id="editVhclModel" name="vhclModel" class="vmModalInput" type="text" value="">
+							</td>
 						</tr>
 						<tr>
 							<td class="vmLocation">차량 번호</td>
-							<td class="vmLocation2"><input class="vmModalInput" type="text" value="${ v.vhclNo }"></td>
+							<td class="vmLocation2">
+								<input id="editVhclNo" name="vhclNo" class="vmModalInput" type="text" value="">
+							</td>
 						</tr>
 						<tr>
 							<td class="vmPersonnel">최대 탑승인원</td>
-							<td class="vmPersonnel2"><input class="vmModalInput" type="text" value="${ v.vhclCapacity }"></td>
+							<td class="vmPersonnel2">
+								<input id="editVhclCapacity" name="vhclCapacity" class="vmModalInput" type="text" value="">
+							</td>
 						</tr>
 						<tr>
 							<td class="vmImgEnroll1">차량 이미지</td>
@@ -573,13 +589,18 @@
 	            </div>
                 <!-- 예약/취소 버튼 -->
 				<div class=btns>
-					<button class="vmSubmitBtn" type="submit">수정하기</button>
-					<button class="vmResetBtn" type="reset">삭제하기</button>
+					<button class="vmSubmitBtn" type="submit" id="editUpdateBtn">수정하기</button>
+					<button class="vmResetBtn" type="submit" id="editDeleteBtn">삭제하기</button>
 				</div>
 
 				<div id="fileArea2">
 					<input type="file" name="reUploadFile" id="fileInput2" onchange="loadImg2(this, 1);">
 				</div>
+				
+				<input id="editVhclCode" name="vhclCode" type="hidden" value="">
+				<input id="editVhclEnrollDate" name="vhclEnrollDate" type="hidden" value="">
+				<input id="editVhclStatus" name="vhclStatus" type="hidden" value="">
+				
 			</form>
 			</div>
 			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br> 
@@ -587,7 +608,79 @@
 
 	</div>
 	
+
+	<!-- 모달용 스크립트 -->
+	<script>
 	
+		$('.open-modal').click(function() {
+			$(this).modal({
+				fadeDuration : 150
+			});
+
+		});
+		
+		/* 등록하기 모달 여는 function */
+		function open_modal() {
+			$("#open_enroll").click();
+		};
+		
+		/* 수정하기 모달 여는 function */
+		function open_modal2() {
+			$("#open_edit").click();
+		};
+
+	</script>
+
+	<!-- 수정하기 모달 값 전달 ajax -->
+	<script>
+		$("#editVehicle").click(function(){
+			
+			$.ajax({
+				url:"select.ve",
+				data:{vhclCode:$("#vhclCode").val()},
+				type:"post",
+				success:function(vehicle){
+					
+					var vhclModel = vehicle.vhclModel;
+					var vhclNo = vehicle.vhclNo;
+					var vhclCapacity = vehicle.vhclCapacity;
+					var vhclImage = vehicle.vhclImage;
+					var vhclCode = vehicle.vhclCode;
+					var vhclEnrollDate = vehicle.vhclEnrollDate;
+					var vhclStatus = vehicle.vhclStatus;
+					
+					$("#editVhclModel").val(vhclModel);
+					$("#editVhclNo").val(vhclNo);
+					$("#editVhclCapacity").val(vhclCapacity);
+					
+					$("#editVhclCode").val(vhclCode);
+					$("#editVhclEnrollDate").val(vhclEnrollDate);
+					$("#editVhclStatus").val(vhclStatus);
+					
+					if(vhclImage == null){
+						$("#vmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/vhclLogo.png");
+					}else{
+						$("#vmImgEdit").attr("src", "${ pageContext.servletContext.contextPath }/resources/uploadFiles/vehicle/"+vhclImage);
+					}
+					
+				},error:function(){
+					console.log("수정 모달 selectVehicle ajax 통신 실패");
+				}
+			});
+		});
+	</script>
+
+	<!-- 수정하기 모달에서 수정하기/삭제하기 form -->
+	<script>
+		$("#editUpdateBtn").click(function () {
+	       $("#updateModalForm").attr("action", "insert.ve");
+		});
+		 
+		$("#editDeleteBtn").click(function () {
+		       $("#updateModalForm").attr("action", "delete.ve");
+		});
+	</script>
+		
     <!-- 사진 첨부 -->
     <script>
 		$(function(){
@@ -642,33 +735,5 @@
 		}
 	</script>
 		
-	<!-- 모달용 스크립트 -->
-	<script>
-	
-		$('.open-modal').click(function() {
-			$(this).modal({
-				fadeDuration : 150
-			});
-
-		});
-		
-		/* 등록하기 모달 여는 function */
-		function open_modal() {
-			$("#open_enroll").click();
-		};
-		
-		
-		/* 수정하기 모달 여는 function */
-		function open_modal2() {
-			
-			// ajax 요청 해서 현재 클릭한 요소의 차량 번호 넘겨서 조회한 후 
-			// 모달에 각 요소에다가 데이터 뿌리기
-			
-			
-			$("#open_edit").click();
-		};
-
-	</script>
-
 </body>
 </html>

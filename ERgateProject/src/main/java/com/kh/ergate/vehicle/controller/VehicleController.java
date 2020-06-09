@@ -14,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.main.model.vo.Employee;
@@ -126,6 +128,16 @@ public class VehicleController {
 		}
 		
 	}
+
+	// 차량 정보 조회 ajax
+	@ResponseBody
+	@RequestMapping(value="select.ve", produces="application/json; charset=utf-8")
+	public String selectVehicle(String vhclCode) {
+		
+		Vehicle vehicle = vService.selectVehicle(vhclCode);
+		
+		return new Gson().toJson(vehicle);
+	}
 	
 	// 차량 수정
 	@RequestMapping("update.ve")
@@ -154,12 +166,12 @@ public class VehicleController {
 		}
 		
 	}
-	
+
 	// 차량 삭제
 	@RequestMapping("delete.ve")
 	public String deleteVehicle(Vehicle v, HttpSession session) {
 		
-		int result = vService.updateVehicle(v);
+		int result = vService.deleteVehicle(v);
 		
 		if(result > 0) {
 			session.setAttribute("msg", "성공적으로 업무 차량 삭제되었습니다.");
@@ -170,6 +182,8 @@ public class VehicleController {
 		}
 		
 	}
+	
+	
 	
 	
 	// ---------- 페이지 이동용 ----------

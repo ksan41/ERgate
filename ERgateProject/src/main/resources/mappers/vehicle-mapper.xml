@@ -75,12 +75,18 @@
 		VALUES(SEQ_VEHICLE_NO.NEXTVAL, #{vhclModel}, #{vhclNo}, #{vhclCapacity}, SYSDATE, #{vhclImage}, 'Y')
 	</insert>
 	
+	<select id="selectVehicle" parameterType="string" resultMap="vehicleResultSet">
+		SELECT *
+		  FROM VEHICLE
+		 WHERE VHCL_CODE=#{vhclCode}
+	</select>
+	
 	<update id="updateVehicle" parameterType="Vehicle">
 		UPDATE VEHICLE
 		   SET VHCL_MODEL=#{vhclModel},
 		   	   VHCL_NO=#{vhclNo},
 		   	   VHCL_CAPACITY=#{vhclCapacity},
-		   	   VHCL_IMAGE=#{vhclImage},
+		   	   VHCL_IMAGE=#{vhclImage}
 		 WHERE VHCL_CODE=#{vhclCode}
 	</update>
 	
