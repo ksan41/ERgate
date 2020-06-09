@@ -53,7 +53,7 @@ public interface MeetingroomService {
 	// 회의실 예약현황 월 선택 조회용 ---statusListMonth(String month)
 	public int seachListCount(String month);
 	
-	public ArrayList<MeetingroomReservation> searchList(PageInfo pi, String month);
+	public ArrayList<MeetingroomReservation> searchList(String month);
 
 	// 회의실 등록용 ---insertMeetingroom(Meetingroom)
 	int insertMeetingroom(Meetingroom m);

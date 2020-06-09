@@ -92,16 +92,13 @@ html, body {
 						<tr>
 							<td id="r1">참석자(내부)</td>
 							<td id="r2">
-								<button id="searchBtn2" class="searchBtn"
-									onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자
-									지정</button> <textarea name="inside" cols="60" rows="4" id="partArea"
-									readonly></textarea>
+								<button id="searchBtn2" class="searchBtn" onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자지정</button>
+								<textarea name="inside" cols="60" rows="4" id="partArea" readonly></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td id="r3">참석자(외부)</td>
-							<td id="r4"><input type="text" name="outside" class="inputs"
-								name=""></td>
+							<td id="r4"><input type="text" name="outside" class="inputs" name=""></td>
 						</tr>
 					</table>
 				</form>

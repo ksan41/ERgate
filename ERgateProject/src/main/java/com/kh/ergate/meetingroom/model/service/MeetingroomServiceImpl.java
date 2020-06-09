@@ -102,8 +102,8 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	 */
 
 	@Override
-	public ArrayList<MeetingroomReservation> searchList(PageInfo pi, String month) {
-		return mrDao.searchList(sqlSession, pi, month);
+	public ArrayList<MeetingroomReservation> searchList(String month) {
+		return mrDao.searchList(sqlSession, month);
 	}
 
 	@Override

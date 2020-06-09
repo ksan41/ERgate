@@ -127,7 +127,7 @@ html, body {
 	font-size: 18px;
 	font-weight: 550;
 	margin-top: -33px;
-	margin-left: 750px;
+	margin-left: 900px;
 	float: left;
 	text-decoration: none;
 }
@@ -169,6 +169,7 @@ margin{0px}
     width: 980px;
 }
 .table_resource {
+	width:100%;
     float: left;
     border-collapse: separate;
     border-top: 2px solid #8c8c8c;
@@ -181,7 +182,7 @@ margin{0px}
 }
 .table_resource td {
     width: 165px;
-    height: 25px;
+    height: 51px;
 }
 p {
     display: block;
@@ -487,13 +488,11 @@ p {
 		<div class="contentArea">
 
 			<div id="midContentArea">
-			
-			
-	
+
 				<h2 style="display: inline-block; margin-left: 330px;">
 					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
 						
-						<b id="calYear"></b>년 <b id="calMonth"></b>월
+						<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
 	
 					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 24 24" fill="black" width="48px" height="48px">
@@ -505,8 +504,8 @@ p {
 	
 				<form id="changeMonthForm" action="statusM.me" method="get">
 					<input type="hidden" name="year"> 
-					<input type="hidden" name="month"> 
-					<input type="hidden" name="currentPage" value="1">
+					<input type="hidden" name="month">
+					<input type="hidden" name="day">
 				</form>
 	
 				<script>
@@ -514,29 +513,41 @@ p {
 						var date = new Date();
 						var year = date.getFullYear();
 						var month = date.getMonth() + 1;
+						var day = date.getDate();
 	
 						var newYear = "<c:out value='${mds.year}'/>";
 						var newMonth = "<c:out value='${mds.month}'/>";
-	
+						var newDay =  "<c:out value='${mds.day}'/>";
+						
+						// 날짜 변경값 있을 경우
 						if (newYear != "") {
 							$("#calYear").text(newYear);
 							$("#calMonth").text(newMonth);
-						} else {
+							$("#calDay").text(newDay);
+							
+						} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
 							$("#calYear").text(year);
 							$("#calMonth").text(month);
+							$("#calDay").text(day);
 						}
-	
+						
+						
+						/* 이전으로  */
 						$("#arrowLeft").click(function() {
 							month = month - 1;
 							if (month < 1) {
 								month = 12;
 								year = year - 1;
+								
 							}
 							$("#calMonth").text(month);
 							$("#calYear").text(year);
+							$("#calDay").text(day);
+							
 	
 							$("input[name=month]").attr("value", month);
 							$("input[name=year]").attr("value", year);
+							$("input[name=day]").attr("value", day);
 	
 							if (newYear != "") {
 								newMonth = newMonth - 1;
@@ -546,41 +557,33 @@ p {
 								}
 								$("#calMonth").text(newMonth);
 								$("#calYear").text(newYear);
+								$("#calDay").text(newDay);
 	
 								$("input[name=month]").attr("value", newMonth);
 								$("input[name=year]").attr("value", newYear);
+								$("input[name=day]").attr("value", newDay);
 							}
 	
 							$("#changeMonthForm").submit();
 	
 						});
 	
+						
+						/* 다음으로 */
 						$("#arrowRight").click(function() {
-							month = parseInt(month) + 1;
-							if (month > 12) {
-								month = 1;
-								year = parseInt(year) + 1;
-							}
-							$("#calMonth").text(month);
-							$("#calYear").text(year);
+							date = date.getDate() + 1
+							newYear = date.getFullYear();
+							newMonth = date.getMonth() + 1;
+							newDay = date.getDate();
+							
+							
 	
-							$("input[name=month]").attr("value", month);
-							$("input[name=year]").attr("value", year);
+							$("input[name=month]").attr("value", newMonth);
+							$("input[name=year]").attr("value", newYear);
+							$("input[name=day]").attr("value", newDay);
+							
 	
-							if (newYear != "") {
-								newMonth = parseInt(newMonth) + 1;
-								if (newMonth > 12) {
-									newMonth = 1;
-									newYear = parseInt(newYear) + 1;
-								}
-								$("#calMonth").text(newMonth);
-								$("#calYear").text(newYear);
-	
-								$("input[name=month]").attr("value", newMonth);
-								$("input[name=year]").attr("value", newYear);
-							}
-	
-							$("#changeMonthForm").submit();
+							$("#changeMonthForm").submit(); 
 						});
 	
 					});
@@ -591,9 +594,8 @@ p {
 			
 				<div class="subBtns">
 					<button id="reservationBtn">예약하기</button>
-					<a id="reservation" class="open-modal" href="#open_reservation"
-						style="display: none;">모달</a> <br> <a id="myReservation"
-						class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
+					<a id="reservation" class="open-modal" href="#open_reservation"style="display: none;">모달</a> <br> 
+					<a id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
 				</div>
 				
 				<br><br>
@@ -606,19 +608,11 @@ p {
 						<tr>
 							<th style="height: 73px">시간</th>
 						</tr>
-						<tr class="">
-							<td>07:00</td>
-						</tr>
-						<tr class="">
-							<td>08:00</td>
-						</tr>
-						<tr class="">
-							<td>09:00</td>
-						</tr>
-						<tr class="">
+						
+						<tr class="a">
 							<td>10:00</td>
 						</tr>
-						<tr class="">
+						<tr class="a">
 							<td>11:00</td>
 						</tr>
 						<tr class="">
@@ -650,9 +644,8 @@ p {
 				</div>
 				<!-- 회의실 table -->
 
-				<div class="table_resource_box" style="float: left; width: 800px">
-					<table class="table_resource" id="mtrmSC" style="float: left;"
-						cellpadding="0" cellspacing="0">
+				<div class="table_resource_box" style="float: left; width: 1000px">
+					<table class="table_resource" id="mtrmSC" style="float: left;" cellpadding="0" cellspacing="0">
 						<tr>
 							<th><p>3층회의실</p></th>
 							<th><p>3층회의실2</p></th>
@@ -660,48 +653,7 @@ p {
 							<th><p>5층회의실2</p></th>
 							<th><p>6층회의실</p></th>
 						</tr>
-						<tr id="07:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						<tr id="07:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						<tr id="08:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						<tr id="08:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						<tr id="09:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						<tr id="09:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="10:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -709,13 +661,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="10:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="11:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -723,13 +669,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="11:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="12:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -737,13 +677,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="12:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="13:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -751,13 +685,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="13:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="14:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -765,13 +693,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="14:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="15:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -779,13 +701,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="15:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="16:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -793,13 +709,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="16:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="17:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -807,13 +717,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="17:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="18:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -821,13 +725,7 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="18:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
+						
 						<tr id="19:00" class="">
 							<td name="000010"><p></p></td>
 							<td name="000011"><p></p></td>
@@ -835,27 +733,12 @@ p {
 							<td name="rooma0"><p></p></td>
 							<td name="roomb0"><p></p></td>
 						</tr>
-						<tr id="19:30" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-
-
-
+						
 					</table>
 				</div>
 			</div>
-
 			<!-- 위에까지 예약하기(main) 부분 -->
-
-
 		</div>
-
-
-
 
 		<!-- 모달 (예약하기 부분) -->
 		<div id="open_reservation" class="modal" style="height: 730px;">
@@ -865,54 +748,45 @@ p {
 					<table class="reservationContent">
 						<tr>
 							<td id="r1">신청자</td>
-							<td id="r2"><input type="hidden" name="empId"
-								value="${ loginUser.empId }"><span>${ loginUser.empName }</span></td>
+							<td id="r2"><input type="hidden" name="empId" value="${ loginUser.empId }"><span>${ loginUser.empName }</span></td>
 						</tr>
 						<tr>
 							<td id="r1">사용기간</td>
-							<td id="r2"><input type="date" name="mtrmStartDate"
-								class="inputs" style="width: 140px"> <input type="time"
-								name="mtrmStartTime" class="inputs" style="width: 120px">
-								<img
-								src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png"
-								id="minusImg"> <input type="date" name="mtrmEndDate"
-								class="inputs" style="width: 140px"> <input type="time"
-								name="mtrmEndTime" class="inputs" style="width: 120px">
+							<td id="r2">
+								<input type="date" name="mtrmStartDate" class="inputs" style="width: 140px"> 
+								<input type="time" name="mtrmStartTime" class="inputs" style="width: 120px">
+								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg"> 
+								<input type="date" name="mtrmEndDate" class="inputs" style="width: 140px"> 
+								<input type="time" name="mtrmEndTime" class="inputs" style="width: 120px">
 							</td>
 						</tr>
 						<tr>
 							<td id="r1">회의실</td>
-							<td id="r2"><select name="mtrmCode" class="inputs"
-								style="width: 120px">
-									<option>회의실 선택</option>
-									<option value="1" selected>3F 회의실</option>
+							<td id="r2"><select name="mtrmCode" class="inputs" style="width: 120px">
+									<option selected disabled>회의실 선택</option>
+									<option value="1">3F 회의실</option>
 									<option value="2">5F 회의실1</option>
 									<option value="3">5F 회의실2</option>
 									<option value="4">6F 회의실1</option>
 									<option value="5">6F 회의실2</option>
 							</select> <br>
 								<button id="searchBtn1" class="searchBtn">가용회의실 검색</button> <br>
-								<input type="text" id="meetingroomBox" class="inputs"
-								style="height: 30px" readonly></td>
+								<input type="text" id="meetingroomBox" class="inputs" style="height: 30px" readonly></td>
 						</tr>
 						<tr>
 							<td id="r1">사용목적</td>
-							<td id="r2"><input type="text" placeholder="내용을 입력하세요"
-								class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }"></td>
+							<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }"></td>
 						</tr>
 						<tr>
 							<td id="r1">참석자(내부)</td>
 							<td id="r2">
-								<button id="searchBtn2" class="searchBtn"
-									onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자
-									지정</button> <textarea name="inside" cols="60" rows="4" id="partArea"
-									readonly></textarea>
+								<button id="searchBtn2" class="searchBtn" onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자지정</button>  
+								<textarea name="inside" cols="60" rows="4" id="partArea" readonly></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td id="r3">참석자(외부)</td>
-							<td id="r4"><input type="text" name="outside" class="inputs"
-								name=""></td>
+							<td id="r4"><input type="text" name="outside" class="inputs" name=""></td>
 						</tr>
 					</table>
 				</form>
@@ -1012,7 +886,7 @@ p {
 	<script>
 		$(function(){
 			$("#mtrmSC").click(function(){
-				window.open('meetingroomCurrentStatusPopup.jsp','popup_name','_blank');
+				window.open('${ pageContext.servletContext.contextPath }/WEB-INF/views/meetingroom/meetingroomCurrentStatusPopup.jsp','popup_name','_blank');
 			});
 			
 		});
@@ -1063,6 +937,35 @@ p {
 		
 	
 	</script>
+	
+	<!-- 등록하기 ajax -->
+	<script>
+			
+		
+	
+	
+	
+	
+	
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>

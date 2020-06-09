@@ -59,11 +59,8 @@ public class MeetingroomDao {
 		return sqlSession.selectOne("meetingroomMapper.searchListCount", month);
 	}
 	
-	public ArrayList<MeetingroomReservation> searchList(SqlSessionTemplate sqlSession, PageInfo pi, String month){
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList",month,rowBounds);
+	public ArrayList<MeetingroomReservation> searchList(SqlSessionTemplate sqlSession, String month){
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", month);
 	}
 	
 	public int cancelReserve(SqlSessionTemplate sqlSession, int mtrmReservNo) {

@@ -74,21 +74,19 @@ public class MeetingroomController {
 	// 회의실예약현황 월선택 조회용(statusM.me) ---statusListMonth(String month,Meetingroom,Model)
 
 	@RequestMapping("statusM.me")
-	public String statusListMonth(String month, Integer currentPage, MeetingroomReservation mr, Model model) {
+	public String statusListMonth(String month, MeetingroomReservation mr, Model model) {
 		
-		/*
-		 * int listCount = mrService.searchListCount(month);
-		 * 
-		 * PageInfo pi = Pagination.getPageInfo(listCount, currentPage.intValue(), 5,
-		 * 10);
-		 * 
-		 * ArrayList<MeetingroomReservation> list = mrService.searchList(pi, month);
-		 * 
-		 * model.addAttribute("pi", pi); model.addAttribute("month", month);
-		 * model.addAttribute("list", list);
-		 */
+		
+		  
+		  ArrayList<MeetingroomReservation> list = mrService.searchList(month);
+		  
+		  
+		  model.addAttribute("month", month);
+		  model.addAttribute("list", list);
+		 
 		
 		return "meetingroom/meetingroomReservationList";
+		
 	}
 
 	// 예약 상세 조회용

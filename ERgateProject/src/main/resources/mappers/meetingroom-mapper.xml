@@ -40,12 +40,14 @@
 		 where mtrm_reserv_status='Y'
 	</select>
 	
+	<select id="searchList">
+		
+	</select>
 
-	
 	  <select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
-		select *
-		  from meetingroom
-		 where mtrm_status = 'Y'
+		SELECT *
+		  FROM MEETINGROOM
+		WHERE MTRM_STATUS = 'Y'
 	</select>
 	
 	<insert id="reserveMtroom" parameterType="MeetingroomReservation">
@@ -82,11 +84,11 @@
 	</update>
 	
 	<update id="updateMeetingroom" parameterType="Meetingroom">
-		update meetingroom
-		   set mtrm_name=#{mtrmName},
-		   	   mtrm_location=#{mtrmLocation},
-		   	   mtrm_capacity=#{mtrmCapacity}
-		 where mtrm_code = #{mtrmCode}
+		UPDATE MEETINGROOM
+		   SET MTRM_NAME=#{mtrmName},
+		   	   MTRM_LOCATION=#{mtrmLocation},
+		   	   MTRM_CAPACITY=#{mtrmCapacity}
+		 WHERE MTRM_CODE=#{mtrmCode}
 	</update>
 
 </mapper>
