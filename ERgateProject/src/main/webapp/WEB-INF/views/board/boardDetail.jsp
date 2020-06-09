@@ -540,6 +540,66 @@
         }); 
 	}
 	
+	function checkHaveReply(rno){
+		var flag = "";
+		$.ajax({
+			url : "checkHaveReply.bo",
+			async: false, // ture: 비동기, false: 동기 // 동기 상태에서만 ajax로 리턴값을 담을때까지 기다려준다!!
+			data : {replyNo:rno},
+			success : function(result){
+				if(result > 0){
+					flag = 1; // 못지운다!
+				}else {
+					flag = 0; // 지운다!
+				}
+			},error:function(){
+				console.log("ajax 통신 실패!");
+			}
+		});
+		return flag;
+	}
+	
+	function getReplyDelete(rno){
+		var replyNumber = rno;
+		$.ajax({
+            url : "deleteReply.bo",
+            data : {replyNo:replyNumber},
+            success : function(result) {
+            		
+            	alert("댓글이 삭제되었습니다.");
+				getReplyAllList();
+            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+					console.log("ajax 통신 실패!");
+			}
+        }); 
+	}
+	function getReReplyDelete(rno){
+		var replyNumber = rno;
+		$.ajax({
+            url : "deleteReReply.bo",
+            data : {replyNo:replyNumber},
+            success : function(result) {
+            		alert("댓글이 삭제되었습니다.");
+					getReplyAllList();
+            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+					console.log("ajax 통신 실패!");
+			}
+        }); 
+	}
+	
+	function getReplyForceDelete(rno){
+		$.ajax({
+            url : "replyForceDelete.bo",
+            data : {replyNo:rno},
+            success : function(result) {
+            		alert("글 내용이 삭제되었습니다.");
+					getReplyAllList();
+            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+					console.log("ajax 통신 실패!");
+			}
+        }); 
+	}
+	
 	// 이 위로는 기본'펑션' 정의 구역
 	// 이 밑으로는 '이벤트'시 수행되는 내용
 	$(document).ready(function() { 
@@ -587,16 +647,6 @@
 				}
 			});
 		});
-
-		$(".replyUpdateBtn").click(function(){
-			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
-			location.href="replyUpdate.bo?replyno=" + replyno;
-		});
-		
-		$(".replyDeleteBtn").click(function(){
-			var replyno=0; // 댓글번호가 들어갈꺼임 (무엇을 삭제할지 알아야되니까)
-			location.href="replyDelete.bo?replyno=" + replyno;
-		});
 		
 		$(document).on("click",".replyInsertBtn",function(){
 			var replyNo = $(this).parent().parent().parent().children().eq(0).find('input').val();
@@ -635,6 +685,26 @@
 				getReplyUpdate(formData);
 			}
 			
+		});
+		
+		$(document).on("click",".replyDeleteBtn",function(){
+			var replyNo = $(this).parent().parent().parent().find('input[name=replyNo]').val();
+			var reFlag = $(this).parent().parent().parent().find('input[name=rereZone]').val();
+			if(reFlag=='Y'){ // 대댓글 삭제할때 요청 함수 (요청 url이 달라서...)
+				getReReplyDelete(replyNo);
+			}else { // 댓글 삭제할때 요청 함수
+				
+				var cntnum = checkHaveReply(replyNo);
+				if(cntnum==1){
+					var result = confirm("대댓글이 있어서 삭제할 수 없습니다. 글 내용을 지우시겠습니까?");
+					if(result){
+						getReplyForceDelete(replyNo);
+					}
+				}else {
+					getReplyDelete(replyNo);
+				}
+				
+			}
 		});
 		
 		$(document).on("click",".replyCancleBtnLast",function(){

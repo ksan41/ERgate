@@ -113,7 +113,36 @@ public class BoardServiceImpl implements BoardService {
 	public int updateReReply(ReReply repl) {
 		return bodDao.updateReReply(sqlSession, repl);
 	}
+	
+	@Override
+	public int deleteReply(int replyNo) {
+		return bodDao.deleteReply(sqlSession, replyNo);
+	}
 
+	@Override
+	public int deleteReReply(int replyNo) {
+		return bodDao.deleteReReply(sqlSession, replyNo);
+	}
+	
+	@Override
+	public int checkHaveReply(int replyNo) {
+		return bodDao.checkHaveReply(sqlSession, replyNo);
+	}
+	
+	@Override
+	public int replyForceDelete(int replyNo) {
+		return bodDao.replyForceDelete(sqlSession, replyNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public int deleteBoard(int bno) {
 		// TODO Auto-generated method stub
@@ -124,6 +153,12 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
+
+	
+
+
 
 
 	

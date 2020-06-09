@@ -101,6 +101,22 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateReReply", repl);
 	}
 
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.delete("boardMapper.deleteReply", replyNo);
+	}
+
+	public int deleteReReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.delete("boardMapper.deleteReReply", replyNo);
+	}
+
+	public int checkHaveReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.selectOne("boardMapper.checkHaveReply", replyNo);
+	}
+
+	public int replyForceDelete(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.update("boardMapper.replyForceDelete", replyNo);
+	}
+
 	
 	
 	

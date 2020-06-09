@@ -188,6 +188,27 @@
 		reply_Enroll_date = sysdate
 		where reply_no = #{replyNo}
 	</update>
+	
+	<delete id="deleteReply" parameterType="_int">
+		delete from board_reply
+		where reply_no = #{replyNo}
+	</delete>
+	<delete id="deleteReReply" parameterType="_int">
+		delete from board_re_reply
+		where reply_no = #{replyNo}
+	</delete>
+	
+	<select id="checkHaveReply" resultType="_int" parameterType="_int">
+		select count(*) from board_re_reply
+		where ref_rno = #{replyNo}
+	</select>
+	
+	<update id="replyForceDelete" parameterType="_int">
+		update board_Reply set
+		reply_Content = '작성자가 삭제한 댓글입니다.',
+		reply_Enroll_date = sysdate
+		where reply_no = #{replyNo}
+	</update>
 </mapper>
 
 

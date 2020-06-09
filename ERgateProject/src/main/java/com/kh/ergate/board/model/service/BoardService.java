@@ -52,13 +52,19 @@ public interface BoardService {
 	int insertReply(Reply repl);
 	int updateReply(Reply repl);
 	int updateReReply(ReReply repl);
-	
+	int deleteReply(int replyNo);
+	int deleteReReply(int replyNo);
+	int checkHaveReply(int replyNo);// 관련된 대댓글 있는지 확인하는 메소드
+	int replyForceDelete(int replyNo);
 	
 	// 4. 게시글 삭제용 서비스
 	int deleteBoard(int bno);
 	
 	// 5. 게시글 수정용 서비스
 	int updateBoard(Board b);
+	
+	
+
 	
 	
 	

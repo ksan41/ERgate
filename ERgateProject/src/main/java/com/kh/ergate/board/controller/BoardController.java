@@ -214,14 +214,41 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="updateReply.bo", produces="application/json; charset=utf-8")
-	public int updatetReply(Reply repl) {
+	public int updateReply(Reply repl) {
 		int result = bodService.updateReply(repl);
 		return result;
 	}
 	@ResponseBody
 	@RequestMapping(value="updateReReply.bo", produces="application/json; charset=utf-8")
-	public int updatetReReply(ReReply repl) {
+	public int updateReReply(ReReply repl) {
 		int result = bodService.updateReReply(repl);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteReply.bo", produces="application/json; charset=utf-8")
+	public int deleteReply(int replyNo) {
+		int result = bodService.deleteReply(replyNo);
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value="deleteReReply.bo", produces="application/json; charset=utf-8")
+	public int deleteReReply(int replyNo) {
+		int result = bodService.deleteReReply(replyNo);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="checkHaveReply.bo", produces="application/json; charset=utf-8")
+	public int checkHaveReply(int replyNo) {
+		int result = bodService.checkHaveReply(replyNo);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="replyForceDelete.bo", produces="application/json; charset=utf-8")
+	public int replyForceDelete(int replyNo) {
+		int result = bodService.replyForceDelete(replyNo);
 		return result;
 	}
 	
