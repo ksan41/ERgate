@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>attendanceManagement</title>
 
-
-
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-<!-- 이곳에 메뉴바 include -->
 	
 <!-- 이곳에 메뉴바 include -->
 <jsp:include page="../common/menubar.jsp"/>
@@ -333,10 +330,11 @@ border-right: 1px solid lightgrey;
 		</div>
 		<div class="subMenuArea">
 			<ul id="subMenuList">
-				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">출퇴근내역</button></li>
-				<li><button class="subBtn">근태현황</button></li>
-				<li><button class="subBtn subActive">근태관리</button></li>
+				<li><button class="subBtn" onclick="location.href='atList.at'">출퇴근내역</button></li>
+				<li><button class="subBtn" onclick="location.href='myStatus.at'">근태현황</button></li>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn subActive" onclick="location.href='atMgList.at'">근태관리</button></li>
+				</c:if> 
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -454,102 +452,6 @@ border-right: 1px solid lightgrey;
 				               </thead>
 				               <tbody>
 				               	   <!-- 리스트 없을시 조건문 처리 -->
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                    <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                    <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                    <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                    <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
 				                   <tr>
 				                       <td></td>
 				                       <td></td>

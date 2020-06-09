@@ -16,6 +16,8 @@
 	<a href="main.ma">메인페이지</a><br><br>
 	 근테페이지 요청용 (attendanceList)<br>
 	<a href="atList.at">근태</a><br><br>
+	근태관리 리스트페이지 (attendanceManagement)
+	<a href="atMgList.at">근태관리 리스트</a><br><br>
 	결재페이지 요청용(signWaitingList)<br>
 	<a href="waitingList.si">결재</a><br><br>
 	일정페이지 요청용(scheduleMain)<br>
