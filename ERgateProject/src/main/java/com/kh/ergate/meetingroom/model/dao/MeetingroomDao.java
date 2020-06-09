@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 @Repository("mrDao")
@@ -59,12 +60,16 @@ public class MeetingroomDao {
 		return sqlSession.selectOne("meetingroomMapper.searchListCount", month);
 	}
 	
-	public ArrayList<MeetingroomReservation> searchList(SqlSessionTemplate sqlSession, String month){
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", month);
+	public ArrayList<MeetingroomReservation> searchList(SqlSessionTemplate sqlSession, String date){
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", date);
 	}
 	
 	public int cancelReserve(SqlSessionTemplate sqlSession, int mtrmReservNo) {
 		return sqlSession.update("meetingroomMapper.cancelReserve", mtrmReservNo);
+	}
+	
+	public ArrayList<MeetingroomReservation> statusListMonth(SqlSessionTemplate sqlSession, String month){
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", month);
 	}
 	
 }

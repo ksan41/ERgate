@@ -23,6 +23,7 @@ import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.meetingroom.model.service.MeetingroomServiceImpl;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 
@@ -54,6 +55,21 @@ public class MeetingroomController {
 		return "meetingroom/meetingroomCurrentStatus";
 
 	}
+	
+	// 날짜선택예약현황조회용(currentStatusD.me) --- currentStatusDay(String day,Model model)
+	@RequestMapping("currentStatusD.me")
+	public String currentStatusDay(String date, Model model) {
+		
+		ArrayList<MeetingroomReservation> list = mrService.searchList(date);
+		
+		model.addAttribute("day", date);
+		model.addAttribute("list", list);
+		
+		return "meetingroom/meetingroomCurrentStatus";
+		
+	}
+	
+	
 	// 회의실 예약 현황 리스트 조회용
 
 	@RequestMapping("statusList.me")
@@ -75,17 +91,13 @@ public class MeetingroomController {
 
 	@RequestMapping("statusM.me")
 	public String statusListMonth(String month, MeetingroomReservation mr, Model model) {
-		
-		
 		  
-		  ArrayList<MeetingroomReservation> list = mrService.searchList(month);
-		  
+		  ArrayList<MeetingroomReservation> list = mrService.statusListMonth(month);
 		  
 		  model.addAttribute("month", month);
 		  model.addAttribute("list", list);
 		 
-		
-		return "meetingroom/meetingroomReservationList";
+		 return "meetingroom/meetingroomReservationList";
 		
 	}
 

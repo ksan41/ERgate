@@ -39,10 +39,9 @@
 		  from meetingroom_reservation
 		 where mtrm_reserv_status='Y'
 	</select>
+
 	
-	<select id="searchList">
-		
-	</select>
+	
 
 	  <select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
 		SELECT *
@@ -54,7 +53,6 @@
 		insert into meetingroom_reservation 
 		values(seq_mreserv_no.nextval, #{empId}, #{mtrmCode}, #{mtrmName}, SYSDATE, #{mtrmDeptTitle},
 			   #{mtrmStartDate}, #{mtrmStartTime},  #{mtrmEndDate}, #{mtrmEndTime}, #{mtrmPurpose}, 'Y')
-	
 	</insert>
 	
 	<insert id="insertMeetingroom" parameterType="Meetingroom">

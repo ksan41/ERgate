@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 public interface MeetingroomService {
@@ -53,7 +54,10 @@ public interface MeetingroomService {
 	// 회의실 예약현황 월 선택 조회용 ---statusListMonth(String month)
 	public int seachListCount(String month);
 	
-	public ArrayList<MeetingroomReservation> searchList(String month);
+	public ArrayList<MeetingroomReservation> searchList(String date);
+	
+	// 회의실 예약현황(관리자쪽)
+	public ArrayList<MeetingroomReservation> statusListMonth(String month);
 
 	// 회의실 등록용 ---insertMeetingroom(Meetingroom)
 	int insertMeetingroom(Meetingroom m);

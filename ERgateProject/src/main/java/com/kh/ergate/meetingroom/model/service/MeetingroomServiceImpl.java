@@ -10,6 +10,7 @@ import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.dao.MeetingroomDao;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 @Service("mrService")
@@ -102,14 +103,19 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	 */
 
 	@Override
-	public ArrayList<MeetingroomReservation> searchList(String month) {
-		return mrDao.searchList(sqlSession, month);
-	}
-
-	@Override
 	public int seachListCount(String month) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<MeetingroomReservation> searchList(String date) {
+		return mrDao.searchList(sqlSession, date);
+	}
+
+	@Override
+	public ArrayList<MeetingroomReservation> statusListMonth(String month) {
+		return mrDao.statusListMonth(sqlSession, month);
 	}
 
 }

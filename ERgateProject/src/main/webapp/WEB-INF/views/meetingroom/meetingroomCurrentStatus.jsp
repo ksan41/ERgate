@@ -489,7 +489,7 @@ p {
 
 			<div id="midContentArea">
 
-				<h2 style="display: inline-block; margin-left: 330px;">
+				<h2 style="display: inline-block; margin-left: 430px;">
 					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
 						
 						<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
@@ -502,7 +502,7 @@ p {
 					<span id="arrowRight" class="material-icons"> arrow_right </span>
 				</h2>
 	
-				<form id="changeMonthForm" action="statusM.me" method="get">
+				<form id="changeMonthForm" action="currentStatusD.me" method="get">
 					<input type="hidden" name="year"> 
 					<input type="hidden" name="month">
 					<input type="hidden" name="day">
@@ -517,7 +517,7 @@ p {
 	
 						var newYear = "<c:out value='${mds.year}'/>";
 						var newMonth = "<c:out value='${mds.month}'/>";
-						var newDay =  "<c:out value='${mds.day}'/>";
+						var newDay =  "<c:out value='${mds.date}'/>";
 						
 						// 날짜 변경값 있을 경우
 						if (newYear != "") {
@@ -574,7 +574,7 @@ p {
 							date = date.getDate() + 1
 							newYear = date.getFullYear();
 							newMonth = date.getMonth() + 1;
-							newDay = date.getDate();
+							newDay = date.getDate() + 1;
 							
 							
 	
@@ -777,13 +777,7 @@ p {
 							<td id="r1">사용목적</td>
 							<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }"></td>
 						</tr>
-						<tr>
-							<td id="r1">참석자(내부)</td>
-							<td id="r2">
-								<button id="searchBtn2" class="searchBtn" onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자지정</button>  
-								<textarea name="inside" cols="60" rows="4" id="partArea" readonly></textarea>
-							</td>
-						</tr>
+						
 						<tr>
 							<td id="r3">참석자(외부)</td>
 							<td id="r4"><input type="text" name="outside" class="inputs" name=""></td>
@@ -843,6 +837,7 @@ p {
 	</script>
 	
 	<script>
+	
 		$(document).ready(function(){
 			console.log("요청");
 			 $.ajax({
@@ -852,7 +847,7 @@ p {
 				success:function(list){
 					var value="";
 					for(var i in list){
-						value +="<tr>" +
+						value += "<tr>" +
 									"<td rowspan='5' class='mcTdImg'>" +
 										"<img class='mcImg' src='${pageContext.servletContext.contextPath}/resources/siteImgs/" + list[i].mtrmImage + "'>" +
 									"</td>" +
@@ -940,12 +935,26 @@ p {
 	
 	<!-- 등록하기 ajax -->
 	<script>
-			
 		
-	
-	
-	
-	
+		$(function(){
+			
+			$("#reservBtn").click(function(){
+				
+				$.ajax({
+					url:"currentStatus.me",
+					dataType:"html",
+					type:"post",
+					success:function(data){
+						$("#reservationForm").html(data);
+					},error:function(){
+						console.log("실패");
+					}
+				});
+			
+			});
+			
+		});
+
 	
 	</script>
 
