@@ -108,7 +108,8 @@ public class BoardController {
 	public String replyList(int refBno) {
 		
 		ArrayList<Reply> list = bodService.replyList(refBno);
-		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(list);
+		System.out.println(list.get(0));
+		return new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm:ss").create().toJson(list);
 	}
 	
 	@ResponseBody
@@ -116,7 +117,7 @@ public class BoardController {
 	public String rereplyList(int refRno) {
 		
 		ArrayList<ReReply> list = bodService.rereplyList(refRno);
-		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(list);
+		return new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm:ss").create().toJson(list);
 	}
 	@ResponseBody
 	@RequestMapping(value="beforeAfter.bo", produces="application/json; charset=utf-8")
@@ -210,6 +211,13 @@ public class BoardController {
 		ReReply rrepl = bodService.rereplyOne(refRno);
 		
 		return new GsonBuilder().setDateFormat("yyyy. MM. dd HH:mm:ss").create().toJson(rrepl);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updateReply.bo", produces="application/json; charset=utf-8")
+	public int updatetReply(Reply repl) {
+		int result = bodService.updateReply(repl);
+		return result;
 	}
 	
 	

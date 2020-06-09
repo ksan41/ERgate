@@ -106,6 +106,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	public int updateReply(Reply repl) {
+		return bodDao.updateReply(sqlSession, repl);
+	}
+	
+	@Override
 	public int deleteBoard(int bno) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -115,6 +120,8 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 	
 

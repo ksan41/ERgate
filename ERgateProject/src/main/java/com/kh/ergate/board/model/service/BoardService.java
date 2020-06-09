@@ -46,12 +46,11 @@ public interface BoardService {
 	int updateBoardFlag();
 	
 	
-	// 5. 게시판 댓글 작성용 서비스
-	// 5-4. 게시판 대댓글 작성 서비스
+	// 5. 게시판 댓글/대댓글 작성/수정/삭제용 서비스
 	int insertReReply(ReReply replForm);
 	ReReply rereplyOne(int refRno);
 	int insertReply(Reply repl);
-	
+	int updateReply(Reply repl);
 	
 	
 	
@@ -60,6 +59,7 @@ public interface BoardService {
 	
 	// 5. 게시글 수정용 서비스
 	int updateBoard(Board b);
+	
 	
 	
 	

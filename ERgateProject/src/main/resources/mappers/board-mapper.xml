@@ -106,14 +106,14 @@
 	</select>
 	
 	<select id="replyList" parameterType="_int" resultMap="replyResultSet">
-		select * 
+		select *
 		  from board_reply
 		 where ref_bno=#{refBno}
 		 order by reply_no asc
 	</select>
 	
 	<select id="rereplyList" parameterType="_int" resultMap="rereplyResultSet">
-		select * 
+		select *
 		  from board_re_reply
 		 where ref_rno=#{refRno}
 		 order by reply_no asc
@@ -175,6 +175,13 @@
 		insert into Board_reply
 		values(seq_bre_no.nextval, #{empId}, #{refBno}, #{replyContent}, sysdate, #{replyWriter})
 	</insert>
+	
+	<update id="updateReply" parameterType="Reply">
+		update board_Reply set
+		reply_Content = #{replyContent},
+		reply_Enroll_date = sysdate
+		where reply_no = #{replyNo}
+	</update>
 	
 </mapper>
 

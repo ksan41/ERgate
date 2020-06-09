@@ -93,6 +93,10 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertReply", repl);
 	}
 
+	public int updateReply(SqlSessionTemplate sqlSession, Reply repl) {
+		return sqlSession.update("boardMapper.updateReply", repl);
+	}
+
 	
 	
 	

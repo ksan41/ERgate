@@ -1,6 +1,7 @@
 package com.kh.ergate.board.model.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class ReReply {
 	private String empId;
 	private int refRno;
 	private String replyContent;
-	private Date replyEnrollDate;
+	private Timestamp replyEnrollDate;
 	private String replyWriter;
 	private int refBno;
 }
