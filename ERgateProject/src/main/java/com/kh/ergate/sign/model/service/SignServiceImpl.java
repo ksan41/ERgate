@@ -96,11 +96,11 @@ public class SignServiceImpl implements SignService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	// 결재자 등록요청용
 	@Override
 	public int insertSigner(Signer si) {
-		// TODO Auto-generated method stub
-		return 0;
+		return siDao.insertSigner(sqlSession,si);
 	}
 
 	@Override
@@ -108,11 +108,18 @@ public class SignServiceImpl implements SignService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	
+	// 결재문서 1차 insert
 	@Override
 	public int insertDocument(SignDocument sd) {
-		// TODO Auto-generated method stub
-		return 0;
+		return siDao.insertDocument(sqlSession,sd);
+	}
+	
+	// 임시저장문서 불러오는용
+	@Override
+	public SignDocument selectMyDocument(String empId) {
+		return siDao.selectMyDocument(sqlSession,empId);
 	}
 
 

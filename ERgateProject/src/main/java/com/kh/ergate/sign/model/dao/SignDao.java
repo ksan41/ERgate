@@ -50,4 +50,16 @@ public class SignDao {
 	public ArrayList<Signer> signDetailSigner(SqlSessionTemplate sqlSession,SignDocument sdd){
 		return (ArrayList)sqlSession.selectList("signMapper.signDetailSigner",sdd);
 	}
+	
+	public int insertDocument(SqlSessionTemplate sqlSession,SignDocument sd) {
+		return sqlSession.insert("signMapper.insertDocument",sd);
+	}
+	
+	public SignDocument selectMyDocument(SqlSessionTemplate sqlSession,String empId) {
+		return sqlSession.selectOne("signMapper.selectMyDocument",empId);
+	}
+	
+	public int insertSigner(SqlSessionTemplate sqlSession,Signer si) {
+		return sqlSession.insert("signMapper.insertSigner",si);
+	}
 }

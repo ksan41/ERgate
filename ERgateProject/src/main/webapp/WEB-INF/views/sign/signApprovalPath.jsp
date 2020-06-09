@@ -353,6 +353,7 @@ div {
 						<div style="width:100%;height:280px;overflow:auto;">
 							<form name="insertSigner" action="insertSigner.si" >
 								<table id="signList" class="boardTable signSel">
+								<input type="hidden" name="documentNo" value="${documentNo}">
 									<thead>
 										<tr>
 											<th width="100">이름</th>
@@ -374,6 +375,7 @@ div {
 						<div id="signSelDiv">
 							<div style="width:100%;height:280px;overflow:auto;">
 								<form name="insertRef" action="insertRef.si">
+								<input type="hidden" name="documentNo" value="${documentNo}">
 								<table class="boardTable refSel">
 								<thead>
 									<tr>
@@ -424,6 +426,7 @@ div {
 			
 			 $('.checkBox:checked').each(function() {
 				var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
+				var nameVal = $(this).parent().parent().children("input[name=empName]").clone().wrapAll("<div/>").parent().html();
 				var name = $(this).parent().parent().children(".name").clone().wrapAll("<div/>").parent().html();
 				var dept = $(this).parent().parent().children(".dept").clone().wrapAll("<div/>").parent().html();
 				var jobRank = $(this).parent().parent().children(".jobRank").clone().wrapAll("<div/>").parent().html();
@@ -438,7 +441,7 @@ div {
 					return false;
 				}
 				 
-				value1 += '<tr>' +  id + name + dept + jobRank
+				value1 += '<tr>' +  id +nameVal+ name + dept + jobRank
 		       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
 		       			+ '</tr>';
 		       			
@@ -461,6 +464,7 @@ div {
 	$(document).on("click",".selRef",function(){
 		$('.checkBox:checked').each(function() {
 			var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
+			var nameVal = $(this).parent().parent().children("input[name=empName]").clone().wrapAll("<div/>").parent().html();
 			var name = $(this).parent().parent().children(".name").clone().wrapAll("<div/>").parent().html();
 			var dept = $(this).parent().parent().children(".dept").clone().wrapAll("<div/>").parent().html();
 			var jobRank = $(this).parent().parent().children(".jobRank").clone().wrapAll("<div/>").parent().html();
@@ -475,7 +479,7 @@ div {
 				return false;
 			}
 			 
-			value2 += '<tr>' +  id + name + dept + jobRank
+			value2 += '<tr>' +  id +nameVal+ name + dept + jobRank
 	       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
 	       			+ '</tr>';
 	       			
@@ -516,7 +520,8 @@ div {
 							var empJob = eList[i].jobTitle;
 							var empDept = eList[i].deptTitle;
 							
-							value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
+							value += '<tr><input type="hidden" name="empId" value="'+empId+'">' +
+									 '<input type="hidden" name="empName" value="'+empName+'">' +
 									 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
 									 '<td class="name">'+empName + '</td>' +
 									 '<td class="dept">'+ empDept + '</td>' +
@@ -558,6 +563,7 @@ div {
 						var empDept = eList[i].deptTitle;
 						
 						value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
+						'<input type="hidden" name="empName" value="'+empName+'">' +
 						 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
 						 '<td>'+empName + '</td>' +
 						 '<td>'+ empDept + '</td>' +
@@ -625,9 +631,7 @@ div {
 	
 	<!-- 팝업창 자동 사이즈맞춤용 스크립트 -->
 	<script>
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							// 팝업 창 크기를 HTML 크기에 맞추어 자동으로 크기를 조정하는 함수.
 							var strWidth;
 							var strHeight;
@@ -660,7 +664,7 @@ div {
 
 							//resize
 							window.resizeTo(strWidth, strHeight);
-						});
+		});
 	</script>
 
 </body>

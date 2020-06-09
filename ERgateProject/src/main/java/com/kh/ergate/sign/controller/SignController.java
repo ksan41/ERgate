@@ -175,6 +175,8 @@ public class SignController {
 		int result = siService.insertDocument(newSd);
 		
 		if(result>0) {
+			SignDocument sd = siService.selectMyDocument(loginUser.getEmpId());
+			model.addAttribute("sd",sd);
 			return "sign/signFormExpense"; 			
 		}else {
 			model.addAttribute("msg","요청 실패. 다시 시도해주세요");
@@ -200,9 +202,9 @@ public class SignController {
 	  
 	  //결재라인등록팝업 요청용
 	  @RequestMapping("openSigner.si")
-	  public String openSigner(HttpSession session) {
+	  public String openSigner(String documentNo,HttpSession session,Model model) {
 		  
-		  
+		  model.addAttribute("documentNo",documentNo);
 		  return "sign/signApprovalPath";
 	  }
 	  
@@ -210,13 +212,34 @@ public class SignController {
 	  
 	  // 결재라인-결재자 등록요청용
 	  @RequestMapping("insertSigner.si") 
-	  public String insertSigner(HttpServletRequest request,Signer si,Model model)throws Exception {
+	  public String insertSigner(String documentNo,HttpServletRequest request,Signer si,Model model)throws Exception {
 		 System.out.println("결재결재");
-		String[] list = request.getParameterValues("empId");	
-		for(int i=0;i<list.length;i++) {
-			System.out.println(list[i]);
+		String[] iList = request.getParameterValues("empId");
+		String[] nList = request.getParameterValues("empName");
+		ArrayList<Signer> sList = new ArrayList<>();
+		
+		int signTurn = 1;
+		for(int i=0;i<iList.length;i++) {
+			Signer s = new Signer();
+			s.setDocumentNo(Integer.parseInt(documentNo));
+			s.setEmpId(iList[i]);
+			s.setEmpName(nList[i]);
+			s.setSignType(1);
+			s.setSignTurn(signTurn++);
+			sList.add(s);
+			System.out.println(i+"번째\n"+s);
 		}
-		  return "";
+		
+		int result = 1;
+		for(int i=0;i<sList.size();i++) {
+			result = siService.insertSigner(sList.get(i));
+			if(result == 0) {
+				System.out.println("실패실패");
+			}
+		}
+		
+		model.addAttribute("signers",sList);
+		return "";
 	  }
 	  
 	  // 결재라인-수신참조자 등록요청용

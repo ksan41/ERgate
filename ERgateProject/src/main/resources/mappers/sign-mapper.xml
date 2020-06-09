@@ -114,4 +114,24 @@
 		 WHERE S.DOCUMENT_NO = #{documentNo}
 		 ORDER BY SIGN_TURN 
 	</select>
+	
+	<insert id="insertDocument" parameterType="SignDocument">
+		INSERT INTO SIGN_DOCUMENT(DOCUMENT_NO,SIGN_TYPE_NO,EMP_ID,SIGN_TYPE_NAME,EMP_NAME,DEPT_TITLE,DOC_STATUS)
+		VALUES (SEQ_SDOC_NO.NEXTVAL,#{signTypeNo},#{empId},#{signTypeName},#{empName},#{deptTitle},0)
+	</insert>
+	
+	<select id="selectMyDocument" parameterType="string" resultMap="signDocResultSet">
+		SELECT *
+		 FROM (SELECT *
+      		   FROM SIGN_DOCUMENT
+      		   ORDER BY DRAFT_DATE DESC)
+	    WHERE DOC_STATUS=0 AND
+      		  EMP_ID=#{empId}
+	</select>
+	
+	<insert id="insertSigner" parameterType="Signer">
+		INSERT INTO SIGNER
+		VALUES(#{documentNo},#{empId},#{empName},#{signTurn},#{signType},'N')
+		
+	</insert>
 </mapper>

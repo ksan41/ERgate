@@ -53,6 +53,9 @@ public interface SignService {
 	//결재라인 등록요청용 
 	public int insertSigner(Signer si);
 	
+	//임시저장 문서 불러오기용
+	public SignDocument selectMyDocument(String empId);
+	
 	//기안임시저장
 	public int saveDocument(SignDocument sd);
 	
