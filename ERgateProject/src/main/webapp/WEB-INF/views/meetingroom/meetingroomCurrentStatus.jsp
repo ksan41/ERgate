@@ -100,7 +100,7 @@ html, body {
 	overflow-x: hidden;
 }
 .subBtns{
-	margin-top:0px;
+	margin-top:-50px;
 }
 
 #reservationBtn {
@@ -156,7 +156,7 @@ margin{0px}
     vertical-align: middle;
 }
 .table_time td, .table_time th {
-    width: 100px;
+    width: 120px;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
     text-align: center;
@@ -486,109 +486,117 @@ p {
 		</div>
 		<div class="contentArea">
 
-			<h2 style="display: inline-block; margin-left: 330px;">
-				<span id="arrowLeft" class="material-icons"> arrow_left </span> 
-					
-					<b id="calYear"></b>년 <b id="calMonth"></b>월
-
-				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
-				<path
-						d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
-				<path d="M0 0h24v24H0z" fill="none" /></svg>
-				<span id="arrowRight" class="material-icons"> arrow_right </span>
-			</h2>
-
-			<form id="changeMonthForm" action="statusM.me" method="get">
-				<input type="hidden" name="year"> 
-				<input type="hidden" name="month"> 
-				<input type="hidden" name="currentPage" value="1">
-			</form>
-
-			<script>
-				$(document).ready(function() {
-					var date = new Date();
-					var year = date.getFullYear();
-					var month = date.getMonth() + 1;
-
-					var newYear = "<c:out value='${mds.year}'/>";
-					var newMonth = "<c:out value='${mds.month}'/>";
-
-					if (newYear != "") {
-						$("#calYear").text(newYear);
-						$("#calMonth").text(newMonth);
-					} else {
-						$("#calYear").text(year);
-						$("#calMonth").text(month);
-					}
-
-					$("#arrowLeft").click(function() {
-						month = month - 1;
-						if (month < 1) {
-							month = 12;
-							year = year - 1;
-						}
-						$("#calMonth").text(month);
-						$("#calYear").text(year);
-
-						$("input[name=month]").attr("value", month);
-						$("input[name=year]").attr("value", year);
-
+			<div id="midContentArea">
+			
+			
+	
+				<h2 style="display: inline-block; margin-left: 330px;">
+					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
+						
+						<b id="calYear"></b>년 <b id="calMonth"></b>월
+	
+					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24" fill="black" width="48px" height="48px">
+					<path
+							d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+					<path d="M0 0h24v24H0z" fill="none" /></svg>
+					<span id="arrowRight" class="material-icons"> arrow_right </span>
+				</h2>
+	
+				<form id="changeMonthForm" action="statusM.me" method="get">
+					<input type="hidden" name="year"> 
+					<input type="hidden" name="month"> 
+					<input type="hidden" name="currentPage" value="1">
+				</form>
+	
+				<script>
+					$(document).ready(function() {
+						var date = new Date();
+						var year = date.getFullYear();
+						var month = date.getMonth() + 1;
+	
+						var newYear = "<c:out value='${mds.year}'/>";
+						var newMonth = "<c:out value='${mds.month}'/>";
+	
 						if (newYear != "") {
-							newMonth = newMonth - 1;
-							if (newMonth < 1) {
-								newMonth = 12;
-								newYear = newYear - 1;
-							}
-							$("#calMonth").text(newMonth);
 							$("#calYear").text(newYear);
-
-							$("input[name=month]").attr("value", newMonth);
-							$("input[name=year]").attr("value", newYear);
-						}
-
-						$("#changeMonthForm").submit();
-
-					});
-
-					$("#arrowRight").click(function() {
-						month = parseInt(month) + 1;
-						if (month > 12) {
-							month = 1;
-							year = parseInt(year) + 1;
-						}
-						$("#calMonth").text(month);
-						$("#calYear").text(year);
-
-						$("input[name=month]").attr("value", month);
-						$("input[name=year]").attr("value", year);
-
-						if (newYear != "") {
-							newMonth = parseInt(newMonth) + 1;
-							if (newMonth > 12) {
-								newMonth = 1;
-								newYear = parseInt(newYear) + 1;
-							}
 							$("#calMonth").text(newMonth);
-							$("#calYear").text(newYear);
-
-							$("input[name=month]").attr("value", newMonth);
-							$("input[name=year]").attr("value", newYear);
+						} else {
+							$("#calYear").text(year);
+							$("#calMonth").text(month);
 						}
-
-						$("#changeMonthForm").submit();
+	
+						$("#arrowLeft").click(function() {
+							month = month - 1;
+							if (month < 1) {
+								month = 12;
+								year = year - 1;
+							}
+							$("#calMonth").text(month);
+							$("#calYear").text(year);
+	
+							$("input[name=month]").attr("value", month);
+							$("input[name=year]").attr("value", year);
+	
+							if (newYear != "") {
+								newMonth = newMonth - 1;
+								if (newMonth < 1) {
+									newMonth = 12;
+									newYear = newYear - 1;
+								}
+								$("#calMonth").text(newMonth);
+								$("#calYear").text(newYear);
+	
+								$("input[name=month]").attr("value", newMonth);
+								$("input[name=year]").attr("value", newYear);
+							}
+	
+							$("#changeMonthForm").submit();
+	
+						});
+	
+						$("#arrowRight").click(function() {
+							month = parseInt(month) + 1;
+							if (month > 12) {
+								month = 1;
+								year = parseInt(year) + 1;
+							}
+							$("#calMonth").text(month);
+							$("#calYear").text(year);
+	
+							$("input[name=month]").attr("value", month);
+							$("input[name=year]").attr("value", year);
+	
+							if (newYear != "") {
+								newMonth = parseInt(newMonth) + 1;
+								if (newMonth > 12) {
+									newMonth = 1;
+									newYear = parseInt(newYear) + 1;
+								}
+								$("#calMonth").text(newMonth);
+								$("#calYear").text(newYear);
+	
+								$("input[name=month]").attr("value", newMonth);
+								$("input[name=year]").attr("value", newYear);
+							}
+	
+							$("#changeMonthForm").submit();
+						});
+	
 					});
-
-				});
-			</script>
-			<div class="subBtns">
-				<button id="reservationBtn">예약하기</button>
-				<a id="reservation" class="open-modal" href="#open_reservation"
-					style="display: none;">모달</a> <br> <a id="myReservation"
-					class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
+				</script>
+				
 			</div>
-
-
+			
+			
+				<div class="subBtns">
+					<button id="reservationBtn">예약하기</button>
+					<a id="reservation" class="open-modal" href="#open_reservation"
+						style="display: none;">모달</a> <br> <a id="myReservation"
+						class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
+				</div>
+				
+				<br><br>
 			<!-- 예약하기(main) 부분 -->
 
 			<div class="resource_layout">
