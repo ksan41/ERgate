@@ -212,8 +212,7 @@ public class SignController {
 	  
 	  // 결재라인-결재자 등록요청용
 	  @RequestMapping("insertSigner.si") 
-	  public String insertSigner(String documentNo,HttpServletRequest request,Signer si,Model model)throws Exception {
-		 System.out.println("결재결재");
+	  public String insertSigner(String documentNo,HttpServletRequest request,Signer si,Model model) {
 		String[] iList = request.getParameterValues("empId");
 		String[] nList = request.getParameterValues("empName");
 		ArrayList<Signer> sList = new ArrayList<>();
@@ -227,7 +226,6 @@ public class SignController {
 			s.setSignType(1);
 			s.setSignTurn(signTurn++);
 			sList.add(s);
-			System.out.println(i+"번째\n"+s);
 		}
 		
 		int result = 1;
@@ -244,8 +242,31 @@ public class SignController {
 	  
 	  // 결재라인-수신참조자 등록요청용
 	  @RequestMapping("insertRef.si") 
-	  public String insertRef(Signer si, Model model) {
+	  public String insertRef(String documentNo,Signer si,HttpServletRequest request, Model model) {
 		  System.out.println("참조참조");
+			String[] iList = request.getParameterValues("empId");
+			String[] nList = request.getParameterValues("empName");
+			ArrayList<Signer> rList = new ArrayList<>();
+			
+			for(int i=0;i<iList.length;i++) {
+				Signer s = new Signer();
+				s.setDocumentNo(Integer.parseInt(documentNo));
+				s.setEmpId(iList[i]);
+				s.setEmpName(nList[i]);
+				s.setSignType(0);
+				s.setSignTurn(0);
+				rList.add(s);
+			}
+			
+			int result = 1;
+			for(int i=0;i<rList.size();i++) {
+				result = siService.insertSigner(rList.get(i));
+				if(result == 0) {
+					System.out.println("실패실패");
+				}
+			}
+			
+			model.addAttribute("signers",rList);
 		  return "";
 	  }
 		  

@@ -301,7 +301,7 @@ div {
 						//console.log(test);
 						
 						$("form[name=insertSigner]").submit();
-						//$("form[name=insertRef]").submit();
+						$("form[name=insertRef]").submit();
 					}
 				});
 			</script>
