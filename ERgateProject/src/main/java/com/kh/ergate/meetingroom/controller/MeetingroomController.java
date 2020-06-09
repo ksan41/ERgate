@@ -1,7 +1,10 @@
 package com.kh.ergate.meetingroom.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -66,6 +70,26 @@ public class MeetingroomController {
 
 		return "meetingroom/meetingroomReservationList";
 	}
+	
+	// 회의실예약현황 월선택 조회용(statusM.me) ---statusListMonth(String month,Meetingroom,Model)
+
+	@RequestMapping("statusM.me")
+	public String statusListMonth(String month, Integer currentPage, MeetingroomReservation mr, Model model) {
+		
+		/*
+		 * int listCount = mrService.searchListCount(month);
+		 * 
+		 * PageInfo pi = Pagination.getPageInfo(listCount, currentPage.intValue(), 5,
+		 * 10);
+		 * 
+		 * ArrayList<MeetingroomReservation> list = mrService.searchList(pi, month);
+		 * 
+		 * model.addAttribute("pi", pi); model.addAttribute("month", month);
+		 * model.addAttribute("list", list);
+		 */
+		
+		return "meetingroom/meetingroomReservationList";
+	}
 
 	// 예약 상세 조회용
 	@RequestMapping("reserveDetail.me")
@@ -87,6 +111,21 @@ public class MeetingroomController {
 		  
 		  new Gson().toJson(list, response.getWriter());
 	}
+	
+	// 예약취소용(cancelReserve.me) ---cancelReserve(int mtrmReservNo,Model)
+	@RequestMapping("cancelReserve.me")
+	public String cancelReserve(int mtrmReservNo, HttpSession session) {
+		
+		int result = mrService.cancelReserve(mtrmReservNo);
+		
+		if(result > 0) {
+			session.setAttribute("msg", "성공적으로 예약 취소되었습니다.");
+			return "redirect:myReserve.me?currentPage=1";
+		}else {
+			session.setAttribute("msg", "예약 취소 실패하였습니다. 다시 시도해 주세요");
+			return "redirect:myReserve.me?currentPage=1";
+		}
+	}
 
 	// 회의실정보 조회용
 	@RequestMapping("mtroomDetail.me")
@@ -102,7 +141,16 @@ public class MeetingroomController {
 
 	// 회의실 등록용
 	@RequestMapping("insertMtroom.me")
-	public String insertMeetingroom(Meetingroom m, HttpSession session) {
+	public String insertMeetingroom(Meetingroom m, HttpSession session,
+									@RequestParam(name="uploadFile", required=false) MultipartFile file,
+									HttpServletRequest request, Model model) {
+		if(!file.getOriginalFilename().equals("")) {
+			
+			String changeName = saveFile(file, request);
+			m.setMtrmImage(changeName);
+		}
+		
+		System.out.println(m);
 		
 		int result = mrService.insertMeetingroom(m);
 
@@ -115,6 +163,7 @@ public class MeetingroomController {
 			return "redirect:mtroomDetail.me";
 		}
 	}
+	
 	
 	// 회의실수정용
 	@RequestMapping("updateMtroom.me")
@@ -133,6 +182,37 @@ public class MeetingroomController {
 		
 		
 	}
+	
+	// 첨부파일 관련 메소드
+	private String saveFile(MultipartFile file, HttpServletRequest request) {
+
+		String resources = request.getSession().getServletContext().getRealPath("resources"); 
+		String savePath = resources + "\\uploadFiles\\meetingroom\\"; 
+		
+		// 원본명 (aaa.jpg)
+		String originName = file.getOriginalFilename();
+		
+		// 수정명
+		// 년월일시분초 (String currentTime)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 확장자 (String ext)
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".jpg"
+		
+		// 최종 수정명 (20200522202011.jpg)
+		String changeName = currentTime + ext;
+		
+		
+		// 서버에 파일을 업로드시키는 메소드
+		try {
+			file.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
+
 	
 
 }

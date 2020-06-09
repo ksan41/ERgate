@@ -40,6 +40,8 @@
 		 where mtrm_reserv_status='Y'
 	</select>
 	
+
+	
 	  <select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
 		select *
 		  from meetingroom
@@ -54,8 +56,8 @@
 	</insert>
 	
 	<insert id="insertMeetingroom" parameterType="Meetingroom">
-		insert into meetingroom
-		values(seq_mroom_no.nextval , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y', sysdate)	
+		INSERT INTO MEETINGROOM
+		VALUES(SEQ_MROOM_NO.NEXTVAL , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y', SYSDATE)	
 	</insert>
 
 	<select id="selectRvListCount" resultType="_int">
@@ -72,6 +74,12 @@
 		 where m.mtrm_code = mr.mtrm_code
 		   and emp_id = #{empId}
 	</select>
+	
+	<update id="cancelReserve" parameterType="string">
+		UPDATE MEETINGROOM_RESERVATION
+		   SET MTRM_RESERV_STATUS='N'
+		 WHERE MTRM_RESERV_NO=#{mtrmReservNo}
+	</update>
 	
 	<update id="updateMeetingroom" parameterType="Meetingroom">
 		update meetingroom

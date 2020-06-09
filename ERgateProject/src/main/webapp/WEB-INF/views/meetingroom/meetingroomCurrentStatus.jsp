@@ -487,8 +487,9 @@ p {
 		<div class="contentArea">
 
 			<h2 style="display: inline-block; margin-left: 330px;">
-				<span id="arrowLeft" class="material-icons"> arrow_left </span> <b
-					id="calYear"></b>년 <b id="calMonth"></b>월
+				<span id="arrowLeft" class="material-icons"> arrow_left </span> 
+					
+					<b id="calYear"></b>년 <b id="calMonth"></b>월
 
 				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
@@ -498,10 +499,10 @@ p {
 				<span id="arrowRight" class="material-icons"> arrow_right </span>
 			</h2>
 
-			<form id="changeMonthForm" action="expenseListM.si" method="get">
-				<input type="hidden" name="year"> <input type="hidden"
-					name="month"> <input type="hidden" name="currentPage"
-					value="1">
+			<form id="changeMonthForm" action="statusM.me" method="get">
+				<input type="hidden" name="year"> 
+				<input type="hidden" name="month"> 
+				<input type="hidden" name="currentPage" value="1">
 			</form>
 
 			<script>
@@ -510,8 +511,8 @@ p {
 					var year = date.getFullYear();
 					var month = date.getMonth() + 1;
 
-					var newYear = "<c:out value='${sds.year}'/>";
-					var newMonth = "<c:out value='${sds.month}'/>";
+					var newYear = "<c:out value='${mds.year}'/>";
+					var newMonth = "<c:out value='${mds.month}'/>";
 
 					if (newYear != "") {
 						$("#calYear").text(newYear);
@@ -924,8 +925,6 @@ p {
 			<div class="modal-content" id="mtrmCurrentInnerPage">
 				<table id="myReserv" class="mtrmCurrentInner">
 
-
-
 				</table>
 
 			</div>
@@ -988,7 +987,7 @@ p {
 									"</span></td>" +
 								"</tr> <tr>" +
 									"<td class='mcTdContent'>"+
-										"<button class='mcBtn' type='button'>예약취소</button>" +
+										"<button id='mcBtn' class='mcBtn' type='button'>예약취소</button>" +
 									"</td>" +
 								"</tr>";
 					
@@ -1008,6 +1007,16 @@ p {
 				window.open('meetingroomCurrentStatusPopup.jsp','popup_name','_blank');
 			});
 			
+		});
+	</script>
+
+	
+	<script>
+		$(function(){
+			$("#mcBtn").click(function(){
+				location.href = "cancelReserve.me?mno"
+					+ $(this).children().eq(0).text();
+			});
 		});
 	</script>
 	

@@ -34,6 +34,8 @@ public interface MeetingroomService {
 	// 내 예약현황 리스트 조회용 --- myReserveList(String empId)
 	ArrayList<MeetingroomReservation> myReserveList(String empId);
 	
+	
+	
 	// 예약취소용---cancelReserve(int mtrmReservNo)
 	int cancelReserve(int mtrmReservNo);
 
@@ -49,7 +51,9 @@ public interface MeetingroomService {
 	ArrayList<MeetingroomReservation> statusList(PageInfo pi);
 
 	// 회의실 예약현황 월 선택 조회용 ---statusListMonth(String month)
-	// 회의실 관리리스트 조회용---meetingroomList()
+	public int seachListCount(String month);
+	
+	public ArrayList<MeetingroomReservation> searchList(PageInfo pi, String month);
 
 	// 회의실 등록용 ---insertMeetingroom(Meetingroom)
 	int insertMeetingroom(Meetingroom m);

@@ -43,7 +43,7 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 
 	@Override
 	public int cancelReserve(int mtrmReservNo) {
-		return 0;
+		return mrDao.cancelReserve(sqlSession, mtrmReservNo);
 	}
 
 	@Override
@@ -95,6 +95,21 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Override
 	public ArrayList<MeetingroomReservation>myReserveList(String empId) {
 		return mrDao.myReserveList(sqlSession, empId);
+	}
+	/*
+	 * @Override public int seachListCount(String month) { return
+	 * mrDao.seachListCount(sqlSession, month); }
+	 */
+
+	@Override
+	public ArrayList<MeetingroomReservation> searchList(PageInfo pi, String month) {
+		return mrDao.searchList(sqlSession, pi, month);
+	}
+
+	@Override
+	public int seachListCount(String month) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

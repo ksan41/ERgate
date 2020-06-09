@@ -372,7 +372,17 @@
 					
 						<tr>
 							<td rowspan="5" class="mmTdImg">
-								<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
+							
+								<c:choose>
+									<c:when test="${ empty m.mtrmImage }">
+										<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
+									</c:when>
+									<c:otherwise>
+										<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${m.mtrmImage}">
+									</c:otherwise>
+									
+								</c:choose>
+								
 							</td>
 							<td class="mmTdContent">
 								<span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -407,12 +417,8 @@
 				</table>
 				</c:forEach>
 			</div>
-			
-
 
 			<!-- 페이징바 안함 그냥 늘어나면 스크롤 늘어나는 형식으로 하기 -->
-			 
-			<!-- 페이징바 -->
 			
 		</div>
 
@@ -424,7 +430,7 @@
 			<div class="modal-title">회의실 등록</div>
 			<div class="modal-content">
 			<a class="open-modal" href="#modal-form"></a>
-				<form id="enrollMtrm" method="post" action="insertMtroom.me">
+				<form id="enrollMtrm" method="post" action="insertMtroom.me" enctype="multipart/form-data">
 						<table class="meetingroomModalTable">
 							<tr>
 								<td class="mmName">회의실명</td>
@@ -450,13 +456,17 @@
 	
 	
 						</table>
+						<!-- 예약/취소 버튼 -->
+						<div class=btns>
+							<button class="mmSubmitBtn" type="submit">등록하기</button>
+							<button class="mmResetBtn" type="reset">삭제하기</button>
+						</div>
+						
+						<div id="fileArea">
+							<input type="file" name="uploadFile" id="fileInput" onchange="loadImg(this, 1);">
+						</div>
+					
 					</form>
-					<!-- 예약/취소 버튼 -->
-					<div class=btns>
-						<button class="mmSubmitBtn" type="submit">등록하기</button>
-						<button class="mmResetBtn" type="reset">삭제하기</button>
-					</div>
-				
 
 			</div>
 		</div>
@@ -467,45 +477,57 @@
 		<div id="edit" class="modal">
 			<div class="modal-title">회의실 수정</div>
 			<div class="modal-content">
-				<form id="updataForm" method="post" action="updateMtroom.me" enctype="multipart/form-data">
+				<form id="updataForm" method="post" action="updateMtroom.me"
+					enctype="multipart/form-data">
 					<div>
-		                <table class="meetingroomModalTable">
-		                    <tr>
-									<td class="mmName">회의실 명</td>
-									<td class="mmName2"><input class="mmModalInput" type="text" name="mtrmName" value="${ m.mtrmName }"></td>
-								</tr>
-		
-								<tr>
-									<td class="mmLocation">회의실 위치</td>
-									<td class="mmLocation2"><input class="mmModalInput" type="text" name="mtrmLocation" value="${ m.mtrmLocation }"></td>
-								</tr>
-		
-								<tr>
-									<td class="mmPersonnel">최대 수용인원</td>
-									<td class="mmPersonnel2"><input class="mmModalInput" type="text" name="mtrmCapacity" value="${ m.mtrmCapacity }"></td>
-								</tr>
-		
-								<tr>
-									<td class="mmImgEnroll">회의실 이미지</td>
-									<td class="mmImgEnroll2">
-										
-										
-										
-										<img id="mmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-									</td>
-								</tr>
-		                </table>
-		            </div>
-		                    <!-- 예약/취소 버튼 -->
+						<table class="meetingroomModalTable">
+							<tr>
+								<td class="mmName">회의실 명</td>
+								<td class="mmName2"><input class="mmModalInput" type="text"
+									name="mtrmName" value="${ m.mtrmName }"></td>
+							</tr>
+
+							<tr>
+								<td class="mmLocation">회의실 위치</td>
+								<td class="mmLocation2"><input class="mmModalInput"
+									type="text" name="mtrmLocation" value="${ m.mtrmLocation }"></td>
+							</tr>
+
+							<tr>
+								<td class="mmPersonnel">최대 수용인원</td>
+								<td class="mmPersonnel2"><input class="mmModalInput"
+									type="text" name="mtrmCapacity" value="${ m.mtrmCapacity }"></td>
+							</tr>
+
+							<tr>
+								<td class="mmImgEnroll">회의실 이미지</td>
+								<td class="mmImgEnroll2"><c:choose>
+										<c:when test="${ empty m.mtrmImage }">
+											<img id="mmImgEdit"
+												src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
+										</c:when>
+										<c:otherwise>
+											<img id="mmImgEdit"
+												src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${m.mtrmImage}">
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+						</table>
+					</div>
+					<!-- 예약/취소 버튼 -->
 					<div class=btns>
-						<button class="mmSubmitBtn" type="submit" onclick="postFormSubmit(1);">수정하기</button>
-						<button class="mmResetBtn" type="reset" onclick="postFormSubmit(2);">삭제하기</button>
+						<button class="mmSubmitBtn" type="submit">수정하기</button>
+						<button class="mmResetBtn" type="reset">삭제하기</button>
+					</div>
+
+					<div id="fileArea2">
+						<input type="file" name="reUploadFile" id="fileInput2" onchange="loadImg2(this, 1);">
 					</div>
 				</form>
 			</div>
-			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br> 
+			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
 		</div>
-		
+
 	</div>
 		
 		<!-- 모달용 스크립트 -->
@@ -531,25 +553,66 @@
 			
 		</script>
 		
+		<!-- 사진 첨부  -->
 		<script>
-			function postFormSubmit(num){
-				if(num == 1){ // 수정하기 클릭 시
-					$("#postForm").attr("action","updateMtroom.me");
-				}else{ // 삭제하기 클릭 시
-					$("#postForm").attr("action", "deleteMtroom.me");
+			
+			$(function() {
+				$("#fileArea").hide();
+
+				$("#mmImgEnroll").click(function() {
+					$("#fileInput").click();
+				});
+			});
+
+			function loadImg(inputFile, num) {
+
+				if (inputFile.files.length == 1) {
+
+					var reader = new FileReader();
+
+					reader.readAsDataURL(inputFile.files[0]);
+
+					reader.onload = function(e) {
+						switch (num) {
+						case 1:
+							$("#mmImgEnroll").attr("src", e.target.result);
+							break;
+						}
+					};
 				}
-				
-				$("#postForm").submit();
-					
 			}
-		
-		</script>
-		
-		<!-- 등록하기 ajax  -->
-		<script>
-		
-		
 		</script>
 
+
+		<!-- 사진 첨부 수정 -->
+		
+		<script>
+			
+			$(function() {
+				$("#fileArea2").hide();
+
+				$("#mmImgEdit").click(function() {
+					$("#fileInput2").click();
+				});
+			});
+
+			function loadImg2(inputFile, num) {
+
+				if (inputFile.files.length == 1) {
+
+					var reader = new FileReader();
+
+					reader.readAsDataURL(inputFile.files[0]);
+
+					reader.onload = function(e) {
+						switch (num) {
+						case 1:
+							$("#mmImgEdit").attr("src", e.target.result);
+							break;
+						}
+					};
+				}
+			}
+		</script>
 </body>
 </html>

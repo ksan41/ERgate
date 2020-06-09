@@ -47,40 +47,38 @@ html, body {
 <body>
 	<!-- 테이블 눌렀을 때 팝업창 나오는거 -->
 
-	<div class="popup-outer">
-		<div class="popup-title">예약하기</div>
-		<div class="popup-content">
-			<div id="open_reservation" class="modal" style="height: 730px;">
-				<div class="modal-title">회의실 예약</div>
-				<div class="modal-content">
+		<div id="open_reservation" class="modal" style="height: 730px;">
+			<div class="modal-title">회의실 예약</div>
+			<div class="modal-content">
+				<form action="" id="reservationForm" name="reservationForm">
 					<table class="reservationContent">
 						<tr>
 							<td id="r1">신청자</td>
-							<td id="r2">${ loginUser.empName }님</td>
+							<td id="r2"><input type="hidden" name="empId"
+								value="${ loginUser.empId }"><span>${ loginUser.empName }</span></td>
 						</tr>
 						<tr>
 							<td id="r1">사용기간</td>
-							<td id="r2">
-								<form name="" action="" method="post">
-									<input type="date" class="inputs" style="width: 140px">
-									<input type="time" class="inputs" style="width: 120px">
-									<img
-										src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png"
-										id="minusImg"> <input type="date" class="inputs"
-										style="width: 140px"> <input type="time"
-										class="inputs" style="width: 120px">
-								</form>
+							<td id="r2"><input type="date" name="mtrmStartDate"
+								class="inputs" style="width: 140px"> <input type="time"
+								name="mtrmStartTime" class="inputs" style="width: 120px">
+								<img
+								src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png"
+								id="minusImg"> <input type="date" name="mtrmEndDate"
+								class="inputs" style="width: 140px"> <input type="time"
+								name="mtrmEndTime" class="inputs" style="width: 120px">
 							</td>
 						</tr>
 						<tr>
 							<td id="r1">회의실</td>
-							<td id="r2"><select name="meetingroom" class="inputs"
+							<td id="r2"><select name="mtrmCode" class="inputs"
 								style="width: 120px">
-									<option selected>회의실 선택</option>
-									<option>5F 회의실1</option>
-									<option>5F 회의실2</option>
-									<option>5F 회의실3</option>
-									<option>6F회의실</option>
+									<option>회의실 선택</option>
+									<option value="1" selected>3F 회의실</option>
+									<option value="2">5F 회의실1</option>
+									<option value="3">5F 회의실2</option>
+									<option value="4">6F 회의실1</option>
+									<option value="5">6F 회의실2</option>
 							</select> <br>
 								<button id="searchBtn1" class="searchBtn">가용회의실 검색</button> <br>
 								<input type="text" id="meetingroomBox" class="inputs"
@@ -89,30 +87,32 @@ html, body {
 						<tr>
 							<td id="r1">사용목적</td>
 							<td id="r2"><input type="text" placeholder="내용을 입력하세요"
-								class="inputs"></td>
+								class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }"></td>
 						</tr>
 						<tr>
 							<td id="r1">참석자(내부)</td>
-							<td id="r2"><button id="searchBtn2" class="searchBtn"
+							<td id="r2">
+								<button id="searchBtn2" class="searchBtn"
 									onclick="window.open('meetingroomAddparticipants.jsp','popup_name','_blank')">참석자
-									지정</button> <textarea cols="60" rows="4" id="partArea" readonly></textarea>
+									지정</button> <textarea name="inside" cols="60" rows="4" id="partArea"
+									readonly></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td id="r3">참석자(외부)</td>
-							<td id="r4"><input type="text" class="inputs"></td>
+							<td id="r4"><input type="text" name="outside" class="inputs"
+								name=""></td>
 						</tr>
 					</table>
-				</div>
+				</form>
+			</div>
 
-				<!-- 예약/취소 버튼 -->
-				<div class="btns">
-					<button id="reservBtn" type="submit">예약하기</button>
-					<button id="resetBtn" type="reset" onClick="history.go(0)">취소</button>
-				</div>
+			<!-- 예약/취소 버튼 -->
+			<div class="btns">
+				<button id="reservBtn" type="button">예약하기</button>
+				<button id="resetBtn" type="reset" onclick="history.go(0)">취소</button>
 			</div>
 		</div>
-	</div>
 
 
 
