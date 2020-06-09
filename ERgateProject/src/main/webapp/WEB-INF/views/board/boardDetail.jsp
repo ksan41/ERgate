@@ -385,6 +385,8 @@
 			}
         });
 	}
+	
+	
 	var loginUserName = $("#loginUserName").val();
 	var num = [];
 	var cnt = 0;
@@ -396,6 +398,7 @@
 				var value = "";
 				for(var i in list){
 					value += "<div style='width:1300px;min-height:110px;'>" +
+							 "<form action='' id='reForm' method='get'>" +			
 							 "<table class='replyContent' style='height:100%;'>" +
 							 "<tr>" +
 								"<td><input type='hidden' class='replyNoZone'name='replyNo' value=" + list[i].replyNo + ">" + list[i].replyWriter + "</td>" +
@@ -409,20 +412,20 @@
 							 "<tr>" +
 							 "<td id='replyBtnArea'>";
 					if(loginUserName == list[i].replyWriter){
-					value += "<button class='smallBtn replyUpdateBtn'>수정</button>" +
-							 "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-							 "<button class='smallBtn replyInsertBtn'>답글</button>";
+					value += "<button type='button' class='smallBtn replyUpdateBtn'>수정</button>" +
+							 "<button type='button' class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+							 "<button type='button' class='smallBtn replyInsertBtn'>답글</button>";
 					}else {
-					value += "<button class='smallBtn replyInsertBtn'>답글</button>";
+					value += "<button type='button' class='smallBtn replyInsertBtn'>답글</button>";
 					}
 					value += "</td>" +
 							 "</tr>" +
 							 "<tr>" + 
 							 "</tr>" + 
 							 "</table>" +
+							 "</form>" +
 							 "<hr>" +
 							 "</div>" +
-							 "<br>" +
 							 "<div class='rerepl" + list[i].replyNo + "' style='display:none; height:130px;'>" +
 							 "<form action='' method='get' class='rereplyForm'>" +
 							 "<textarea class='textArea' cols='120' rows='5' placeholder='내용을 입력하세요.'>" +
@@ -454,28 +457,31 @@
 				                	var value2 = "";
 									for(var i in relist){ // 같은 리플에 대댓글이 여러개일수도 있으니까 for문을 돌림 (보통은 1개지만)
 										value2 += "<div class='re" + relist[i].replyNo + "' style='width:1300px;min-height:50px;'>" +
+												  "<form action='' id='reForm' method='get'>" +
 												  "<table class='replyContent rereply'>" +
 												  "<tr>" +
-												 	"<td>" + "└"+ relist[i].replyWriter + "</td>" +
+												 	"<td><input type='hidden' class='replyNoZone'name='replyNo' value=" + relist[i].replyNo + ">" + "└"+ relist[i].replyWriter + "</td>" +
 												  "</tr>" +
 												  "<tr>" +
 												  	"<td id='reContentWrap'>" + "<span id='reContent'>" + relist[i].replyContent + "</span>" + "</td>" +
 												  "</tr>" +
 												  "<tr>" +
-												  	"<td id='reDate'>" + relist[i].replyEnrollDate + "</td>" +
+												  	"<td id='reDate'><input type='hidden' class='rereZone' name='rereZone' value='Y'>" + relist[i].replyEnrollDate + "</td>" +
 												  "</tr>";
 												  
 										if(loginUserName == relist[i].replyWriter){
 										value2 += "<tr>" +
 										  		  "<td id='replyBtnArea'>" +
-												  "<button class='smallBtn replyUpdateBtn'>수정</button>" +
-												  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>";
+												  "<button type='button' class='smallBtn replyUpdateBtn'>수정</button>" +
+												  "<button type='button' class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>";
 												  "</td>" +
 												  "</tr>" +
 												  "</table>" +
+												  "</form>" + 
 												  "<hr>";
 										}
-										value2 += "</table>" + 
+										value2 += "</table>" +
+												  "</form>" +
 												  "<hr>";
 										$(".rereplyShow" + relist[i].refRno).html(value2); 
 										// 여기서 리소스 낭비가 좀 있음, value2에 있는 값을 뿌려주는건데, 뿌려지는 구문이 for문 안에 있기 때문에 '댓글 1개'뿌린 상태에서 
@@ -572,14 +578,30 @@
 			value +="<div style='min-height:80px;'>" + 
 					"<textarea class='textArea replText' name='replyContent' cols='170' rows='5'>"+replyContent+"</textarea>" +
 					"</div>";
-			value2 +="<button class='smallBtn replyUpdateBtnLast'>수정</button>" +
-					 "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
-					 "<button class='smallBtn replyInsertBtn'>답글</button>";
+			value2 +="<button type='button' class='smallBtn replyUpdateBtnLast'>수정</button>" +
+					 "<button type='button' class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>" +
+					 "<button type='button' class='smallBtn replyCancleBtnLast'>취소</button>";
 			$(this).parent().parent().parent('tbody').children().eq(1).html(value);
 			$(this).parent().html(value2);
 		});
 		$(document).on("click",".replyUpdateBtnLast",function(){
-			console.log("이거 누르면 수정함!");
+			var replyNo = $(this).parent().parent().parent().find('input[name=replyNo]').val();
+			var replyContent =$(this).parent().parent().parent('tbody').children().eq(1).children().text();
+			var reFlag = $(this).parent().parent().parent().find('input[name=rereZone]').val();
+			
+			if(reFlag=='Y'){
+				console.log("리리플입니다.");
+				console.log(replyNo);
+				console.log(replyContent);
+			}else {		
+			console.log(replyNo);
+			console.log(replyContent);
+			}
+			
+		});
+		$(document).on("click",".replyCancleBtnLast",function(){
+			getReplyAllList();
+			
 		});
 		
 
@@ -603,35 +625,7 @@
                 dataType : 'json',
                 cache : false,
                 success : function(relist) {
-                	var value2 = "";
-				     value2 +=  "<div style='width:1300px;min-height:50px;'>" +
-							    "<table class='replyContent rereply'>" +
-							    "<tr>" +
-								"<td>" + "└"+ relist.replyWriter + "</td>" +
-								"</tr>" +
-								"<tr>" +
-								"<td id='reContentWrap'>" + "<span id='reContent'>" + relist.replyContent + "</span>" + "</td>" +
-								"</tr>" +
-								"<tr>" +
-								"<td id='reDate'>" + relist.replyEnrollDate + "</td>" +
-								"</tr>";
-								  
-						if(loginUserName == relist.replyWriter){
-						value2 += "<tr>" +
-						  		  "<td id='replyBtnArea'>" +
-								  "<button class='smallBtn replyUpdateBtn'>수정</button>" +
-								  "<button class='smallBtn replyDeleteBtn' style='background: rgb(190, 190, 190);'>삭제</button>";
-								  "</td>" +
-								  "</tr>" +
-								  "</table>";
-						}
-						value2 += "</table>";
-						$(".rereplyShow" + relist.refRno).html() + value2;
-						
 						getReplyAllList();
-						
-	 					
-						
                 },
                 error:function(){	// error : ajax 통신실패시 처리할 함수 지정
  					console.log("ajax 통신 실패!");
