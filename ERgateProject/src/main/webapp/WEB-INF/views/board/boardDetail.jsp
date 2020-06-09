@@ -523,6 +523,22 @@
 			}
         }); 
 	}
+	function getReReplyUpdate(formData){
+		$.ajax({
+            url : "updateReReply.bo",
+            data : formData,
+            type : 'POST',
+            processData : false,
+            contentType : false,
+            dataType : 'json',
+            cache : false,
+            success : function(result) {
+					getReplyAllList();
+            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+					console.log("ajax 통신 실패!");
+			}
+        }); 
+	}
 	
 	// 이 위로는 기본'펑션' 정의 구역
 	// 이 밑으로는 '이벤트'시 수행되는 내용
@@ -614,9 +630,7 @@
 		    formData.append("replyNo", replyNo);
 		    formData.append("replyContent", replyContent);
 			if(reFlag=='Y'){ // 대댓글 수정할때 요청 함수 (요청 url이 달라서...)
-				console.log("리리플입니다.");
-				console.log(replyNo);
-				console.log(replyContent);
+				getReReplyUpdate(formData);
 			}else { // 댓글 수정할때 요청 함수
 				getReplyUpdate(formData);
 			}

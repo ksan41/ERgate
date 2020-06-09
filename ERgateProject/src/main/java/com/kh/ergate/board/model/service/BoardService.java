@@ -51,7 +51,7 @@ public interface BoardService {
 	ReReply rereplyOne(int refRno);
 	int insertReply(Reply repl);
 	int updateReply(Reply repl);
-	
+	int updateReReply(ReReply repl);
 	
 	
 	// 4. 게시글 삭제용 서비스

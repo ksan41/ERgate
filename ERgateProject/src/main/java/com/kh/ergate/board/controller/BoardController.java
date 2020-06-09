@@ -108,7 +108,6 @@ public class BoardController {
 	public String replyList(int refBno) {
 		
 		ArrayList<Reply> list = bodService.replyList(refBno);
-		System.out.println(list.get(0));
 		return new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm:ss").create().toJson(list);
 	}
 	
@@ -219,7 +218,12 @@ public class BoardController {
 		int result = bodService.updateReply(repl);
 		return result;
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="updateReReply.bo", produces="application/json; charset=utf-8")
+	public int updatetReReply(ReReply repl) {
+		int result = bodService.updateReReply(repl);
+		return result;
+	}
 	
 	/*
 	 * @RequestMapping("delete.bo") public String deleteBoard(int bno, String

@@ -182,7 +182,12 @@
 		reply_Enroll_date = sysdate
 		where reply_no = #{replyNo}
 	</update>
-	
+		<update id="updateReReply" parameterType="ReReply">
+		update board_Re_Reply set
+		reply_Content = #{replyContent},
+		reply_Enroll_date = sysdate
+		where reply_no = #{replyNo}
+	</update>
 </mapper>
 
 
