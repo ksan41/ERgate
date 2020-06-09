@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +34,31 @@ public class MainController {
 	
 	// 로그인
 	@RequestMapping("login.ma")
-	public String loginMember(Employee e, HttpSession session) {
+	public String loginMember(Employee e, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		
 		Employee loginUser = mService.loginMember(e);
 		
+		String saveId = request.getParameter("saveId");
+		
 		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) {
+			
 			session.setAttribute("loginUser", loginUser);
+	        
+	        //쿠키
+	        Cookie c =new Cookie("saveId", e.getEmpId());
+
+	        if(saveId != null) {
+	            c.setMaxAge(7 * 24 * 60 * 60);
+	        }else {
+	            c.setMaxAge(0);
+	        }
+	        
+	        c.setPath("/");
+	        
+	        response.addCookie(c);
+			
 			return "main/main";
+			
 		}else {
 			session.setAttribute("msg", "로그인에 실패하였습니다. 알맞은 아이디와 비밀번호를 입력해주세요.");
 			return "redirect:returnLogin.ma";
@@ -245,7 +265,7 @@ public class MainController {
 		
 		// 파일을 업로드 시킬 폴더 경로 (String savePath)
 		String resources = request.getSession().getServletContext().getRealPath("resources"); // webapp 폴더의 resources 폴더까지의 물리적인 경로
-		String savePath = resources + "\\uploadFiles\\"; // 실제로 저장되어있는 폴더 (resources 폴더 안 경로)
+		String savePath = resources + "\\uploadFiles\\main\\"; // 실제로 저장되어있는 폴더 (resources 폴더 안 경로)
 		
 		
 		// 원본명 (aaa.jpg)
@@ -277,7 +297,7 @@ public class MainController {
 		// (실행 후 리턴값 없음)
 		
 		String resources = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = resources + "\\uploadFiles\\";
+		String savePath = resources + "\\uploadFiles\\main\\";
 		
 		File deleteFile = new File(savePath + fileName); // 삭제하고자 하는 풀 경로(경로+파일명)
 		deleteFile.delete(); // 실제 서버의 파일 찾아 삭제 처리

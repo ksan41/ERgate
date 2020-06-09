@@ -173,7 +173,7 @@ button:focus{
 							<img src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png">
 						</c:when>
 						<c:otherwise>
-							<img src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${ loginUser.empImage }">
+							<img src="${pageContext.servletContext.contextPath }/resources/uploadFiles/main/${ loginUser.empImage }">
 						</c:otherwise>
 					</c:choose>
 				</div>
