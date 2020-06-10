@@ -116,8 +116,11 @@
 	</select>
 	
 	<insert id="insertDocument" parameterType="SignDocument">
-		INSERT INTO SIGN_DOCUMENT(DOCUMENT_NO,SIGN_TYPE_NO,EMP_ID,SIGN_TYPE_NAME,EMP_NAME,DEPT_TITLE,DOC_STATUS)
-		VALUES (SEQ_SDOC_NO.NEXTVAL,#{signTypeNo},#{empId},#{signTypeName},#{empName},#{deptTitle},0)
+		INSERT INTO SIGN_DOCUMENT(DOCUMENT_NO,SIGN_TYPE_NO,EMP_ID,SIGN_TYPE_NAME,EMP_NAME,DEPT_TITLE,
+								  SIGN_TITLE,SIGN_CONTENT,DRAFT_DATE,DOC_STATUS,STATUS,EXPENSE_STARTDATE,
+								  EXPENSE_ENDDATE,SIGN_STEP,SIGN_STATUS,HOLIDAY_TYPE,HOLIDAY_START,
+								  HOLIDAY_END,HOLIDAY_USECOUNT)
+		VALUES (#{documentNo},#{signTypeNo},#{empId},#{signTypeName},#{empName},#{deptTitle},#{signTitle},#{signContent},SYSDATE,2,'Y',#{expenseStartDate},#{expenseEndDate},0,0,#{holidayType},#{holidayStart},#{holidayEnd},#{holidayUsecount})
 	</insert>
 	
 	<select id="selectMyDocument" parameterType="string" resultMap="signDocResultSet">
@@ -130,8 +133,13 @@
 	</select>
 	
 	<insert id="insertSigner" parameterType="Signer">
-		INSERT INTO SIGNER
+		INSERT INTO SIGNER(DOCUMENT_NO,EMP_ID,EMP_NAME,SIGN_TURN,SIGN_TYPE,SIGNED)
 		VALUES(#{documentNo},#{empId},#{empName},#{signTurn},#{signType},'N')
 		
+	</insert>
+	
+	<insert id="insertSignAttachment" parameterType="SignAttachment">
+		INSERT INTO SIGN_ATTACHMENT(FILE_NO,REF_DOC_NO,ORIGIN_NAME,CHANGE_NAME)
+		VALUES (SEQ_SDOC_NO.NEXTVAL,#{refDocNo},#{originName},#{changeName})
 	</insert>
 </mapper>

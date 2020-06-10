@@ -374,6 +374,8 @@ div {
 						opener.getRefId(refId);
 						opener.getRefName(refName);
 						
+						window.close();
+					
 					}
 				});
 			</script>

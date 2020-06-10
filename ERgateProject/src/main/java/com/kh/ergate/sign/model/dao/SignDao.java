@@ -59,7 +59,12 @@ public class SignDao {
 		return sqlSession.selectOne("signMapper.selectMyDocument",empId);
 	}
 	
+	// 결재라인 등록
 	public int insertSigner(SqlSessionTemplate sqlSession,Signer si) {
 		return sqlSession.insert("signMapper.insertSigner",si);
+	}
+	
+	public int insertSignAttachment(SqlSessionTemplate sqlSession,SignAttachment st) {
+		return sqlSession.insert("signMapper.insertSignAttachment",st);
 	}
 }

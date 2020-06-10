@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Signer {
-	private int documentNo; //참조문서번호
+	private long documentNo; //참조문서번호
 	private String empId; //결재자 아이디
 	private String empName; //결재자 이름
 	private int signTurn; //결재순서

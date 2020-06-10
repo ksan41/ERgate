@@ -110,7 +110,7 @@ public class SignServiceImpl implements SignService{
 	}
 	
 	
-	// 결재문서 1차 insert
+	// 결재문서 등록용
 	@Override
 	public int insertDocument(SignDocument sd) {
 		return siDao.insertDocument(sqlSession,sd);
@@ -120,6 +120,12 @@ public class SignServiceImpl implements SignService{
 	@Override
 	public SignDocument selectMyDocument(String empId) {
 		return siDao.selectMyDocument(sqlSession,empId);
+	}
+	
+	// 결재문서-첨부파일 등록용
+	@Override
+	public int insertSignAttachment(SignAttachment st) {
+		return siDao.insertSignAttachment(sqlSession,st);
 	}
 
 

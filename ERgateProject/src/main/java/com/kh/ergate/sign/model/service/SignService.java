@@ -61,5 +61,8 @@ public interface SignService {
 	
 	//기안등록
 	public int insertDocument(SignDocument sd);
-
+	
+	//기안문서 첨부파일 등록용
+	public int insertSignAttachment(SignAttachment st);
+	
 }

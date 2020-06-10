@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignDocument {
-	private int documentNo; //문서번호
+	private long documentNo; //문서번호
 	private String signTypeNo; //결재양식번호
 	private String empId; //기안자아이디
 	private String signTypeName; //결재양식명
