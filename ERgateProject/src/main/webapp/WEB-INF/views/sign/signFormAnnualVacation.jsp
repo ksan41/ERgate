@@ -299,38 +299,48 @@ h2, h3 {
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">결재대기함</button></li>
-				<li><button class="subBtn">진행결재함</button></li>
-				<li><button class="subBtn subActive">상신내역</button></li>
-				<li><button class="subBtn">지출결의내역</button></li>
-				<li><button class="subBtn">외근&휴가내역</button></li>
+				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
+				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
+				<c:if test="${loginUser.deptCode eq 'D2' }">
+					<li><button class="subBtn subActive"
+							onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+				</c:if>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
+				</c:if>	
 			</ul>
 		</div>
 		<div class="contentArea">
 			<!-- 내용 작성 영역 입니다-->
 			<h1>휴가계</h1>
 			<div id="btnArea">
-				<button class="bigBtn" style="background: rgb(190, 190, 190);">임시저장</button>
-				<button class="bigBtn" id="signSubmit">기안등록</button>
+				<button type="button" class="bigBtn" id="signSubmit" onclick="uploadFile();">기안등록</button>
 			</div>
 			<br>
-			<form id="signForm" action="#" method="get">
+			<form id="signForm" name="signForm" method="get" enctype="multipart/form-data">
+				<input type="hidden" name="signTypeNo" value="1"> 
+				<input type="hidden" name="signTypeName" value="휴가계"> 
+				<input type="hidden" name="empId" value="${loginUser.empId }"> 
+				<input type="hidden" name="empName" value="${loginUser.empName }">
+				<input type="hidden" name="deptTitle" value="${loginUser.deptTitle }"> 
+				<input type="hidden" name="documentNo" value="${documentNo }">
 				<table id="signInfo1">
 					<tr>
 						<th>기안부서</th>
-						<td width="400">인사부</td>
+						<td width="400">${loginUser.deptTitle }</td>
 						<th>문서분류</th>
 						<td width="400">휴가계</td>
 					</tr>
 					<tr>
 						<th>기안자</th>
-						<td>김기철</td>
+						<td>${loginUser.empName }</td>
 						<th>문서번호</th>
-						<td>00000</td>
+						<td>${documentNo}</td>
 					</tr>
 					<tr>
 						<th>기안일시</th>
-						<td>2020/05/10</td>
+						<td><p id="toDate"></p></td>
 						<td colspan="2" style="display:none;"></td>
 					</tr>
 				</table>
@@ -338,87 +348,70 @@ h2, h3 {
 				<table id="signInfo2">
 					<tr>
 						<th rowspan="2" width="120">결재라인
-							<button type="button" class="middleBtn"
-								style="width: 120px; margin-top: 10px;">결재라인추가</button>
+						<button type="button" class="middleBtn"
+								style="width: 120px; margin-top: 10px;"
+								onclick="window.open('openSigner.si','signApproval','_blank');">결재라인추가</button>
 						</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
+						<th id="j1"></th>
+						<th id="j2"></th>
+						<th id="j3"></th>
+						<th id="j4"></th>
+						<th id="j5"></th>
+						<th id="j6"></th>
 					</tr>
 					<tr>
 						<td width="150"><h2>1</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n1"></h3></td>
 						<td width="150"><h2>2</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n2"></h3></td>
 						<td width="150"><h2>3</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n3"></h3></td>
 						<td width="150"><h2>4</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n4"></h3></td>
 						<td width="150"><h2>5</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n5"></h3></td>
 						<td width="150"><h2>6</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n6"></h3></td>
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left"><span>@앨리스 </span> <span>@레베카
-						</span> <span>@마리아 </span> <span>@존 </span> <span>@올리버 </span> <span>@샬롯
-						</span></td>
+						<td id="refArea" colspan="6" align="left"></td>
 					</tr>
 				</table>
 
-				<!-- 결재완료시 체크될 부분 -->
-				<table id="checkArea">
-					<tr>
-						<th width="120"></th>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-					</tr>
-				</table>
 				<table id="signInfo3">
 					<thead>
 						<tr>
 							<th>휴가구분</th>
-							<td><select class="inputs" name="" style="height:35px;margin-right:220px;">
-									<option>연차</option>
-									<option>오전반차</option>
-									<option>오후반차</option>
-									<option>경조사</option>
-									<option>공가</option>
-									<option>병가</option>
-									<option>휴직</option>
+							<td><select class="inputs" name="holidayType" style="height:35px;margin-right:220px;">
+									<option value="0">연차</option>
+									<option value="1">오전반차</option>
+									<option value="2">오후반차</option>
+									<option value="3">경조사</option>
+									<option value="4">공가</option>
+									<option value="5">병가</option>
+									<option value="6">휴직</option>
 								</select></td>
 							<th width="103">잔여연차</th>
-							<td align="left"> 15 일</td>
+							<td align="left"><p id="remainDay">15</p> 일</td>
 						</tr>
 						<tr>
 							<th>기간</th>
 							<td>
-								<input class="inputs" name="" type="date">
+								<input class="inputs" name="holidayStart" type="date">
 								~
-								<input class="inputs" name="" type="date">
+								<input class="inputs" name="holidayEnd" type="date">
 							</td>
 							<th>사용일수</th>
 							<td>
-								<input type="text" class="inputs" value="1" readonly> 일
+								<input type="text" name="holidayUsecount" class="inputs" value="1" readonly> 일
 							</td>
 						</tr>
 						<tr>
 							<th width="120">제목</th>
-							<td colspan="4"><input class="inputs" type="text" style="width: 100%;margin-left: 7px;"></td>
+							<td colspan="4">
+								<input name="signTitle" class="inputs" type="text" style="width: 100%;margin-left: 7px;">
+							</td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
@@ -450,7 +443,7 @@ h2, h3 {
 						</tr>
 					</thead>
 				</table>
-				<input type="hidden" name="contentTable">
+				
 				<table id="contentTable">
 						<tr>
 							<th>휴가사유</th>

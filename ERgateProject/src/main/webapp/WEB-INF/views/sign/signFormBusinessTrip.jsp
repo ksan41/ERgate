@@ -309,16 +309,19 @@ h2, h3 {
 				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
 				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
 				<li><button class="subBtn subActive" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
-				
-				<li><button class="subBtn" onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
-				<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
+				<c:if test="${loginUser.deptCode eq 'D2' }">
+					<li><button class="subBtn subActive"
+							onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+				</c:if>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
+				</c:if>	
 			</ul>
 		</div>
 		<div class="contentArea">
 			<!-- 내용 작성 영역 입니다-->
 			<h1>외근신청서</h1>
 			<div id="btnArea">
-				<button type="button" class="bigBtn" style="background: rgb(190, 190, 190);">임시저장</button>
 				<button type="button" class="bigBtn" id="signSubmit" onclick="uploadFile();">기안등록</button>
 			</div>
 			<br>
@@ -613,7 +616,7 @@ h2, h3 {
                 var ext = fileNameArr[fileNameArr.length - 1];
                 
                 var fileSize = files[i].size; // 파일 사이즈(단위 :byte)
-                console.log("fileSize="+fileSize);
+               // console.log("fileSize="+fileSize);
                 if (fileSize <= 0) {
                     console.log("0kb file return");
                     return;
@@ -624,13 +627,13 @@ h2, h3 {
                 
                 var fileSizeStr = "";
                 if ((1024*1024) <= fileSize) {    // 파일 용량이 1메가 이상인 경우 
-                    console.log("fileSizeMb="+fileSizeMb.toFixed(2));
+                    //console.log("fileSizeMb="+fileSizeMb.toFixed(2));
                     fileSizeStr = fileSizeMb.toFixed(2) + " Mb";
                 } else if ((1024) <= fileSize) {
-                    console.log("fileSizeKb="+parseInt(fileSizeKb));
+                   // console.log("fileSizeKb="+parseInt(fileSizeKb));
                     fileSizeStr = parseInt(fileSizeKb) + " kb";
                 } else {
-                    console.log("fileSize="+parseInt(fileSize));
+                    //console.log("fileSize="+parseInt(fileSize));
                     fileSizeStr = parseInt(fileSize) + " byte";
                 }
 
@@ -684,7 +687,7 @@ h2, h3 {
 
     // 업로드 파일 삭제
     function deleteFile(fIndex) {
-        console.log("deleteFile.fIndex=" + fIndex);
+        //console.log("deleteFile.fIndex=" + fIndex);
         // 전체 파일 사이즈 수정
         totalFileSize -= fileSizeList[fIndex];
 
@@ -727,8 +730,6 @@ h2, h3 {
            formData.append('deptTitle', form[0].deptTitle.innerText);
            formData.append('signTitle', form[0].signTitle.innerText);
            formData.append('signContent', contentTable);
-           //formData.append('expenseStartDate', form[0].expenseStartDate.innerText);
-           //formData.append('expenseEndDate', form[0].expenseEndDate.innerText);
            formData.append('signerId',signerId);
            formData.append('signerName',signerName);
            formData.append('refId',refId);

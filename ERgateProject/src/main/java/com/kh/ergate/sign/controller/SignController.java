@@ -185,6 +185,8 @@ public class SignController {
 	  // 기안작성폼-휴가계 요청용
 	  @RequestMapping("annualForm.si") 
 	  public String annualForm(Model model){
+		  
+		  // 문서번호 랜덤값으로 생성
 		  String documentNo = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); // "20200522202011" 
 		  documentNo += Integer.toString((int)Math.random()*100+1);
 			 
@@ -205,8 +207,8 @@ public class SignController {
 		  return "sign/signFormBusinessTrip"; 
 	  }
 	  
-	  // 결재라인 팝업 요청용
 	  
+	  // 결재라인 팝업 요청용
 	  @RequestMapping("approval.si") public String approvalPath() { 
 		  return "sign/signApprovalPath"; 
 	  }
@@ -290,7 +292,6 @@ public class SignController {
 	  }
 	  
 	  // 기안등록
-	  
 	  @ResponseBody
 	  @RequestMapping(value="insertDoc.si", produces="application/json; charset=utf-8") 
 	  public int insertDocument(MultipartHttpServletRequest form, @RequestParam(name="files", required=false) MultipartFile[] files) {
@@ -384,12 +385,19 @@ public class SignController {
 			  
 			  // 첨부파일 있을 경우 insert 진행
 			  if(files.length > 0) { 
+				  int flag = 0;
 				  for(int i=0; i<files.length;i++){
-					System.out.println(i+"번째 파일 \n"+ files[i]);  
-					//String changeName = saveFile(files[i], form); 
+					  int setFlag = (int)(Math.random()*99) + 10;
+					  if(setFlag != flag) {
+							flag = setFlag;
+						}else {
+							setFlag += 100;
+							flag = setFlag;
+						} // 혹시나 Math.random이 같은 값이 나올경우를 대비해서~
+					String changeName = saveFile(files[i], form,flag); 
 					SignAttachment st = new SignAttachment(); 
 					st.setRefDocNo(Long.parseLong(documentNo[0]));
-					st.setChangeName(saveFile(files[i], form));
+					st.setChangeName(changeName);
 					st.setOriginName(files[i].getOriginalFilename()); 
 					result *= siService.insertSignAttachment(st); 
 				} 
@@ -399,7 +407,7 @@ public class SignController {
 	  }
 	 
 	  
-	  public String saveFile(MultipartFile file, HttpServletRequest request) {
+	  public String saveFile(MultipartFile file, HttpServletRequest request,int flag) {
 			
 			String resources = request.getSession().getServletContext().getRealPath("resources");
 			String savePath = resources + "\\uploadFiles\\sign\\";
@@ -412,6 +420,8 @@ public class SignController {
 			
 			currentTime += Integer.toString((int)Math.random()*100+1);
 			
+			// 반복시의 구별값
+			currentTime += flag;
 			
 			// 확장자 (String ext)
 			String ext = originName.substring(originName.lastIndexOf(".")); // ".jpg"
