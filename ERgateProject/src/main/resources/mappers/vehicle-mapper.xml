@@ -29,7 +29,7 @@
 		<result column="VHCL_IMAGE" property="vhclImage"/>
 	</resultMap>
 	
-	<select id="selectReserveListCount" resultType="_int">
+	<select id="selectReserveListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
       	  FROM VEHICLE_RESERVATION
       	 WHERE EMP_ID=#{empId}

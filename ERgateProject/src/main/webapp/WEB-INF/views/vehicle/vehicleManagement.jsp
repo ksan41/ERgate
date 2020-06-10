@@ -434,7 +434,7 @@
 			</div>
 			
 			<!-- 페이징바 -->
-			<c:if test="${ pi.startPage eq 1 }">
+			<c:if test="${ pi.endPage gt 1 }">
 			
 				<ul class="pagingBar">
 					

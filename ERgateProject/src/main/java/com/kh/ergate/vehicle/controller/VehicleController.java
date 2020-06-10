@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.main.model.vo.Employee;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 import com.kh.ergate.vehicle.model.service.VehicleService;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
@@ -32,6 +35,8 @@ public class VehicleController {
 	private VehicleService vService;
 	
 	
+	/*
+	// 나의 예약 현황 리스트 조회
 	@RequestMapping("myReserve.ve")
 	public String myReserveVehicle(int currentPage, Model model, HttpSession session) {
 		
@@ -49,6 +54,16 @@ public class VehicleController {
 		return "vehicle/vehicleCurrentStatus";
 		
 	}
+	*/
+
+	// 나의 예약 현황 리스트 조회 ajax
+	@ResponseBody
+	@RequestMapping(value="myReserve.ve", produces="application/json; charset=utf-8")
+	public String myReserveList(String empId, Model model) {
+
+		ArrayList<VehicleReservation> list = vService.myReserveVehicle(empId);
+		return new Gson().toJson(list);
+	}
 	
 	@RequestMapping("cancelReserve.ve")
 	public String cancelReserveVehicle(String vhclReserveNo, HttpSession session) {
@@ -65,6 +80,7 @@ public class VehicleController {
 		
 	}
 	
+	// 차량 예약
 	@RequestMapping("reserve.ve")
 	public String reserveVehicle(VehicleReservation vr, HttpSession session) {
 		
@@ -80,16 +96,7 @@ public class VehicleController {
 		
 	}
 	
-	@RequestMapping("currentStatus.ve")
-	public String selectCurrentStatus() {
-		return "vehicle/vehicleCurrentStatus";
-	}
-	
-	@RequestMapping("reserveList.ve")
-	public String reserveVehicleList() {
-		return "vehicle/vehicleReservationList";
-	}
-	
+	// 차량 리스트 조회 - 관리자
 	@RequestMapping("vehicleList.ve")
 	public String selectVehicleList(int currentPage, Model model, HttpSession session) {
 
@@ -105,7 +112,7 @@ public class VehicleController {
 		return "vehicle/vehicleManagement";
 	}
 	
-	// 차량 등록
+	// 차량 등록 - 관리자
 	@RequestMapping("insert.ve")
 	public String insertVehicle(Vehicle v, HttpSession session,
 								@RequestParam(name="uploadFile", required=false) MultipartFile file,
@@ -129,17 +136,16 @@ public class VehicleController {
 		
 	}
 
-	// 차량 정보 조회 ajax
+	// 차량 정보 조회 ajax - 관리자
 	@ResponseBody
 	@RequestMapping(value="select.ve", produces="application/json; charset=utf-8")
 	public String selectVehicle(String vhclCode) {
 		
 		Vehicle vehicle = vService.selectVehicle(vhclCode);
-		
 		return new Gson().toJson(vehicle);
 	}
 	
-	// 차량 수정
+	// 차량 수정 - 관리자
 	@RequestMapping("update.ve")
 	public String updateVehicle(Vehicle v, HttpSession session,
 			   					@RequestParam(name="reUploadFile", required=false) MultipartFile file,
@@ -167,7 +173,7 @@ public class VehicleController {
 		
 	}
 
-	// 차량 삭제
+	// 차량 삭제 - 관리자
 	@RequestMapping("delete.ve")
 	public String deleteVehicle(Vehicle v, HttpSession session) {
 		
@@ -184,10 +190,19 @@ public class VehicleController {
 	}
 	
 	
-	
-	
 	// ---------- 페이지 이동용 ----------
 	
+	// 업무차량 메인
+	@RequestMapping("currentStatus.ve")
+	public String selectCurrentStatus() {
+		return "vehicle/vehicleCurrentStatus";
+	}
+	
+	// 차량 예약 현황 조회 (월별) - 관리자
+	@RequestMapping("reserveList.ve")
+	public String reserveVehicleList() {
+		return "vehicle/vehicleReservationList";
+	}
 	
 	
 	// ---------- 메소드 선언 ----------

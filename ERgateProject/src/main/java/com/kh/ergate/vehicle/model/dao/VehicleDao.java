@@ -18,10 +18,16 @@ public class VehicleDao {
 		return sqlSession.selectOne("vehicleMapper.selectReserveListCount", empId);
 	}
 	
+	/*
 	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, Employee e, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("vehicleMapper.myReserveVehicle", e, rowBounds);
+	}
+	*/
+	
+	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, String empId) {
+		return (ArrayList)sqlSession.selectList("vehicleMapper.myReserveVehicle", empId);
 	}
 	
 	public ArrayList<VehicleReservation> selectCurrentStatus(SqlSessionTemplate sqlSession, String currentDate) {
