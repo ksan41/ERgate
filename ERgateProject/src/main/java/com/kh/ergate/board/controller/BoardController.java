@@ -154,8 +154,9 @@ public class BoardController {
 		result = bodService.insertBoard(insertB);
 		if(files.length > 0) {
 			int flag = 0;
+			int setFlag = 0;
 			for(int i=0; i<files.length; i++) {
-				int setFlag = (int)(Math.random()*99) + 10;
+				setFlag = (int)(Math.random()*99) + 10;
 				if(setFlag != flag) {
 					flag = setFlag;
 				}else {
