@@ -155,7 +155,7 @@ public class BoardController {
 		if(files.length > 0) {
 			
 			for(int i=0; i<files.length; i++) {
-				String changeName = saveFile(files[i], form);
+				String changeName = saveFile(files[i], form, i);
 				BoardAttachment bt = new BoardAttachment();
 				bt.setChangeName(changeName);
 				bt.setOriginName(files[i].getOriginalFilename());
@@ -169,7 +169,7 @@ public class BoardController {
 		return result;
 	}
 	
-	public String saveFile(MultipartFile file, HttpServletRequest request) {
+	public String saveFile(MultipartFile file, HttpServletRequest request, int flag) {
 		
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources + "\\uploadFiles\\board\\";
@@ -179,6 +179,9 @@ public class BoardController {
 		
 		// 수정명 (20200522202011.jpg)
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 반복시의 구별값
+		currentTime += flag;
 		
 		// 확장자 (String ext)
 		String ext = originName.substring(originName.lastIndexOf(".")); // ".jpg"
