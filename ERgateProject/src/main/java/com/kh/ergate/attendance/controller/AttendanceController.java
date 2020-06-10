@@ -47,9 +47,9 @@ public class AttendanceController {
 	// 근태관리 리스트 조회용 - 첫페이지에 뿌려지는 ajax
 	@ResponseBody
 	@RequestMapping(value="atMgListAjax.at", produces="application/json; charset=utf-8")
-	public String selectAtMgListAjax(){
+	public String selectAtMgListAjax(String year){
 		
-		ArrayList<Employee> list = atService.selectAtMgListAjax();
+		ArrayList<Employee> list = atService.selectAtMgListAjax(year);
 		return new Gson().toJson(list);
 	}
 	
@@ -68,7 +68,6 @@ public class AttendanceController {
 	@RequestMapping(value="atMgDetail.at", produces="application/json; charset=utf-8")
 	public String selectAtMgDetail(Holiday holiday) {
 		
-		Holiday empHoliday = atService.selectEmpHoliday(holiday);
 		ArrayList<Holiday> list = atService.selectAtMgDetail(holiday); 
 		//System.out.println(list);
 		return new Gson().toJson(list);

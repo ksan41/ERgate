@@ -413,15 +413,15 @@ border-right: 1px solid lightgrey;
 										year = $("#year").text();
 										if(year > NowYear-4){
 											$("#year").text($("#year").text()-1);
+											selectEmpList($("#year").text());
 										}
-										atMgdeptEmpList();										
 									});	
 									$("#arrowRight").click(function() {
 										year = $("#year").text();
 										if(year < NowYear){
 											$("#year").text(Number($("#year").text())+1);
+											selectEmpList($("#year").text());
 										}
-										atMgdeptEmpList();		
 									});	
 								});
 							</script>
@@ -522,12 +522,13 @@ border-right: 1px solid lightgrey;
 	<script>
 		
 		$(function(){
-			selectEmpList();
+			selectEmpList($("#year").text());
 			
 			
 			/* 조직도 부서별 사원 조회 */
 			$(".deptList").click(function(){
 				keyword =$(this).attr("key");
+				console.log(keyword);
 				year = $("#year").text();
 				
 				$.ajax({
@@ -564,17 +565,15 @@ border-right: 1px solid lightgrey;
 
 		});
 		
-		function atMgdeptEmpList(){
-			$(".deptList").click();
-		}
 		
 		/* 조직도 전체 리스트 조회 - 계정관리 페이지 첫 화면 */
-		function selectEmpList(){		
+		function selectEmpList(year){		
 				
+			//console.log(year);
 			$.ajax({
 				url: "atMgListAjax.at",
 				type: "post",
-				
+				data:{"year":year},
 				success: function(list){
 					// console.log(list);
 					var value = "";
@@ -646,7 +645,8 @@ border-right: 1px solid lightgrey;
 			
 			empId = window.event.target.getAttribute("key");
 			year = $("#year").text();
-			console.log(year);
+			console.log(empId);
+			
 			$.ajax({
 				url:"atMgDetail.at",
 				type:"get",

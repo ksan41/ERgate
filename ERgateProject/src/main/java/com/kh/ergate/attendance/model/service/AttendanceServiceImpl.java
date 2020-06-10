@@ -21,22 +21,23 @@ public class AttendanceServiceImpl implements AttendanceService {
 	private AttendanceDao atDao;
 
 	@Override
-	public ArrayList<Holiday> selectAtMgDetail(Holiday holiday) {
-		return atDao.selectAtMgDetail(sqlSession, holiday);
-	}
-
-	@Override
 	public Holiday selectEmpHoliday(Holiday holiday) {
 		return atDao.selectEmpHoliday(sqlSession, holiday);
 	}
 
 	@Override
-	public ArrayList<Employee> selectAtMgListAjax() {
-		return atDao.selectAtMgListAjax(sqlSession);
+	public ArrayList<Employee> selectAtMgListAjax(String year) {
+		return atDao.selectAtMgListAjax(sqlSession, year);
 	}
 
 	@Override
 	public ArrayList<Employee> selectAtMgdeptEmpList(Search srch) {
 		return atDao.selectAtMgdeptEmpList(sqlSession, srch);
 	}
+	
+	@Override
+	public ArrayList<Holiday> selectAtMgDetail(Holiday holiday) {
+		return atDao.selectAtMgDetail(sqlSession, holiday);
+	}
+
 }

@@ -17,15 +17,15 @@ public class AttendanceDao {
 	}
 
 	public Holiday selectEmpHoliday(SqlSessionTemplate sqlSession, Holiday holiday) {
-		return sqlSession.selectOne("selectEmpHoliday", holiday);
+		return sqlSession.selectOne("attendanceMapper.selectEmpHoliday", holiday);
 	}
 
-	public ArrayList<Employee> selectAtMgListAjax(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("selectAtMgListAjax");
+	public ArrayList<Employee> selectAtMgListAjax(SqlSessionTemplate sqlSession, String year) {
+		return (ArrayList)sqlSession.selectList("attendanceMapper.selectAtMgListAjax", year);
 	}
 
 	public ArrayList<Employee> selectAtMgdeptEmpList(SqlSessionTemplate sqlSession, Search srch) {
-		return (ArrayList)sqlSession.selectList("selectAtMgdeptEmpList", srch);
+		return (ArrayList)sqlSession.selectList("attendanceMapper.selectAtMgdeptEmpList", srch);
 	}
 
 	

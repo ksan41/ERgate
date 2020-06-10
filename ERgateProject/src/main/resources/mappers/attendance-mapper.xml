@@ -38,7 +38,7 @@
 	</select>
 	
 	<!-- 근태관리 리스트 조회용 - 첫페이지에 뿌려지는 ajax -->
-	<select id="selectAtMgListAjax" resultMap="holidayResultSet">
+	<select id="selectAtMgListAjax" parameterType="string" resultMap="holidayResultSet">
 		select emp_name, rank_title, job_title, emp_id, dept_title
 		  from employee e	
 		  join rank r on e.rank_code=r.rank_code
@@ -46,6 +46,7 @@
 		  join department d on e.dept_code=d.dept_code
 		 where resign_flag='N' 
 		       and r.rank_Code is not null
+		       and extract (year from e.hire_date)<![CDATA[ <= ]]> #{year}
 		 order by emp_name
 	</select>
 	
