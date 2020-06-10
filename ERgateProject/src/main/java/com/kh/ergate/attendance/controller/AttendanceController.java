@@ -67,10 +67,16 @@ public class AttendanceController {
 	@ResponseBody
 	@RequestMapping(value="atMgDetail.at", produces="application/json; charset=utf-8")
 	public String selectAtMgDetail(Holiday holiday) {
+		//System.out.println(holiday);
+		ArrayList list = new ArrayList<>();
+		Holiday holi = atService.selectHoli(holiday);
+		//System.out.println(holi);
+		list.add(holi);
+		list.add(atService.selectAtMgDetail(holiday)); 
 		
-		ArrayList<Holiday> list = atService.selectAtMgDetail(holiday); 
 		//System.out.println(list);
 		return new Gson().toJson(list);
+		//return "";
 	}
 	
 	

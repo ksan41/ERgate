@@ -40,4 +40,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return atDao.selectAtMgDetail(sqlSession, holiday);
 	}
 
+	@Override
+	public Holiday selectHoli(Holiday holiday) {
+		return atDao.selectHoli(sqlSession, holiday);
+	}
+
 }

@@ -664,22 +664,22 @@ border-right: 1px solid lightgrey;
 				    
 					var value1 = "";
 					
-					if(list.length == 0){ // 리스트가 비어있을 경우
+					if(list[1].length == 0){ // 리스트가 비어있을 경우
 						value1 = '<tr class="pageNoClick"><td colspan="3"><br><span class="noEmpText">조회된 리스트가 없습니다. </span></td><td>';
 					}else{ // 리스트가 비어있지 않을 경우
 		            
-						for(var i in list){
+						for(var i in list[1]){
 							
-							var holidayUsecount = list[i].holidayUsecount;
-							var holidayStart = list[i].holidayStart;
-							var holidayEnd =  list[i].holidayEnd;
-							var holidayType = list[i].holidayType;
+							var holidayUsecount = list[1][i].holidayUsecount;
+							var holidayStart = list[1][i].holidayStart;
+							var holidayEnd =  list[1][i].holidayEnd;
+							var holidayType = list[1][i].holidayType;
 							
 							value1 += 
 							 '<tr class="pageNoClick"><td>'+ holidayUsecount +'</td><td>'+ holidayStart +' ~ '+ holidayEnd +'</td><td>'+ holidayType +'</td></tr>';
 						}
 					
-					  	for(var i=0; i<8-list.length; i++){
+					  	for(var i=0; i<8-list[1].length; i++){
 					  		value1 += 
 					  		'<tr>'+
 								'<td class="pageNoClick">&nbsp;</td>'+

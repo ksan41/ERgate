@@ -28,5 +28,9 @@ public class AttendanceDao {
 		return (ArrayList)sqlSession.selectList("attendanceMapper.selectAtMgdeptEmpList", srch);
 	}
 
+	public Holiday selectHoli(SqlSessionTemplate sqlSession, Holiday holiday) {
+		return sqlSession.selectOne("attendanceMapper.selectHoli", holiday);
+	}
+
 	
 }

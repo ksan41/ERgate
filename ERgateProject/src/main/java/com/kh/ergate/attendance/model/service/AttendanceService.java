@@ -17,7 +17,10 @@ public interface AttendanceService {
 	// 근태관리 부서별 사원 조회 - 가운데 부분 ajax
 	ArrayList<Employee> selectAtMgdeptEmpList(Search srch);
 
-	// 사원별 근태현황 상세 조회용
+	// 사원별 근태현황 상세 조회용2
 	ArrayList<Holiday> selectAtMgDetail(Holiday holiday);
+
+	// 사원별 근태현황 상세 조회용1
+	Holiday selectHoli(Holiday holiday);
 
 }

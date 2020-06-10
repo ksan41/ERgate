@@ -34,7 +34,7 @@
 		  join employee e using(emp_id)
 		  join department d on(e.dept_code=d.dept_code)
 		  join rank r on(e.rank_code=r.rank_code)
-		 where emp_id=#{empId} and year=#{year}
+		 where emp_id=#{empId} and SUBSTR(holiday_start,1,4)=#{year}
 	</select>
 	
 	<!-- 근태관리 리스트 조회용 - 첫페이지에 뿌려지는 ajax -->
@@ -84,6 +84,14 @@
 		
 	</select>
 	
+	<select id="selectHoli" parameterType="Holiday" resultMap="holidayResultSet">
+		select e.emp_name,r.rank_title,d.dept_title,hday,remain_day
+		from holiday
+		join employee e using (emp_id)
+		join rank r on e.rank_code=r.rank_code
+		join department d on(e.dept_code=d.dept_code)
+		where emp_id = #{empId} and year = #{year}
+	</select>
 	
 	<select id="selectEmpHoliday" parameterType="Holiday" resultMap="holidayResultSet">
 		select *
