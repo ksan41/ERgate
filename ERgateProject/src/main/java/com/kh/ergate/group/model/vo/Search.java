@@ -15,5 +15,6 @@ public class Search {
 	
 	private String condition;
 	private String keyword;
+	private String year;
 	
 }

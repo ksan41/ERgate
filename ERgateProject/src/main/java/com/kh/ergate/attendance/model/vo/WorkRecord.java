@@ -13,9 +13,9 @@ import lombok.ToString;
 @ToString
 public class WorkRecord {
 
-	private int workRecordNo;
-	private String empId;
-	private String clockIn;
-	private String clockOut;
-	private String workDate;
+	private int workRecordNo;	// 출퇴근번호
+	private String empId;		// 아이디
+	private String clockIn;		// 출근기록
+	private String clockOut;	// 퇴근기록
+	private String workDate;	// 출근일자
 }

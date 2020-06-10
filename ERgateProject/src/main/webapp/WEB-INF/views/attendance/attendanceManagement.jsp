@@ -6,13 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>attendanceManagement</title>
-
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath }/resources/icons/fontello_tree/css/fontello.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	
 <!-- 이곳에 메뉴바 include -->
 <jsp:include page="../common/menubar.jsp"/>
 	
-
 <!-- 모달 사용페이지에 복사해주세요 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
@@ -228,21 +227,41 @@ border-right: 1px solid lightgrey;
     padding-top: 10px;
     height: 35px; 
 }
+.deptList {
+	cursor: pointer;
+}
+
+.deptList:hover {
+	font-weight: 600;
+}
 /* empList_area */
 .empList{
     list-style: none;
+    list-style-image:url('${pageContext.servletContext.contextPath }/resources/icons/person_icon.png');
 }
 .empList li{
     padding-top: 10px;
     height: 35px; 
+    cursor: pointer;
 }
-.rank_code, .job_code{
-    color: rgb(188, 188, 188);
+.empList li:hover {
+	font-weight: 600;
+	cursor: pointer;
+}
+.dept_rank_code1 {
+	color: rgb(188, 188, 188);
+	cursor: default;
 }
 .empList a{
     text-decoration: none;
     color: rgb(77, 77, 77);
     cursor: pointer;
+}
+.noEmpText {
+	color: rgb(77, 77, 77);
+	font-size: 17px;
+	pointer-events: none;
+    cursor: default;
 }
  /* 조직도 div 스타일 */
  /* 모달팝업 스타일 */
@@ -271,15 +290,43 @@ border-right: 1px solid lightgrey;
 
 /* 모달팝업 스타일 */
 /* 모달 내부 스타일 */
-.empInfo{
+.dept_rank_code1 {
+	color: rgb(188, 188, 188);
+	cursor: default;
+}
+ .empInfo1{
     border: solid 1px lightgray;
-    border-radius: 5px;
-    width: 350px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    width: 300px;
     height: 35px;
     text-align: center;
     padding-top: 10px;
     font-size: 17px;
     margin-left:30px;
+    float: left;
+}
+.empInfo2{
+    border: solid 1px lightgray;
+    border-left: 0ch;
+    width: 300px;
+    height: 35px;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 17px;
+    float: left;
+}
+.empInfo3{
+    border: solid 1px lightgray;
+    border-left: 0ch;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 300px;
+    height: 35px;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 17px;
+    float: left;
 }
 .year{
     margin: auto; 
@@ -318,6 +365,10 @@ border-right: 1px solid lightgrey;
 	background-color: rgb(224, 224, 224);
 	cursor: pointer;
 }
+.pageNoClick{
+   pointer-events: none;
+   cursor: default;
+}
 /* 게시판 스타일 */
 </style>
 </head>
@@ -326,15 +377,15 @@ border-right: 1px solid lightgrey;
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
-			<span>조직도</span>
+			<span>근태</span>
 		</div>
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<li><button class="subBtn" onclick="location.href='atList.at'">출퇴근내역</button></li>
 				<li><button class="subBtn" onclick="location.href='myStatus.at'">근태현황</button></li>
-				<c:if test="${loginUser.deptCode eq 'D5' }">
+				<%-- <c:if test="${loginUser.deptCode eq 'D5' }"> --%>
 					<li><button class="subBtn subActive" onclick="location.href='atMgList.at'">근태관리</button></li>
-				</c:if> 
+				<%-- </c:if>  --%>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -345,31 +396,49 @@ border-right: 1px solid lightgrey;
 					<tr>
 						<td id="leftArea"> 
 							<h2 style="display: inline-block; margin-left: 530px;">
-								<span class="material-icons"> arrow_left </span> 
-									    <select name="year" id="year">
-									        <option value="">2020</option>
-									        <option value="">2019</option>
-									        <option value="">2018</option>
-									        <option value="">2017</option>
-									    </select>								
-							
-								<span class="material-icons"> arrow_right </span>
+								<span class="material-icons" id="arrowLeft"> arrow_left </span> 
+									   &nbsp; &nbsp;&nbsp;&nbsp;<span name="year" id="year"></span>&nbsp;&nbsp;&nbsp;&nbsp;								
+								<span class="material-icons" id="arrowRight"> arrow_right </span>
+								
 							</h2>
+							
+							<script>
+								$(function(){
+									var date = new Date();
+									var NowYear = date.getFullYear();
+									
+									$("#year").text(NowYear);
+									
+									$("#arrowLeft").click(function() {
+										year = $("#year").text();
+										if(year > NowYear-4){
+											$("#year").text($("#year").text()-1);
+										}
+										atMgdeptEmpList();										
+									});	
+									$("#arrowRight").click(function() {
+										year = $("#year").text();
+										if(year < NowYear){
+											$("#year").text(Number($("#year").text())+1);
+										}
+										atMgdeptEmpList();		
+									});	
+								});
+							</script>
 							
 						</td>
 						<td id="rightArea">
 							<!-- 검색바 -->
 							<div class="searchBar">
-								<select>
-									<option>이름</option>
-									<option>직급</option>
-									<option>직책</option>
-									<option>부서</option>
-								</select> <input type="text" placeholder="이름/직급/직책/부서 검색">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+								<select id="condition" name="condition">
+									<option value="empName">이름</option>
+									<option value="rankTitle">직급</option>
+									<option value="jobTitle">직책</option>
+									<option value="deptTitle">부서</option>
+								</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
+								<svg onclick="return searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 									fill="black" width="48px" height="48px">
-									<path
-										d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+									<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
 							</div>
 							<!-- 검색바 -->
@@ -386,45 +455,36 @@ border-right: 1px solid lightgrey;
 		        <div class="depList_area" style="overflow: auto;">
 		            <ul class="group_tree">
 		                <li>
-		                    <input type="checkbox" id="root">
-		                    <label for="root"> ERgate</label>
-		                    <ul>
-		                       <li><a href="#"> 임원</a></li>
-		                       <li><a href="#"> 개발팀</a></li>
-		                       <li><a href="#"> 회계팀</a></li>
-		                       <li><a href="#"> 기술팀</a></li>
-		                       <li><a href="#"> 총무팀</a></li>
-		                       <li><a href="#"> 인사팀</a></li>
-		                    </ul>
+		                    <input type="checkbox" id="root"> 
+							<label for="root" class="deptList" key="all"> ERgate</label>
+							<ul>
+								<li class="deptList" key="D0">└ 임원</li>
+								<li class="deptList" key="D1">└ 개발팀</li>
+								<li class="deptList" key="D2">└ 회계팀</li>
+								<li class="deptList" key="D3">└ 기술팀</li>
+								<li class="deptList" key="D4">└ 총무팀</li>
+								<li class="deptList" key="D5">└ 인사팀</li>
+							</ul>
 		                </li>
 		            </ul>
 		        </div>
 		        <!-- 가운데 영역 -->
 		        <div class="empList_area" style="overflow: auto;">
-		            <ul class="empList">
-		            	<a class="open-modal" href="#modal-form"><li><span>앨리스</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a class="open-modal" href="#modal-form"><li><span>리차드</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a class="open-modal" href="#modal-form"><li><span>케빈</span> <span class="rank_code">(임원 /</span> <span class="job_code">대표이사)</span></li></a>
-		                <a class="open-modal" href="#modal-form"><li><span>김카카오</span> <span class="rank_code">(회계팀 /</span> <span class="job_code">과장)</span></li></a>
-		                <a class="open-modal" href="#modal-form"><li><span>최삼성</span> <span class="rank_code">(기술팀 /</span> <span class="job_code">팀원)</span></li></a>
-		                <a class="open-modal" href="#modal-form"><li><span>박다음</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">대리)</span></li></a>
-		                <a class="open-modal" href="#modal-form"><li><span>문별</span> <span class="rank_code">(인사팀 /</span> <span class="job_code">팀장)</span></li></a>
-		            </ul>
+		            <ul class="empList"></ul>
 		        </div>
 		    </div><!-- groupMap_outer -->
 		    
 		    <!-- 여기아래로 모달 -->
 		 
 		    <br><br><br><br><br>
-			<!-- <a class="open-modal" href="#modal-form">모달열기</a> -->
+			<a class="open-modal" href="#modal-form" style="display:none;">모달열기</a>
 			
 			<div id="modal-form" class="modal">
 				<div class="modal-title">근태현황조회</div>
 				<div class="modal-content">
 					<br>
 					<div class="attendanceManagementModalOuter">
-				        <div class="empInfo">
-				            <div>김카카오 &nbsp;(개발1팀/팀장)</div>&nbsp;
+						<div class="empInfo">
 				        </div>
 				        <div class="year">
 							<h2 align="center" style="display: inline-block; margin-left: 530px;">
@@ -437,29 +497,18 @@ border-right: 1px solid lightgrey;
 									    </select>						
 								<span class="material-icons"> arrow_right </span>
 							</h2>
+							
 				        </div>
-				       	<div align="center" class="boardScroll" style="overflow: auto; width: 1300px; height: 350px; margin:auto;">
+				       	<div align="center" class="boardScroll" style="overflow: auto; width: 1320px; height: 350px; margin:auto;">
 				           <table class="boardTable">
 				               <thead>
 				                   <tr>
-				                       <th>생성연차</th>
-				                       <th>사용일자</th>
-				                       <th>사용</th>
-				                       <th>구분(연차/반차/병가/훈련)</th>
-				                       <th>외근</th>
-				                       <th>출장</th>
+				                       <th width="200">사용일수</th> <!-- 몇개 사용했는지 -->
+				                       <th width="800">사용기간</th>
+				                       <th width="335">구분</th> <!-- (연차/반차/병가/공가/경조사) -->
 				                   </tr>
 				               </thead>
 				               <tbody>
-				               	   <!-- 리스트 없을시 조건문 처리 -->
-				                   <tr>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                       <td></td>
-				                   </tr>
 				               </tbody>
 				           </table>
 			           </div> <!-- boardScroll -->
@@ -467,18 +516,205 @@ border-right: 1px solid lightgrey;
 				</div>
 			</div>
 
+		</div><!-- contentArea -->
+	</div> <!-- outer -->
+	
+	<script>
+		
+		$(function(){
+			selectEmpList();
+			
+			
+			/* 조직도 부서별 사원 조회 */
+			$(".deptList").click(function(){
+				keyword =$(this).attr("key");
+				year = $("#year").text();
+				
+				$.ajax({
+					url: "atMgdeptEmpList.gr",
+					type: "post",
+					data:{"keyword":keyword,
+						  "year":year}, 
+					async: false,
+					success: function(eList){
+					 	console.log(eList);
+						var value = "";
+						
+						if(eList.length == 0){ // 리스트가 비어있을 경우
+			            	value = '<li> 조회된 사원이 없습니다. </li>';
+						}else{ // 리스트가 비어있지 않을 경우
+			            	
+							for(var i in eList){
+								
+								var empName = eList[i].empName;
+								var empRank = eList[i].rankTitle;
+								var empJob = eList[i].jobTitle;
+								
+								value += '<li>' + '<span key="'+ eList[i].empId +'" onclick="open_modal();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
+							}
+							$(".empList").html(value);
+						} 
+						
+					},
+					error:function(){
+						console.log("조직도 부서별 사원 리스트 조회 실패");
+					}
+				});
+			});
+
+		});
+		
+		function atMgdeptEmpList(){
+			$(".deptList").click();
+		}
+		
+		/* 조직도 전체 리스트 조회 - 계정관리 페이지 첫 화면 */
+		function selectEmpList(){		
+				
+			$.ajax({
+				url: "atMgListAjax.at",
+				type: "post",
+				
+				success: function(list){
+					// console.log(list);
+					var value = "";
+					
+					if(list.length == 0){ // 리스트가 비어있을 경우
+		            	value = '<span class="noEmpText">조회된 사원이 없습니다. </span>';
+					}else{ // 리스트가 비어있지 않을 경우
+		            
+						for(var i in list){
+							
+							var empName = list[i].empName;
+							var empRank = list[i].rankTitle;
+							var empJob = list[i].jobTitle;
+							
+							value += '<li>' + '<span key="'+ list[i].empId +'" onclick="open_modal();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
+						
+						}
+						$(".empList").html(value);
+					}
+				},
+				error:function(){
+					console.log("조직도 사원 리스트조회용 통신 실패");
+				}
+			});
+		}
+	
+		/* 사원 검색 */
+		function searchEmpProfile(){
+			condition = $("#condition option:selected").val();
+			keyword = $("#keyword").val();
+			if(keyword==''){
+				alert("키워드를 입력하세요");
+				return;
+			}
+			$.ajax({
+				url:"empListSearch.gr",
+				type:"get",
+				data:{"condition":condition,
+					 "keyword":keyword},
+				success: function(list){
+				
+					var value = "";
+					
+					if(list.length == 0){ // 리스트가 비어있을 경우
+						value = '<br><span class="noEmpText">조회된 사원이 없습니다. </span>';
+					}else{ // 리스트가 비어있지 않을 경우
+		            
+						for(var i in list){
+							
+							var empName = list[i].empName;
+							var empRank = list[i].rankTitle;
+							var empJob = list[i].jobTitle;
+							
+							value += '<li>' + '<span key="'+ list[i].empId +'" onclick="open_modal();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
+						}
+					}
+					$(".empList").html(value);
+				},
+				error:function(){
+					console.log("조직도 사원 리스트조회용 통신 실패");
+				}
+			})
+		}
+		
+		
+		
+		/* 사원별 근태 현황 - 모달 */
+		function attendanceManagement(){
+			
+			empId = window.event.target.getAttribute("key");
+			year = $("#year").text();
+			console.log(year);
+			$.ajax({
+				url:"atMgDetail.at",
+				type:"get",
+				data:{"empId":empId,
+					 "year":year},
+				success: function(list){
+				console.log(list);
+					
+					var value0 =
+						'<div class="empInfo1">'+ list[0].empName +'&nbsp;<span class="dept_rank_code1">('+ list[0].deptTitle +'/'+ list[0].rankTitle +')</span></div>'+
+				        '<div class="empInfo2">생성연차 &nbsp;/&nbsp;'+ list[0].hday +'</div>'+
+				        '<div class="empInfo3">잔여일수 &nbsp;/&nbsp;'+ list[0].remainDay +'</div>';
+				
+				    $(".empInfo").html(value0);
+				    
+					var value1 = "";
+					
+					if(list.length == 0){ // 리스트가 비어있을 경우
+						value1 = '<tr class="pageNoClick"><td colspan="3"><br><span class="noEmpText">조회된 리스트가 없습니다. </span></td><td>';
+					}else{ // 리스트가 비어있지 않을 경우
+		            
+						for(var i in list){
+							
+							var holidayUsecount = list[i].holidayUsecount;
+							var holidayStart = list[i].holidayStart;
+							var holidayEnd =  list[i].holidayEnd;
+							var holidayType = list[i].holidayType;
+							
+							value1 += 
+							 '<tr class="pageNoClick"><td>'+ holidayUsecount +'</td><td>'+ holidayStart +' ~ '+ holidayEnd +'</td><td>'+ holidayType +'</td></tr>';
+						}
+					
+					  	for(var i=0; i<8-list.length; i++){
+					  		value1 += 
+					  		'<tr>'+
+								'<td class="pageNoClick">&nbsp;</td>'+
+								'<td class="pageNoClick">&nbsp;</td>'+
+								'<td class="pageNoClick">&nbsp;</td>'
+							'</tr>';
+						  }
+						
+					}
+					$(".boardTable tbody").html(value1);
+				},
+				error:function(){
+					console.log("사원별 근태 현황용 통신 실패");
+				}
+				
+			});
+		}
+		
+	</script>
+
 			<!-- 모달용 스크립트 -->
 			<script>
-				$('.open-modal').click(function() {
-					$(this).modal({
-						fadeDuration : 150
-					});
+			function open_modal(){
+				$(".open-modal").click();
+			};
+			$('.open-modal').click(function() {
+				$(this).modal({
+					fadeDuration : 150
 				});
+				
+				attendanceManagement();
+			});
 			</script>
 			<!-- 모달팝업 -->
         
-		</div><!-- contentArea -->
-	</div> <!-- outer -->
-
+	
 </body>
 </html>

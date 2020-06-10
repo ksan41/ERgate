@@ -12,7 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class HolidayType {
-	private String holidayTypecode;
-	private String holidayType;
-	private String holidayCount;
+	private String holidayTypecode;	// 휴가타입코드
+	private String holidayType;		// 휴가타입
+	private String holidayCount;	// 휴가타입 별 휴가일수
 }

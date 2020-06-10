@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="com.kh.ergate.vehicle.model.vo.Vehicle" alias="Vehicle"/>
       <typeAlias type="com.kh.ergate.vehicle.model.vo.VehicleReservation" alias="VehicleReservation"/>
       <typeAlias type="com.kh.ergate.group.model.vo.Search" alias="Search" />
+      <typeAlias type="com.kh.ergate.attendance.model.vo.Holiday" alias="Holiday"/>
    </typeAliases>
    
    

@@ -397,7 +397,6 @@ div {
 						<td id="rightArea">
 							<!-- 검색바 -->
 							<div class="searchBar">
-
 								<select id="condition" name="condition">
 									<option value="empName">이름</option>
 									<option value="rankTitle">직급</option>
@@ -408,9 +407,8 @@ div {
 										fill="black" width="48px" height="48px">
 										<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 										<path d="M0 0h24v24H0z" fill="none" /></svg>
-
-
-							</div> <!-- 검색바 -->
+							</div> 
+							<!-- 검색바 -->
 						</td>
 					</tr>
 				</table>
@@ -418,14 +416,13 @@ div {
 
 			<div style="height: 10px;"></div>
 
-
-
 			<!-- 조직도 div -->
 			<div class="groupMap_outer">
 				<div class="depList_area" style="overflow: auto;">
 					<ul class="group_tree">
-						<li><input type="checkbox" id="root"> <label
-							for="root" class="deptList" key="all"> ERgate</label>
+						<li>
+							<input type="checkbox" id="root"> 
+							<label for="root" class="deptList" key="all"> ERgate</label>
 							<ul>
 								<li class="deptList" key="D0">└ 임원</li>
 								<li class="deptList" key="D1">└ 개발팀</li>
@@ -433,7 +430,8 @@ div {
 								<li class="deptList" key="D3">└ 기술팀</li>
 								<li class="deptList" key="D4">└ 총무팀</li>
 								<li class="deptList" key="D5">└ 인사팀</li>
-							</ul></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 				<div class="empList_area" style="overflow: auto;">
@@ -501,7 +499,7 @@ div {
 	
 	/* 조직도 사원 프로필 조회 */
 	function empPrf(){
-		console.log(window.event.target.getAttribute("key"));
+		
 		empId = window.event.target.getAttribute("key");
 		
 		$.ajax({
@@ -606,6 +604,7 @@ div {
 		});
 	}
 	
+	/* 사원 검색 */
 	function searchEmpProfile(){
 		condition = $("#condition option:selected").val();
 		keyword = $("#keyword").val();
@@ -641,7 +640,7 @@ div {
 				console.log("조직도 사원 리스트조회용 통신 실패");
 			}
 			
-		})
+		});
 		
 	}
     </script>

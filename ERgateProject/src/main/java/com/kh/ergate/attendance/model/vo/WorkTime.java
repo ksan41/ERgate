@@ -13,9 +13,9 @@ import lombok.ToString;
 @ToString
 public class WorkTime {
 
-	private int workTimeCode;
-	private String arrive;
-	private String leave;
-	private String halfdayOff;
+	private int workTimeCode;	// 출결코드
+	private String arrive;		// 퇴근시간
+	private String leave;		// 출근시간
+	private String halfdayOff;	// 반차출근시간
 	
 }
