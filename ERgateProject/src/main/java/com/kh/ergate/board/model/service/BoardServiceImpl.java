@@ -134,20 +134,19 @@ public class BoardServiceImpl implements BoardService {
 		return bodDao.replyForceDelete(sqlSession, replyNo);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public int deleteBoard(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bodDao.deleteBoard(sqlSession, bno);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public int updateBoard(com.kh.ergate.board.model.vo.Board b) {
 		// TODO Auto-generated method stub

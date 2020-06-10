@@ -16,12 +16,11 @@
 	</resultMap>
 	
 	<resultMap id="attachResultSet" type="BoardAttachment">
-		<id column="attahcment_no" property="attachmentNo"/>
+		<id column="ATTACHMENT_NO" property="attachmentNo"/>
 		<result column="origin_name" property="originName"/>
 		<result column="change_name" property="changeName"/>
 		<result column="board_type" property="boardType"/>
 		<result column="ref_board_no" property="refBoardNo"/>
-		<result column="file_Path" property="filePath"/>
 	</resultMap>
 	
 	<resultMap id="replyResultSet" type="Reply">
@@ -99,7 +98,7 @@
     </select>
     
     <select id="fileList" parameterType="_int" resultMap="attachResultSet">
-		select * 
+		select attachment_no, origin_name, change_name, board_type, ref_board_no 
 		  from board_attachment
 		 where ref_board_no=#{refBoardNo}
 		 order by attachment_no desc
@@ -151,7 +150,7 @@
 	
 	<insert id="insertBoardAttachment" parameterType="BoardAttachment">
 		insert into Board_Attachment 
-		values(seq_atboard_no.nextval, #{originName}, #{changeName}, 'B', seq_board_no.currval, #{filePath})
+		values(seq_atboard_no.nextval, #{originName}, #{changeName}, 'B', seq_board_no.currval)
 	</insert>
 	
 	<update id="updateBoardFlag">
@@ -208,6 +207,12 @@
 		reply_Content = '작성자가 삭제한 댓글입니다.',
 		reply_Enroll_date = sysdate
 		where reply_no = #{replyNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="_int">
+		update Board set
+		board_status = 'N'
+		where board_no = #{bno}
 	</update>
 </mapper>
 

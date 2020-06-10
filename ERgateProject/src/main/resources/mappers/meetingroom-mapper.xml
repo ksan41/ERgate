@@ -41,7 +41,7 @@
 		 where mtrm_reserv_status='Y'
 	</select>
 
-	<select id="searchListt" parameterType="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" resultMap="MeetingroomReservation">
+	<select id="searchListt" parameterType="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" resultMap="MeetingroomReservationResultSet">
 		SELECT TO_CHAR(SYSDATE-1, 'YY/MM/DD') FROM MEETINGROOM_RESERVATION
 	</select>
 	

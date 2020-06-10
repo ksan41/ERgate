@@ -307,6 +307,7 @@
 			</div>
 			<br>
 			<div id="btnArea">
+				<input type="hidden" name="boardNo" value="${b.boardNo }">
 				<button class="bigBtn listBtn" style="background: rgb(26, 188, 156);">목록</button>
 				<button class="bigBtn updateBtn">수정</button>
 				<button class="bigBtn deleteBtn">삭제</button>
@@ -616,13 +617,13 @@
 		
 		
 		$(".updateBtn").click(function(){
-			var bno=0; // 글번호가 들어갈꺼임 (무엇을 수정할지 알아야되니까)
-			location.href="update.bo?pno=" + bno;
+			var bno=$(this).parent().find('input[name=boardNo]').val();
+			location.href="update.bo?bno=" + bno;
 		});
 		
 		$(".deleteBtn").click(function(){
-			var bno=0; // 글번호가 들어갈꺼임 (무엇을 삭제할지 알아야되니까)
-			location.href="delete.bo?pno=" + bno;
+			var bno=$(this).parent().find('input[name=boardNo]').val();
+			location.href="delete.bo?bno=" + bno;
 		});
 		
 		$(".fileShow").click(function() {

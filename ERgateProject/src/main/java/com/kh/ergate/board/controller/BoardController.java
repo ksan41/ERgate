@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,14 +38,16 @@ public class BoardController {
 	private BoardService bodService;
 
 	@RequestMapping("list.bo")
-	public String selectList(int currentPage, Model model) {
+	public String selectList(int currentPage, Model model, @RequestParam(value="deleteFlag", required=false, defaultValue="0") int flag) {
 
 		int listCount = bodService.selectListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		ArrayList<Board> list = bodService.selectList(pi);
-
+		if(flag == 1) {
+			model.addAttribute("msg", "게시글 삭제 성공");	
+		}
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 
@@ -263,6 +266,29 @@ public class BoardController {
 		return result;
 	}
 	
+	@RequestMapping("update.bo")
+	public ModelAndView updateBoard(int bno, ModelAndView mv) {
+
+		Board b = bodService.selectBoard(bno); 
+			mv.addObject("b", b);
+			mv.setViewName("board/boardDetail");
+		return mv;
+	}
+	
+	@RequestMapping("delete.bo")
+	public String deleteBoard(int bno, Model model) {
+		
+		int result = bodService.deleteBoard(bno);
+		if(result > 0) {
+			ArrayList<BoardAttachment> list = new ArrayList<>();
+			list = bodService.fileList(bno);
+			return "redirect:list.bo?currentPage=1&deleteFlag=1";
+		}else {
+			model.addAttribute("msg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+
+	}
 	/*
 	 * @RequestMapping("delete.bo") public String deleteBoard(int bno, String
 	 * fileName, HttpServletRequest request, Model model) {

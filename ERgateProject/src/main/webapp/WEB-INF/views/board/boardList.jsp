@@ -215,7 +215,12 @@
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp" />
 	<!-- 이곳에 메뉴바 include -->
-
+	<c:if test="${ !empty msg }">
+		<script>
+			alert("${msg}");
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
