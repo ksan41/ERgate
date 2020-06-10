@@ -153,9 +153,16 @@ public class BoardController {
 		int result = 0;
 		result = bodService.insertBoard(insertB);
 		if(files.length > 0) {
-			
+			int flag = 0;
 			for(int i=0; i<files.length; i++) {
-				String changeName = saveFile(files[i], form, i);
+				int setFlag = (int)(Math.random()*99) + 10;
+				if(setFlag != flag) {
+					flag = setFlag;
+				}else {
+					setFlag += 100;
+					flag = setFlag;
+				} // 혹시나 Math.random이 같은 값이 나올경우를 대비해서~
+				String changeName = saveFile(files[i], form, flag);
 				BoardAttachment bt = new BoardAttachment();
 				bt.setChangeName(changeName);
 				bt.setOriginName(files[i].getOriginalFilename());
