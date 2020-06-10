@@ -29,9 +29,14 @@ public class MeetingroomDao {
 		
 	}
 	
-	public ArrayList<Meetingroom> selectMtroomDetail(SqlSessionTemplate sqlSession) {
-		
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMtroomDetail");
+	public int selectMtroomDetailListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("meetingroomMapper.selectMtroomDetailListCount");
+	}
+	
+	public ArrayList<Meetingroom> selectMtroomDetail(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMtroomDetail", null, rowBounds);
 	}
 	
 	public int reserveMtroom(SqlSessionTemplate sqlSession, MeetingroomReservation mr) {

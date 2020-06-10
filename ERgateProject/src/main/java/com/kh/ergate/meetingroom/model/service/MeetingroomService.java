@@ -63,7 +63,9 @@ public interface MeetingroomService {
 	int insertMeetingroom(Meetingroom m);
 
 	// 회의실 정보 상세조회용---selectMtroomDetail(String mtrmCode,Meetingroom)
-	ArrayList<Meetingroom> selectMtroomDetail();
+	int selectMtroomDetailListCount();
+	
+	ArrayList<Meetingroom> selectMtroomDetail(PageInfo pi);
 
 	// 회의실 수정용---updateMeetingroom(Meetingroom)
 	int updateMeetingroom(Meetingroom m);

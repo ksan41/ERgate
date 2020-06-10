@@ -35,7 +35,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 
 	@Override
 	public int currentStatusDay(MeetingroomDate md) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -77,10 +76,7 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		return mrDao.statusList(sqlSession, pi);
 	}
 
-	@Override
-	public ArrayList<Meetingroom> selectMtroomDetail() {
-		return mrDao.selectMtroomDetail(sqlSession);
-	}
+
 
 	// 회의실 예약용
 	@Override
@@ -124,6 +120,18 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Override
 	public ArrayList<MeetingroomReservation> statusListMonth(String month) {
 		return mrDao.statusListMonth(sqlSession, month);
+	}
+
+
+	// 회의실 리스트 조회용 서비스 -관리자
+	@Override
+	public int selectMtroomDetailListCount() {
+		return mrDao.selectMtroomDetailListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Meetingroom> selectMtroomDetail(PageInfo pi) {
+		return mrDao.selectMtroomDetail(sqlSession, pi);
 	}
 
 

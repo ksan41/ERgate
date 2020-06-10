@@ -518,7 +518,7 @@ p {
 						var newYear = "<c:out value='${mds.year}'/>";
 						var newMonth = "<c:out value='${mds.month}'/>";
 						var newDay =  "<c:out value='${mds.date}'/>";
-						
+					 	
 						// 날짜 변경값 있을 경우
 						if (newYear != "") {
 							$("#calYear").text(newYear);

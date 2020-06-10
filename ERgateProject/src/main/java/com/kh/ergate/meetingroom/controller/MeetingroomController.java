@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
@@ -25,6 +26,7 @@ import com.kh.ergate.meetingroom.model.service.MeetingroomServiceImpl;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
+import com.kh.ergate.vehicle.model.vo.Vehicle;
 
 
 @Controller
@@ -143,10 +145,15 @@ public class MeetingroomController {
 
 	// 회의실정보 조회용
 	@RequestMapping("mtroomDetail.me")
-	public String selectMtroomDetail(Meetingroom m, Model model) {
+	public String selectMtroomDetail(int currentPage, Meetingroom m, Model model) {
 
+		int listCount = mrService.selectMtroomDetailListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
+		
 		ArrayList<Meetingroom> list = mrService.selectMtroomDetail();
 
+		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 
 		return "meetingroom/meetingroomManagement";
@@ -178,11 +185,33 @@ public class MeetingroomController {
 		}
 	}
 	
+	// 회의실 정보 조회 ajax
+	@ResponseBody
+	@RequestMapping(value="select.me", produces="application/json; charset=utf-8")
+	public String selectMeetingroom(String mtrmCode) {
+		
+		Meetingroom meetingroom = mrService.selectVehicle(mtrmCode);
+		
+		return new Gson().toJson(meetingroom);
+	}
+	
 	
 	// 회의실수정용
 	@RequestMapping("updateMtroom.me")
-	public String updateMeetingroom(Meetingroom m, HttpSession session) {
+	public String updateMeetingroom(Meetingroom m, HttpSession session,
+									@RequestParam(name="reUploadFile", required=false) MultipartFile file,
+									HttpServletRequest request, Model model) {
 		
+		if(!file.getOriginalFilename().equals("")) {
+			
+			if(m.getMtrmImage() != null) {
+				deleteFile(m.getMtrmImage(), request);
+			}
+			
+			String changeName = saveFile(file, request);
+			m.setMtrmImage(changeName);
+		}
+
 		int result = mrService.updateMeetingroom(m);
 		
 		if(result > 0) {
@@ -196,6 +225,26 @@ public class MeetingroomController {
 		
 		
 	}
+	
+	// 회의실 삭제
+	@RequestMapping("deleteMtroom.me")
+	public String deleteMeetingroom(Meetingroom m, HttpSession session) {
+		
+		int result = mrService.deleteMeetingroom(m);
+		
+		if(result > 0) {
+			session.setAttribute("msg", "성공적으로 회의실이 삭제되었습니다.");
+			return "redirect:mtroomDetail.me?currentPage=1";
+		}else {
+			session.setAttribute("msg", "삭제에 실패하였습니다. 다시 시도해 주세요.");
+			return "redirect:mtroomDetail.me?currentPage=1";
+		}
+		
+	}
+	
+	
+	
+	// =========================================================
 	
 	// 첨부파일 관련 메소드
 	private String saveFile(MultipartFile file, HttpServletRequest request) {

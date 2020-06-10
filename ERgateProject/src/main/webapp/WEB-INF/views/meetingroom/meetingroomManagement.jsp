@@ -345,6 +345,14 @@
 </style>
 </head>
 <body>
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session" />
+	</c:if>
+
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -418,7 +426,63 @@
 				</c:forEach>
 			</div>
 
-			<!-- 페이징바 안함 그냥 늘어나면 스크롤 늘어나는 형식으로 하기 -->
+				<!-- 페이징바 -->
+			<c:if test="${ pi.startPage eq 1 }">
+			
+				<ul class="pagingBar">
+					
+	               	<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                		<li><a href="#">&lt;&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li><a href="mtroomDetail.me?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
+	                    </c:otherwise>
+					</c:choose>
+					
+					<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                		<li><a href="#">&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li><a href="mtroomDetail.me?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
+	                    </c:otherwise>
+					</c:choose>
+					
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                   	<c:choose>
+	                   		<c:when test="${ p eq pi.currentPage }">
+			                    <li><span>${ p }</span></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li><a href="mtroomDetail.me?currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+						</c:choose>	                    
+					</c:forEach>
+	
+	                <c:choose>
+	                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li><a href="#">&gt;</a></li>
+	                   	</c:when>
+	                   	<c:otherwise>
+		                    <li><a href="mtroomDetail.me?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                </c:otherwise>
+	                </c:choose>
+	                
+	                <c:choose>
+	                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li><a href="#">&gt;&gt;</a></li>
+	                   	</c:when>
+	                   	<c:otherwise>
+		                    <li><a href="mtroomDetail.me?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
+		                </c:otherwise>
+	                </c:choose>
+					
+				</ul>
+				
+			</c:if>
+			<!-- 페이징바 -->
+			
 			
 		</div>
 
@@ -477,26 +541,26 @@
 		<div id="edit" class="modal">
 			<div class="modal-title">회의실 수정</div>
 			<div class="modal-content">
-				<form id="updataForm" method="post" action="updateMtroom.me"
+				<form id="updataForm" method="post" action=""
 					enctype="multipart/form-data">
 					<div>
 						<table class="meetingroomModalTable">
 							<tr>
 								<td class="mmName">회의실 명</td>
-								<td class="mmName2"><input class="mmModalInput" type="text"
-									name="mtrmName" value="${ m.mtrmName }"></td>
+								<td class="mmName2"><input id="editMtrmName" class="mmModalInput" type="text"
+									name="mtrmName" value=""></td>
 							</tr>
 
 							<tr>
 								<td class="mmLocation">회의실 위치</td>
-								<td class="mmLocation2"><input class="mmModalInput"
-									type="text" name="mtrmLocation" value="${ m.mtrmLocation }"></td>
+								<td class="mmLocation2"><input id="editMtrmLocation" class="mmModalInput"
+									type="text" name="mtrmLocation" value=""></td>
 							</tr>
 
 							<tr>
 								<td class="mmPersonnel">최대 수용인원</td>
-								<td class="mmPersonnel2"><input class="mmModalInput"
-									type="text" name="mtrmCapacity" value="${ m.mtrmCapacity }"></td>
+								<td class="mmPersonnel2"><input id="editMtrmCapacity" class="mmModalInput"
+									type="text" name="mtrmCapacity" value=""></td>
 							</tr>
 
 							<tr>
@@ -516,13 +580,19 @@
 					</div>
 					<!-- 예약/취소 버튼 -->
 					<div class=btns>
-						<button class="mmSubmitBtn" type="submit">수정하기</button>
-						<button class="mmResetBtn" type="reset">삭제하기</button>
+						<button class="mmSubmitBtn" type="submit" id="editUpdateBtn">수정하기</button>
+						<button class="mmResetBtn" type="submit" id="editUpdateBtn">삭제하기</button>
 					</div>
 
 					<div id="fileArea2">
 						<input type="file" name="reUploadFile" id="fileInput2" onchange="loadImg2(this, 1);">
 					</div>
+					
+					<input id="editMtrmCode" name="mtrmCode" type="hidden" value="">
+					<input id="editMtrmStatus" name="mtrmStatus" type="hidden" value="">
+					<input id="editMtrmEnrollDate" name="mtrmEnrollDate" type="hidden" value="">
+					
+					
 				</form>
 			</div>
 			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
@@ -545,13 +615,63 @@
 				$("#open_enroll").click();
 			};
 			
+			/* 수정하기 모달 여는 function */
 			function open_modal2() {
 				$("#open_edit").click();
 			};
-			
 
-			
 		</script>
+		
+		<!-- 수정하기 모달 값 전달 ajax  -->
+			<script>
+				$("#editUpdateBtn").click(function(){
+					
+					$.ajax({
+						url:"select.me",
+						data:{vhclCode:$("#mtrmCode").val()},
+						type:"post",
+						success:function(meetingroom){
+							
+							var mtrmName = meetingroom.mtrmName;
+							var mtrmLocation = meetingroom.mtrmLocation;
+							var mtrmCapacity = meetingroom.mtrmCapacity;
+							var mtrmImage = meetingroom.mtrmImage;
+							var mtrmCode = meetingroom.mtrmCode;
+							var mtrmStatus = meetingroom.mtrmStatus;
+							var mtrmEnrollDate = meetingroom.mtrmEnrollDate;
+							
+							$("#editMtrmName").val(mtrmName);
+							$("#editMtrmLocation").val(mtrmLocation);
+							$("#editMtrmCapacity").val(mtrmCapacity);
+							
+							$("#editMtrmCode").val(mtrmImage);
+							$("#editMtrmStatus").val(mtrmStatus);
+							$("#editMtrmEnrollDate").val(mtrmEnrollDate);
+							
+							if(mtrmImage == null){
+								$("#mmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg");
+							}else{
+								$("#mmImgEdit").attr("src", "${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/"+mtrmImage);
+							}
+							
+						},error:function(){
+							console.log(" ajax 통신 실패");
+						}
+					});
+				});
+			</script>
+
+			<!-- 수정하기 모달에서 수정하기/삭제하기 form -->
+			<script>
+				$("#editUpdateBtn").click(function () {
+			       $("#updateModalForm").attr("action", "insertMtroom.me");
+				});
+				 
+				$("#editDeleteBtn").click(function () {
+				       $("#updateModalForm").attr("action", "deleteMtroom.me");
+				});
+			</script>
+		
 		
 		<!-- 사진 첨부  -->
 		<script>
