@@ -28,6 +28,7 @@
 		<result column="MTRM_IMAGE" property="mtrmImage"/>
 	</resultMap>
 
+
 	<select id="statusListCount" resultType="_int">
 		select count(*)
 		  from meetingroom_reservation
@@ -40,6 +41,9 @@
 		 where mtrm_reserv_status='Y'
 	</select>
 
+	<select id="searchListt" parameterType="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" resultMap="MeetingroomReservation">
+		SELECT TO_CHAR(SYSDATE-1, 'YY/MM/DD') FROM MEETINGROOM_RESERVATION
+	</select>
 	
 	
 

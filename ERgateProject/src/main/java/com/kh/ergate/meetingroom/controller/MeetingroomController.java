@@ -57,12 +57,14 @@ public class MeetingroomController {
 	}
 	
 	// 날짜선택예약현황조회용(currentStatusD.me) --- currentStatusDay(String day,Model model)
-	@RequestMapping("currentStatusD.me")
-	public String currentStatusDay(String date, Model model) {
+	@RequestMapping("currentStatusD.me")                             
+	public String currentStatusDay(MeetingroomDate md, MeetingroomReservation mr, Model model) {
 		
-		ArrayList<MeetingroomReservation> list = mrService.searchList(date);
 		
-		model.addAttribute("day", date);
+		ArrayList<MeetingroomReservation> list = mrService.searchListt(md);
+		
+		System.out.println(md);
+		model.addAttribute("md", md);
 		model.addAttribute("list", list);
 		
 		return "meetingroom/meetingroomCurrentStatus";
@@ -87,20 +89,22 @@ public class MeetingroomController {
 		return "meetingroom/meetingroomReservationList";
 	}
 	
-	// 회의실예약현황 월선택 조회용(statusM.me) ---statusListMonth(String month,Meetingroom,Model)
+	// 회의실예약현황  일선택 조회용(statusM.me) ---statusListMonth(String month,Meetingroom,Model)
 
-	@RequestMapping("statusM.me")
-	public String statusListMonth(String month, MeetingroomReservation mr, Model model) {
-		  
-		  ArrayList<MeetingroomReservation> list = mrService.statusListMonth(month);
-		  
-		  model.addAttribute("month", month);
-		  model.addAttribute("list", list);
-		 
-		 return "meetingroom/meetingroomReservationList";
-		
-	}
-
+	/*
+	 * @RequestMapping("statusM.me") public String statusListMonth(MeetingroomDate
+	 * md, MeetingroomReservation mr, Model model) {
+	 * 
+	 * int listCount = mrService.searchListCount(md);
+	 * 
+	 * ArrayList<MeetingroomReservation> list = mrService.statusListMonth();
+	 * 
+	 * model.addAttribute("month", month); model.addAttribute("list", list);
+	 * 
+	 * return "meetingroom/meetingroomReservationList";
+	 * 
+	 * }
+	 */
 	// 예약 상세 조회용
 	@RequestMapping("reserveDetail.me")
 	public String reserveDetail(int reservNo, Model model) {

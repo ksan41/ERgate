@@ -14,8 +14,8 @@ public interface MeetingroomService {
 	int currentStatusList();
 
 	// 날짜선택 예약현황 조회용 --- currentStatusDay(String day)
-	int currentStatusDay(String day);
-
+	public ArrayList<MeetingroomReservation> searchListt(MeetingroomDate md);
+	
 	// 회의실 예약용 ---reserveMtroom(MeetingroomReservation,ArrayList<String> empId)
 	int reserveMtroom(MeetingroomReservation mr);
 

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ergate.common.model.vo.PageInfo;
-import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.dao.MeetingroomDao;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
@@ -26,11 +25,20 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	public int currentStatusList() {
 		return 0;
 	}
+	
+
 
 	@Override
-	public int currentStatusDay(String day) {
+	public ArrayList<MeetingroomReservation> searchListt(MeetingroomDate md) {
+		return mrDao.searchListt();
+	}
+
+	@Override
+	public int currentStatusDay(MeetingroomDate md) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	@Override
 	public Meetingroom selectPeople() {
@@ -117,5 +125,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	public ArrayList<MeetingroomReservation> statusListMonth(String month) {
 		return mrDao.statusListMonth(sqlSession, month);
 	}
+
 
 }

@@ -72,4 +72,8 @@ public class MeetingroomDao {
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", month);
 	}
 	
+	public ArrayList<MeetingroomReservation> searchListt(SqlSessionTemplate sqlSeesion, MeetingroomDate md){
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchListt", md);
+	}
+	
 }
