@@ -184,7 +184,7 @@ public class BoardController {
 		
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources + "\\uploadFiles\\board\\";
-		
+		System.out.println("생성시 : " + resources);
 		// 원본명 (aaa.jpg)
 		String originName = file.getOriginalFilename();
 		
@@ -208,6 +208,13 @@ public class BoardController {
 		return changeName;
 	}
 	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "\\uploadFiles\\board\\";
+		System.out.println("삭제시: " + resources);
+		File deleteFile = new File(savePath + fileName);
+		deleteFile.delete();
+	}
 	@ResponseBody
 	@RequestMapping(value="insertReply.bo", produces="application/json; charset=utf-8")
 	public int insertReply(Reply repl) {
@@ -276,12 +283,22 @@ public class BoardController {
 	}
 	
 	@RequestMapping("delete.bo")
-	public String deleteBoard(int bno, Model model) {
+	public String deleteBoard(int bno, Model model, HttpServletRequest request) {
 		
 		int result = bodService.deleteBoard(bno);
 		if(result > 0) {
 			ArrayList<BoardAttachment> list = new ArrayList<>();
 			list = bodService.fileList(bno);
+			String[] fileName = new String[list.size()];
+			if(list.size() > 0) {
+				for(int i=0; i<list.size(); i++) {
+					fileName[i] = list.get(i).getChangeName();
+					//System.out.println(fileName[i]);
+					deleteFile(fileName[i], request);
+				}
+				
+			}
+			
 			return "redirect:list.bo?currentPage=1&deleteFlag=1";
 		}else {
 			model.addAttribute("msg", "게시글 삭제 실패");
