@@ -365,7 +365,7 @@ h2, h3 {
 						<th id="j6"></th>
 					</tr>
 					<tr>
-						<td width="150" id="ttt"><h2>1</h2>
+						<td width="150"><h2>1</h2>
 							<h3 id="n1"></h3></td>
 						<td width="150"><h2>2</h2>
 							<h3 id="n2"></h3></td>
@@ -429,7 +429,7 @@ h2, h3 {
 					style="background: rgb(190, 190, 190); width: 120px; margin-top: 10px;">행
 					삭제</button>
 				<br> <br> 
-				<!-- <input type="hidden" name="signContent"> -->
+				
 				<table id="contentTable">
 					<thead>
 						<tr>
@@ -455,11 +455,6 @@ h2, h3 {
 
 	<script>
 		
-		
-	
-		/* function openApproval(){
-			childWin = window.open('openSigner.si','signApproval','_blank');
-		} */
 		var signerId = new Array();
 		var signerName = new Array();
 		

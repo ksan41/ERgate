@@ -306,38 +306,45 @@ h2, h3 {
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn" onclick="location.href='waitingList.si';">결재대기함</button></li>
-				<li><button class="subBtn" onclick="location.href='ongoingList.si';">진행결재함</button></li>
-				<li><button class="subBtn subActive" onclick="location.href='reportList.si';">상신내역</button></li>
-				<li><button class="subBtn" onclick="location.href='expenseList.si';">지출결의내역</button></li>
-				<li><button class="subBtn">외근&휴가내역</button></li>
+				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
+				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
+				
+				<li><button class="subBtn" onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+				<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
 			<!-- 내용 작성 영역 입니다-->
 			<h1>외근신청서</h1>
 			<div id="btnArea">
-				<button class="bigBtn" style="background: rgb(190, 190, 190);">임시저장</button>
-				<button class="bigBtn" id="signSubmit">기안등록</button>
+				<button type="button" class="bigBtn" style="background: rgb(190, 190, 190);">임시저장</button>
+				<button type="button" class="bigBtn" id="signSubmit" onclick="uploadFile();">기안등록</button>
 			</div>
 			<br>
-			<form id="signForm" action="#" method="get">
+			<form id="signForm" name="signForm" method="get" enctype="multipart/form-data">
+				<input type="hidden" name="signTypeNo" value="2"> 
+				<input type="hidden" name="signTypeName" value="외근신청서"> 
+				<input type="hidden" name="empId" value="${loginUser.empId }"> 
+				<input type="hidden" name="empName" value="${loginUser.empName }">
+				<input type="hidden" name="deptTitle" value="${loginUser.deptTitle }"> 
+				<input type="hidden" name="documentNo" value="${documentNo }">
 				<table id="signInfo1">
 					<tr>
 						<th>기안부서</th>
-						<td width="400">인사부</td>
+						<td width="400">${loginUser.deptTitle }</td>
 						<th>문서분류</th>
 						<td width="400">외근신청서</td>
 					</tr>
 					<tr>
 						<th>기안자</th>
-						<td>김기철</td>
+						<td>${loginUser.empName }</td>
 						<th>문서번호</th>
-						<td>00000</td>
+						<td>${documentNo}</td>
 					</tr>
 					<tr>
 						<th>기안일시</th>
-						<td>2020/05/10</td>
+						<td><p id="toDate"></p></td>
 						<td colspan="2" style="display:none;"></td>
 					</tr>
 				</table>
@@ -346,60 +353,43 @@ h2, h3 {
 					<tr>
 						<th rowspan="2" width="120">결재라인
 							<button type="button" class="middleBtn"
-								style="width: 120px; margin-top: 10px;">결재라인추가</button>
+								style="width: 120px; margin-top: 10px;"
+								onclick="window.open('openSigner.si','signApproval','_blank');">결재라인추가</button>
 						</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
+						<th id="j1"></th>
+						<th id="j2"></th>
+						<th id="j3"></th>
+						<th id="j4"></th>
+						<th id="j5"></th>
+						<th id="j6"></th>
 					</tr>
 					<tr>
 						<td width="150"><h2>1</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n1"></h3></td>
 						<td width="150"><h2>2</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n2"></h3></td>
 						<td width="150"><h2>3</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n3"></h3></td>
 						<td width="150"><h2>4</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n4"></h3></td>
 						<td width="150"><h2>5</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n5"></h3></td>
 						<td width="150"><h2>6</h2>
-							<h3>전지현</h3></td>
+							<h3 id="n6"></h3></td>
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left"><span>@앨리스 </span> <span>@레베카
-						</span> <span>@마리아 </span> <span>@존 </span> <span>@올리버 </span> <span>@샬롯
-						</span></td>
+						<td id="refArea" colspan="6" align="left"></td>
 					</tr>
 				</table>
 
-				<!-- 결재완료시 체크될 부분 -->
-				<table id="checkArea">
-					<tr>
-						<th width="120"></th>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-					</tr>
-				</table>
+				
 				<table id="signInfo3">
 					<thead>
 						<tr>
 							<th width="120">제목</th>
-							<td colspan="4"><input class="inputs" type="text" style="width: 100%;margin-left: 7px;"></td>
+							<td colspan="4">
+							<input name="signTitle" class="inputs" type="text" style="width: 100%;margin-left: 7px;"></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>
@@ -431,7 +421,7 @@ h2, h3 {
 						</tr>
 					</thead>
 				</table>
-				<input type="hidden" name="contentTable">
+				
 				<table id="contentTable">
 						<tr>
 							<th width="160">출장기간</th>
@@ -462,6 +452,48 @@ h2, h3 {
 			</form>
 		</div>
 	</div>
+	
+	<script>
+	var signerId = new Array();
+	var signerName = new Array();
+	
+	// 결재자아이디 받아오기
+	function getSid(data){
+		signerId = data;
+	}
+	
+	// 결재자이름 받아오기
+	function getSname(data){
+		signerName = data;
+	}
+	
+	var refId = new Array();
+	var refName = new Array();
+	
+	// 수신자 아이디 받아오기
+	function getRefId(data){
+		refId = data;
+	}
+	
+	// 수신자 이름 받아오기
+	function getRefName(data){
+		refName = data;
+	}
+	
+	
+	//오늘날짜 표시
+	$(document).ready(function(){
+		var n =  new Date();
+		var y = n.getFullYear();
+		var m = n.getMonth() + 1;
+		var d = n.getDate();
+		
+		$("#toDate").text(y+"/"+m+"/"+d);
+		
+	});
+	
+	</script>
+	
 	<script>
 
 	
@@ -473,14 +505,7 @@ h2, h3 {
 		$(".textareaStyle:eq("+index+")").text(inputVal);
 	});
 
-	//기안등록 눌렀을 시 처리되는 스크립트 
-	$(document).on("click","#signSubmit",function(){
-		//테이블에 입력된 값들 html로 묶어서 input태그에 전달
-		var contentTable = "<table id='contentTable'>" + $("#contentTable").html() + "</table>";
-		 $("input[name=contentTable]").attr("value",contentTable);
-		 console.log($("input[name=contentTable]").val());
-	});
-	
+
 	
 	//파일첨부관련
     $(document).ready(function() {
@@ -685,23 +710,36 @@ h2, h3 {
 
     // 파일 등록
     function uploadFile() {
+    	
+    	var contentTable = "<table id='contentTable'>" + $("#contentTable").html() + "</table>";
+    	
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
         	
            var form = $('#signForm');
            console.log(form[0]);
            var formData = new FormData(form[0]);
-           formData.append('noticeTitle', form[0].boardTitle.innerText);
-           formData.append('noticeContent', form[0].boardContent.innerText);
+           formData.append('documentNo', form[0].documentNo.innerText);
+           formData.append('signTypeNo', form[0].signTypeNo.innerText);
+           formData.append('empId', form[0].empId.innerText);
+           formData.append('signTypeName', form[0].signTypeName.innerText);
+           formData.append('empName', form[0].empName.innerText);
+           formData.append('deptTitle', form[0].deptTitle.innerText);
+           formData.append('signTitle', form[0].signTitle.innerText);
+           formData.append('signContent', contentTable);
+           //formData.append('expenseStartDate', form[0].expenseStartDate.innerText);
+           //formData.append('expenseEndDate', form[0].expenseEndDate.innerText);
+           formData.append('signerId',signerId);
+           formData.append('signerName',signerName);
+           formData.append('refId',refId);
+           formData.append('refName',refName);
+           
            for (var i = 0; i < uploadFileList.length; i++) {
                formData.append('files', fileList[uploadFileList[i]]);
            }
-           console.log(formData.getAll('noticeTitle'));
-           console.log(formData.getAll('noticeContent'));
-           console.log(formData.getAll('files'));
-           
+          
            $.ajax({
-               url : "/testFileload.bo",
+               url : "insertDoc.si",
                data : formData,
                type : 'POST',
                enctype : 'multipart/form-data',
@@ -710,22 +748,20 @@ h2, h3 {
                dataType : 'json',
                cache : false,
                success : function(result) {
-                   if (result.length > 0) {
-                       alert("성공");
-                       location.reload();
+                   if (result>0) {
+                       alert("기안서가 제출되었습니다.");
+                       location.href="reportList.si?currentPage=1";	                       
                    } else {
-                       alert("성공");
+                       alert("문서 등록에 실패했습니다. 다시 시도해주세요.");
                        location.reload();
                    }
                    
                },
                error:function(){	// error : ajax 통신실패시 처리할 함수 지정
 					console.log("ajax 통신 실패!");
-				},
-				complete:function(){// complete : ajax 통신 성공여부와 상관없이 실행
-					console.log("무조건 호출!!");
 				}
            });
+          
     }
 	
 	</script>

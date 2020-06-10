@@ -136,9 +136,9 @@ public class SignController {
 	  
 	  // 외근&휴가내역요청용
 	  
-	  @RequestMapping("hrList.si") public String hrList(SignDocument sd, Model
+	  @RequestMapping("hrList.si") public String hrList(int currentPage,SignDocument sd, Model
 	  model) {
-	  
+		  return "sign/signHRlist";
 	  }
 	  
 	  // 외근휴가 월선택용
@@ -164,31 +164,15 @@ public class SignController {
 	  
 	  // 기안작성폼메인요청용
 	  
-	  @RequestMapping("formSelect.si") public String formSelectPage() { return
-	  "sign/signFormMain"; }
+	  @RequestMapping("formSelect.si") 
+	  public String formSelectPage() { 
+		  return "sign/signFormMain"; 
+	  }
+	  
 	  
 	  // 기안작성폼-지출결의서 요청용
-	  
 	  @RequestMapping("expenseForm.si") 
 	  public String expenseForm(Model model) {
-		//Employee loginUser = (Employee)session.getAttribute("loginUser");
-		//System.out.println(loginUser);
-		
-		// 임시저장중인 문서 없을 시 임의로 문서 생성
-		
-		/*
-		 * SignDocument newSd = new SignDocument(); newSd.setSignTypeNo("0");
-		 * newSd.setEmpId(loginUser.getEmpId()); newSd.setSignTypeName("지출결의서");
-		 * newSd.setEmpName(loginUser.getEmpName());
-		 * newSd.setDeptTitle(loginUser.getDeptTitle());
-		 * 
-		 * int result = siService.insertDocument(newSd);
-		 * 
-		 * if(result>0) { SignDocument sd =
-		 * siService.selectMyDocument(loginUser.getEmpId());
-		 * model.addAttribute("sd",sd); return "sign/signFormExpense"; }else {
-		 * model.addAttribute("msg","요청 실패. 다시 시도해주세요"); return ""; }
-		 */
 		  
 		 String documentNo = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); // "20200522202011" 
 		 documentNo += Integer.toString((int)Math.random()*100+1);
@@ -199,14 +183,27 @@ public class SignController {
 	  }
 	  
 	  // 기안작성폼-휴가계 요청용
-	  
-	  @RequestMapping("annualForm.si") public String annualForm(HttpSession
-	  session, Model model) { return "sign/signFormAnnualVacation"; }
+	  @RequestMapping("annualForm.si") 
+	  public String annualForm(Model model){
+		  String documentNo = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); // "20200522202011" 
+		  documentNo += Integer.toString((int)Math.random()*100+1);
+			 
+			 
+		  model.addAttribute("documentNo",documentNo);
+		  return "sign/signFormAnnualVacation"; 
+	  }
 	  
 	  // 기안작성폼-외근신청서 요청용
 	  
-	  @RequestMapping("businessForm.si") public String businessForm(HttpSession
-	  session, Model model) { return "sign/signFormBusinessTrip"; }
+	  @RequestMapping("businessForm.si") 
+	  public String businessForm(Model model) { 
+		  String documentNo = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); // "20200522202011" 
+		  documentNo += Integer.toString((int)Math.random()*100+1);
+			 
+			 
+		  model.addAttribute("documentNo",documentNo);
+		  return "sign/signFormBusinessTrip"; 
+	  }
 	  
 	  // 결재라인 팝업 요청용
 	  
