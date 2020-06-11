@@ -5,14 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>attendanceMyStatus</title>
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-		rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style>
-	
-		/* ==========페이지영역========== */
+	/* ==========페이지영역========== */
     .outer {
 		padding-left: 320px;
 		float: left;
@@ -86,25 +84,55 @@
 	/* 콘텐츠영역 */
 	
 	/* ==========페이지영역========== */
-
+	/* 게시판 위에 들어가는 휴가 정보 */
+	 .empInfo1{
+        border: solid 1px lightgray;
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+        width: 230px;
+        height: 35px;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 17px;
+        margin-left:30px;
+        float: left;
+    }
+    .empInfo2{
+        border: solid 1px lightgray;
+        border-left: 0ch;
+        width: 230px;
+        height: 35px;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 17px;
+        float: left;
+    }
+    .empInfo3{
+        border: solid 1px lightgray;
+        border-left: 0ch;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        width: 230px;
+        height: 35px;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 17px;
+        float: left;
+    }	
+	/* 게시판 위에 들어가는 휴가 정보 */
 	/* 게시판 스타일 */
-	.headTable {
-		width:1100px;
-		height:auto;
-	}
 
 	.boardTable {
-		width: 1100px;
+		width: 1400px;
 		height: auto;
 	}
 	
- 	.boardScroll {
+ 	/* .boardScroll {
 		overflow-x:hidden;
 		overflow-y:scroll;
-		width:1100px;
+		width:1400px;
 		height:450px;	
-	}
-	
+	} */
 	.boardTable, .boardTable th, .boardTable td {
 		border-width: 1px 0;
 		border-collapse: collapse;
@@ -113,7 +141,6 @@
 	}
 	
 	.boardTable th {
-		
 		color: rgb(182, 179, 179);
 		height: 40px;
 	}
@@ -167,7 +194,7 @@
 
 </head>
 <body>
-			<!-- 이곳에 메뉴바 include -->
+		<!-- 이곳에 메뉴바 include -->
 		<jsp:include page="../common/menubar.jsp" />
 		<!-- 이곳에 메뉴바 include -->
 	
@@ -196,20 +223,17 @@
 					<span class="material-icons"> arrow_right </span>
 				</h2>
 				<br><br>
-                <table border="1" class="headTable">
-					<thead>
-						 <tr>
-							 <th>총 사용일수</th>
-							 <th>1.5</th>
-							 <th>발생 휴가일</th>
-							 <th>16</th>
-							 <th>잔여 휴가일</th>
-							 <th>14</th>
-						 </tr>
-					</thead>
-				</table>
-				<br><br> 
-				<div class="boardScroll">
+				<div class="holidayInfo" style="margin-rigth:20px;">
+			        <div class="empInfo1">발생 휴가일 </div>
+			        <div class="empInfo2">16 </div>
+			        <div class="empInfo2">총 사용일수 </div>
+			        <div class="empInfo2">16 </div>
+			        <div class="empInfo2">잔여휴가일 </div>
+			        <div class="empInfo3">14.5 </div>
+			    </div>
+				<br><br><br><br>  
+				<div >
+				<div class="boardScroll" style="overflow: auto; width: 1400px; height: 400px;">
 					<table class="boardTable">
 						<thead>
 							<tr>
@@ -221,120 +245,17 @@
                                 <th>사용일자</th>
 							</tr>
 						</thead>
-                        
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                        </tr>
-                        <tr>
-							<td>2020</td>
-							<td>연차</td>
-							<td>1</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-                            <td>2020.05.23</td>
-						</tr>
-
+	                        <tbody>
+		                        <tr>
+									<td>2020</td>
+									<td>연차</td>
+									<td>1</td>
+		                            <td>2020.05.23</td>
+		                            <td>2020.05.23</td>
+		                            <td>2020.05.23</td>
+		                        </tr>
+		                        
+							</tbody>
 					</table>
 				</div>	
 			</div>

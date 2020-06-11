@@ -327,7 +327,7 @@
 	                                        <option value="D2">회계팀</option>
 	                                        <option value="D3">기술팀</option>
 	                                        <option value="D4">총무팀</option>
-	                                        <option value="D5" selected>인사팀</option>
+	                                        <option value="D5">인사팀</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -349,7 +349,7 @@
                                             <option value="R7">과장</option>
                                             <option value="R8">대리</option>
                                             <option value="R9">주임</option>
-                                            <option value="R10" selected>사원</option>
+                                            <option value="R10">사원</option>
                                         </select>
                                     </td>
                                     <td>
@@ -358,7 +358,7 @@
                                             <option value="J0">COO</option>
                                             <option value="J1">본부장</option> 
                                             <option value="J2">팀장</option>
-                                            <option value="J3" selected>팀원</option>
+                                            <option value="J3">팀원</option>
                                         </select>
                                     </td>
                                 </tr>

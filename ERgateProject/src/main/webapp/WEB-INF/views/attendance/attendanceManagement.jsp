@@ -336,7 +336,7 @@ border-right: 1px solid lightgrey;
 	height: 100%;
 }
 /* 모달 내부 스타일 */
- /* 게시판 스타일 */
+/* 게시판 스타일 */
 .boardTable {
 	width: 1300px;
 	height: 350px;
