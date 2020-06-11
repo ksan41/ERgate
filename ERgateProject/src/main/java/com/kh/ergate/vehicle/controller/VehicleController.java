@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
-import com.kh.ergate.main.model.vo.Employee;
-import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 import com.kh.ergate.vehicle.model.service.VehicleService;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
@@ -59,12 +56,25 @@ public class VehicleController {
 	// 나의 예약 현황 리스트 조회 ajax
 	@ResponseBody
 	@RequestMapping(value="myReserve.ve", produces="application/json; charset=utf-8")
-	public String myReserveList(String empId, Model model) {
-
-		ArrayList<VehicleReservation> list = vService.myReserveVehicle(empId);
-		return new Gson().toJson(list);
+	public String myReserveList(String empId, int currentPage, Model model) {
+		
+		int listCount = vService.selectReserveListCount(empId);
+		
+		// PageInfo
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
+		
+		// ArrayList
+		ArrayList<VehicleReservation> list = vService.myReserveVehicle(empId, pi);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return new Gson().toJson(map); // {"pi": {}, "list":[{}, {}]}
 	}
 	
+	/*
 	@RequestMapping("cancelReserve.ve")
 	public String cancelReserveVehicle(String vhclReserveNo, HttpSession session) {
 		
@@ -77,7 +87,21 @@ public class VehicleController {
 			session.setAttribute("msg", "예약 취소 실패하였습니다. 다시 시도해 주세요.");
 			return "redirect:myReserve.ve?currentPage=1";
 		}
+	}
+	*/
+	
+	// 차량 예약 취소
+	@ResponseBody
+	@RequestMapping(value="cancelReserve.ve")
+	public String cancelReserveVehicle(int vhclReserveNo) {
 		
+		int result = vService.cancelReserveVehicle(vhclReserveNo);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 	// 차량 예약
@@ -88,10 +112,10 @@ public class VehicleController {
 		
 		if(result > 0) {
 			session.setAttribute("msg", "성공적으로 예약되었습니다.");
-			return "redirect:myReserve.ve?currentPage=1";
+			return "redirect:currentStatus.ve";
 		}else {
 			session.setAttribute("msg", "예약 실패하였습니다. 다시 시도해 주세요.");
-			return "redirect:myReserve.ve?currentPage=1";
+			return "redirect:currentStatus.ve";
 		}
 		
 	}
@@ -152,13 +176,15 @@ public class VehicleController {
 			   					HttpServletRequest request, Model model) {
 		
 		if(!file.getOriginalFilename().equals("")) {
-			
+
 			if(v.getVhclImage() != null) {
 				deleteFile(v.getVhclImage(), request);
 			}
-			
+
 			String changeName = saveFile(file, request);
 			v.setVhclImage(changeName);
+		}else {
+			
 		}
 		
 		int result = vService.updateVehicle(v);

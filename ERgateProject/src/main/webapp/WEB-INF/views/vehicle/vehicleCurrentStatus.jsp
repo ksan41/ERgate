@@ -410,6 +410,9 @@
 		font-size: 16px;
 		margin-bottom: 10px;
 	}
+	.reserveCancelBtn:hover{
+		cursor: pointer;
+	}
 	
 	/* 페이징바 스타일 */
 	.pagingBar {
@@ -742,54 +745,151 @@
 	
 	<!-- 나의 예약 현황 리스트 조회 ajax -->
 	<script>
-		/* $(document).ready(function(){ */
-		$("#myReservation").click(function(){
+		function myReserveList(cur){
+			
+			
+			
 			 $.ajax({
 				url:"myReserve.ve",
-				data:{empId:"${loginUser.empId}"},
+				data:{empId:"${loginUser.empId}",
+					  currentPage:cur},
 				type:"post",
-				success:function(list){
-					var value="";
-					for(var i in list){
-						value += 
+				success:function(map){ // map
+					
+					// map.pi  => {}
+					// map.list => [{}, {}]
+					
+					var value1 = "";
+					
+					for(var i in map.list){
+						value1 += 
 							"<table class='vhclCurrentInner'>" + 
 							"<tr>" +
-								"<td rowspan='5' class='vcTdImg'>" +
+								"<td rowspan='5' class='vcTdImg'>";
 								
-									"<c:choose>" +
-										"<c:when test='${ empty " + list[i].vhclImage + " }'>" +
-											"<img class='vcImg' src='${pageContext.servletContext.contextPath }/resources/siteImgs/vhclLogo.png'>" + 
-										"</c:when>" + 
-										"<c:otherwise>" +
-											"<img class='vcImg' src='${ pageContext.servletContext.contextPath }/resources/uploadFiles/vehicle/" + list[i].vhclImage + "'>" +
-										"</c:otherwise>" + 
-									"</c:choose>" +
-									
+								if(map.list[i].vhclImage == null) {
+									value1 += 
+										"<img class='vcImg' src='${pageContext.servletContext.contextPath }/resources/siteImgs/vhclLogo.png'>";
+								}else{
+									value1 += 
+										"<img class='vcImg' src='${ pageContext.servletContext.contextPath }/resources/uploadFiles/vehicle/" + map.list[i].vhclImage + "'>";
+								};
+								
+						value1 += 
 								"</td>" + 
-								"<td class='vcTdContent'><span class='vcContent1'>" + list[i].vhclModel list[i].vhclNo + "</span></td>" +
+								"<td class='vcTdContent'><span class='vcContent1'>" + map.list[i].vhclModel + " " + map.list[i].vhclNo + "</span></td>" +
 							"</tr>" + 
 							"<tr>" + 
-								"<td class='vcTdContent'><span class='vcContent2'>" + list[i].vhclPurpose + "</span></td>" + 
+								"<td class='vcTdContent'><span class='vcContent2'>" + map.list[i].vhclPurpose + "</span></td>" + 
 							"</tr>" + 
 							"<tr>" + 
 								"<td class='vcTdContent'>" +
-									"<span class='vcContent3'>" + list[i].vhclStartDate list[i].vhclStartTime } + "<br>" +
-									 ~ list[i].vhclEndDate list[i].vhclEndTime + "</span>" +
+									"<span class='vcContent3'>" + map.list[i].vhclStartDate + " " + map.list[i].vhclStartTime + "<br>" +
+									 "~" + map.list[i].vhclEndDate + " " + map.list[i].vhclEndTime + "</span>" +
 								"</td>" +
 							"</tr>" +
 							"<tr>" +
 								"<td class='vcTdContent'>" + 
-									"<button class='vcBtn' type='button' onclick='location.href='cancelReserve.ve?vhclReserveNo=" + list[i].vhclReserveNo + "''>예약 취소</button>" + 
+									"<input type='hidden' class='vcVhclReserveNo' name='vhclReserveNo' value='" + map.list[i].vhclReserveNo + "'/>" +
+									"<button class='vcBtn reserveCancelBtn' type='button'>예약 취소</button>" + 
 								"</td>" + 
 							"</tr>" +
 						"</table>";
 								
 					}
-					$("#modalContent2").html(value);
+					
+					var value2 = "";
+					
+					if(map.pi.endPage > 1){
+						value2 += 
+						"<ul class='pagingBar' id='vcPagingBar'>";
+						
+						if(map.pi.currentPage == 1){
+							value2 += 
+								"<li><a href='#'>&lt;&lt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + map.pi.startPage + ")';>&lt;&lt;</a></li>";
+						}
+						
+						if(map.pi.currentPage == 1){
+							value2 += 
+								"<li><a href='#'>&lt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + (map.pi.currentPage - 1) + ")';>&lt;</a></li>";
+						}
+						
+						for(var p = map.pi.startPage; p <= map.pi.endPage; p++){
+							
+							if(map.pi.currentPage == p){
+								value2 +=
+									"<li><span>" + p + "</span></li>";
+							}else{
+								value2 +=
+									"<li><a onclick='myReserveList(" + p + ")';>" + p + "</a></li>";
+							}
+						}
+						
+						if(map.pi.currentPage == map.pi.maxPage){
+							value2 += 
+								"<li><a href='#'>&gt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + (map.pi.currentPage + 1) + ")';>&gt;</a></li>";
+						}
+						
+						if(map.pi.currentPage == map.pi.maxPage){
+							value2 +=
+								"<li><a href='#'>&gt;&gt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + map.pi.endPage + ")';>&gt;&gt;</a></li>";
+						}
+						
+						value2 += "</ul>";
+					}
+				
+					
+					$("#modalContent2").html(value1+value2);
+					
 				},error:function(){
 					console.log("나의 예약 현황 모달 리스트 조회 ajax 통신 실패");
 				}
 			}); 
+		}
+		
+		$(function(){
+			myReserveList(1);
+		});
+	</script>
+	
+	<!-- 차량 예약 취소 ajax -->
+	<script>
+		$(document).on("click", ".reserveCancelBtn", function(){
+			
+			$.ajax({
+				url:"cancelReserve.ve",
+				data:{vhclReserveNo:$(this).prev().val()},
+				type:"post",
+				success:function(status){
+					
+					console.log(status);
+					
+					if(status == "success"){
+						
+						alert("성공적으로 예약 취소되었습니다.");
+						
+						myReserveList(1);
+						
+					}else{
+						alert("예약 취소 실패하였습니다. 다시 시도해 주세요.");
+					}
+										
+				},error:function(){
+					console.log("차량 예약 취소 ajax 통신 실패");
+				}
+			});
 		});
 	</script>
 

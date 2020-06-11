@@ -26,8 +26,10 @@ public class VehicleDao {
 	}
 	*/
 	
-	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, String empId) {
-		return (ArrayList)sqlSession.selectList("vehicleMapper.myReserveVehicle", empId);
+	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, String empId, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("vehicleMapper.myReserveVehicle", empId, rowBounds);
 	}
 	
 	public ArrayList<VehicleReservation> selectCurrentStatus(SqlSessionTemplate sqlSession, String currentDate) {
@@ -38,7 +40,7 @@ public class VehicleDao {
 		return sqlSession.insert("vehicleMapper.reserveVehicle", vr);
 	}
 	
-	public int cancelReserveVehicle(SqlSessionTemplate sqlSession, String vhclReserveNo) {
+	public int cancelReserveVehicle(SqlSessionTemplate sqlSession, int vhclReserveNo) {
 		return sqlSession.update("vehicleMapper.cancelReserveVehicle", vhclReserveNo);
 	}
 	

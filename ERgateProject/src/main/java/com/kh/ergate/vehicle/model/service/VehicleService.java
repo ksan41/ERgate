@@ -18,7 +18,7 @@ public interface VehicleService {
 	*/
 	
 	// 내 예약 조회용 서비스 ajax
-	ArrayList<VehicleReservation> myReserveVehicle(String empId);
+	ArrayList<VehicleReservation> myReserveVehicle(String empId, PageInfo pi);
 	
 	// 차량 예약 현황 조회용 서비스 (일별)
 	ArrayList<VehicleReservation> selectCurrentStatus(String currentDate);
@@ -27,7 +27,7 @@ public interface VehicleService {
 	int reserveVehicle(VehicleReservation vr);
 	
 	// 차량 예약 취소용 서비스
-	int cancelReserveVehicle(String vhclReserveNo);
+	int cancelReserveVehicle(int vhclReserveNo);
 	
 	// 차량 예약 현황 조회용 서비스 (월별) - 관리자
 	ArrayList<VehicleReservation> reserveVehicleList(String month, PageInfo pi);

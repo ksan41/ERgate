@@ -21,7 +21,7 @@
 		<result column="VHCL_START_DATE" property="vhclStartDate"/>
 		<result column="VHCL_START_TIME" property="vhclStartTime"/>
 		<result column="VHCL_END_DATE" property="vhclEndDate"/>
-		<result column="VHCE_END_TIME" property="vhclEndTime"/>
+		<result column="VHCL_END_TIME" property="vhclEndTime"/>
 		<result column="VHCL_PURPOSE" property="vhclPurpose"/>
 		<result column="VHCL_RESERVE_STATUS" property="vhclReserveStatus"/>
 		<result column="VHCL_MODEL" property="vhclModel"/>
@@ -46,7 +46,7 @@
 		 ORDER BY VHCL_RESERVE_DATE DESC
 	</select>
 	
-	<update id="cancelReserveVehicle" parameterType="string">
+	<update id="cancelReserveVehicle" parameterType="_int">
 		UPDATE VEHICLE_RESERVATION
 		   SET VHCL_RESERVE_STATUS='N'
 		 WHERE VHCL_RESERVE_NO=#{vhclReserveNo}

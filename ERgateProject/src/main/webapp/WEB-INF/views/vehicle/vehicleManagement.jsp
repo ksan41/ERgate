@@ -422,11 +422,11 @@
 					</tr>
 					<tr>
 						<td class="vmTdContent">
-							<button id="editVehicle" class="vmBtn" type="button" onclick="open_modal2();">수정하기</button>
+							<input type="hidden" class="vhclCode" name="vhclCode" value="${ v.vhclCode }"/>
+							<button id="" class="vmBtn editVehicle" type="button" onclick="open_modal2();">수정하기</button>
 							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
 						</td>
 					</tr>
-					<input type="hidden" id="vhclCode" name="vhclCode" value="${ v.vhclCode }"/>
 				</table>
 				
 			</c:forEach>
@@ -592,11 +592,11 @@
 					<button class="vmSubmitBtn" type="submit" id="editUpdateBtn">수정하기</button>
 					<button class="vmResetBtn" type="submit" id="editDeleteBtn">삭제하기</button>
 				</div>
-
 				<div id="fileArea2">
-					<input type="file" name="reUploadFile" id="fileInput2" onchange="loadImg2(this, 1);">
+					<input type="file" name="reUploadFile" id="fileInput2" value="" onchange="loadImg2(this, 1);">
 				</div>
 				
+				<input id="editVhclImage" name="vhclImage" type="hidden" value="">
 				<input id="editVhclCode" name="vhclCode" type="hidden" value="">
 				<input id="editVhclEnrollDate" name="vhclEnrollDate" type="hidden" value="">
 				<input id="editVhclStatus" name="vhclStatus" type="hidden" value="">
@@ -633,11 +633,11 @@
 
 	<!-- 수정하기 모달 값 전달 ajax -->
 	<script>
-		$("#editVehicle").click(function(){
+		$(".editVehicle").click(function(){
 			
 			$.ajax({
 				url:"select.ve",
-				data:{vhclCode:$("#vhclCode").val()},
+				data:{vhclCode:$(this).prev().val()},
 				type:"post",
 				success:function(vehicle){
 					
@@ -652,7 +652,7 @@
 					$("#editVhclModel").val(vhclModel);
 					$("#editVhclNo").val(vhclNo);
 					$("#editVhclCapacity").val(vhclCapacity);
-					
+					$("#editVhclImage").val(vhclImage);
 					$("#editVhclCode").val(vhclCode);
 					$("#editVhclEnrollDate").val(vhclEnrollDate);
 					$("#editVhclStatus").val(vhclStatus);
@@ -673,7 +673,7 @@
 	<!-- 수정하기 모달에서 수정하기/삭제하기 form -->
 	<script>
 		$("#editUpdateBtn").click(function () {
-	       $("#updateModalForm").attr("action", "insert.ve");
+	       $("#updateModalForm").attr("action", "update.ve");
 		});
 		 
 		$("#editDeleteBtn").click(function () {

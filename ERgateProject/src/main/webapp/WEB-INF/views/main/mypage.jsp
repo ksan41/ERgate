@@ -395,6 +395,7 @@
                 </table>
                 <input type="hidden" name="empId" value="${ loginUser.empId }">
                 <input type="hidden" name="empPwd" value="${ loginUser.empPwd }"/>
+                <input type="hidden" name="empImage" value="${ loginUser.empImage }"/>
                 <div id="fileArea">
 					<input type="file" name="reUploadFile" id="fileInput" onchange="loadImg(this, 1);">
 				</div>

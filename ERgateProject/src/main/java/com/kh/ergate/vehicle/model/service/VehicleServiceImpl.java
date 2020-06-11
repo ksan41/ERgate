@@ -38,8 +38,8 @@ public class VehicleServiceImpl implements VehicleService {
 	
 	// 내 예약 조회용 서비스 ajax
 		@Override
-		public ArrayList<VehicleReservation> myReserveVehicle(String empId) {
-			return vDao.myReserveVehicle(sqlSession, empId);
+		public ArrayList<VehicleReservation> myReserveVehicle(String empId, PageInfo pi) {
+			return vDao.myReserveVehicle(sqlSession, empId, pi);
 		}
 		
 	// 차량 예약 현황 조회용 서비스 (일별)
@@ -56,7 +56,7 @@ public class VehicleServiceImpl implements VehicleService {
 
 	// 차량 예약 취소용 서비스
 	@Override
-	public int cancelReserveVehicle(String vhclReserveNo) {
+	public int cancelReserveVehicle(int vhclReserveNo) {
 		return vDao.cancelReserveVehicle(sqlSession, vhclReserveNo);
 	}
 
