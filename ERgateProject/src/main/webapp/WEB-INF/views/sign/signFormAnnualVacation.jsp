@@ -516,7 +516,7 @@ h2, h3 {
 			
 			var result = (end - start) / 1000 / 60 / 60 / 24 + 1;
 			
-			if(result != null){
+			if(start != null && end != null){
 				//console.log(result);
 				$("input[name=holidayUsecount]").attr("value",result);
 				$("#remainDay").text(remainDay-result);
@@ -532,7 +532,7 @@ h2, h3 {
 			
 			var result = (end - start) / 1000 / 60 / 60 / 24 + 1;
 			//console.log(result);
-			if(result != null){
+			if(start != null && end != null){
 				$("input[name=holidayUsecount]").attr("value",result);
 				$("#remainDay").text(remainDay-result);
 			}
@@ -759,7 +759,7 @@ h2, h3 {
     
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
-        	
+        
            var form = $('#signForm');
            console.log(form[0]);
            var formData = new FormData(form[0]);
@@ -768,6 +768,10 @@ h2, h3 {
            formData.append('empId', form[0].empId.innerText);
            formData.append('signTypeName', form[0].signTypeName.innerText);
            formData.append('empName', form[0].empName.innerText);
+           formData.append('holidayType', form[0].holidayType.innerText);
+           formData.append('holidayStart', form[0].holidayStart.innerText);
+           formData.append('holidayEnd', form[0].holidayEnd.innerText);
+           formData.append('holidayUsecount', form[0].holidayUsecount.innerText);
            formData.append('deptTitle', form[0].deptTitle.innerText);
            formData.append('signTitle', form[0].signTitle.innerText);
            formData.append('signContent', contentTable);

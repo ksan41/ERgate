@@ -224,71 +224,9 @@ public class SignController {
 		  model.addAttribute("documentNo",documentNo);
 		  return "sign/signApprovalPath";
 	  }
-	  
-	  
-	  
-	  // 결재라인-결재자 등록요청용
-	  @ResponseBody
-	  @RequestMapping(value="insertSigner.si", produces="application/json; charset=utf-8") 
-	  public String insertSigner(String documentNo,String[] empId,String[] empName,Model model) {
-		ArrayList<Signer> sList = new ArrayList<>();
-		
-		int signTurn = 1;
-		for(int i=0;i<empId.length;i++) {
-			Signer s = new Signer();
-			s.setDocumentNo(Integer.parseInt(documentNo));
-			s.setEmpId(empId[i]);
-			s.setEmpName(empName[i]);
-			s.setSignType(1);
-			s.setSignTurn(signTurn++);
-			sList.add(s);
-		}
-		
-		int result = 1;
-		for(int i=0;i<sList.size();i++) {
-			result = siService.insertSigner(sList.get(i));
-			if(result == 0) {
-				System.out.println("실패실패");
-			}
-		}
-		
-		return new Gson().toJson(sList);
-	  }
-	  
-	  // 결재라인-수신참조자 등록요청용
-	  @RequestMapping("insertRef.si") 
-	  public String insertRef(String documentNo,Signer si,HttpServletRequest request, Model model) {
-		  System.out.println("참조참조");
-			String[] iList = request.getParameterValues("empId");
-			String[] nList = request.getParameterValues("empName");
-			ArrayList<Signer> rList = new ArrayList<>();
-			
-			for(int i=0;i<iList.length;i++) {
-				Signer s = new Signer();
-				s.setDocumentNo(Integer.parseInt(documentNo));
-				s.setEmpId(iList[i]);
-				s.setEmpName(nList[i]);
-				s.setSignType(0);
-				s.setSignTurn(0);
-				rList.add(s);
-			}
-			
-			int result = 1;
-			for(int i=0;i<rList.size();i++) {
-				result = siService.insertSigner(rList.get(i));
-				if(result == 0) {
-					System.out.println("실패실패");
-				}
-			}
-			
-			model.addAttribute("rList",rList);
-		  return "";
-	  }
-		  
-	  
+	  	  
 	  
 	  // 기안임시저장
-	  
 	  @RequestMapping("saveDoc.si") public String saveDocument(SignDocument sd,
 	  Model model) {
 	  
@@ -329,10 +267,18 @@ public class SignController {
 			  // 휴가계일 경우 
 		  	  if(form.getParameterValues("holidayType") != null) {
 			  //System.out.println("휴가계 요청");
-			  sd.setHolidayType(holidayType[0]); 
-			  sd.setHolidayStart(holidayStart[0]);
-			  sd.setHolidayEnd(holidayEnd[0]); 
-			  sd.setHolidayUsecount(holidayUsecount[0]); 
+		  		  switch(holidayType[0]) {
+		  		  case "0": sd.setHolidayType("연차");break;
+		  		  case "1": sd.setHolidayType("오전반차");break;	  	
+		  		  case "2": sd.setHolidayType("오후반차");break;
+		  		  case "3": sd.setHolidayType("경조사");break;
+		  		  case "4": sd.setHolidayType("공가");break;
+		  		  case "5": sd.setHolidayType("병가");break;
+		  		  case "6": sd.setHolidayType("휴직");break;
+		  		  }
+				  sd.setHolidayStart(holidayStart[0]);
+				  sd.setHolidayEnd(holidayEnd[0]); 
+				  sd.setHolidayUsecount(holidayUsecount[0]); 
 			  }
 			  
 		  	  
