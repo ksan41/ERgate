@@ -25,8 +25,11 @@ public interface SignService {
 	//진행결재함요청용
 	public ArrayList<SignDocument> ongoingList(String month,SignDocument sd);
 	
+	// 상신내역 게시글수 조회용
+	public int selectRlistCount(SignDateSearch sds);
+	
 	//상신내역요청용 
-	public ArrayList<SignDocument> reportList(SignDocument sd);
+	public ArrayList<SignDocument> reportList(PageInfo pi,SignDateSearch sds);
 	
 	//지출결의내역요청용
 	public ArrayList<SignDocument> expenseList(PageInfo pi);
@@ -52,12 +55,6 @@ public interface SignService {
 	
 	//결재라인 등록요청용 
 	public int insertSigner(Signer si);
-	
-	//임시저장 문서 불러오기용
-	public SignDocument selectMyDocument(String empId);
-	
-	//기안임시저장
-	public int saveDocument(SignDocument sd);
 	
 	//기안등록
 	public int insertDocument(SignDocument sd);

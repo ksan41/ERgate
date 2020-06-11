@@ -3,8 +3,6 @@ package com.kh.ergate.sign.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -20,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.google.gson.Gson;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
+import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.sign.model.service.SignServiceImpl;
 import com.kh.ergate.sign.model.vo.SignAttachment;
 import com.kh.ergate.sign.model.vo.SignDateSearch;
@@ -82,16 +80,52 @@ public class SignController {
 	  }
 	  
 	  // 상신내역요청용
-	  
 	  @RequestMapping("reportList.si") 
-	  public String reportList(SignDocument sd,int currentPage,Model model) 
-	  { return "sign/signReportList"; }
+	  public String reportList(HttpSession session,SignDateSearch sds,int currentPage,Model model) {
+		  Employee e = (Employee)session.getAttribute("loginUser");
+		  
+		  sds.setCondition(0);
+		  sds.setEmpId(e.getEmpId());
+		  
+		  java.util.Date d = new java.util.Date();
+		  SimpleDateFormat format = new SimpleDateFormat("yyyy/MM");
+		  String sysdate = format.format(d);
+		  String[] array = sysdate.split("/");
+		  
+		  sds.setYear(array[0]);
+		  sds.setMonth(array[1]);
+		  
+		  int listCount = siService.selectRlistCount(sds);
+		  
+		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		  
+		  ArrayList<SignDocument> list = siService.reportList(pi,sds);
+		  
+		  
+		  model.addAttribute("sds",sds);
+		  model.addAttribute("pi", pi); 
+		  model.addAttribute("list", list);
+		  return "sign/signReportList"; 
+	  }
 	  
 	  // 상신내역 월선택용
-	  
-	  @RequestMapping("reportListM.si") public String reportListMonth(String month,
-	  SignDocument sd, Model model) {
-	  
+	  @RequestMapping("reportListM.si") 
+	  public String reportListMonth(HttpSession session,SignDateSearch sds,Integer currentPage,SignDocument sd, Model model) {
+		  Employee e = (Employee)session.getAttribute("loginUser");
+		  
+		  sds.setCondition(0);
+		  sds.setEmpId(e.getEmpId());
+		  int listCount = siService.selectRlistCount(sds);
+		  
+		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage.intValue(), 5, 10);
+		  
+		  ArrayList<SignDocument> list = siService.searchList(pi,sds);
+		  
+		  model.addAttribute("pi",pi); 
+		  model.addAttribute("sds",sds);
+		  model.addAttribute("list",list); 
+		  
+		  return "sign/signReportList";
 	  }
 	  
 	  // 지출결의내역요청용
@@ -105,16 +139,18 @@ public class SignController {
 	  
 	  ArrayList<SignDocument> list = siService.expenseList(pi);
 	  
+	  SimpleDateFormat sformat = new SimpleDateFormat("yyyy/MM/dd");
+	  	  
 	  SignDateSearch sds = null;
 	  
 	  model.addAttribute("sds",sds);
 	  model.addAttribute("pi", pi); 
 	  model.addAttribute("list", list);
+	  return "sign/signExpenseList"; 
+	  }
 	  
-	  return "sign/signExpenseList"; }
 	  
 	  // 지출결의내역 월선택용
-	  
 	  @RequestMapping("expenseListM.si") 
 	  public String expenseListMonth(SignDateSearch sds, Integer currentPage, SignDocument sd, Model model) {
 		  
@@ -198,8 +234,8 @@ public class SignController {
 		  return "sign/signFormAnnualVacation"; 
 	  }
 	  
-	  // 기안작성폼-외근신청서 요청용
 	  
+	  // 기안작성폼-외근신청서 요청용
 	  @RequestMapping("businessForm.si") 
 	  public String businessForm(Model model) { 
 		  String documentNo = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); // "20200522202011" 
@@ -225,12 +261,6 @@ public class SignController {
 		  return "sign/signApprovalPath";
 	  }
 	  	  
-	  
-	  // 기안임시저장
-	  @RequestMapping("saveDoc.si") public String saveDocument(SignDocument sd,
-	  Model model) {
-	  
-	  }
 	  
 	  // 기안등록
 	  @ResponseBody

@@ -20,7 +20,7 @@ public class SignDao {
 		return sqlSession.selectOne("signMapper.selectElistCount");
 	}
 	
-	// 지출결의내력 리스트 조회용
+	// 지출결의내역 리스트 조회용
 	public ArrayList<SignDocument> expenseList(SqlSessionTemplate sqlSession,PageInfo pi){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		
@@ -32,6 +32,7 @@ public class SignDao {
 		return sqlSession.selectOne("signMapper.searchListCount",sds);
 	}
 	
+	// 결재 월검색
 	public ArrayList<SignDocument> searchList(SqlSessionTemplate sqlSession,PageInfo pi, SignDateSearch sds){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		
@@ -72,4 +73,17 @@ public class SignDao {
 	public int selectRemainHoliday(SqlSessionTemplate sqlSession,String empId) {
 		return sqlSession.selectOne("signMapper.selectRemainHoliday",empId);
 	}
-}
+	
+	//상신내역 게시글 수 조회용
+	public int selectRlistCount(SqlSessionTemplate sqlSession, SignDateSearch sds) {
+		return sqlSession.selectOne("signMapper.selectRlistCount",sds);
+	}
+	
+	//상신내역 요청용
+	public ArrayList<SignDocument> reportList(SqlSessionTemplate sqlSession, SignDateSearch sds,PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("signMapper.reportList",sds,rowBounds);
+	}
+} 

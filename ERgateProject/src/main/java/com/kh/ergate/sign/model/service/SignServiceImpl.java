@@ -33,9 +33,7 @@ public class SignServiceImpl implements SignService{
 	}
 	
 	
-	/*
-	 * 결재상세-첨부파일 리스트 요청용
-	 */
+	//결재상세-첨부파일 리스트 요청용
 	@Override
 	public ArrayList<SignAttachment> signDetailAttachment(SignDocument sdd) {
 		return siDao.signDetailAttachment(sqlSession,sdd);
@@ -51,11 +49,17 @@ public class SignServiceImpl implements SignService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	// 상신내역 게시글수 조회용
 	@Override
-	public ArrayList<SignDocument> reportList(SignDocument sd) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectRlistCount(SignDateSearch sds) {
+		return siDao.selectRlistCount(sqlSession,sds);
+	}
+	
+	// 상신내역 요청용
+	@Override
+	public ArrayList<SignDocument> reportList(PageInfo pi,SignDateSearch sds) {
+		return siDao.reportList(sqlSession,sds,pi);
 	}
 	
 	// 지출결의내역 리스트 요청
@@ -103,12 +107,6 @@ public class SignServiceImpl implements SignService{
 		return siDao.insertSigner(sqlSession,si);
 	}
 
-	@Override
-	public int saveDocument(SignDocument sd) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 	
 	// 결재문서 등록용
 	@Override
@@ -116,11 +114,7 @@ public class SignServiceImpl implements SignService{
 		return siDao.insertDocument(sqlSession,sd);
 	}
 	
-	// 임시저장문서 불러오는용
-	@Override
-	public SignDocument selectMyDocument(String empId) {
-		return siDao.selectMyDocument(sqlSession,empId);
-	}
+
 	
 	// 결재문서-첨부파일 등록용
 	@Override
@@ -133,10 +127,5 @@ public class SignServiceImpl implements SignService{
 	public int selectRemainHoliday(String empId) {
 		return siDao.selectRemainHoliday(sqlSession,empId);
 	}
-
-
-
-
-
 
 }

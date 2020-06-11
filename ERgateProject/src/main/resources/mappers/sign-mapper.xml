@@ -89,6 +89,7 @@
               <if test="condition == 1">
               	AND SIGN_TYPE_NO = 0
               </if>
+        ORDER BY DRAFT_DATE DESC 
 	</select>
 	
 	<select id="signDetail" parameterType="SignDocument" resultMap="signDocResultSet">
@@ -149,5 +150,21 @@
 		  FROM HOLIDAY
 		WHERE EMP_ID = #{empId} AND
       		  YEAR = TO_CHAR(SYSDATE, 'YYYY')
+	</select>
+	
+	<select id="selectRlistCount" parameterType="com.kh.ergate.sign.model.vo.SignDateSearch" resultType="_int">
+		SELECT COUNT(*)
+		  FROM SIGN_DOCUMENT
+		WHERE EMP_ID = #{empId} AND
+      		  EXTRACT(YEAR FROM DRAFT_DATE) = #{year} AND
+      		  EXTRACT(MONTH FROM DRAFT_DATE) = #{month}
+	</select>
+	
+	<select id="reportList" parameterType="com.kh.ergate.sign.model.vo.SignDateSearch" resultMap="signDocResultSet">
+		SELECT *
+		  FROM SIGN_DOCUMENT
+		WHERE EMP_ID = #{empId} AND
+      		  EXTRACT(YEAR FROM DRAFT_DATE) = #{year} AND
+      		  EXTRACT(MONTH FROM DRAFT_DATE) = #{month}
 	</select>
 </mapper>
