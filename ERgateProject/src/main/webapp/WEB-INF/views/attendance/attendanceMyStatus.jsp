@@ -94,7 +94,6 @@
         text-align: center;
         padding-top: 10px;
         font-size: 17px;
-        margin-left:30px;
         float: left;
     }
     .empInfo2{
@@ -223,7 +222,7 @@
 					<span class="material-icons"> arrow_right </span>
 				</h2>
 				<br><br>
-				<div class="holidayInfo" style="margin-rigth:20px;">
+				<div class="holidayInfo">
 			        <div class="empInfo1">발생 휴가일 </div>
 			        <div class="empInfo2">16 </div>
 			        <div class="empInfo2">총 사용일수 </div>
@@ -231,7 +230,7 @@
 			        <div class="empInfo2">잔여휴가일 </div>
 			        <div class="empInfo3">14.5 </div>
 			    </div>
-				<br><br><br><br>  
+				<br><br><br><br>  <br><br>
 				<div >
 				<div class="boardScroll" style="overflow: auto; width: 1400px; height: 400px;">
 					<table class="boardTable">

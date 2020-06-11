@@ -469,7 +469,7 @@ border-right: 1px solid lightgrey;
 		            </ul>
 		        </div>
 		        <!-- 가운데 영역 -->
-		        <div class="empList_area" style="overflow: auto;">
+		        <div class="empList_area" style="overflow: auto; width:712px">
 		            <ul class="empList"></ul>
 		        </div>
 		    </div><!-- groupMap_outer -->
