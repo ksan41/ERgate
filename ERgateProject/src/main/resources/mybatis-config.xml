@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="com.kh.ergate.meetingroom.model.vo.Meetingroom" alias="Meetingroom"/>
       <typeAlias type="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" alias="MeetingroomDate"/>
       <typeAlias type="com.kh.ergate.meetingroom.model.vo.MeetingroomReservation" alias="MeetingroomReservation"/>
+      <typeAlias type="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" alias="MeetingroomDate"/>
       <typeAlias type="com.kh.ergate.sign.model.vo.SignAttachment" alias="SignAttachment"/>
       <typeAlias type="com.kh.ergate.sign.model.vo.SignDocument" alias="SignDocument" />
       <typeAlias type="com.kh.ergate.sign.model.vo.Signer" alias="Signer" />
