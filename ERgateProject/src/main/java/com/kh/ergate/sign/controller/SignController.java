@@ -184,13 +184,16 @@ public class SignController {
 	  
 	  // 기안작성폼-휴가계 요청용
 	  @RequestMapping("annualForm.si") 
-	  public String annualForm(Model model){
+	  public String annualForm(String empId,Model model){
 		  
 		  // 문서번호 랜덤값으로 생성
 		  String documentNo = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); // "20200522202011" 
 		  documentNo += Integer.toString((int)Math.random()*100+1);
-			 
-			 
+		  
+		  // 사용자 잔여 연차정보 불러오기
+		  int remainDay = siService.selectRemainHoliday(empId);
+		  
+		  model.addAttribute("remainDay",remainDay);
 		  model.addAttribute("documentNo",documentNo);
 		  return "sign/signFormAnnualVacation"; 
 	  }

@@ -65,4 +65,6 @@ public interface SignService {
 	//기안문서 첨부파일 등록용
 	public int insertSignAttachment(SignAttachment st);
 	
+	//사용자 잔여연차 조회용
+	public int selectRemainHoliday(String empId);
 }

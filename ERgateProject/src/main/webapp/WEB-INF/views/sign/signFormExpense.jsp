@@ -748,7 +748,7 @@ h2, h3 {
         var uploadFileList = Object.keys(fileList);
         	
            var form = $('#signForm');
-           console.log(form[0]);
+          // console.log(form[0]);
            var formData = new FormData(form[0]);
            formData.append('documentNo', form[0].documentNo.innerText);
            formData.append('signTypeNo', form[0].signTypeNo.innerText);

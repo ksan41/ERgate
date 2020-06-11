@@ -127,6 +127,12 @@ public class SignServiceImpl implements SignService{
 	public int insertSignAttachment(SignAttachment st) {
 		return siDao.insertSignAttachment(sqlSession,st);
 	}
+	
+	// 사용자 잔여연차 조회용
+	@Override
+	public int selectRemainHoliday(String empId) {
+		return siDao.selectRemainHoliday(sqlSession,empId);
+	}
 
 
 

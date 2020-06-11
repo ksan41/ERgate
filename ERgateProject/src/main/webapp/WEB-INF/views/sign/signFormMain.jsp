@@ -155,7 +155,7 @@
 			<div class="selectArea">
 				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;※문서 양식을 선택해주세요.</p>
 				<br>
-				<div id="selectAnnual" class="selectDiv" onclick="location.href='annualForm.si';">
+				<div id="selectAnnual" class="selectDiv" onclick="location.href='annualForm.si?empId=${loginUser.empId}';">
 					<span class="material-icons"> emoji_food_beverage </span>
 					<h2 align="center">휴가계</h2>
 				</div>

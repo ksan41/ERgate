@@ -315,7 +315,7 @@ h2, h3 {
 			<!-- 내용 작성 영역 입니다-->
 			<h1>휴가계</h1>
 			<div id="btnArea">
-				<button type="button" class="bigBtn" id="signSubmit" onclick="uploadFile();">기안등록</button>
+				<button type="button" class="bigBtn" id="signSubmit" style="margin-left: 150px;" onclick="uploadFile();">기안등록</button>
 			</div>
 			<br>
 			<form id="signForm" name="signForm" method="get" enctype="multipart/form-data">
@@ -393,7 +393,7 @@ h2, h3 {
 									<option value="6">휴직</option>
 								</select></td>
 							<th width="103">잔여연차</th>
-							<td align="left"><p id="remainDay">15</p> 일</td>
+							<td align="left"><span id="remainDay">${remainDay }</span> 일</td>
 						</tr>
 						<tr>
 							<th>기간</th>
@@ -404,7 +404,7 @@ h2, h3 {
 							</td>
 							<th>사용일수</th>
 							<td>
-								<input type="text" name="holidayUsecount" class="inputs" value="1" readonly> 일
+								<input type="text" name="holidayUsecount" class="inputs" readonly> 일
 							</td>
 						</tr>
 						<tr>
@@ -443,7 +443,7 @@ h2, h3 {
 						</tr>
 					</thead>
 				</table>
-				
+			 	
 				<table id="contentTable">
 						<tr>
 							<th>휴가사유</th>
@@ -458,8 +458,89 @@ h2, h3 {
 			</form>
 		</div>
 	</div>
+	
+		<script>
+		
+		var signerId = new Array();
+		var signerName = new Array();
+		
+		// 결재자아이디 받아오기
+		function getSid(data){
+			signerId = data;
+		}
+		
+		// 결재자이름 받아오기
+		function getSname(data){
+			signerName = data;
+		}
+		
+		var refId = new Array();
+		var refName = new Array();
+		
+		// 수신자 아이디 받아오기
+		function getRefId(data){
+			refId = data;
+		}
+		
+		// 수신자 이름 받아오기
+		function getRefName(data){
+			refName = data;
+		}
+		
+		
+		//오늘날짜 표시
+		$(document).ready(function(){
+			var n =  new Date();
+			var y = n.getFullYear();
+			var m = n.getMonth() + 1;
+			var d = n.getDate();
+			
+			$("#toDate").text(y+"/"+m+"/"+d);
+			
+		});
+		
+		
+	</script>
 	<script>
-
+	
+	$(document).ready(function(){
+		var remainDay = $("#remainDay").text();
+			
+		
+		$("input[name=holidayStart]").change(function(){
+			
+			var start = $("input[name=holidayStart]").val();
+			var end = $("input[name=holidayEnd]").val();	
+			start = new Date(start);
+			end = new Date(end);
+			
+			var result = (end - start) / 1000 / 60 / 60 / 24 + 1;
+			
+			if(result != null){
+				//console.log(result);
+				$("input[name=holidayUsecount]").attr("value",result);
+				$("#remainDay").text(remainDay-result);
+			}
+		});
+		
+		$("input[name=holidayEnd]").change(function(){
+			
+			var start = $("input[name=holidayStart]").val();
+			var end = $("input[name=holidayEnd]").val();	
+			start = new Date(start);
+			end = new Date(end);
+			
+			var result = (end - start) / 1000 / 60 / 60 / 24 + 1;
+			//console.log(result);
+			if(result != null){
+				$("input[name=holidayUsecount]").attr("value",result);
+				$("#remainDay").text(remainDay-result);
+			}
+		});
+		
+		
+	});
+	
 	
 	//테이블input 값 입력시 input value에 값 입력
 	$(document).on("keyup","#signContent",function(){
@@ -467,14 +548,6 @@ h2, h3 {
 		$("#signContent").text(inputVal);
 	});
 
-	//기안등록 눌렀을 시 처리되는 스크립트 
-	$(document).on("click","#signSubmit",function(){
-		//테이블에 입력된 값들 html로 묶어서 input태그에 전달
-		var contentTable = "<table id='contentTable'>" + $("#contentTable").html() + "</table>";
-		 $("input[name=contentTable]").attr("value",contentTable);
-		 console.log($("input[name=contentTable]").val());
-	});
-	
 	
 	//파일첨부관련
     $(document).ready(function() {
@@ -679,23 +752,35 @@ h2, h3 {
 
     // 파일 등록
     function uploadFile() {
+    	
+    	// 결재 내용 변수에 받음
+    	var contentTable = "<table id='contentTable'>" + $("#contentTable").html() + "</table>";
+    	
+    
         // 등록할 파일 리스트
         var uploadFileList = Object.keys(fileList);
         	
            var form = $('#signForm');
            console.log(form[0]);
            var formData = new FormData(form[0]);
-           formData.append('noticeTitle', form[0].boardTitle.innerText);
-           formData.append('noticeContent', form[0].boardContent.innerText);
+           formData.append('documentNo', form[0].documentNo.innerText);
+           formData.append('signTypeNo', form[0].signTypeNo.innerText);
+           formData.append('empId', form[0].empId.innerText);
+           formData.append('signTypeName', form[0].signTypeName.innerText);
+           formData.append('empName', form[0].empName.innerText);
+           formData.append('deptTitle', form[0].deptTitle.innerText);
+           formData.append('signTitle', form[0].signTitle.innerText);
+           formData.append('signContent', contentTable);
+           formData.append('signerId',signerId);
+           formData.append('signerName',signerName);
+           formData.append('refId',refId);
+           formData.append('refName',refName);
            for (var i = 0; i < uploadFileList.length; i++) {
                formData.append('files', fileList[uploadFileList[i]]);
            }
-           console.log(formData.getAll('noticeTitle'));
-           console.log(formData.getAll('noticeContent'));
-           console.log(formData.getAll('files'));
-           
+         
            $.ajax({
-               url : "/testFileload.bo",
+               url : "insertDoc.si",
                data : formData,
                type : 'POST',
                enctype : 'multipart/form-data',
@@ -704,22 +789,20 @@ h2, h3 {
                dataType : 'json',
                cache : false,
                success : function(result) {
-                   if (result.length > 0) {
-                       alert("성공");
-                       location.reload();
+                   if (result>0) {
+                       alert("기안서가 제출되었습니다.");
+                       location.href="reportList.si?currentPage=1";	                       
                    } else {
-                       alert("성공");
+                       alert("문서 등록에 실패했습니다. 다시 시도해주세요.");
                        location.reload();
                    }
                    
                },
                error:function(){	// error : ajax 통신실패시 처리할 함수 지정
 					console.log("ajax 통신 실패!");
-				},
-				complete:function(){// complete : ajax 통신 성공여부와 상관없이 실행
-					console.log("무조건 호출!!");
 				}
            });
+           
     }
 	
 	</script>

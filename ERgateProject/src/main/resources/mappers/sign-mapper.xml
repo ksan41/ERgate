@@ -142,4 +142,12 @@
 		INSERT INTO SIGN_ATTACHMENT(FILE_NO,REF_DOC_NO,ORIGIN_NAME,CHANGE_NAME)
 		VALUES (SEQ_SDOC_NO.NEXTVAL,#{refDocNo},#{originName},#{changeName})
 	</insert>
+	
+	<!-- 사용자 잔여연차 조회용 -->
+	<select id="selectRemainHoliday" parameterType="string" resultType="_int">
+		SELECT REMAIN_DAY
+		  FROM HOLIDAY
+		WHERE EMP_ID = #{empId} AND
+      		  YEAR = TO_CHAR(SYSDATE, 'YYYY')
+	</select>
 </mapper>

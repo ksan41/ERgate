@@ -67,4 +67,9 @@ public class SignDao {
 	public int insertSignAttachment(SqlSessionTemplate sqlSession,SignAttachment st) {
 		return sqlSession.insert("signMapper.insertSignAttachment",st);
 	}
+	
+	//사용자 잔여연차 조회용
+	public int selectRemainHoliday(SqlSessionTemplate sqlSession,String empId) {
+		return sqlSession.selectOne("signMapper.selectRemainHoliday",empId);
+	}
 }
