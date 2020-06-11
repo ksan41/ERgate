@@ -1,7 +1,5 @@
 package com.kh.ergate.schedule.model.vo;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +23,6 @@ public class Schedule {
 	private String scheduleKind;
 	private String outMeetingRoom;
 	private String inMeetingRoom;
+	private String callPeople;
+	private String joinPeople;
 }

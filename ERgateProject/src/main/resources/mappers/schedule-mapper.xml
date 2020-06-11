@@ -14,48 +14,18 @@
 		<result column="schedule_kind" property="scheduleKind"/>
 		<result column="outmeetingroom" property="outMeetingRoom"/>
 		<result column="inmeetingroom" property="inMeetingRoom"/>
+		<result column="callpeople" property="callPeople"/>
+		<result column="joinpeople" property="joinPeople"/>
 	</resultMap> 
+	  
 	
- 	 <resultMap id="ScheduleJoinpeopleResult" type="ScheduleJoinpeople">
-		<id column="schedule_no" property="scheduleNo"/>
-		<result column="emp_id" property="empId"/>
-		<result column="joinPeople" property="joinPeople"/>
-		<result column="dept_Name" property="deptName"/>			
-	</resultMap>   
-	
-	<resultMap id="ScheduleCallpeopleResult" type="ScheduleCallpeople">		
-		<id column="schedule_no" property="scheduleNo"/>
-		<result column="emp_id" property="empId"/>
-		<result column="callPeople" property="callPeople"/>
-		<result column="dept_Name" property="deptName"/>				
-	</resultMap>   
-	
-	<insert id="insertSchedule" parameterType="Schedule">
-<!-- 			<selectKey resultType="integer" keyProperty="scheduleNo" order="BEFORE">
-			    SELECT seq_sche_no.nextval from dual
-			</selectKey>  -->
-			insert into Schedule
-			values(seq_sche_no.nextval, #{empId}, #{scheduleTitle}, #{scheduleContent}, #{scheduleStartDay}, #{scheduleEndDay}, #{scheduleStartTime}, 
-			#{scheduleEndTime}, #{scheduleKind}, #{outMeetingRoom}, #{inMeetingRoom})
+	<insert id="insertSchedule" parameterType="Schedule">	
+		insert into schedule
+		values(seq_sche_no.nextval, #{empId}, #{scheduleTitle}, #{scheduleContent}, #{scheduleStartDay}, #{scheduleEndDay}, #{scheduleStartTime}, 
+		#{scheduleEndTime}, #{scheduleKind}, #{outMeetingRoom}, #{inMeetingRoom}, #{callPeople}, #{joinPeople})
 	</insert>
 	
-	 <insert id="insertJoin" parameterType="ScheduleJoinpeople">
-		<!-- 	<selectKey resultType="integer" keyProperty="scheduleNo" order="BEFORE">
-			    SELECT seq_sche_no.currval from dual
-			</selectKey> -->
-			insert into schedule_joinpeople
-			values(#{scheduleNo} , #{empId}, #{joinPeople}, #{deptName})
-			
-	</insert>
-	
-	<insert id="insertCall" parameterType="ScheduleCallpeople">
-		<selectKey resultType="integer" keyProperty="scheduleNo" order="BEFORE">
-			    SELECT seq_sche_no.currval from dual
-			</selectKey>
-			insert into schedule_callpeople
-			values(#{scheduleNo}, #{empId}, #{callPeople}, #{deptName})
-			
-	</insert> 
+
 	
 	<select id="selectScheduleList" resultMap="ScheduleResult">
 		select * from schedule

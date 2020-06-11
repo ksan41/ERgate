@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         eventClick: function(event) { 
         	/*  $('#list_schedule').modal('show'); */
               	$.ajax({
-        		url:"slist.bo",      		
+        		url:"slist.sc",      		
         		type:"GET",        		
         		data:"scheduleNo="+event.event.id,
         		asyns:false,
@@ -116,28 +116,40 @@ document.addEventListener('DOMContentLoaded', function() {
 	                    $("#list_schedule_Ga").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
 	                    $("#list_schedule_Ga").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
 	                    $("#list_schedule_Ga").find('textarea[name=scheduleContent]').val(data.scheduleContent);
+	                    $("#list_schedule_Ga").find('input[name=callPeople]').val(data.callPeople);
+	                    $("#list_schedule_Ga").find('input[name=joinPeople]').val(data.joinPeople);
 	                    $('#list_schedule_Ga').modal('show');
           			}
           			else if(data.scheduleKind=="업무일정"){
           				$("#list_schedule_Up").find('input[name=scheduleNo]').val(data.scheduleNo);
-                    	$("#list_schedule_Up").find('input[name=scheduleTitle]').val(data.scheduleTitle);
- 	                    $("#list_schedule_Up").find('input[name=scheduleStartDay]').val(data.scheduleStartDay);
- 	                    $("#list_schedule_Up").find('input[name=scheduleStartTime]').val(data.scheduleStartTime);
- 	                    $("#list_schedule_Up").find('input[name=scheduleEndDay]').val(data.scheduleEndDay);
- 	                    $("#list_schedule_Up").find('input[name=scheduleEndTime]').val(data.scheduleEndTime);
- 	                    $("#list_schedule_Up").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
- 	                   $("#list_schedule_Up").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
- 	                    $("#list_schedule_Up").find('textarea[name=scheduleContent]').val(data.scheduleContent);
- 	                    $('#list_schedule_Up').modal('show');
+          			 	$("#list_schedule_Up").find('input[name=empId]').val(data.empId);
+	                    $("#list_schedule_Up").find('input[name=scheduleTitle]').val(data.scheduleTitle);
+	                    $("#list_schedule_Up").find('input[name=scheduleStartDay]').val(data.scheduleStartDay);
+	                    $("#list_schedule_Up").find('input[name=scheduleStartTime]').val(data.scheduleStartTime);
+	                    $("#list_schedule_Up").find('input[name=scheduleEndDay]').val(data.scheduleEndDay);
+	                    $("#list_schedule_Up").find('input[name=scheduleEndTime]').val(data.scheduleEndTime);
+	                    $("#list_schedule_Up").find('input[name=scheduleKind]').val(data.scheduleKind);
+	                    $("#list_schedule_Up").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
+	                    $("#list_schedule_Up").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
+	                    $("#list_schedule_Up").find('textarea[name=scheduleContent]').val(data.scheduleContent);
+	                    $("#list_schedule_Up").find('textarea[name=callPeople]').val(data.callPeople);
+	                    $("#list_schedule_Up").find('textarea[name=joinPeople]').val(data.joinPeople);
+	                    $('#list_schedule_Up').modal('show');
                        
                     }else if(data.scheduleKind=="공유일정"){
                     	$("#list_schedule_Go").find('input[name=scheduleNo]').val(data.scheduleNo);
-                    	$("#list_schedule_Go").find('input[name=scheduleTitle]').val(data.scheduleTitle);
- 	                    $("#list_schedule_Go").find('input[name=scheduleStartDay]').val(data.scheduleStartDay);
- 	                    $("#list_schedule_Go").find('input[name=scheduleStartTime]').val(data.scheduleStartTime);
- 	                    $("#list_schedule_Go").find('input[name=scheduleEndDay]').val(data.scheduleEndDay);
- 	                    $("#list_schedule_Go").find('input[name=scheduleEndTime]').val(data.scheduleEndTime);
- 	                    $("#list_schedule_Go").find('textarea[name=scheduleContent]').val(data.scheduleContent);
+          			 	$("#list_schedule_Go").find('input[name=empId]').val(data.empId);
+	                    $("#list_schedule_Go").find('input[name=scheduleTitle]').val(data.scheduleTitle);
+	                    $("#list_schedule_Go").find('input[name=scheduleStartDay]').val(data.scheduleStartDay);
+	                    $("#list_schedule_Go").find('input[name=scheduleStartTime]').val(data.scheduleStartTime);
+	                    $("#list_schedule_Go").find('input[name=scheduleEndDay]').val(data.scheduleEndDay);
+	                    $("#list_schedule_Go").find('input[name=scheduleEndTime]').val(data.scheduleEndTime);
+	                    $("#list_schedule_Go").find('input[name=scheduleKind]').val(data.scheduleKind);
+	                    $("#list_schedule_Go").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
+	                    $("#list_schedule_Go").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
+	                    $("#list_schedule_Go").find('textarea[name=scheduleContent]').val(data.scheduleContent);
+	                    $("#list_schedule_Go").find('input[name=callPeople]').val(data.callPeople);
+	                    $("#list_schedule_Go").find('input[name=joinPeople]').val(data.joinPeople);
  	                    $('#list_schedule_Go').modal('show');
                     	
                     }
@@ -425,8 +437,6 @@ html, body {
 
 /* ==========예약하기 모달========== */
 
-
-
 </style>
 </head>
 <body>
@@ -502,7 +512,9 @@ html, body {
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
                                  <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">        
                           		 <input type="hidden" id="outmeetingroom" name="outmeetingroom" >
-                          		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" >	
+                          		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" >
+                          		 <input type="hidden" id="callPeople" name="callPeople" value="null">
+                          		 <input type="hidden" id="joinPeople" name="joinPeople" value="null">	
                            </td>
                         </tr>
                         <tr>
@@ -512,8 +524,8 @@ html, body {
                            </td>
                         </tr>
                      </table>
-                   <div class="btns">
-		            <button id="scheduleBtn" type="submit">예약하기</button>
+                    <div class="btns">
+		            <button id="scheduleBtn" type="submit">확인</button>
 		            <button id="resetBtn" type="reset">취소</button>
 		         </div>
                </div>		          
@@ -548,24 +560,21 @@ html, body {
                            </td>
                         </tr>
                          <tr>
-                           <td id="r1">참석자(내부)</td>
+                           <td id="r1">참석자</td>
                            <td id="r2">
-                           <button id="searchBtn2" class="searchBtn" id="" name="" >참석자 지정</button>
-                              <textarea cols="60" rows="4" id="partArea" ></textarea>
+                           <button id="searchBtn2" class="searchBtn">참석자 지정</button>
+                           	  <textarea cols="60" rows="4" id="callPeople" name="callPeople"></textarea>   
                            </td>
                         </tr>
-                        <tr>
-                           <td id="r3">참석자(외부)</td>
-                           <td id="r4"><input type="text" class="inputs" name="joinPeople"></td>
-                        </tr>
+                        
                         <tr>
                            <td id="r1">수신자</td>
                            <td id="r2">
                            <button id="searchBtn2" class="searchBtn" >수신자 지정</button>
-                              <textarea cols="60" rows="4" id="partArea" ></textarea>
+                              <textarea cols="60" rows="4" id="joinPeople" name="joinPeople"></textarea>  
                            </td>
                         </tr> 
-                        
+                       
                         <tr>
                            <td id="r1">회의장소</td>
                            <td id="r2">
@@ -592,7 +601,7 @@ html, body {
                      </table>
                      <!-- 예약/취소 버튼 -->
 		         <div class="btns">
-		            <button id="scheduleBtn" type="submit">예약하기</button>
+		            <button id="scheduleBtn" type="submit">확인</button>
 		            <button id="resetBtn" type="reset">취소</button>
 		         </div>
                		</div>
@@ -633,6 +642,8 @@ html, body {
 	                             <textarea cols="60" rows="4" id="partArea" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent" ></textarea>
 	                             <input type="hidden" id="outmeetingroom" name="outmeetingroom" value="null">
                           		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" value="null">
+                          		 <input type="hidden" id="callPeople" name="callPeople" value="null">
+                    			 <input type="hidden" id="joinPeople" name="joinPeople" value="null">
 	                           </td>
 	                        </tr>
 	                        <tr>
@@ -644,8 +655,9 @@ html, body {
 	                     </table>  
 	            <!-- 예약/취소 버튼 -->
 		         <div class="btns">
-		            <button id="scheduleBtn" type="submit">예약하기</button>
+		            <button id="scheduleBtn" type="submit">확인</button>
 		            <button id="resetBtn" type="reset">취소</button>
+		            
 		         </div>                  
 	              	</div>
              	</form>
@@ -656,6 +668,9 @@ html, body {
  
  <!-- 수정하기 모달 -->
       
+      
+      
+      
   <div id="list_schedule_Ga" class="modal">
    <div class="modal-title">개인일정 상세보기</div>
          <div class="modal-content">
@@ -663,13 +678,13 @@ html, body {
          	<form action="update.sc" method="post" onsubmit="">
         			<input type="hidden" id="scheduleKind" name="scheduleKind" value=""> 
         			<input type="hidden" id="scheduleNo" name="scheduleNo" value=""> 
-      			   <input type="hidden" id="empId" name="empId" value=""> 
+      			    <input type="hidden" id="empId" name="empId" value=""> 
       			         			    			  
                    <table class="scheduleContent">
                         <tr>
                            <td id="r1">제목</td>
                            <td id="r2">
-                              <input type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle" value="">
+                              <input type="text" class="inputs" id="scheduleTitle" name="scheduleTitle" value="">
                            </td>
                         </tr>
                         <tr>
@@ -689,7 +704,9 @@ html, body {
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
                                  <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime" value="">        
                           		 <input type="hidden" id="outmeetingroom" name="outmeetingroom" value="">
-                          		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" value="">	
+                          		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" value="">
+                          		 <input type="hidden" id="callPeople" name="callPeople" value="">
+                          		 <input type="hidden" id="joinPeople" name="joinPeople" value="">	
                            </td>
                         </tr>
                         <tr>
@@ -708,19 +725,19 @@ html, body {
 		      </form>   
           
             </div>                
-</div>
+  </div>
   <div id="list_schedule_Up" class="modal">
    <div class="modal-title">업무일정 상세보기</div>
          <div class="modal-content">
          <form action="update.sc" method="post" onsubmit="">
-      			   <input type="hidden" id="scheduleKind" name="scheduleKind" value="업무일정"> 
-      			    <input type="hidden" id="scheduleNo" name="scheduleNo" value="">  
-      			   <input type="hidden" id="empId" name="empId" value="${ loginUser.empId }"> 
+      			   <input type="hidden" id="scheduleKind" name="scheduleKind" value=""> 
+      			   <input type="hidden" id="scheduleNo" name="scheduleNo" value="">  
+      			   <input type="hidden" id="empId" name="empId" value=""> 
       			 <table class="scheduleContent">
                         <tr>
                            <td id="r1">제목</td>
                            <td id="r2">
-                              <input type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
+                              <input type="text"  class="inputs" id="scheduleTitle" name="scheduleTitle">
                            </td>
                         </tr>
                         <tr>
@@ -741,21 +758,18 @@ html, body {
                            </td>
                         </tr>
                          <tr>
-                           <td id="r1">참석자(내부)</td>
+                           <td id="r1">참석자</td>
                            <td id="r2">
                            <button id="searchBtn2" class="searchBtn" id="" name="" >참석자 지정</button>
-                              <textarea cols="60" rows="4" id="partArea" name="joinPeople"></textarea>
+                              <textarea cols="60" rows="4" class="partArea" id="joinPeople" name="joinPeople"></textarea>
                            </td>
                         </tr>
-                        <tr>
-                           <td id="r3">참석자(외부)</td>
-                           <td id="r4"><input type="text" class="inputs"></td>
-                        </tr>
+                 
                         <tr>
                            <td id="r1">수신자</td>
                            <td id="r2">
                            <button id="searchBtn2" class="searchBtn" >수신자 지정</button>
-                              <textarea cols="60" rows="4" id="partArea" name="callPeople"></textarea>
+                              <textarea cols="60" rows="4" class="partArea" id="callPeople" name="callPeople"></textarea>
                            </td>
                         </tr> 
                         
@@ -797,9 +811,9 @@ html, body {
    <div class="modal-title">공유일정 상세보기</div>
          <div class="modal-content">
          <form action="update.sc" method="post" onsubmit="">        
-      			   <input type="hidden" id="scheduleKind" name="scheduleKind" value="공유일정"> 
+      			   <input type="hidden" id="scheduleKind" name="scheduleKind" value=""> 
       			   <input type="hidden" id="scheduleNo" name="scheduleNo" value=""> 
-      			   <input type="hidden" id="empId" name="empId" value="${ loginUser.empId }"> 
+      			   <input type="hidden" id="empId" name="empId" value=""> 
       				      <table class="scheduleContent">
 	                        <tr>
 	                           <td id="r1">제목</td>
@@ -821,15 +835,18 @@ html, body {
 	                           <td id="r2">
 	                                 <input type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
 	                                 <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-	                                 <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">         
+	                                 <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime"> 
+	                                 <input type="hidden" id="outmeetingroom" name="outmeetingroom" value="null">
+                          		     <input type="hidden" id="inmeetingroom" name="inmeetingroom" value="null">
+                          		     <input type="hidden" id="callPeople" name="callPeople" value="">
+                          		     <input type="hidden" id="joinPeople" name="joinPeople" value="">        
 	                           </td>
 	                        </tr>
 	                        <tr>
 	                           <td id="r1">내용</td>
 	                           <td id="r2">                             
 	                             <textarea cols="60" rows="4" id="partArea" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent" ></textarea>
-	                             <input type="hidden" id="outmeetingroom" name="outmeetingroom" value="null">
-                          		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" value="null">
+	                             
 	                           </td>
 	                        </tr>
 	                        <tr>
@@ -862,13 +879,13 @@ html, body {
          });
       });
 
-      /* 예약하기 모달 여는 function */
+      /* 일정등록 모달 여는 function */
       $("#scheduleBtn").on("click",function(){
             $("#schedule").click();
       });
    </script>
 
-<script type="text/javascript">
+   <script type="text/javascript">
    function tabSetting() {
       // 탭 컨텐츠 hide 후 현재 탭메뉴 페이지만 show
       $('.tabPage').hide();

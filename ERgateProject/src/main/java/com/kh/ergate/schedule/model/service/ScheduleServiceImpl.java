@@ -38,29 +38,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scDao.insertSchedule(sqlSession, s);
 	};
 	  
-	  //일정등록-참석자
-	@Override
-	  public int insertJoin(ScheduleJoinpeople sjp) {
-		return scDao.insertJoin(sqlSession, sjp);
-	};
-	  
-	  //참석자 삭제 
-	@Override
-	  public int deleteJoin(ScheduleJoinpeople sjp) {
-		return 1;
-	};
-	  
-	  //일정등록-수신자
-	@Override
-	  public int insertCall(ScheduleCallpeople scp) {
-		return scDao.insertCall(sqlSession, scp);
-	};
-	  
-	  //수신자 삭제 
-	@Override
-	  public int deleteCall(ScheduleCallpeople scp) {
-		return 1;
-	};
 	  
 	  //일정 수정용  
 	@Override

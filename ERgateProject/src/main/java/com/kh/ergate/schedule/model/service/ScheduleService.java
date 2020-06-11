@@ -21,18 +21,6 @@ public interface ScheduleService {
 	  //일정 등록-일정 
 	  public int insertSchedule(Schedule s);
 	  
-	  //일정등록-참석자
-	  public int insertJoin(ScheduleJoinpeople sjp);
-	  
-	  //참석자 삭제 
-	  public int deleteJoin(ScheduleJoinpeople sjp);
-	  
-	  //일정등록-수신자  
-	  public int insertCall(ScheduleCallpeople scp);
-	  
-	  //수신자 삭제 
-	  public int deleteCall(ScheduleCallpeople scp);
-	  
 	  //일정 수정용  
 	  public int updateSchedule(Schedule sc);
 	 
