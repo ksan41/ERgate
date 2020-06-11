@@ -32,7 +32,7 @@ public class AttendanceController {
 	@RequestMapping(value="myStatus.at")
 	public String myStatusList(String empId, Model model) {
 		return "attendance/attendanceMyStatus";
-	}
+	}	
 	
 	// 근태관리 페이지 이동
 	@RequestMapping(value="atMgList.at")

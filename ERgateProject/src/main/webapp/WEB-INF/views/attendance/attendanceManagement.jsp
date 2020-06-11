@@ -542,7 +542,8 @@ border-right: 1px solid lightgrey;
 						var value = "";
 						
 						if(eList.length == 0){ // 리스트가 비어있을 경우
-			            	value = '<li> 조회된 사원이 없습니다. </li>';
+							//alert("좋룅ㄹ");
+			            	value = '<span class="noEmpText"> 조회된 사원이 없습니다. </span>';
 						}else{ // 리스트가 비어있지 않을 경우
 			            	
 							for(var i in eList){
@@ -553,9 +554,8 @@ border-right: 1px solid lightgrey;
 								
 								value += '<li>' + '<span key="'+ eList[i].empId +'" onclick="open_modal();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
 							}
-							$(".empList").html(value);
 						} 
-						
+						$(".empList").html(value);
 					},
 					error:function(){
 						console.log("조직도 부서별 사원 리스트 조회 실패");
@@ -589,10 +589,9 @@ border-right: 1px solid lightgrey;
 							var empJob = list[i].jobTitle;
 							
 							value += '<li>' + '<span key="'+ list[i].empId +'" onclick="open_modal();">' + empName + '</span>' + '<span class="dept_rank_code1">(' + empRank + '/' + empJob +')</span></li>';
-						
 						}
-						$(".empList").html(value);
 					}
+					$(".empList").html(value);
 				},
 				error:function(){
 					console.log("조직도 사원 리스트조회용 통신 실패");
