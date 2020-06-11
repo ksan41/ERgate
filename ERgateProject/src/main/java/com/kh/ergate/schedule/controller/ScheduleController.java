@@ -81,7 +81,7 @@ public class ScheduleController {
 		  
 		  if(result > 0) {  // 수정 성공
 			  
-			  session.setAttribute("loginUser", sService.selectScheduleDetail(sc.getScheduleNo() ));
+			  session.setAttribute("scloginUser", sService.selectScheduleDetail(sc.getScheduleNo() ));
 			  
 			  return "redirect:selectList.sc";
 			  

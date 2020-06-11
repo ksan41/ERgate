@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ergate.schedule.model.dao.ScheduleDao;
 import com.kh.ergate.schedule.model.vo.Schedule;
-import com.kh.ergate.schedule.model.vo.ScheduleCallpeople;
-import com.kh.ergate.schedule.model.vo.ScheduleJoinpeople;
 
 @Service("scService")
 public class ScheduleServiceImpl implements ScheduleService {
