@@ -298,7 +298,7 @@ border-right: 1px solid lightgrey;
     border: solid 1px lightgray;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
-    width: 325px;
+    width: 320px;
     height: 35px;
     text-align: center;
     padding-top: 10px;
@@ -484,7 +484,7 @@ border-right: 1px solid lightgrey;
 				<div class="modal-content">
 					<br>
 					<div class="attendanceManagementModalOuter">
-						<div class="empInfo" align="center">
+						<div class="empInfo">
 				        </div>
 				        <div class="year">
 							<h2 align="center" style="display: inline-block; margin-left: 530px;">
