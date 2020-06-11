@@ -1,4 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="scheduleMapper">
+
+  	<resultMap id="ScheduleResult" type="Schedule">
+		<id column="schedule_no" property="scheduleNo"/>
+		<result column="emp_id" property="empId"/>
+		<result column="schedule_title" property="scheduleTitle"/>
+		<result column="schedule_content" property="scheduleContent"/>	
+		<result column="schedule_startday" property="scheduleStartDay"/>
+		<result column="schedule_endday" property="scheduleEndDay"/>	
+		<result column="schedule_starttime" property="scheduleStartTime"/>
+		<result column="schedule_endtime" property="scheduleEndTime"/>
+		<result column="schedule_kind" property="scheduleKind"/>
+		<result column="outmeetingroom" property="outMeetingRoom"/>
+		<result column="inmeetingroom" property="inMeetingRoom"/>
+	</resultMap> 
+	
+ 	 <resultMap id="ScheduleJoinpeopleResult" type="ScheduleJoinpeople">
+		<id column="schedule_no" property="scheduleNo"/>
+		<result column="emp_id" property="empId"/>
+		<result column="joinPeople" property="joinPeople"/>
+		<result column="dept_Name" property="deptName"/>			
+	</resultMap>   
+	
+	<resultMap id="ScheduleCallpeopleResult" type="ScheduleCallpeople">		
+		<id column="schedule_no" property="scheduleNo"/>
+		<result column="emp_id" property="empId"/>
+		<result column="callPeople" property="callPeople"/>
+		<result column="dept_Name" property="deptName"/>				
+	</resultMap>   
+	
+	<insert id="insertSchedule" parameterType="Schedule">
+<!-- 			<selectKey resultType="integer" keyProperty="scheduleNo" order="BEFORE">
+			    SELECT seq_sche_no.nextval from dual
+			</selectKey>  -->
+			insert into Schedule
+			values(seq_sche_no.nextval, #{empId}, #{scheduleTitle}, #{scheduleContent}, #{scheduleStartDay}, #{scheduleEndDay}, #{scheduleStartTime}, 
+			#{scheduleEndTime}, #{scheduleKind}, #{outMeetingRoom}, #{inMeetingRoom})
+	</insert>
+	
+	 <insert id="insertJoin" parameterType="ScheduleJoinpeople">
+		<!-- 	<selectKey resultType="integer" keyProperty="scheduleNo" order="BEFORE">
+			    SELECT seq_sche_no.currval from dual
+			</selectKey> -->
+			insert into schedule_joinpeople
+			values(#{scheduleNo} , #{empId}, #{joinPeople}, #{deptName})
+			
+	</insert>
+	
+	<insert id="insertCall" parameterType="ScheduleCallpeople">
+		<selectKey resultType="integer" keyProperty="scheduleNo" order="BEFORE">
+			    SELECT seq_sche_no.currval from dual
+			</selectKey>
+			insert into schedule_callpeople
+			values(#{scheduleNo}, #{empId}, #{callPeople}, #{deptName})
+			
+	</insert> 
+	
+	<select id="selectScheduleList" resultMap="ScheduleResult">
+		select * from schedule
+	</select>
+	
+	<select id="selectScheduleDetail" resultMap="ScheduleResult" parameterType="_int">
+		select * from schedule where schedule_no= #{scNo}
+	</select>
+	
+	<update id="updateSchedule" parameterType="Schedule">
+		update Schedule
+		set schedule_title=${scheduleTitle},
+			emp_id=${empId},			
+			schedule_startday=${scheduleStartDay},
+		    schedule_starttime=${scheduleStartTime},
+		    schedule_endday=${scheduleEndDay},
+		    schedule_endtime=${scheduleEndTime},
+		    schedule_kind= ${scheduleKind},
+		    outmeetingroom=${outMeetingRoom},
+		    inmeetingroom=${inMeetingRoom},
+		    schedule_content=${scheduleContent}	
+		where schedule_no=${scheduleNo}	 
+	
+	</update>
+	
+	<delete id="deleteSchedule" parameterType="_int">
+		delete
+		from schedule
+		where schedule_no=${ScheduleNo}
+	</delete>
+
 </mapper>

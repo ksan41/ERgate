@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="com.kh.ergate.board.model.vo.ReReply" alias="ReReply" />
       <typeAlias type="com.kh.ergate.board.model.vo.BoardAttachment" alias="BoardAttachment" />
       <typeAlias type="com.kh.ergate.meetingroom.model.vo.Meetingroom" alias="Meetingroom"/>
+      <typeAlias type="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" alias="MeetingroomDate"/>
       <typeAlias type="com.kh.ergate.meetingroom.model.vo.MeetingroomReservation" alias="MeetingroomReservation"/>
       <typeAlias type="com.kh.ergate.sign.model.vo.SignAttachment" alias="SignAttachment"/>
       <typeAlias type="com.kh.ergate.sign.model.vo.SignDocument" alias="SignDocument" />
@@ -26,6 +27,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="com.kh.ergate.vehicle.model.vo.VehicleReservation" alias="VehicleReservation"/>
       <typeAlias type="com.kh.ergate.group.model.vo.Search" alias="Search" />
       <typeAlias type="com.kh.ergate.attendance.model.vo.Holiday" alias="Holiday"/>
+	<typeAlias type="com.kh.ergate.schedule.model.vo.Schedule" alias="Schedule" />
+       <typeAlias type="com.kh.ergate.schedule.model.vo.ScheduleCallpeople" alias="ScheduleCallpeople" />
+        <typeAlias type="com.kh.ergate.schedule.model.vo.ScheduleJoinpeople" alias="ScheduleJoinpeople" />
    </typeAliases>
    
    
