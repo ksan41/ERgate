@@ -30,12 +30,12 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 
 	@Override
 	public ArrayList<MeetingroomReservation> searchListt(MeetingroomDate md) {
-		return mrDao.searchListt();
+		return null;
 	}
 
 	@Override
 	public int currentStatusDay(MeetingroomDate md) {
-		return 0;
+		return null;
 	}
 
 
@@ -57,11 +57,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Override
 	public int insertMeetingroom(Meetingroom m) {
 		return mrDao.insertMeetingroom(sqlSession, m);
-	}
-
-	@Override
-	public int deleteMeetingroom(int mtrmCode) {
-		return 0;
 	}
 
 	// 회의실 예약현황 리스트 조회용-
@@ -135,4 +130,12 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	}
 
 
+
+	@Override
+	public int deleteMeetingroom(Meetingroom m) {
+		return mrDao.deleteMeetingroom(sqlSession, m);
+	}
+
+
+	
 }

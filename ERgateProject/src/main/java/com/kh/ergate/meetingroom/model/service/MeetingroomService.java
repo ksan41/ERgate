@@ -71,7 +71,7 @@ public interface MeetingroomService {
 	int updateMeetingroom(Meetingroom m);
 
 	// 회의실 삭제용---deleteMeetingroom(int mtrmCode)
-	int deleteMeetingroom(int mtrmCode);
+	int deleteMeetingroom(Meetingroom m);
 
 
 }

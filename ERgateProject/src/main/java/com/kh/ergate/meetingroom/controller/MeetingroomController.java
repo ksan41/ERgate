@@ -186,14 +186,17 @@ public class MeetingroomController {
 	}
 	
 	// 회의실 정보 조회 ajax
-	@ResponseBody
-	@RequestMapping(value="select.me", produces="application/json; charset=utf-8")
-	public String selectMeetingroom(String mtrmCode) {
-		
-		Meetingroom meetingroom = mrService.selectVehicle(mtrmCode);
-		
-		return new Gson().toJson(meetingroom);
-	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value="select.me",
+	 * produces="application/json; charset=utf-8") public String
+	 * selectMeetingroom(String mtrmCode) {
+	 * 
+	 * Meetingroom meetingroom = mrService.selectVehicle(mtrmCode);
+	 * 
+	 * return new Gson().toJson(meetingroom); }
+	 */
 	
 	
 	// 회의실수정용

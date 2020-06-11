@@ -81,4 +81,8 @@ public class MeetingroomDao {
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchListt", md);
 	}
 	
+	public int deleteMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
+		return sqlSession.update("meetingroomMapper.deleteMeetingroom", m);
+	}
+	
 }
