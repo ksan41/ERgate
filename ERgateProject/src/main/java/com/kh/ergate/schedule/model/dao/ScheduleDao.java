@@ -6,8 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.schedule.model.vo.Schedule;
-import com.kh.ergate.schedule.model.vo.ScheduleCallpeople;
-import com.kh.ergate.schedule.model.vo.ScheduleJoinpeople;
 
 @Repository("scDao")
 public class ScheduleDao {

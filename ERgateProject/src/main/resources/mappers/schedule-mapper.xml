@@ -37,17 +37,17 @@
 	
 	<update id="updateSchedule" parameterType="Schedule">
 		update Schedule
-		set schedule_title=${scheduleTitle},
-			emp_id=${empId},			
-			schedule_startday=${scheduleStartDay},
-		    schedule_starttime=${scheduleStartTime},
-		    schedule_endday=${scheduleEndDay},
-		    schedule_endtime=${scheduleEndTime},
-		    schedule_kind= ${scheduleKind},
-		    outmeetingroom=${outMeetingRoom},
-		    inmeetingroom=${inMeetingRoom},
-		    schedule_content=${scheduleContent}	
-		where schedule_no=${scheduleNo}	 
+		set 			
+			schedule_startday=#{scheduleStartDay},
+		    schedule_starttime=#{scheduleStartTime},
+		    schedule_endday=#{scheduleEndDay},
+		    schedule_endtime=#{scheduleEndTime},
+		    outmeetingroom=#{outMeetingRoom},
+		    inmeetingroom=#{inMeetingRoom},
+		    callpeople=#{callPeople},
+		    joinpeople=#{joinPeople},
+		    schedule_content=#{scheduleContent}	
+		where schedule_no=#{scheduleNo}	 
 	
 	</update>
 	

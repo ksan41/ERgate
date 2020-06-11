@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         		data:"scheduleNo="+event.event.id,
         		asyns:false,
           		success:function(data){
+
           			if(data.scheduleKind=="개인일정"){
           			 	$("#list_schedule_Ga").find('input[name=scheduleNo]').val(data.scheduleNo);
           			 	$("#list_schedule_Ga").find('input[name=empId]').val(data.empId);
@@ -866,7 +867,7 @@ html, body {
           </div>
           
           <form id="postForm" action="delete.sc" method="post">
-          	<input type="hidden" name="ScheduleNo" value="${ loginUser.empId }">
+          	<input type="hidden" name="ScheduleNo" value="${ scloginUser.empId }">
           </form>	 
                         
 </div>   

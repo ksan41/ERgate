@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ergate.notice.model.vo.Notice;
 import com.kh.ergate.schedule.model.vo.Schedule;
-import com.kh.ergate.schedule.model.vo.ScheduleCallpeople;
-import com.kh.ergate.schedule.model.vo.ScheduleJoinpeople;
 
 
 public interface ScheduleService {
