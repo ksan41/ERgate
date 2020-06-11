@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,6 @@ import com.kh.ergate.meetingroom.model.service.MeetingroomServiceImpl;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
-import com.kh.ergate.vehicle.model.vo.Vehicle;
 
 
 @Controller
@@ -52,8 +52,23 @@ public class MeetingroomController {
 
 	// 현재 예약 조회용
 	@RequestMapping("currentStatus.me")
-	public String currentStatus(Model model) {
+	public String currentStatusList(MeetingroomReservation mr, Model model) {
 
+		Date today = new Date();
+
+		SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+		String today1 = date.format(today);
+		String[] array = today1.split("/");
+		
+		MeetingroomDate sysdate = new MeetingroomDate();
+		sysdate.setYear(array[0]);
+		sysdate.setMonth(array[1]);
+		sysdate.setDate(array[2]);
+		
+		ArrayList<MeetingroomReservation> list = mrService.currentStatusList(sysdate);
+		
+		//System.out.println(list);
+		model.addAttribute("list", list);
 		return "meetingroom/meetingroomCurrentStatus";
 
 	}
@@ -63,11 +78,10 @@ public class MeetingroomController {
 	public String currentStatusDay(MeetingroomDate md, MeetingroomReservation mr, Model model) {
 		
 		
-		ArrayList<MeetingroomReservation> list = mrService.searchListt(md);
+		ArrayList<MeetingroomReservation> list = mrService.currentStatusList(md);
 		
 		System.out.println(md);
 		model.addAttribute("md", md);
-		model.addAttribute("list", list);
 		
 		return "meetingroom/meetingroomCurrentStatus";
 		
@@ -107,6 +121,7 @@ public class MeetingroomController {
 	 * 
 	 * }
 	 */
+	 
 	// 예약 상세 조회용
 	@RequestMapping("reserveDetail.me")
 	public String reserveDetail(int reservNo, Model model) {
@@ -116,30 +131,37 @@ public class MeetingroomController {
 	}
 
 	// 내 예약현황 리스트 조회용
-	@RequestMapping(value="myReserve.me")
-	public void myReserveList(String empId, Model model, HttpSession session, HttpServletResponse response) throws JsonIOException, IOException {
-
-		  ArrayList<MeetingroomReservation> list = mrService.myReserveList(empId);
+	@ResponseBody
+	@RequestMapping("myReserve.me")
+	public String myReserveList(String empId, int currentPage, Model model,HttpSession session, HttpServletResponse response) throws JsonIOException, IOException{
+		System.out.println("호출");
+		 int listCount = mrService.selectRvListCount(empId);
+		
+		 PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
+		
+		  ArrayList<MeetingroomReservation> list = mrService.myReserveList(empId, pi);
 		  
-		  model.addAttribute("list", list);
+		  HashMap<String, Object> map = new HashMap<>();
+		  
+		  System.out.println(list);
+		  map.put("pi", pi);
+		  map.put("list", list);
 		  
 		  response.setContentType("application/json; charset=utf-8");
-		  
-		  new Gson().toJson(list, response.getWriter());
+		  return new Gson().toJson(map);
 	}
 	
 	// 예약취소용(cancelReserve.me) ---cancelReserve(int mtrmReservNo,Model)
+	@ResponseBody
 	@RequestMapping("cancelReserve.me")
-	public String cancelReserve(int mtrmReservNo, HttpSession session) {
+	public String cancelReserve(int mtrmReservNo) {
 		
 		int result = mrService.cancelReserve(mtrmReservNo);
 		
 		if(result > 0) {
-			session.setAttribute("msg", "성공적으로 예약 취소되었습니다.");
-			return "redirect:myReserve.me?currentPage=1";
+			return "성공";
 		}else {
-			session.setAttribute("msg", "예약 취소 실패하였습니다. 다시 시도해 주세요");
-			return "redirect:myReserve.me?currentPage=1";
+			return "실패";
 		}
 	}
 
@@ -151,7 +173,7 @@ public class MeetingroomController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
 		
-		ArrayList<Meetingroom> list = mrService.selectMtroomDetail();
+		ArrayList<Meetingroom> list = mrService.selectMtroomDetail(pi);
 
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -177,7 +199,7 @@ public class MeetingroomController {
 
 		if(result > 0) { 
 			session.setAttribute("msg", "성공적으로 회의실이 등록되었습니다.");
-			return "redirect:mtroomDetail.me";
+			return "redirect:mtroomDetail.me?currentPage=1";
 
 		} else {
 			session.setAttribute("msg", "회의실 등록에 실패하였습니다. 다시 시도해주세요");
@@ -244,8 +266,19 @@ public class MeetingroomController {
 		}
 		
 	}
+	// ---------- 페이지 이동용 ----------
 	
-	
+	/*
+	 * // 업무차량 메인
+	 * 
+	 * @RequestMapping("currentStatus.me") public String selectCurrentStatus() {
+	 * return "meetingroom/meetingroomCurrentStatus"; }
+	 * 
+	 * // 차량 예약 현황 조회 (월별) - 관리자
+	 * 
+	 * @RequestMapping("statusList.me") public String reserveVehicleList() { return
+	 * "meetingroom/meetingroomReservationList"; }
+	 */
 	
 	// =========================================================
 	
@@ -279,6 +312,19 @@ public class MeetingroomController {
 		return changeName;
 	}
 
+
+	// 전달받은 파일명을 가지고 서버로부터 삭제하는 메소드
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		// (실행 후 리턴값 없음)
+		
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "\\uploadFiles\\vehicle\\";
+		
+		File deleteFile = new File(savePath + fileName); // 삭제하고자 하는 풀 경로(경로+파일명)
+		deleteFile.delete(); // 실제 서버의 파일 찾아 삭제 처리
+		
+	}
 	
+
 
 }

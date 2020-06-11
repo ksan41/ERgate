@@ -41,9 +41,18 @@
 		 where mtrm_reserv_status='Y'
 	</select>
 
-	<select id="searchListt" parameterType="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" resultMap="MeetingroomReservationResultSet">
+	<!-- <select id="searchListt" parameterType="MeetingroomDate" resultMap="MeetingroomReservationResultSet">
 		SELECT TO_CHAR(SYSDATE-1, 'YY/MM/DD') FROM MEETINGROOM_RESERVATION
+	</select> -->
+	
+	<select id="currentStatusList" parameterType="com.kh.ergate.meetingroom.model.vo.MeetingroomDate" resultMap="MeetingroomReservationResultSet">
+		SELECT *
+		FROM MEETINGROOM_RESERVATION
+		WHERE SUBSTR(MTRM_START_DATE,0,(INSTR(MTRM_START_DATE, '-',1,1)-1)) = #{year} AND
+		      SUBSTR(MTRM_START_DATE,(INSTR(MTRM_START_DATE, '-',1,1)+1),2) = #{month} AND
+		      SUBSTR(MTRM_START_DATE,(INSTR(MTRM_START_DATE, '-',1,2)+1)) = #{date}
 	</select>
+	
 	
 	<select id="selectMtroomDetailListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -54,7 +63,7 @@
 	  <select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
 		SELECT *
 		  FROM MEETINGROOM
-		WHERE MTRM_STATUS = 'Y'
+		 WHERE MTRM_STATUS = 'Y'
 	</select>
 	
 	<insert id="reserveMtroom" parameterType="MeetingroomReservation">
@@ -68,7 +77,7 @@
 		VALUES(SEQ_MROOM_NO.NEXTVAL , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y', SYSDATE)	
 	</insert>
 
-	<select id="selectRvListCount" resultType="_int">
+	<select id="selectRvListCount" parameterType="string" resultType="_int">
 		select count(*)
           from meetingroom_reservation
          where emp_id=#{empId}

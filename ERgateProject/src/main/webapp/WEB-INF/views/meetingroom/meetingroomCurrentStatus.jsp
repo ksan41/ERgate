@@ -482,7 +482,12 @@ p {
 		</div>
 		<div class="subMenuArea">
 			<ul id="subMenuList">
-				<li><button class="subBtn subActive">회의실 예약</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='currentStatus.me'">회의실 예약</button></li>
+				
+				<c:if test="${ loginUser.deptTitle eq '총무팀'}">
+					<li><button class="subBtn" style="width: 170px" onclick="location.href='statusList.me?currentPage=1'">회의실 예약현황</button></li>
+					<li><button class="subBtn" onclick="location.href='mtroomDetail.me?currentPage=1'">회의실 관리</button></li>
+				</c:if>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -505,87 +510,66 @@ p {
 				<form id="changeMonthForm" action="currentStatusD.me" method="get">
 					<input type="hidden" name="year"> 
 					<input type="hidden" name="month">
-					<input type="hidden" name="day">
+					<input type="hidden" name="date">
 				</form>
 	
 				<script>
-					$(document).ready(function() {
-						var date = new Date();
-						var year = date.getFullYear();
-						var month = date.getMonth() + 1;
-						var day = date.getDate();
-	
-						var newYear = "<c:out value='${mds.year}'/>";
-						var newMonth = "<c:out value='${mds.month}'/>";
-						var newDay =  "<c:out value='${mds.date}'/>";
-					 	
-						// 날짜 변경값 있을 경우
-						if (newYear != "") {
-							$("#calYear").text(newYear);
-							$("#calMonth").text(newMonth);
-							$("#calDay").text(newDay);
+						$(document).ready(function(){
+							var date = new Date();
+							var year = date.getFullYear();
+							var month = date.getMonth() + 1;
+							var day = date.getDate();
 							
-						} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
-							$("#calYear").text(year);
-							$("#calMonth").text(month);
-							$("#calDay").text(day);
-						}
-						
+							console.log(year);
+							console.log(month);
+							console.log(day);
+							
+							var newYear = "<c:out value='${md.year}'/>";
+							var newMonth = "<c:out value='${md.month}'/>";
+							var newDay =  "<c:out value='${md.day}'/>";
+							
+							// 날짜 변경값 있을 경우
+							if (newYear != "") {
+								$("#calYear").text(newYear);
+								$("#calMonth").text(newMonth);
+								$("#calDay").text(newDay);
+								
+							} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
+								$("#calYear").text(year);
+								$("#calMonth").text(month);
+								$("#calDay").text(day);
+							}
+							
+							
 						
 						/* 이전으로  */
 						$("#arrowLeft").click(function() {
-							month = month - 1;
-							if (month < 1) {
-								month = 12;
-								year = year - 1;
-								
-							}
+							
+							// 버튼 처음 눌렀을때.
+							// 오늘날짜 -1 
+							date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
+
+							year = date.getFullYear();
+							month = date.getMonth() + 1;
+							day = date.getDate();
+							
+							
+							console.log(year);
+							console.log(month);
+							console.log(day);
+							
 							$("#calMonth").text(month);
 							$("#calYear").text(year);
 							$("#calDay").text(day);
 							
-	
 							$("input[name=month]").attr("value", month);
 							$("input[name=year]").attr("value", year);
-							$("input[name=day]").attr("value", day);
-	
-							if (newYear != "") {
-								newMonth = newMonth - 1;
-								if (newMonth < 1) {
-									newMonth = 12;
-									newYear = newYear - 1;
-								}
-								$("#calMonth").text(newMonth);
-								$("#calYear").text(newYear);
-								$("#calDay").text(newDay);
-	
-								$("input[name=month]").attr("value", newMonth);
-								$("input[name=year]").attr("value", newYear);
-								$("input[name=day]").attr("value", newDay);
-							}
-	
-							$("#changeMonthForm").submit();
-	
-						});
-	
-						
-						/* 다음으로 */
-						$("#arrowRight").click(function() {
-							date = date.getDate() + 1
-							newYear = date.getFullYear();
-							newMonth = date.getMonth() + 1;
-							newDay = date.getDate() + 1;
+							$("input[name=date]").attr("value", day);
 							
 							
-	
-							$("input[name=month]").attr("value", newMonth);
-							$("input[name=year]").attr("value", newYear);
-							$("input[name=day]").attr("value", newDay);
-							
-	
-							$("#changeMonthForm").submit(); 
-						});
-	
+
+							//$("#changeMonthForm").submit();
+						});	
 					});
 				</script>
 				
@@ -609,10 +593,10 @@ p {
 							<th style="height: 73px">시간</th>
 						</tr>
 						
-						<tr class="a">
+						<tr class="">
 							<td>10:00</td>
 						</tr>
-						<tr class="a">
+						<tr class="">
 							<td>11:00</td>
 						</tr>
 						<tr class="">
@@ -746,18 +730,45 @@ p {
 			<div class="modal-content">
 				<form action="" id="reservationForm" name="reservationForm">
 					<table class="reservationContent">
+						<input type="hidden" name="deptTitle" value="${ loginUser.deptTitle }"/>
 						<tr>
 							<td id="r1">신청자</td>
-							<td id="r2"><input type="hidden" name="empId" value="${ loginUser.empId }"><span>${ loginUser.empName }</span></td>
+							<td id="r2">
+							<input type="hidden" name="empId" value="${ loginUser.empId }"><span>${ loginUser.empName }</span></td>
 						</tr>
 						<tr>
 							<td id="r1">사용기간</td>
 							<td id="r2">
 								<input type="date" name="mtrmStartDate" class="inputs" style="width: 140px"> 
-								<input type="time" name="mtrmStartTime" class="inputs" style="width: 120px">
+								<select type="time" name="mtrmStartTime" class="inputs" style="width: 120px">
+									<option disabled selected>시작 시각</option>
+									<option value="10">10:00</option>
+									<option value="11">11:00</option>
+									<option value="12">12:00</option>
+									<option value="13">1:00</option>
+									<option value="14">2:00</option>
+									<option value="15">3:00</option>
+									<option value="16">4:00</option>
+									<option value="17">5:00</option>
+									<option value="18">6:00</option>
+									<option value="19">7:00</option>
+								</select>
 								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg"> 
 								<input type="date" name="mtrmEndDate" class="inputs" style="width: 140px"> 
-								<input type="time" name="mtrmEndTime" class="inputs" style="width: 120px">
+								<select type="time" name="mtrmEndTime" class="inputs" style="width: 120px">
+									<option disabled selected>종료 시각</option>
+									<option value="10">10:00</option>
+									<option value="11">11:00</option>
+									<option value="12">12:00</option>
+									<option value="13">1:00</option>
+									<option value="14">2:00</option>
+									<option value="15">3:00</option>
+									<option value="16">4:00</option>
+									<option value="17">5:00</option>
+									<option value="18">6:00</option>
+									<option value="19">7:00</option>
+								
+								</select>
 							</td>
 						</tr>
 						<tr>
@@ -796,19 +807,11 @@ p {
 
 		<!-- 모달(나의 예약 현황) -->
 		<div id="myReservation_open_modal" class="modal">
-
 			<div class="modal-title">나의 예약현황</div>
-			<div class="modal-content" id="mtrmCurrentInnerPage">
-				<table id="myReserv" class="mtrmCurrentInner">
-
-				</table>
-
-			</div>
+			<div class="modal-content" id="mtrmCurrentInnerPage"></div>
 		</div>
-	</div>
 
-	<br>
-	<br>
+	</div>
 
 
 	<!-- 모달용 스크립트 -->
@@ -824,60 +827,162 @@ p {
 			$("#reservation").click();
 		});
 
-		$(function() {
+/* 		$(function() {
 			$("#mtrmCurrentInnerPage tr").click(
 					function() {
 						location.href = "reserveDetail.me?mno"
 								+ $(this).children().eq(0).text();
 				});
 		});
-		
-		
-		
+ */
 	</script>
 	
 	<script>
 	
-		$(document).ready(function(){
-			console.log("요청");
-			 $.ajax({
+		$("#myReservation").click(function(){
+
+			$.ajax({
 				url:"myReserve.me",
-				data:{empId:"${loginUser.empId}"},
+				data:{empId:"${loginUser.empId}",
+						currentPage:1},
 				type:"post",
-				success:function(list){
+				success:function(map){
 					var value="";
-					for(var i in list){
-						value += "<tr>" +
-									"<td rowspan='5' class='mcTdImg'>" +
-										"<img class='mcImg' src='${pageContext.servletContext.contextPath}/resources/siteImgs/" + list[i].mtrmImage + "'>" +
+					for(var i in map.list){
+						value += 
+								"<table class='mtrmCurrentInner'>" +
+								"<tr>" +
+									"<td rowspan='5' class='mcTdImg'>";
+									
+									if(map.list[i].mtrmImage == null){
+										value +=
+											"<img class='mcImg' src='${pageContext.servletContext.contextPath}/resources/siteImgs/mtrmLogo.png'>";
+									}else{
+										value +=
+											"<img class='mcImg' src='${pageContext.servletContext.contextPath}/resources/siteImgs/" + map.list[i].mtrmImage + "'>";
+									}
+									
+							value +=
 									"</td>" +
 									"<td class='mcTdContent'>" 
-										+ "<span class='mcContent1'>" + "<input type='text' value='"+list[i].mtrmName+"'>" + "</span>" + 
+										+ "<span class='mcContent1'>" + "<input type='text' value='"+map.list[i].mtrmName+"'>" + "</span>" + 
 									"</td>" +
 								"</tr>" +
 								"<tr>" +
-									"<td class='mcTdContent'>"+ "<span class='mcContent2'>" + list[i].mtrmPurpose + "</span></td>" +
+									"<td class='mcTdContent'>"+ "<span class='mcContent2'>" + map.list[i].mtrmPurpose + "</span></td>" +
 								"</tr>" +
 								"<tr>" +
-									"<td class='mcTdContent'>" + "<span class='mcContent3'>" + list[i].mtrmStartDate + list[i].mtrmStartTime + 
-										"~ <br>" + list[i].mtrmEndDate + list[i].mtrmEndTime +
-									"</span></td>" +
-								"</tr> <tr>" +
+									"<td class='mcTdContent'>" + 
+										"<span class='mcContent3'>" + map.list[i].mtrmStartDate + map.list[i].mtrmStartTime + "<<br>" +
+										"~ " + map.list[i].mtrmEndDate + map.list[i].mtrmEndTime + "</span>" +
+									"</td>" +
+								"</tr>" +
+								"<tr>" +
 									"<td class='mcTdContent'>"+
-										"<button id='mcBtn' class='mcBtn' type='button'>예약취소</button>" +
+										"<input type='hidden' class='vcMtrmReserveNo' name='mtrmReserveNo' value='" + map.list[i].mtrmReserveNo + "'/>" +
+										"<button id='mcBtn' class='mcBtn reserveCancelBtn' type='button'>예약취소</button>" +
 									"</td>" +
-								"</tr>";
+								"</tr>" +
+								"</table>";
+					
 					
 					}
-					$("#myReserv").html(value);
+				var value2 = "";
+					
+					if(map.pi.endPage > 1){
+						value2 += 
+						"<ul class='pagingBar' id='vcPagingBar'>";
+						
+						if(map.pi.currentPage == 1){
+							value2 += 
+								"<li><a href='#'>&lt;&lt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + map.pi.startPage + ")';>&lt;&lt;</a></li>";
+						}
+						
+						if(map.pi.currentPage == 1){
+							value2 += 
+								"<li><a href='#'>&lt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + (map.pi.currentPage - 1) + ")';>&lt;</a></li>";
+						}
+						
+						for(var p = map.pi.startPage; p <= map.pi.endPage; p++){
+							
+							if(map.pi.currentPage == p){
+								value2 +=
+									"<li><span>" + p + "</span></li>";
+							}else{
+								value2 +=
+									"<li><a onclick='myReserveList(" + p + ")';>" + p + "</a></li>";
+							}
+						}
+						
+						if(map.pi.currentPage == map.pi.maxPage){
+							value2 += 
+								"<li><a href='#'>&gt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + (map.pi.currentPage + 1) + ")';>&gt;</a></li>";
+						}
+						
+						if(map.pi.currentPage == map.pi.maxPage){
+							value2 +=
+								"<li><a href='#'>&gt;&gt;</a></li>";
+						}else{
+							value2 += 
+								"<li><a onclick='myReserveList(" + map.pi.endPage + ")';>&gt;&gt;</a></li>";
+						}
+						
+						value2 += "</ul>";
+					}
+
+					$("#modal-content").html(value+value2);
+					
 				},error:function(){
-					console.log("실패");
+					console.log("나의 예약황 리스트 조회 실패");
 				}
 			}); 
 		});
+		
+		
+
 	
 	</script>
 	
+		<!-- 차량 예약 취소 ajax -->
+	<script>
+		$(document).on("click", ".reserveCancelBtn", function(){
+			
+			$.ajax({
+				url:"cancelReserve.me",
+				data:{mtrmReserveNo:$(this).prev().val()},
+				type:"post",
+				success:function(status){
+					
+					console.log(status);
+					
+					if(status == "success"){
+						
+						alert("성공적으로 예약 취소되었습니다.");
+						
+						myReserveList(1);
+						
+					}else{
+						alert("예약 취소 실패하였습니다. 다시 시도해 주세요.");
+					}
+										
+				},error:function(){
+					console.log("예약 취소 ajax 통신 실패");
+				}
+			});
+		});
+	</script>
+
+<!-- 	
+
 	<script>
 		$(function(){
 			$("#mtrmSC").click(function(){
@@ -885,9 +990,9 @@ p {
 			});
 			
 		});
-	</script>
+	</script> -->
 
-	
+<!-- 	
 	<script>
 		$(function(){
 			$("#mcBtn").click(function(){
@@ -896,7 +1001,7 @@ p {
 			});
 		});
 	</script>
-	
+	 -->
 	<!-- 예약하기 모달 스크립트 -->
 	
 	<script>

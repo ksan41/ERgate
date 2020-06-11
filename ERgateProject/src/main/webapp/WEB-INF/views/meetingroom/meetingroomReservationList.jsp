@@ -205,8 +205,9 @@
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='currentStatus.me'">회의실 예약</button></li>
-				<li><button class="subBtn subActive" onclick="location.href='statusList.me'">회의실 예약현황</button></li>
-				<li><button class="subBtn" onclick="open_modal();">회의실 관리</button></li>
+				<li><button class="subBtn subActive" style="width: 170px" onclick="location.href='statusList.me?currentPage=1'">회의실 예약현황</button></li>
+				<li><button class="subBtn" onclick="location.href='mtroomDetail.me?currentPage=1'">회의실 관리</button></li>
+				
 			</ul>
 		</div>
 

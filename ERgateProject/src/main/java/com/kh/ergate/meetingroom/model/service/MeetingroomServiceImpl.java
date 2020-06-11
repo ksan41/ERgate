@@ -21,22 +21,23 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Autowired
 	private MeetingroomDao mrDao;
 
-	@Override
-	public int currentStatusList() {
-		return 0;
-	}
-	
 
+
+	@Override
+	public ArrayList<MeetingroomReservation> currentStatusList(MeetingroomDate md) {
+		return mrDao.currentStatusList(sqlSession, md);
+	}
+
+	
+	/*
+	 * @Override public int currentStatusDay(MeetingroomDate md) { return null; }
+	 */
 
 	@Override
 	public ArrayList<MeetingroomReservation> searchListt(MeetingroomDate md) {
 		return null;
 	}
 
-	@Override
-	public int currentStatusDay(MeetingroomDate md) {
-		return null;
-	}
 
 
 	@Override
@@ -87,14 +88,14 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 
 	// 나의 예약 현황 총 개수 조회용 서비스
 	@Override
-	public int selectRvListCount() {
-		return mrDao.selectRvListCount(sqlSession);
+	public int selectRvListCount(String empId) {
+		return mrDao.selectRvListCount(sqlSession, empId);
 	}
 
 	// 나의 예약 조회용 서비스
 	@Override
-	public ArrayList<MeetingroomReservation>myReserveList(String empId) {
-		return mrDao.myReserveList(sqlSession, empId);
+	public ArrayList<MeetingroomReservation>myReserveList(String empId, PageInfo pi) {
+		return mrDao.myReserveList(sqlSession, empId, pi);
 	}
 	/*
 	 * @Override public int seachListCount(String month) { return
@@ -135,6 +136,8 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	public int deleteMeetingroom(Meetingroom m) {
 		return mrDao.deleteMeetingroom(sqlSession, m);
 	}
+
+
 
 
 	

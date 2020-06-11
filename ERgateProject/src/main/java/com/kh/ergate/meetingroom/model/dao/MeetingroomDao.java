@@ -19,6 +19,10 @@ public class MeetingroomDao {
 		return sqlSession.selectOne("meetingroomMapper.statusListCount");
 	}
 	
+	public ArrayList<MeetingroomReservation> currentStatusList(SqlSessionTemplate sqlSession, MeetingroomDate md){
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.currentStatusList", md);
+	}
+	
 	public ArrayList<MeetingroomReservation> statusList(SqlSessionTemplate sqlSession, PageInfo pi){
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
@@ -47,14 +51,14 @@ public class MeetingroomDao {
 		return sqlSession.insert("meetingroomMapper.insertMeetingroom", m);
 	}
 
-	public int selectRvListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("meetingroomMapper.selectRvListCount");
+	public int selectRvListCount(SqlSessionTemplate sqlSession, String empId) {
+		return sqlSession.selectOne("meetingroomMapper.selectRvListCount", empId);
 	}
 	
-	public ArrayList<MeetingroomReservation> myReserveList(SqlSessionTemplate sqlSession, String empId){
-		//int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		//RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.myReserveList", empId);
+	public ArrayList<MeetingroomReservation> myReserveList(SqlSessionTemplate sqlSession, String empId, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.myReserveList", empId, rowBounds);
 	}
 
 	public int updateMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
@@ -77,9 +81,11 @@ public class MeetingroomDao {
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", month);
 	}
 	
-	public ArrayList<MeetingroomReservation> searchListt(SqlSessionTemplate sqlSeesion, MeetingroomDate md){
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchListt", md);
-	}
+	/*
+	 * public ArrayList<MeetingroomReservation> searchListt(SqlSessionTemplate
+	 * sqlSeesion, MeetingroomDate md){ return
+	 * (ArrayList)sqlSession.selectList("meetingroomMapper.searchListt", md); }
+	 */
 	
 	public int deleteMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
 		return sqlSession.update("meetingroomMapper.deleteMeetingroom", m);

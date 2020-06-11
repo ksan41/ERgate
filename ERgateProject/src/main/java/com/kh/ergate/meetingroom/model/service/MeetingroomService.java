@@ -11,7 +11,7 @@ import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 public interface MeetingroomService {
 
 	// 현재 예약현황 조회용 --- currentStatusList()
-	int currentStatusList();
+	public ArrayList<MeetingroomReservation> currentStatusList(MeetingroomDate md);
 
 	// 날짜선택 예약현황 조회용 --- currentStatusDay(String day)
 	public ArrayList<MeetingroomReservation> searchListt(MeetingroomDate md);
@@ -30,10 +30,10 @@ public interface MeetingroomService {
 	int reserveDetail(int reservNo);
 
 	// 나의 예약현황 총 개수 조회용 서비스
-	int selectRvListCount();
+	int selectRvListCount(String empId);
 	
 	// 내 예약현황 리스트 조회용 --- myReserveList(String empId)
-	ArrayList<MeetingroomReservation> myReserveList(String empId);
+	ArrayList<MeetingroomReservation> myReserveList(String empId, PageInfo pi);
 	
 	
 	
