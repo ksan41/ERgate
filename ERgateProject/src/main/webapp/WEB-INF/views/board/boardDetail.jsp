@@ -618,7 +618,7 @@
 		
 		$(".updateBtn").click(function(){
 			var bno=$(this).parent().find('input[name=boardNo]').val();
-			location.href="update.bo?bno=" + bno;
+			location.href="update.bo?bno=" + bno + "&currentPage=" + ${currentPage};
 		});
 		
 		$(".deleteBtn").click(function(){

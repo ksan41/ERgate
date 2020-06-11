@@ -274,11 +274,24 @@ public class BoardController {
 	}
 	
 	@RequestMapping("update.bo")
-	public ModelAndView updateBoard(int bno, ModelAndView mv) {
+	public ModelAndView updateBoard(int bno, int currentPage, ModelAndView mv) {
+
+		Board b = bodService.selectBoard(bno);
+		ArrayList<BoardAttachment> bt = bodService.fileList(bno);
+			mv.addObject("b", b);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("btList", bt);
+			mv.setViewName("board/boardEnrollForm");
+		return mv;
+	}
+	
+	@RequestMapping("realUpdate.bo")
+	public ModelAndView realUpdateBoard(int bno, int currentPage, ModelAndView mv) {
 
 		Board b = bodService.selectBoard(bno); 
 			mv.addObject("b", b);
-			mv.setViewName("board/boardDetail");
+			mv.addObject("currentPage", currentPage);
+			mv.setViewName("board/boardEnrollForm");
 		return mv;
 	}
 	

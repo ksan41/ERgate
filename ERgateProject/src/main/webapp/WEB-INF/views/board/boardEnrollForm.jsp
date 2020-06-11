@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	String contextPath = request.getContextPath();
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -215,12 +214,15 @@
 				<table id="boardDetail">
 					<tr>
 						<th colspan="2" style="text-align:left;">글제목</th>
-						<td colsapn="6"><input name="boardTitle" class="inputs" type="text" value=""></td>
+						<td colsapn="6"><input name="boardTitle" class="inputs" type="text" value="${b.boardTitle}"></td>
 					</tr>
 					<tr>
 						<th colspan="2" style="text-align:left;">첨부파일</th>
 						<td colspan="6">
 							<button type="button" class="bigBtn fileShow">추가</button>
+							<c:if test="${b.boardFileFlag eq 'Y' }">
+								※현재 파일 <span><b>${fn:length(btList)}</b></span>개
+							</c:if>
 						</td>
 					</tr>
 					<tr>
@@ -234,23 +236,38 @@
 							            <div id="fileDragDesc"> ※파일을 드래그 해주세요. </div>
 							            <table id="fileListTable" width="100%" border="0px">
 							                <tbody id="fileTableTbody">
+							                	
 							                </tbody>
 							            </table>
 							        </div>
+							        <input type="hidden" id="bff" name="boardFileFlag" value="${b.boardFileFlag }">
+							        <input type="hidden" id="fileListSize" name="fileListSize" value="${fn:length(btList)-1}">
+							        <div class="fileNameList" style="display:none">
+							        
+							        </div>
 						</td>
 					</tr>
+					
 					<tr>
 						<td colspan="8" rowspan="20">
-							<textarea name="boardContent" class="textArea" cols="160" rows="25" value=""></textarea>
+							<textarea name="boardContent" class="textArea" cols="160" rows="25" value="">${b.boardContent }</textarea>
 						</td>
 					</tr>
 				</table>
 				<input type="hidden" name="boardWriter" value="${ loginUser.empName }">
 				<input type="hidden" name="empId" value="${ loginUser.empId }">
+				<input type="hidden" name="boardNo" value="${b.boardNo }">
 			</form>
 			<br>
 			<div id="btnArea">
-				<button id="submitBoard" class="bigBtn" onclick="uploadFile();" style="background: rgb(26, 188, 156);">등록</button>
+				<c:choose>
+					<c:when test="${empty b }">
+						<button id="submitBoard" class="bigBtn" onclick="uploadFile();" style="background: rgb(26, 188, 156);">등록</button>
+					</c:when>
+					<c:otherwise>
+						<button id="submitBoard" class="bigBtn" onclick="updateLoadFile();" style="background: rgb(26, 188, 156);">수정</button>
+					</c:otherwise>
+				</c:choose>
 				<button class="bigBtn">취소</button>
 			</div>
 			<br> <br><br>
@@ -269,8 +286,9 @@
                  //this.files[0].size gets the size of your file.
                  //alert(this.files[0].size);
              });
+             
+             
          });
-     
 	     
 	     $(document).ready(function() {
 				$(".fileShow").click(function(e) {
@@ -395,7 +413,7 @@
                          // 확장자 체크
                          alert("등록 불가 확장자");
                          break; */
-                     if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'pdf', 'png', 'jpeg', 'gif', 'zip' ]) <= 0) {
+                     if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'pdf','PNG', 'png', 'jpeg', 'gif', 'zip' ]) <= 0) {
                          // 확장자 체크
                          /* alert("등록이 불가능한 파일 입니다.");
                          break; */
@@ -519,6 +537,50 @@
                 });
          }
 		
+         
+         function updateLoadFile() { // 수정
+             // 등록할 파일 리스트
+              var uploadFileList = Object.keys(fileList);
+             	
+                var form = $('#uploadForm');
+                console.log(form[0]);
+                var formData = new FormData(form[0]);
+                formData.append('boardTitle', form[0].boardTitle.innerText);
+                formData.append('boardContent', form[0].boardContent.innerText);
+                formData.append('boardWriter', form[0].boardWriter.innerText);
+                formData.append('empId', form[0].boardWriter.innerText);
+                for (var i = 0; i < uploadFileList.length; i++) {
+                    formData.append('files', fileList[uploadFileList[i]]);
+                }
+                
+                $.ajax({
+                    url : "realUpdate.bo",
+                    data : formData,
+                    type : 'POST',
+                    enctype : 'multipart/form-data',
+                    processData : false,
+                    contentType : false,
+                    dataType : 'json',
+                    cache : false,
+                    success : function(result) {
+                        if (result >= 1) {
+                            alert("게시글이수정되었습니다.");
+                            location.href="list.bo?currentPage=1";
+                        } else {
+                            alert("게시글 수정에 실패하였습니다.");
+                            location.href="list.bo?currentPage=1";
+                        }
+                        
+                    },
+                    error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+	 					console.log("ajax 통신 실패!");
+	 				},
+	 				complete:function(){// complete : ajax 통신 성공여부와 상관없이 실행
+	 					console.log("무조건 호출!!");
+	 				}
+                });
+         }
+         
 	</script>
 </body>
 </html>
