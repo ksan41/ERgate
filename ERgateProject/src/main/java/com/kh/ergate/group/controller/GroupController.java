@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.ergate.group.model.service.GroupService;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
@@ -64,7 +65,8 @@ public class GroupController {
 	public String selectEmpProfile(String empId) {
 		
 		Employee empPrf = grService.selectEmpProfile(empId);
-		return new Gson().toJson(empPrf);
+		//return new Gson().toJson(empPrf);
+		return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(empPrf);
 	}
 	
 	// 6. 조직도 키워드 검색 

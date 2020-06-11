@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.ergate.attendance.model.service.AttendanceService;
 import com.kh.ergate.attendance.model.vo.Holiday;
 import com.kh.ergate.group.model.vo.Search;
@@ -60,7 +61,8 @@ public class AttendanceController {
 		
 		System.out.println(srch);
 		ArrayList<Employee> array = atService.selectAtMgdeptEmpList(srch);
-		return new Gson().toJson(array);
+		//return new Gson().toJson(array);
+		return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(array);
 	}
 	
 	// 사원별 근태현황 상세 조회용

@@ -244,17 +244,16 @@
                                 <th>사용일자</th>
 							</tr>
 						</thead>
-	                        <tbody>
-		                        <tr>
-									<td>2020</td>
-									<td>연차</td>
-									<td>1</td>
-		                            <td>2020.05.23</td>
-		                            <td>2020.05.23</td>
-		                            <td>2020.05.23</td>
-		                        </tr>
-		                        
-							</tbody>
+                        <tbody>
+	                        <tr>
+								<td>2020</td>
+								<td>연차</td>
+								<td>1</td>
+	                            <td>2020.05.23</td>
+	                            <td>2020.05.23</td>
+	                            <td>2020.05.23</td>
+	                        </tr>
+						</tbody>
 					</table>
 				</div>	
 			</div>
