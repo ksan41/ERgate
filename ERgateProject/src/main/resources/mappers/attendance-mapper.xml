@@ -85,7 +85,7 @@
 	</select>
 	
 	<select id="selectHoli" parameterType="Holiday" resultMap="holidayResultSet">
-		select e.emp_name,r.rank_title,d.dept_title,hday,remain_day
+		select e.emp_name, r.rank_title, d.dept_title, hday, remain_day
 		from holiday
 		join employee e using (emp_id)
 		join rank r on e.rank_code=r.rank_code
@@ -93,9 +93,4 @@
 		where emp_id = #{empId} and year = #{year}
 	</select>
 	
-	<select id="selectEmpHoliday" parameterType="Holiday" resultMap="holidayResultSet">
-		select *
-		  from holiday
-		 where emp_id=#{empId}
-	</select>
 </mapper>

@@ -298,7 +298,7 @@ border-right: 1px solid lightgrey;
     border: solid 1px lightgray;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
-    width: 300px;
+    width: 325px;
     height: 35px;
     text-align: center;
     padding-top: 10px;
@@ -309,7 +309,7 @@ border-right: 1px solid lightgrey;
 .empInfo2{
     border: solid 1px lightgray;
     border-left: 0ch;
-    width: 300px;
+    width: 325px;
     height: 35px;
     text-align: center;
     padding-top: 10px;
@@ -321,7 +321,7 @@ border-right: 1px solid lightgrey;
     border-left: 0ch;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
-    width: 300px;
+    width: 325px;
     height: 35px;
     text-align: center;
     padding-top: 10px;
@@ -383,9 +383,9 @@ border-right: 1px solid lightgrey;
 			<ul id="subMenuList">
 				<li><button class="subBtn" onclick="location.href='atList.at'">출퇴근내역</button></li>
 				<li><button class="subBtn" onclick="location.href='myStatus.at'">근태현황</button></li>
-				<%-- <c:if test="${loginUser.deptCode eq 'D5' }"> --%>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
 					<li><button class="subBtn subActive" onclick="location.href='atMgList.at'">근태관리</button></li>
-				<%-- </c:if>  --%>
+				</c:if> 
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -484,18 +484,18 @@ border-right: 1px solid lightgrey;
 				<div class="modal-content">
 					<br>
 					<div class="attendanceManagementModalOuter">
-						<div class="empInfo">
+						<div class="empInfo" align="center">
 				        </div>
 				        <div class="year">
 							<h2 align="center" style="display: inline-block; margin-left: 530px;">
-								<span class="material-icons"> arrow_left </span> 
+								<!-- <span class="material-icons"> arrow_left </span> 
 									    <select name="year" id="year">
 									        <option value="">2020</option>
 									        <option value="">2019</option>
 									        <option value="">2018</option>
 									        <option value="">2017</option>
 									    </select>						
-								<span class="material-icons"> arrow_right </span>
+								<span class="material-icons"> arrow_right </span> -->
 							</h2>
 							
 				        </div>
@@ -656,8 +656,9 @@ border-right: 1px solid lightgrey;
 				console.log(list);
 					
 					var value0 =
-						'<div class="empInfo1">'+ list[0].empName +'&nbsp;<span class="dept_rank_code1">('+ list[0].deptTitle +'/'+ list[0].rankTitle +')</span></div>'+
-				        '<div class="empInfo2">생성연차 &nbsp;/&nbsp;'+ list[0].hday +'</div>'+
+						'<div class="empInfo1">'+ year +'&nbsp; 년 </div>'+
+						'<div class="empInfo2">'+ list[0].empName +'&nbsp;<span class="dept_rank_code1">('+ list[0].deptTitle +'/'+ list[0].rankTitle +')</span></div>'+
+						'<div class="empInfo2">생성연차 &nbsp;/&nbsp;'+ list[0].hday +'</div>'+
 				        '<div class="empInfo3">잔여일수 &nbsp;/&nbsp;'+ list[0].remainDay +'</div>';
 				
 				    $(".empInfo").html(value0);

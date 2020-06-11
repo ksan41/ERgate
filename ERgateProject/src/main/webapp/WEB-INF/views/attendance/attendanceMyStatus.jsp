@@ -180,9 +180,9 @@
 				<ul id="subMenuList">
 					<li><button class="subBtn" onclick="location.href='atList.at'">출퇴근내역</button></li>
 					<li><button class="subBtn subActive" onclick="location.href='myStatus.at'">근태현황</button></li>
-					<%-- <c:if test="${loginUser.deptCode eq 'D5' }"> --%>
+					<c:if test="${loginUser.deptCode eq 'D5' }">
 						<li><button class="subBtn" onclick="location.href='atMgList.at'">근태관리</button></li>
-					<%-- </c:if>  --%>
+					</c:if>
 				</ul>
 			</div>
 			<div class="contentArea">
