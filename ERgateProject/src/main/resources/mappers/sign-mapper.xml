@@ -77,6 +77,9 @@
               <if test="condition == 1">
               	AND SIGN_TYPE_NO = 0
               </if>
+               <if test="condition == 2">
+              	AND SIGN_TYPE_NO IN(1,2)
+              </if>
 	</select>
 	
 	<select id="searchList" parameterType="com.kh.ergate.sign.model.vo.SignDateSearch" resultMap="signDocResultSet">
@@ -89,6 +92,9 @@
               </if>
               <if test="condition == 1">
               	AND SIGN_TYPE_NO = 0
+              </if>
+              <if test="condition == 2">
+              	AND SIGN_TYPE_NO IN(1,2)
               </if>
         ORDER BY DRAFT_DATE DESC 
 	</select>

@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class SignDateSearch {
-	private int condition; // 0 : 결재상신내역 / 1: 지출결의내역
+	private int condition; // 0 : 결재상신내역 / 1: 지출결의내역 / 2: 외근신청서,휴가계
 	private String year;
 	private String month;
 	private String day;

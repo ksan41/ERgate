@@ -23,7 +23,7 @@ public class SignServiceImpl implements SignService{
 	private SqlSessionTemplate sqlSession;
 	
 
-	
+	// 결재 상세 요청용
 	@Override
 	public SignDocument signDetail(SignDocument sdd) {
 		return siDao.signDetail(sqlSession,sdd);
@@ -36,6 +36,7 @@ public class SignServiceImpl implements SignService{
 		return siDao.signDetailAttachment(sqlSession,sdd);
 	}
 	
+	//결재상세-결재자 정보 요청용
 	@Override
 	public ArrayList<Signer> signDetailSigner(SignDocument sdd) {
 		return siDao.signDetailSigner(sqlSession,sdd);
@@ -60,25 +61,30 @@ public class SignServiceImpl implements SignService{
 		return siDao.expenseList(sqlSession,pi);
 	}
 	
+	// 지출결의내역 게시글 수 조회용
 	@Override
 	public int selectElistCount() {
 		return siDao.selectElistCount(sqlSession);
 	}
 	
+	// 월별 게시글 수 조회용(공용)
 	@Override
 	public int searchListCount(SignDateSearch sds) {
 		return siDao.searchListCount(sqlSession,sds);
 	}
 	
+	// 월별 게시글 조회용
 	@Override
 	public ArrayList<SignDocument> searchList(PageInfo pi, SignDateSearch sds) {
 		return siDao.searchList(sqlSession,pi,sds);
 	}
 	
+	// 외근휴가내역 게시글 수 조회용
 	@Override
-	public ArrayList<SignDocument> hrList(SignDocument sd) {
-		return null;
+	public int selectHRlistCount(SignDateSearch sds) {
+		return 0;
 	}
+	
 
 	@Override
 	public int updateSign(Signer si, SignDocument sd) {
@@ -142,5 +148,7 @@ public class SignServiceImpl implements SignService{
 	public ArrayList<SignDocument> selectWaitingList(PageInfo pi,String empId) {
 		return siDao.selectWaitingList(sqlSession,pi,empId);
 	}
+
+
 
 }
