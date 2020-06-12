@@ -21,6 +21,8 @@
 		<result column="change_name" property="changeName"/>
 		<result column="board_type" property="boardType"/>
 		<result column="ref_board_no" property="refBoardNo"/>
+		<result column="file_size" property="boardFileSize"/>
+		<result column="file_path" property="boardFilePath"/>
 	</resultMap>
 	
 	<resultMap id="replyResultSet" type="Reply">
@@ -150,7 +152,7 @@
 	
 	<insert id="insertBoardAttachment" parameterType="BoardAttachment">
 		insert into Board_Attachment 
-		values(seq_atboard_no.nextval, #{originName}, #{changeName}, 'B', seq_board_no.currval)
+		values(seq_atboard_no.nextval, #{originName}, #{changeName}, 'B', seq_board_no.currval, #{boardFileSize}, #{boardFilePath})
 	</insert>
 	
 	<update id="updateBoardFlag">
@@ -214,6 +216,13 @@
 		board_status = 'N'
 		where board_no = #{bno}
 	</update>
+	
+	<select id="fileOne" parameterType="_int" resultMap="attachResultSet">
+		select *
+		from Board_Attachment
+		where attachment_no = #{fno}
+	</select>
+	
 </mapper>
 
 

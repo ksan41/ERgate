@@ -241,9 +241,15 @@
 							            </table>
 							        </div>
 							        <input type="hidden" id="bff" name="boardFileFlag" value="${b.boardFileFlag }">
-							        <input type="hidden" id="fileListSize" name="fileListSize" value="${fn:length(btList)-1}">
-							        <div class="fileNameList" style="display:none">
-							        
+							        <input type="hidden" id="fileListSize" name="fileListSize" value="${fn:length(btList)}">
+							        <div class="fileNameList" style="display:none;">
+							        	<table class="fnoTable" border="1">
+							        	<tr>
+							        	<c:forEach items="${ btList }" var="bt">
+							        		<td><input type="hidden" name="fno" value="${bt.attachmentNo}">${bt.attachmentNo}</td>
+							        	</c:forEach>
+							        	</tr>
+							        	</table>
 							        </div>
 						</td>
 					</tr>
@@ -256,7 +262,12 @@
 				</table>
 				<input type="hidden" name="boardWriter" value="${ loginUser.empName }">
 				<input type="hidden" name="empId" value="${ loginUser.empId }">
-				<input type="hidden" name="boardNo" value="${b.boardNo }">
+				<input type="hidden" id="boardNo" name="boardNo" value="${b.boardNo }">
+				<div class="ffnos" style="display:none;">
+				<c:forEach items="${ btList }" var="bt">
+					<input type="file" id="ffno" name="ffno" value="">
+				</c:forEach>
+				</div>
 			</form>
 			<br>
 			<div id="btnArea">
@@ -286,7 +297,58 @@
                  //this.files[0].size gets the size of your file.
                  //alert(this.files[0].size);
              });
-             
+           var bno = $("#boardNo").val();
+           var fl = $("#bff").val();
+           var flsize = $("#fileListSize").val();
+           var fno = new Array();
+           var fname = 1;
+           var fileNum = 0;
+           
+           
+           
+           if(fl == 'Y'){
+        	   for (var i = 0; i < flsize; i++) {
+        		   
+				   fno[i] = $(".fnoTable tr td:nth-child("+ fname +")").find('input').val();
+				   fname = fname + 1;
+        		   $.ajax({
+                       url : "nowFile.bo",
+                       traditional : true,
+                       data : {fno:fno[i]},
+                       type : 'POST',
+                       success : function(result) {
+                    	   
+                    	   var fileSizeKb = result.boardFileSize / 1024;
+                           var fileSizeMb = fileSizeKb / 1024;
+                    	   var nowfileSizeStr = "";
+                           if ((1024*1024) <= result.boardFileSize) {    // 파일 용량이 1메가 이상인 경우 
+                               console.log("fileSizeMb="+fileSizeMb.toFixed(2));
+                               nowfileSizeStr = fileSizeMb.toFixed(2) + " Mb";
+                           } else if ((1024) <= result.boardFileSize) {
+                               console.log("fileSizeKb="+parseInt(fileSizeKb));
+                               nowfileSizeStr = parseInt(fileSizeKb) + " kb";
+                           } else {
+                               console.log("fileSize="+parseInt(fileSize));
+                               nowfileSizeStr = parseInt(fileSize) + " byte";
+                           }
+                           
+                    	   var html = "";
+                           html += "<tr id='nowfileTr_" + result.attachmentNo + "'>";
+                           html += "    <td id='dropZone' class='left' >";
+                           html += result.originName + " (" + nowfileSizeStr +") " 
+                                   + "<span id='deleteBtn' class='material-icons nowDelete' onclick='deleteNowFile(" + result.attachmentNo +"); return false;'>highlight_off</span>"
+                           html += "    </td>"
+                           html += "</tr>"
+               
+                           $('#fileTableTbody').append(html);
+                    	   $("#fileDragDesc").hide(); 
+                           $("#fileListTable").show();
+                       },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+    	 					console.log("ajax 통신 실패!");
+    	 			   }
+                   });
+               }
+           }
              
          });
 	     
@@ -363,10 +425,11 @@
          // 파일 선택시
          function selectFile(fileObject) {
              var files = null;
- 
+ 			 console.log(fileObject);
              if (fileObject != null) {
                  // 파일  등록시
                  files = fileObject;
+                 console.log(files);
              }
  
              // 다중파일 등록
@@ -443,7 +506,7 @@
                  alert("ERROR");
              }
          }
- 
+         
          // 업로드 파일 목록 생성
          function addFileList(fIndex, fileName, fileSizeStr) {
              /* if (fileSize.match("^0")) {
@@ -487,7 +550,13 @@
                  $("fileListTable").hide();
              }
          }
- 
+ 		 
+         function deleteNowFile(nowNum) {
+        	 console.log(nowNum);
+        	 $("#nowfileTr_" + nowNum).remove();
+         }
+         
+         
          // 파일 등록
          function uploadFile() {
              // 등록할 파일 리스트
@@ -536,7 +605,8 @@
 	 				}
                 });
          }
-		
+		 
+         
          
          function updateLoadFile() { // 수정
              // 등록할 파일 리스트
@@ -549,6 +619,7 @@
                 formData.append('boardContent', form[0].boardContent.innerText);
                 formData.append('boardWriter', form[0].boardWriter.innerText);
                 formData.append('empId', form[0].boardWriter.innerText);
+                formData.append('boardNo', form[0].boardNo.innerText);
                 for (var i = 0; i < uploadFileList.length; i++) {
                     formData.append('files', fileList[uploadFileList[i]]);
                 }

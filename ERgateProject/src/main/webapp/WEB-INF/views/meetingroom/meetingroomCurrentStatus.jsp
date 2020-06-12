@@ -570,6 +570,38 @@ p {
 
 							//$("#changeMonthForm").submit();
 						});	
+						
+						/* 다음으로 */
+						
+						$("#arrowRight").click(function() {
+							
+							// 버튼 처음 눌렀을때.
+							// 오늘날짜 -1 
+							date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
+
+							year = date.getFullYear();
+							month = date.getMonth() + 1;
+							day = date.getDate();
+							
+							
+							console.log(year);
+							console.log(month);
+							console.log(day);
+							
+							$("#calMonth").text(month);
+							$("#calYear").text(year);
+							$("#calDay").text(day);
+							
+							$("input[name=month]").attr("value", month);
+							$("input[name=year]").attr("value", year);
+							$("input[name=date]").attr("value", day);
+							
+							
+
+							//$("#changeMonthForm").submit();
+						});	
+						
+						
 					});
 				</script>
 				

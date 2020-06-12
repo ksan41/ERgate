@@ -22,7 +22,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	private MeetingroomDao mrDao;
 
 
-
 	@Override
 	public ArrayList<MeetingroomReservation> currentStatusList(MeetingroomDate md) {
 		return mrDao.currentStatusList(sqlSession, md);
@@ -37,8 +36,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	public ArrayList<MeetingroomReservation> searchListt(MeetingroomDate md) {
 		return null;
 	}
-
-
 
 	@Override
 	public Meetingroom selectPeople() {
@@ -73,7 +70,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	}
 
 
-
 	// 회의실 예약용
 	@Override
 	public int reserveMtroom(MeetingroomReservation mr) {
@@ -104,7 +100,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 
 	@Override
 	public int seachListCount(String month) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -118,7 +113,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		return mrDao.statusListMonth(sqlSession, month);
 	}
 
-
 	// 회의실 리스트 조회용 서비스 -관리자
 	@Override
 	public int selectMtroomDetailListCount() {
@@ -131,14 +125,10 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	}
 
 
-
 	@Override
 	public int deleteMeetingroom(Meetingroom m) {
 		return mrDao.deleteMeetingroom(sqlSession, m);
 	}
-
-
-
 
 	
 }
