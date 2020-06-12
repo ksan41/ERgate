@@ -167,4 +167,20 @@
       		  EXTRACT(YEAR FROM DRAFT_DATE) = #{year} AND
       		  EXTRACT(MONTH FROM DRAFT_DATE) = #{month}
 	</select>
+	
+	<!-- 진행결재함 게시글 수 조회용 -->
+	<select id="selectOlistCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM SIGN_DOCUMENT
+		WHERE EMP_ID = #{empId} AND
+      		  SIGN_STATUS = 0
+	</select>
+	
+	<!-- 진행결재함 리스트 조회용 -->
+	<select id="ongoingList" parameterType="string" resultMap="signDocResultSet">
+		SELECT *
+		  FROM SIGN_DOCUMENT
+		WHERE EMP_ID = #{empId} AND
+      		  SIGN_STATUS = 0
+	</select>
 </mapper>

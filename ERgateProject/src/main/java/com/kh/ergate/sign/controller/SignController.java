@@ -64,20 +64,32 @@ public class SignController {
 		  model.addAttribute("sgList",sgList);
 		  model.addAttribute("saList",saList);
 		  model.addAttribute("sd",sd);
+		  
+		  switch(signTypeNo) {
+		  case 0:
+		  case 1:
+		
+		  }
 		  return "sign/signDetailExpense";
 	  }
 	  
 	  // 진행결재함요청용
 	  
-	  @RequestMapping("ongoingList.si") public String ongoingList(SignDocument sd,
-	  Model model) { return "sign/signOngoingList"; }
-	  
-	  // 진행결재함 월선택용
-	  
-	  @RequestMapping("ongoingListM.si") public String ongoingListMonth(String
-	  month, SignDocument sd, Model model) {
-	  
+	  @RequestMapping("ongoingList.si") 
+	  public String ongoingList(int currentPage,HttpSession session,SignDocument sd,Model model) {
+		  Employee e = (Employee)session.getAttribute("loginUser");
+		  
+		  int listCount = siService.selectOlistCount(e.getEmpId());
+		  
+		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		  
+		  ArrayList<SignDocument> list = siService.ongoingList(pi,e.getEmpId());
+		  
+		  model.addAttribute("pi",pi);
+		  model.addAttribute("list",list);
+		  return "sign/signOngoingList"; 
 	  }
+	  
 	  
 	  // 상신내역요청용
 	  @RequestMapping("reportList.si") 

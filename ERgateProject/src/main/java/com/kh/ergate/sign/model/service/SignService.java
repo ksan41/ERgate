@@ -22,8 +22,11 @@ public interface SignService {
 	//결재상세-결재자리스트 요청용
 	public ArrayList<Signer> signDetailSigner(SignDocument sdd);
 	
+	//진행결재함 게시글수 조회용
+	public int selectOlistCount(String empId);
+	
 	//진행결재함요청용
-	public ArrayList<SignDocument> ongoingList(String month,SignDocument sd);
+	public ArrayList<SignDocument> ongoingList(PageInfo pi,String empId);
 	
 	// 상신내역 게시글수 조회용
 	public int selectRlistCount(SignDateSearch sds);

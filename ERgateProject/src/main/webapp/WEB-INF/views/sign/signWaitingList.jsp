@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -244,16 +246,41 @@
 				<li><button class="subBtn subActive" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
 				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
 				<li><button class="subBtn" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
-				<li><button class="subBtn" onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
-				<li><button class="subBtn" onclick="location.href='';">외근&휴가내역</button></li>
+				<c:if test="${loginUser.deptCode eq 'D2' }">
+					<li><button class="subBtn"
+							onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+				</c:if>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
+				</c:if>		
+				
 			</ul>
 		</div>
 		<div class="contentArea">
 			<button class="bigBtn">선택결재</button>
-			<button class="bigBtn" style="background: rgb(190, 190, 190);" onclick="open_modal();">서명등록</button>
-			<h2 style="display: inline-block; margin-left: 300px;">2020년 5월
-				10일</h2>
+			<h2 style="display: inline-block; margin-left: 400px;">
+
+				<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
+		
+				</h2>
 			<br> <br>
+	<script>
+		$(document).ready(function() {
+			// 기본적으로 문서 열었을때 오늘날짜 보여지도록 변수에 저장해둠
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;				
+			var day = date.getDate();
+			
+			$("#calYear").text(year);
+			$("#calMonth").text(month);
+			$("#calDay").text(day);
+		
+			
+		});
+	</script>			
+
+
 
 			<table class="boardTable">
 				<thead>
@@ -388,43 +415,6 @@
 				<li><a href="#">&gt;&gt;</a></li>
 			</ul>
 			<!-- 페이징바 -->
-
-
-			<!-- 모달팝업 (head부분에 링크들도 복사해주셔야합니다)-->
-
-			<!-- 모달 타겟. href의 #xxx와 모달영역의 id(xxx)가 한셋트입니다.
-     용도에 따라 href와 id는 변경해주세요.(여러개 가능)
-     모달타겟으로 쓸 요소에 class와 href 복사해주세요.
--->
-			<a class="open-modal" href="#modal-form" style="display:none;">모달열기</a> <br>
-
-
-			<div id="modal-form" class="modal">
-				<div class="modal-title">서명등록</div>
-				<div class="modal-content">
-					<div id="sign_thumb">
-					</div>
-					<br>
-					<button class="smallBtn">첨부파일</button>
-					<a href="#">첨부파일.jsp</a>
-					<br><br>
-					<button class="bigBtn" style="margin-left:60px;">등록</button>
-				</div>
-			</div>
-
-			<!-- 모달용 스크립트 -->
-			<script>
-				function open_modal(){
-					$(".open-modal").click();
-				};
-			
-				$('.open-modal').click(function() {
-					$(this).modal({
-						fadeDuration : 150
-					});
-
-				});
-			</script>
 
 
 			<!-- 모달팝업 -->

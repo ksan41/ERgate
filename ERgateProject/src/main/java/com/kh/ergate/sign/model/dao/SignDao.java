@@ -86,4 +86,17 @@ public class SignDao {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.reportList",sds,rowBounds);
 	}
+	
+	//진행결재함 게시글 수 조회용
+	public int selectOlistCount(SqlSessionTemplate sqlSession,String empId) {
+		return sqlSession.selectOne("signMapper.selectOlistCount",empId);
+	}
+	
+	// 진행결재함 요청용
+	public ArrayList<SignDocument> ongoingList(SqlSessionTemplate sqlSession,PageInfo pi,String empId){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("signMapper.ongoingList",empId,rowBounds);
+	}
 } 
