@@ -262,7 +262,6 @@ h2, h3 {
 							<td width="150"><h2></h2>
 								<h3></h3></td>
 						</c:forEach>
-
 					</tr>
 					<tr>
 						<th>수신참조</th>

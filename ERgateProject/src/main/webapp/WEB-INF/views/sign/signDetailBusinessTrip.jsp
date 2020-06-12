@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -255,38 +257,37 @@ h2, h3 {
 				<table id="signInfo2">
 					<tr>
 						<th rowspan="2" width="120">결재라인</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
+						<c:forEach var="sg" items="${sgList }">
+							<c:if test="${sg.signType eq 1 }">
+								<th>${sg.jobTitle }</th>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<th></th>
+						</c:forEach>
 					</tr>
 					<tr>
-						<td width="150"><h2>1</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>2</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>3</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>4</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>5</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>6</h2>
-							<h3>전지현</h3></td>
+						<c:forEach var="sg" items="${sgList }">
+							<c:if test="${sg.signType eq 1 }">
+								<td width="150"><h2>${sg.signTurn}</h2>
+									<h3>${sg.empName }</h3></td>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<td width="150"><h2></h2>
+								<h3></h3></td>
+						</c:forEach>
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left">
+							<td colspan="6" align="left">
 							<c:if test="${!empty sgList }">
 								<c:forEach var="sg" items="${sgList }">
 									<c:if test="${sg.signType eq 0 }">
 										<span>@${sg.empName } </span>
 									</c:if>
 								</c:forEach>
-							</c:if>
-						</td>
+							</c:if></td>
 					</tr>
 				</table>
 
@@ -294,18 +295,22 @@ h2, h3 {
 				<table id="checkArea">
 					<tr>
 						<th width="120"></th>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
+						<c:forEach var="sg" items="${sgList }" varStatus="status">
+							<c:if test="${sg.signType eq 1}">
+								<c:choose>
+									<c:when test="${sg.signed eq 'Y' }">
+										<td width="150"><span class="material-icons circle">
+										panorama_fish_eye </span></td>
+									</c:when>
+									<c:otherwise>
+										<td width="150"></td>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<td width="150"></td>
+						</c:forEach>
 					</tr>
 				</table>
 				<table id="signInfo3">
