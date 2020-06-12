@@ -141,14 +141,18 @@ public class BoardServiceImpl implements BoardService {
 	
 	
 	@Override
-	public int updateBoard(com.kh.ergate.board.model.vo.Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateBoard(Board b) {
+		return bodDao.updateBoard(sqlSession, b);
 	}
 
 	@Override
 	public BoardAttachment fileOne(int fno) {
 		return bodDao.fileOne(sqlSession, fno);
+	}
+
+	@Override
+	public int fileDbDelete(int nowFno) {
+		return bodDao.fileDbDelete(sqlSession, nowFno);
 	}
 
 	
