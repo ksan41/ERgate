@@ -301,9 +301,11 @@
            var fl = $("#bff").val();
            var flsize = $("#fileListSize").val();
            var fno = new Array();
-           var fileLt = new Array();
            var fname = 1;
            var fileNum = 0;
+           
+           
+           
            if(fl == 'Y'){
         	   for (var i = 0; i < flsize; i++) {
         		   
@@ -315,15 +317,39 @@
                        data : {fno:fno[i]},
                        type : 'POST',
                        success : function(result) {
-              
-                    	   fileLt[fileNum] = result;
-                    	   fileNum = fileNum + 1;
+                    	   
+                    	   var fileSizeKb = result.boardFileSize / 1024;
+                           var fileSizeMb = fileSizeKb / 1024;
+                    	   var nowfileSizeStr = "";
+                           if ((1024*1024) <= result.boardFileSize) {    // 파일 용량이 1메가 이상인 경우 
+                               console.log("fileSizeMb="+fileSizeMb.toFixed(2));
+                               nowfileSizeStr = fileSizeMb.toFixed(2) + " Mb";
+                           } else if ((1024) <= result.boardFileSize) {
+                               console.log("fileSizeKb="+parseInt(fileSizeKb));
+                               nowfileSizeStr = parseInt(fileSizeKb) + " kb";
+                           } else {
+                               console.log("fileSize="+parseInt(fileSize));
+                               nowfileSizeStr = parseInt(fileSize) + " byte";
+                           }
+                           
+                    	   var html = "";
+                           html += "<tr id='nowfileTr_" + fileNum + "'>";
+                           html += "    <td id='dropZone' class='left' >";
+                           html += result.originName + " (" + nowfileSizeStr +") " 
+                                   + "<span id='deleteBtn' class='material-icons' onclick='deleteFile(" + fileNum + "); return false;'>highlight_off</span>"
+                           html += "    </td>"
+                           html += "</tr>"
+               
+                           $('#fileTableTbody').append(html);
+                    	   $("#fileDragDesc").hide(); 
+                           $("#fileListTable").show();
+                           
+                           fileNum = fileNum + 1;
                        },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
     	 					console.log("ajax 통신 실패!");
     	 			   }
                    });
                }
-        	   selectFileJava(fileLt);
            }
              
          });
@@ -589,6 +615,7 @@
                 formData.append('boardContent', form[0].boardContent.innerText);
                 formData.append('boardWriter', form[0].boardWriter.innerText);
                 formData.append('empId', form[0].boardWriter.innerText);
+                formData.append('boardNo', form[0].boardNo.innerText);
                 for (var i = 0; i < uploadFileList.length; i++) {
                     formData.append('files', fileList[uploadFileList[i]]);
                 }

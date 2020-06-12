@@ -18,4 +18,6 @@ public class BoardAttachment {
 	private String changeName;
 	private String boardType;
 	private int refBoardNo;
+	private String boardFileSize;
+	private String boardFilePath;
 }

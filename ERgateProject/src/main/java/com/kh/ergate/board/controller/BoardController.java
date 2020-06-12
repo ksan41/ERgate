@@ -156,6 +156,8 @@ public class BoardController {
 		
 		int result = 0;
 		result = bodService.insertBoard(insertB);
+		String resources = form.getSession().getServletContext().getRealPath("resources");
+		String filePath = resources + "\\uploadFiles\\board\\";
 		if(files.length > 0) {
 			int flag = 0;
 			int setFlag = 0;
@@ -171,6 +173,8 @@ public class BoardController {
 				BoardAttachment bt = new BoardAttachment();
 				bt.setChangeName(changeName);
 				bt.setOriginName(files[i].getOriginalFilename());
+				bt.setBoardFileSize(String.valueOf(files[i].getSize()));
+				bt.setBoardFilePath(filePath);
 				result += bodService.insertBoardAttachment(bt);
 			}
 		}else {
@@ -284,14 +288,56 @@ public class BoardController {
 		return mv;
 	}
 	
-	@RequestMapping("realUpdate.bo")
-	public ModelAndView realUpdateBoard(int bno, int currentPage, ModelAndView mv) {
-
-		Board b = bodService.selectBoard(bno); 
-			mv.addObject("b", b);
-			mv.addObject("currentPage", currentPage);
-			mv.setViewName("board/boardEnrollForm");
-		return mv;
+	@ResponseBody
+	@RequestMapping(value="realUpdate.bo", produces="application/json; charset=utf-8")
+	public int realUpdateBoard(MultipartHttpServletRequest form, @RequestParam(name="files", required=false) MultipartFile[] files) {
+		//System.out.println(files.length);
+		String title[] = form.getParameterValues("boardTitle");
+		String content[] = form.getParameterValues("boardContent");
+		String writer[] = form.getParameterValues("boardWriter");
+		String empId[] = form.getParameterValues("empId");
+		String boardNo[] = form.getParameterValues("boardNo");
+		//System.out.println("제목값은? : " + title[0]); 
+		//System.out.println("내용값은? : " + content[0]);
+		//System.out.println("이름은? : " + content[0]);
+		Board insertB = new Board();
+		insertB.setBoardTitle(title[0]);
+		insertB.setBoardContent(content[0]);
+		insertB.setBoardWriter(writer[0]);
+		insertB.setEmpId(empId[0]);
+		insertB.setBoardNo(Integer.parseInt(boardNo[0]));
+		
+		System.out.println(insertB);
+		
+		int result = 0;
+		result = bodService.updateBoard(insertB);
+		String resources = form.getSession().getServletContext().getRealPath("resources");
+		String filePath = resources + "\\uploadFiles\\board\\";
+		if(files.length > 0) {
+			int flag = 0;
+			int setFlag = 0;
+			for(int i=0; i<files.length; i++) {
+				setFlag = (int)(Math.random()*99) + 10;
+				if(setFlag != flag) {
+					flag = setFlag;
+				}else {
+					setFlag += 100;
+					flag = setFlag;
+				} // 혹시나 Math.random이 같은 값이 나올경우를 대비해서~
+				String changeName = saveFile(files[i], form, flag);
+				BoardAttachment bt = new BoardAttachment();
+				bt.setChangeName(changeName);
+				bt.setOriginName(files[i].getOriginalFilename());
+				bt.setBoardFileSize(String.valueOf(files[i].getSize()));
+				bt.setBoardFilePath(filePath);
+				result += bodService.insertBoardAttachment(bt);
+			}
+		}else {
+			result = bodService.updateBoardFlag();
+		}
+		
+		
+		return result;
 	}
 	
 	@RequestMapping("delete.bo")
@@ -323,18 +369,18 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="nowFile.bo", produces="application/json; charset=utf-8")
-	public MultipartFile nowFileList(int fno, HttpServletRequest request) {
+	public String nowFileList(int fno, HttpServletRequest request) {
 		
 		 BoardAttachment fileOne = bodService.fileOne(fno); 
 		 
 		 String resources = request.getSession().getServletContext().getRealPath("resources");
 		 String filePath = resources + "\\uploadFiles\\board\\";
 		 String fileName=fileOne.getChangeName(); 
-		 
-		 MultipartFile nowFile = (MultipartFile) new File(filePath + fileName);
+		 System.out.println(filePath);
+		 //MultipartFile nowFile = (MultipartFile) new File(filePath + fileName);
 		 
 		
-		return nowFile;
+		 return new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm:ss").create().toJson(fileOne);
 	}
 	
 	
@@ -343,113 +389,5 @@ public class BoardController {
 	
 	
 	
-	/*
-	 * @RequestMapping("delete.bo") public String deleteBoard(int bno, String
-	 * fileName, HttpServletRequest request, Model model) {
-	 * 
-	 * int result = bService.deleteBoard(bno);
-	 * 
-	 * if(result > 0) { // 게시글 삭제 성공 --> 기존의 첨부파일이 있었을 경우 서버에 삭제
-	 * 
-	 * // 기존의 첨부파일이 있었을 경우(fileName에 빈문자열이 아닐꺼임)만 서버에 업로드된 파일 삭제
-	 * if(!fileName.equals("")) { deleteFile(fileName, request); }
-	 * 
-	 * return "redirect:list.bo?currentPage=1";
-	 * 
-	 * }else { // 게시글 삭제 실패
-	 * 
-	 * model.addAttribute("msg", "게시글 삭제 실패!!"); return "common/errorPage";
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * 
-	 * @RequestMapping("updateForm.bo") public String updateForm(int bno, Model
-	 * model) {
-	 * 
-	 * model.addAttribute("b", bService.selectBoard(bno)); return
-	 * "board/boardUpdateForm";
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping("update.bo") public String updateBoard(Board b,
-	 * HttpServletRequest request, Model model,
-	 * 
-	 * @RequestParam(name="reUploadFile", required=false) MultipartFile file) {
-	 * 
-	 * // 새로 넘어온 첨부파일이 있을 경우 --> 서버에 업로드 해야됨
-	 * if(!file.getOriginalFilename().equals("")) {
-	 * 
-	 * // 기존의 첨부파일의 있었을 경우 --> 업로드 된 파일 지워야 됨 if(b.getChangeName() != null) { // 새로
-	 * 넘어온 첨부파일도 있고 기존의 첨부파일도 있었을 경우 deleteFile(b.getChangeName(), request); }
-	 * 
-	 * String changeName = saveFile(file, request);
-	 * 
-	 * b.setChangeName(changeName); b.setOriginName(file.getOriginalFilename());
-	 * 
-	 * }
-	 * 
-	 * 
-	 * b = 게시글번호, 게시글제목, 게시글내용
-	 * 
-	 * 1. 기존의 첨부파일 X, 새로 첨부된 파일 X --> originName : null, changeName : null
-	 * 
-	 * 2. 기존의 첨부파일 X, 새로 첨부된 파일 O --> 서버에 업로드 처리 후 --> originName : 새로첨부된파일원본명,
-	 * changeName : 새로첨부된파일수정명
-	 * 
-	 * 3. 기존의 첨부파일 O, 새로 첨부된 파일 X --> originName : 기존첨부파일원본명, changeName : 기존첨부파일수정명
-	 * 
-	 * 4. 기존의 첨부파일 O, 새로 첨부된 파일 O --> 기존의 첨부파일 삭제 후 --> 새로첨부된 파일 서버에 업로드 후 -->
-	 * originName : 새로첨부된파일원본명, changeName : 새로첨부된파일수정명
-	 * 
-	 * 
-	 * int result = bService.updateBoard(b);
-	 * 
-	 * if(result > 0) {
-	 * 
-	 * return "redirect:detail.bo?bno=" + b.getBoardNo();
-	 * 
-	 * }else { model.addAttribute("msg", "게시글 수정 실패!!"); return "common/errorPage";
-	 * }
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * // 전달받은 파일명을 가지고 서버로 부터 삭제하는 메소드 public void deleteFile(String fileName,
-	 * HttpServletRequest request) { String resources =
-	 * request.getSession().getServletContext().getRealPath("resources"); String
-	 * savePath = resources + "\\uploadFiles\\";
-	 * 
-	 * File deleteFile = new File(savePath + fileName); deleteFile.delete(); }
-	 * 
-	 * 
-	 * // 공유해서 쓸수 있게끔 따로 정의 해놓은 메소드 // 전달받은 파일을 서버에 업로드 시킨 후 수정명 리턴하는 메소드 public
-	 * String saveFile(MultipartFile file, HttpServletRequest request) {
-	 * 
-	 * // 파일을 업로드 시킬 폴더 경로 (String savePath) String resources =
-	 * request.getSession().getServletContext().getRealPath("resources"); String
-	 * savePath = resources + "\\uploadFiles\\";
-	 * 
-	 * // 원본명 (aaa.jpg) String originName = file.getOriginalFilename();
-	 * 
-	 * // 수정명 (20200522202011.jpg) // 년월일시분초 (String currentTime) String currentTime
-	 * = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); //
-	 * "20200522202011"
-	 * 
-	 * // 확장자 (String ext) String ext =
-	 * originName.substring(originName.lastIndexOf(".")); // ".jpg"
-	 * 
-	 * String changeName = currentTime + ext;
-	 * 
-	 * 
-	 * try { file.transferTo(new File(savePath + changeName)); } catch
-	 * (IllegalStateException | IOException e) { e.printStackTrace(); }
-	 * 
-	 * return changeName;
-	 * 
-	 * }
-	 */
 
 }
