@@ -155,7 +155,6 @@
 	    border-collapse: separate;
 	    border-top: 2px solid #8c8c8c;
 	    border-left: 1px solid #ccc;
-	
 	}
 	.table_time td {
 	    position: relative;
@@ -207,6 +206,16 @@
 	    font-weight: 700;
 	    font-size: 14px;
 	    color: #333;
+	}
+	
+	.reserved{
+		background-color: rgba(22, 160, 133, 0.20);
+		padding-left: 10px;
+		font-size: 15px;
+		color: dimgray;
+	}
+	.reservationBtn:hover{
+		cursor: pointer;
 	}
 	
 /* ===========예약 시간표============= */
@@ -484,7 +493,7 @@
 		<div class="contentArea" style="margin-top: 30px;">
 			<div id="midContentArea">
 
-				<h2 style="display: inline-block; margin-left: 400px; margin-bottom:10px;">
+				<h2 style="display: inline-block; margin-left: 400px; margin-bottom:30px;">
 					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
 						
 						<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일 &nbsp;
@@ -506,7 +515,6 @@
 			</div>
 		
 			<div class="subBtns">
-				<button id="reservationBtn">예약하기</button>
 				<a id="reservation" class="open-modal" href="#open_reservation" style="display: none;">모달</a> <br> 
 				<a id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
 			</div>
@@ -516,137 +524,47 @@
 
 			<div class="resource_layout">
 				<div style="float: left;">
+				
 					<!-- 시간 table  -->
 					<table class="table_time" cellpadding="0" cellspacing="0">
 						<tr>
 							<th style="height: 73px">시간</th>
 						</tr>
 						
-						<tr class="a">
-							<td>10:00</td>
-						</tr>
-						<tr class="a">
-							<td>11:00</td>
-						</tr>
-						<tr class="">
-							<td>12:00</td>
-						</tr>
-						<tr class="">
-							<td>13:00</td>
-						</tr>
-						<tr class="">
-							<td>14:00</td>
-						</tr>
-						<tr class="">
-							<td>15:00</td>
-						</tr>
-						<tr class="">
-							<td>16:00</td>
-						</tr>
-						<tr class="">
-							<td>17:00</td>
-						</tr>
-						<tr class="">
-							<td>18:00</td>
-						</tr>
-						<tr class="">
-							<td>19:00</td>
-						</tr>
+						<c:forEach var="t" begin="10" end="19">
+							<tr class="">
+								<td>${ t }:00</td>
+							</tr>
+						</c:forEach>
 
 					</table>
 				</div>
-				<!-- 회의실 table -->
-
+				
+				<!-- 차량 table -->
 				<div class="table_resource_box" style="float: left; width: 1000px">
-					<table class="table_resource" id="mtrmSC" style="float: left;" cellpadding="0" cellspacing="0">
-						<tr>
-							<th><p>그랜저 33허 3333</p></th>
-							<th><p>소나타 33허 3333</p></th>
-							<th><p>카니발 33허 3333</p></th>
-							<th><p>스타렉스 33허 3333</p></th>
-							<th><p>스파크 33허 3333</p></th>
-						</tr>
+					<table class="table_resource" id="vhclSC" style="float: left;" cellpadding="0" cellspacing="0">
+						<thead>
+							<tr>
+								<th><p>그랜저 33허 3333</p></th>
+								<th><p>소나타 33허 3333</p></th>
+								<th><p>카니발 33허 3333</p></th>
+								<th><p>스타렉스 33허 3333</p></th>
+								<th><p>스파크 33허 3333</p></th>
+							</tr>
+						</thead>
+						<tbody>
 						
-						<tr id="10:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="11:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="12:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="13:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="14:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="15:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="16:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="17:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="18:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
-						<tr id="19:00" class="">
-							<td name="000010"><p></p></td>
-							<td name="000011"><p></p></td>
-							<td name="000013"><p></p></td>
-							<td name="rooma0"><p></p></td>
-							<td name="roomb0"><p></p></td>
-						</tr>
-						
+							<c:forEach var="t" begin="10" end="19">
+								<tr id="${ t }">
+									<td class="111 reservationBtn"><p></p></td>
+									<td class="112 reservationBtn"><p></p></td>
+									<td class="113 reservationBtn"><p></p></td>
+									<td class="114 reservationBtn"><p></p></td>
+									<td class="115 reservationBtn"><p></p></td>
+								</tr>
+							</c:forEach>
+							
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -668,7 +586,7 @@
 						<tr>
 							<td id="r1">사용기간</td>
 							<td id="r2">
-								<input name="vhclStartDate" type="date" class="inputs" style="width:140px" required>
+								<input name="vhclStartDate" type="text" class="inputs" style="width:140px" required readonly>
 								<select name="vhclStartTime" class="inputs" style="width:110px" required>
 									<option disabled selected>시작 시각</option>
 									<option value="10">10:00</option>
@@ -683,7 +601,7 @@
 									<option value="19">7:00</option>
 								</select>
 								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-								<input name="vhclEndDate" type="date" class="inputs" style="width:140px" required>
+								<input name="vhclEndDate" type="text" class="inputs" style="width:140px" required readonly>
 								<select name="vhclEndTime" class="inputs" style="width:110px" required>
 									<option disabled selected>종료 시각</option>
 									<option value="10">10:00</option>
@@ -743,11 +661,173 @@
 	</div>
 	
 	
+	
+	<!-- 캘린더 테이블 -->	
+	<script>
+		$(document).ready(function(){
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			
+			var newYear = "<c:out value='${md.year}'/>";
+			var newMonth = "<c:out value='${md.month}'/>";
+			var newDay =  "<c:out value='${md.day}'/>";
+			
+			// 날짜 변경값 있을 경우
+			if (newYear != "") {
+				$("#calYear").text(newYear);
+				$("#calMonth").text(newMonth);
+				$("#calDay").text(newDay);
+				
+			} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
+				$("#calYear").text(year);
+				$("#calMonth").text(month);
+				$("#calDay").text(day);
+			}
+			
+			/* 이전으로  */
+			$("#arrowLeft").click(function() {
+				
+				// 버튼 처음 눌렀을때.
+				// 오늘날짜 -1 
+				date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
+	
+				year = date.getFullYear();
+				month = date.getMonth() + 1;
+				day = date.getDate();
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				$("#calDay").text(day);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+				$("input[name=date]").attr("value", day);
+				
+				listAjax();
+	
+			});	
+			
+			
+			$("#arrowRight").click(function() {
+				
+				// 버튼 처음 눌렀을때.
+				// 오늘날짜 -1 
+				date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
+	
+				year = date.getFullYear();
+				month = date.getMonth() + 1;
+				day = date.getDate();
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				$("#calDay").text(day);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+				$("input[name=date]").attr("value", day);
+				
+				listAjax();
+				
+			});	
+		
+		});
+	</script>
+				
+	<script>
+		var time = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+		var code = [111, 112, 113, 114, 115];
+		
+		$(function(){
+			listAjax();
+		});
+		
+		function init(){
+			
+			var value = "";
+			
+			for(var t=10; t<=19; t++){
+				value += '<tr id="' + t + '">' + 
+							'<td class="111 reservationBtn"><p></p></td>' + 
+							'<td class="112 reservationBtn"><p></p></td>' +
+							'<td class="113 reservationBtn"><p></p></td>' +
+							'<td class="114 reservationBtn"><p></p></td>' +
+							'<td class="115 reservationBtn"><p></p></td>' +
+						 '</tr>';			
+			}
+			
+			$("#vhclSC tbody").html(value);
+		}
+		
+		function listAjax(){
+			$.ajax({
+				url:"currentStatusAjax.ve",
+				data:{calYear:$("#calYear").text(),
+					  calMonth:$("#calMonth").text(),
+					  calDay:$("#calDay").text()},
+				success:function(data){
+					
+					init();
+					
+					for(var i in data){
+						
+						for(var t in time){
+							
+							if(data[i].vhclStartTime == time[t]){
+								
+								for(var c in code){
+									if(data[i].vhclCode == code[c]){
+										
+										showReserve(time[t], code[c], data[i]);
+										
+									}
+								}
+							}
+						}
+					}
+				}, error:function(){
+					console.log("일별 예약 현황 리스트 조회 ajax 통신 실패");
+				}
+			});
+		}
+		
+		function showReserve(time, code, data){
+
+			var count = data.vhclEndTime - data.vhclStartTime;
+			
+			var info = data.deptTitle + "  " + data.empName;
+			
+			if(count > 1){
+				
+				$("#" + time + " ." + code).attr("rowspan", count).text(info).addClass("reserved").removeClass("reservationBtn");
+				
+				for(var i=time+1; i<data.vhclEndTime; i++){
+					$("#" + i + " ." + code).remove();
+				}
+				
+			}else{
+				$("#" + time + " ." + code).text(info).addClass("reserved").attr("disabled", "true").removeClass("reservationBtn");
+			}
+			
+		}
+		
+	</script>
+
+	<!-- 예약하기 모달 ajax -->	
+	<script>
+		function myReserveList(today, startTime, endTime, vhclInfo){
+			
+			$.ajax({
+				url:"reserveInfo.ve",
+				data:
+			});
+		}
+	</script>
+	
 	<!-- 나의 예약 현황 리스트 조회 ajax -->
 	<script>
 		function myReserveList(cur){
-			
-			
 			
 			 $.ajax({
 				url:"myReserve.ve",
@@ -902,84 +982,31 @@
 		});
 
 		/* 예약하기 모달 여는 function */
-		$("#reservationBtn").on("click",function(){
-				$("#reservation").click();
-		});
-	</script>
-	
-	<!-- 캘린더 테이블 -->
-	<script>
-		$(document).ready(function() {
-			var date = new Date();
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var day = date.getDate();
-
-			var newYear = "<c:out value='${mds.year}'/>";
-			var newMonth = "<c:out value='${mds.month}'/>";
-			var newDay =  "<c:out value='${mds.date}'/>";
-		 	
-			// 날짜 변경값 있을 경우
-			if (newYear != "") {
-				$("#calYear").text(newYear);
-				$("#calMonth").text(newMonth);
-				$("#calDay").text(newDay);
-				
-			} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
-				$("#calYear").text(year);
-				$("#calMonth").text(month);
-				$("#calDay").text(day);
+		$(document).on("click", ".reservationBtn", function(){
+			
+			//console.log($(this).attr("class").substring(0, 3));
+			//console.log($(this).parent().attr("id"));
+			
+			var code = $(this).attr("class").substring(0, 3);
+			var time = $(this).parent().attr("id");
+			//13
+			// 14 ~ 19 
+			
+			console.log(code);
+			console.log(time);
+			
+			var reser;
+			for(var t=Number(time)+1; t<=19; t++){
+				//console.log($("#" + t + " ." + code));
+				if($("#" + t + " ." + code).attr("disabled") == "disabled"){
+					reser = t;
+				}
 			}
 			
-			/* 이전으로  */
-			$("#arrowLeft").click(function() {
-				month = month - 1;
-				if (month < 1) {
-					month = 12;
-					year = year - 1;
-					
-				}
-				$("#calMonth").text(month);
-				$("#calYear").text(year);
-				$("#calDay").text(day);
-				
-
-				$("input[name=month]").attr("value", month);
-				$("input[name=year]").attr("value", year);
-				$("input[name=day]").attr("value", day);
-
-				if (newYear != "") {
-					newMonth = newMonth - 1;
-					if (newMonth < 1) {
-						newMonth = 12;
-						newYear = newYear - 1;
-					}
-					$("#calMonth").text(newMonth);
-					$("#calYear").text(newYear);
-					$("#calDay").text(newDay);
-
-					$("input[name=month]").attr("value", newMonth);
-					$("input[name=year]").attr("value", newYear);
-					$("input[name=day]").attr("value", newDay);
-				}
-
-				$("#changeMonthForm").submit();
-
-			});
+			console.log(reser);
 			
-			/* 다음으로 */
-			$("#arrowRight").click(function() {
-				date = date.getDate() + 1
-				newYear = date.getFullYear();
-				newMonth = date.getMonth() + 1;
-				newDay = date.getDate() + 1;
-
-				$("input[name=month]").attr("value", newMonth);
-				$("input[name=year]").attr("value", newYear);
-				$("input[name=day]").attr("value", newDay);
-				
-				$("#changeMonthForm").submit(); 
-			});
+			
+			$("#reservation").click();
 		});
 	</script>
 	

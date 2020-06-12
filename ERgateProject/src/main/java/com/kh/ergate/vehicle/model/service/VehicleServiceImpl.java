@@ -22,25 +22,23 @@ public class VehicleServiceImpl implements VehicleService {
 	private VehicleDao vDao;
 	
 	
+	// 업무차량 예약 현황 조회용 서비스 (일별)
+	@Override
+	public ArrayList<VehicleReservation> currentStatusList(String date) {
+		return vDao.currentStatusList(sqlSession, date);
+	}
+	
 	// 나의 예약 현황 총 개수 조회용 서비스
 	@Override
 	public int selectReserveListCount(String empId) {
 		return vDao.selectReserveListCount(sqlSession, empId);
 	}
 	
-	/*
-	// 내 예약 조회용 서비스
-	@Override
-	public ArrayList<VehicleReservation> myReserveVehicle(Employee e, PageInfo pi) {
-		return vDao.myReserveVehicle(sqlSession, e, pi);
-	}
-	*/
-	
 	// 내 예약 조회용 서비스 ajax
-		@Override
-		public ArrayList<VehicleReservation> myReserveVehicle(String empId, PageInfo pi) {
-			return vDao.myReserveVehicle(sqlSession, empId, pi);
-		}
+	@Override
+	public ArrayList<VehicleReservation> myReserveVehicle(String empId, PageInfo pi) {
+		return vDao.myReserveVehicle(sqlSession, empId, pi);
+	}
 		
 	// 차량 예약 현황 조회용 서비스 (일별)
 	@Override

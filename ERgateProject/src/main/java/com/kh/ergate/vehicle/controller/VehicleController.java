@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.Pagination;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 import com.kh.ergate.vehicle.model.service.VehicleService;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
@@ -32,26 +35,24 @@ public class VehicleController {
 	private VehicleService vService;
 	
 	
-	/*
-	// 나의 예약 현황 리스트 조회
-	@RequestMapping("myReserve.ve")
-	public String myReserveVehicle(int currentPage, Model model, HttpSession session) {
-		
-		Employee e = (Employee)session.getAttribute("loginUser");
-		
-		int listCount = vService.selectReserveListCount(e.getEmpId());
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
-		
-		ArrayList<VehicleReservation> list = vService.myReserveVehicle(e, pi);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
+	// 업무차량 메인
+	@RequestMapping("currentStatus.ve")
+	public String selectCurrentStatus() {
 		return "vehicle/vehicleCurrentStatus";
-		
 	}
-	*/
+	
+	// 업무차량 예약 현황 (일별) 조회 ajax
+	@RequestMapping("currentStatusAjax.ve")
+	public void currentStatusListAjax(String calYear, String calMonth, String calDay, HttpServletResponse response) throws JsonIOException, IOException {
+		
+		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
+		
+		ArrayList<VehicleReservation> list = vService.currentStatusList(month + "/" + calDay + "/" + calYear);
+		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(list, response.getWriter());
+
+	}
 
 	// 나의 예약 현황 리스트 조회 ajax
 	@ResponseBody
@@ -73,22 +74,6 @@ public class VehicleController {
 		
 		return new Gson().toJson(map); // {"pi": {}, "list":[{}, {}]}
 	}
-	
-	/*
-	@RequestMapping("cancelReserve.ve")
-	public String cancelReserveVehicle(String vhclReserveNo, HttpSession session) {
-		
-		int result = vService.cancelReserveVehicle(vhclReserveNo);
-		
-		if(result > 0) {
-			session.setAttribute("msg", "성공적으로 예약 취소되었습니다.");
-			return "redirect:myReserve.ve?currentPage=1";
-		}else {
-			session.setAttribute("msg", "예약 취소 실패하였습니다. 다시 시도해 주세요.");
-			return "redirect:myReserve.ve?currentPage=1";
-		}
-	}
-	*/
 	
 	// 차량 예약 취소
 	@ResponseBody
@@ -135,7 +120,6 @@ public class VehicleController {
 		
 		return "vehicle/vehicleManagement";
 	}
-	
 	// 차량 등록 - 관리자
 	@RequestMapping("insert.ve")
 	public String insertVehicle(Vehicle v, HttpSession session,
@@ -217,12 +201,7 @@ public class VehicleController {
 	
 	
 	// ---------- 페이지 이동용 ----------
-	
-	// 업무차량 메인
-	@RequestMapping("currentStatus.ve")
-	public String selectCurrentStatus() {
-		return "vehicle/vehicleCurrentStatus";
-	}
+
 	
 	// 차량 예약 현황 조회 (월별) - 관리자
 	@RequestMapping("reserveList.ve")

@@ -8,23 +8,20 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.main.model.vo.Employee;
+import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 
 @Repository("vDao")
 public class VehicleDao {
 	
+	public ArrayList<VehicleReservation> currentStatusList(SqlSessionTemplate sqlSession, String date){
+		return (ArrayList)sqlSession.selectList("vehicleMapper.currentStatusList", date);
+	}
+	
 	public int selectReserveListCount(SqlSessionTemplate sqlSession, String empId) {
 		return sqlSession.selectOne("vehicleMapper.selectReserveListCount", empId);
 	}
-	
-	/*
-	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, Employee e, PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("vehicleMapper.myReserveVehicle", e, rowBounds);
-	}
-	*/
 	
 	public ArrayList<VehicleReservation> myReserveVehicle(SqlSessionTemplate sqlSession, String empId, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();

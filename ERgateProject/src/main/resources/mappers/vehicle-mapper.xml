@@ -27,6 +27,7 @@
 		<result column="VHCL_MODEL" property="vhclModel"/>
 		<result column="VHCL_NO" property="vhclNo"/>
 		<result column="VHCL_IMAGE" property="vhclImage"/>
+		<result column="EMP_NAME" property="empName"/>
 	</resultMap>
 	
 	<select id="selectReserveListCount" parameterType="string" resultType="_int">
@@ -34,6 +35,16 @@
       	  FROM VEHICLE_RESERVATION
       	 WHERE EMP_ID=#{empId}
 		 	   AND VHCL_RESERVE_STATUS='Y'
+	</select>
+	
+	<select id="currentStatusList" parameterType="string" resultMap="vehicleReservationResultSet">
+		SELECT VHCL_RESERVE_NO, EMP_ID, VHCL_CODE, VHCL_RESERVE_DATE, DEPT_TITLE, VHCL_START_DATE, VHCL_START_TIME, 
+			   VHCL_END_DATE, VHCL_END_TIME, VHCL_PURPOSE, VHCL_RESERVE_STATUS, VHCL_MODEL, VHCL_NO, VHCL_IMAGE, 
+			   EMP_NAME
+		  FROM VEHICLE_RESERVATION
+		  JOIN VEHICLE USING(VHCL_CODE)
+		  JOIN EMPLOYEE USING(EMP_ID)
+		 WHERE VHCL_START_DATE = #{date}
 	</select>
 	
 	<select id="myReserveVehicle" parameterType="string" resultMap="vehicleReservationResultSet">

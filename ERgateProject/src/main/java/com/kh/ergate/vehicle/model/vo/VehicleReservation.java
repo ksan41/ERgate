@@ -30,5 +30,6 @@ public class VehicleReservation {
 	private String vhclModel;
 	private String vhclNo;
 	private String vhclImage;
+	private String empName;
 
 }
