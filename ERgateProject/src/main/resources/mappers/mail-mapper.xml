@@ -30,4 +30,35 @@
 		 order by mail_no desc
 	</select>
 
+	<select id="searchListCount" parameterType="com.kh.ergate.mail.model.vo.SearchCondition" resultType="_int">
+		select count(*)
+		  from email
+		 where mail_status='Y'
+		    <if test="mailnameFrom != null">
+				AND mailname_from LIKE '%' || #{mailnameFrom} || '%'  
+			</if>
+			<if test="mailTitle != null">
+				AND mail_TITLE LIKE '%' || #{mailTitle} || '%'
+			</if>
+			<if test="mailContent != null">
+				AND mail_CONTENT LIKE '%' || #{mailContent} || '%'
+			</if>
+	</select>
+	
+	<select id="searchList" parameterType="com.kh.ergate.mail.model.vo.SearchCondition" resultMap="emailResultSet">
+		select * 
+		  from email
+		 where mail_status='Y'
+		 	<if test="mailnameFrom != null">
+				AND mailname_From LIKE '%' || #{mailnameFrom} || '%'  
+			</if>
+			<if test="mailTitle != null">
+				AND mail_TITLE LIKE '%' || #{mailTitle} || '%'
+			</if>
+			<if test="mailContent != null">
+				AND mail_CONTENT LIKE '%' || #{mailContent} || '%'
+			</if>
+		 order by mail_no desc
+	</select>
+
 </mapper>

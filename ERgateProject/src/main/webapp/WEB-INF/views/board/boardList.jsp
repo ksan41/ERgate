@@ -234,7 +234,7 @@
 		</div>
 		<div class="contentArea">
 
-			<button class="bigBtn insertBoardBtn" onclick="location.href='enrollForm.bo'">글쓰기</button>
+			<button class="bigBtn insertBoardBtn" onclick="location.href='enrollForm.bo?currentPage=${param.currentPage}'">글쓰기</button>
 
 			<!-- 검색바 -->
 			<form id="searchForm" action="search.bo" method="get">

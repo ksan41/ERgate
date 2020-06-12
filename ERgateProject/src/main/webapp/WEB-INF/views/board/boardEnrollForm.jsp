@@ -293,7 +293,7 @@
 			$("form[name=boardEnroll]").submit();
 		}); */
 		function cancleBack(){
-			location.href="detail.bo?bno=" + ${b.boardNo} + "&currentPage=" + ${currentPage};
+			location.href="detail.bo?bno=" + ${b.boardNo} + "&currentPage=" + ${param.currentPage};
 		}
 		
 		
@@ -650,11 +650,11 @@
                     success : function(result) {
                         if (result >= 1) {
                             alert("게시글이수정되었습니다.");
-                            location.href="list.bo?currentPage=1";
+                            location.href="list.bo?currentPage=" + ${param.currentPage};
                             fileNum = 0;
                         } else {
                             alert("게시글 수정에 실패하였습니다.");
-                            location.href="list.bo?currentPage=1";
+                            location.href="list.bo?currentPage=" + ${param.currentPage};
                             fileNum = 0;
                         }
                         
