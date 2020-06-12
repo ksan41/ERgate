@@ -566,8 +566,11 @@ html, body {
                          <tr>
                            <td id="r1">참석자</td>
                            <td id="r2">
-                           <button id="searchBtn2" class="searchBtn">참석자 지정</button>
-                           	  <textarea cols="60" rows="4" id="callPeople" name="callPeople"></textarea>   
+                         	<button id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddparticipants','_blank');">참석자 지정</button> 
+                           	  <!--  <button id="" class="searchBtn" onclick="location.href='joinPeople.sc'">참석자 지정</button> -->
+                         
+                           	  <textarea cols="60" rows="4" id="joinPeople" name="joinPeople"></textarea>  
+                           	    
                            </td>
                         </tr>
                         
@@ -575,7 +578,7 @@ html, body {
                            <td id="r1">수신자</td>
                            <td id="r2">
                            <button id="searchBtn2" class="searchBtn" >수신자 지정</button>
-                              <textarea cols="60" rows="4" id="joinPeople" name="joinPeople"></textarea>  
+       							<textarea cols="60" rows="4" id="callPeople" name="callPeople"></textarea> 
                            </td>
                         </tr> 
                        

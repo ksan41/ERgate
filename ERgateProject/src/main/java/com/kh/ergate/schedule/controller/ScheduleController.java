@@ -39,6 +39,12 @@ public class ScheduleController {
 	}
 	
 	
+	  // 참석자 팝업 요청용
+	  @RequestMapping("joinPeople.sc") 
+	  public String approvalPath() { 
+		  return "schedule/scheduleAddparticipants"; 
+	  }
+	
 	
 	@RequestMapping("insert.sc")
 	public String insertSchedule(Schedule s, Model model,HttpSession session) {
@@ -59,10 +65,8 @@ public class ScheduleController {
 			
 		}
 		
-		
-		
 	}
-	
+
 	
 	
 	 // @ResponseBody
