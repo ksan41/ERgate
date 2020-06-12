@@ -17,7 +17,9 @@ public class Email {
 	private int mailNo;
 	private String mailImportFlag;
 	private String mailFrom;
+	private String mailnameFrom;
 	private String mailTo;
+	private String mailnameTo;
 	private String mailTitle;
 	private String mailContent;
 	private String mailAttachment;

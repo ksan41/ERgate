@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
+
+	<resultMap id="emailResultSet" type="Email">
+		<id column="mail_no" property="mailNo"/>
+		<result column="mail_import_flag" property="mailImportFlag"/>
+		<result column="mail_from" property="mailFrom"/>
+		<result column="mailname_from" property="mailnameFrom"/>
+		<result column="mail_to" property="mailTo"/>
+		<result column="mailname_to" property="mailnameTo"/>
+		<result column="mail_title" property="mailTitle"/>
+		<result column="mail_content" property="mailContent"/>
+		<result column="mail_attachment" property="mailAttachment"/>
+		<result column="mail_date" property="mailDate"/>
+		<result column="mail_read_flag" property="mailReadFlag"/>
+		<result column="mail_status" property="mailStatus"/>
+	</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+		select count(*)
+		  from email
+		 where mail_status='Y'
+	</select>
+	
+	<select id="selectList" resultMap="emailResultSet">
+		select * 
+		  from email
+		 where mail_status='Y'
+		 order by mail_no desc
+	</select>
+
 </mapper>

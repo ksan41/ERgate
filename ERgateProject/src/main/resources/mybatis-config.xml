@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="com.kh.ergate.group.model.vo.Search" alias="Search" />
       <typeAlias type="com.kh.ergate.attendance.model.vo.Holiday" alias="Holiday"/>
 	  <typeAlias type="com.kh.ergate.schedule.model.vo.Schedule" alias="Schedule" />
+	  <typeAlias type="com.kh.ergate.mail.model.vo.Email" alias="Email" />
    </typeAliases>
    
    

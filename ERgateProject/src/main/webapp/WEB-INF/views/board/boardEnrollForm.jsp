@@ -281,7 +281,7 @@
 						<button id="submitBoard" class="bigBtn" onclick="updateLoadFile();" style="background: rgb(26, 188, 156);">수정</button>
 					</c:otherwise>
 				</c:choose>
-				<button class="bigBtn">취소</button>
+				<button class="bigBtn" onclick="cancleBack();">취소</button>
 			</div>
 			<br> <br><br>
 		</div>
@@ -292,6 +292,10 @@
 		/* $("#submitBoard").click(function(){
 			$("form[name=boardEnroll]").submit();
 		}); */
+		function cancleBack(){
+			location.href="detail.bo?bno=" + ${b.boardNo} + "&currentPage=" + ${currentPage};
+		}
+		
 		
 	     $(document).ready(function() {
              $("#input_file").bind('change', function() {
