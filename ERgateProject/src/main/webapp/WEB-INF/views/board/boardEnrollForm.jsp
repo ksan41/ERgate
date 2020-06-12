@@ -211,6 +211,7 @@
 			<h4 style="margin-left: 1180px;">사내게시판 작성</h4>
 			<form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="get">
 			<!-- <form name="boardEnroll" action="enroll.bo" method="get"> -->
+				
 				<table id="boardDetail">
 					<tr>
 						<th colspan="2" style="text-align:left;">글제목</th>
@@ -267,6 +268,7 @@
 				<c:forEach items="${ btList }" var="bt">
 					<input type="file" id="ffno" name="ffno" value="">
 				</c:forEach>
+				
 				</div>
 			</form>
 			<br>
@@ -302,10 +304,7 @@
            var flsize = $("#fileListSize").val();
            var fno = new Array();
            var fname = 1;
-           var fileNum = 0;
-           
-           
-           
+
            if(fl == 'Y'){
         	   for (var i = 0; i < flsize; i++) {
         		   
@@ -337,6 +336,7 @@
                            html += "    <td id='dropZone' class='left' >";
                            html += result.originName + " (" + nowfileSizeStr +") " 
                                    + "<span id='deleteBtn' class='material-icons nowDelete' onclick='deleteNowFile(" + result.attachmentNo +"); return false;'>highlight_off</span>"
+                                   + "<input type='hidden' name='nowFileNum' value='"+ result.attachmentNo +"'>";
                            html += "    </td>"
                            html += "</tr>"
                
@@ -551,10 +551,7 @@
              }
          }
  		 
-         function deleteNowFile(nowNum) {
-        	 console.log(nowNum);
-        	 $("#nowfileTr_" + nowNum).remove();
-         }
+         
          
          
          // 파일 등록
@@ -572,6 +569,7 @@
                 for (var i = 0; i < uploadFileList.length; i++) {
                     formData.append('files', fileList[uploadFileList[i]]);
                 }
+                
                 /* console.log(formData.getAll('boardTitle'));
                 console.log(formData.getAll('boardContent'));
                 console.log(formData.getAll('boardWriter'));
@@ -608,10 +606,22 @@
 		 
          
          
+         /* function nowDeleteView(nowFno){
+      	   nowFno[fileNum] = nowFno;
+      	   fileNum = fileNum + 1;
+         } */
+         var fileNum = 0;
+         var nowFno = new Array();
+         function deleteNowFile(nowNum) {
+        	 console.log(nowNum);
+        	 nowFno[fileNum] = nowNum;
+        	 $("#nowfileTr_" + nowNum).remove();
+        	 fileNum = fileNum + 1;
+         }
          function updateLoadFile() { // 수정
              // 등록할 파일 리스트
               var uploadFileList = Object.keys(fileList);
-             	
+             	console.log(nowFno[1]);
                 var form = $('#uploadForm');
                 console.log(form[0]);
                 var formData = new FormData(form[0]);
@@ -623,7 +633,7 @@
                 for (var i = 0; i < uploadFileList.length; i++) {
                     formData.append('files', fileList[uploadFileList[i]]);
                 }
-                
+                formData.append('nowFno', nowFno);
                 $.ajax({
                     url : "realUpdate.bo",
                     data : formData,
@@ -637,9 +647,11 @@
                         if (result >= 1) {
                             alert("게시글이수정되었습니다.");
                             location.href="list.bo?currentPage=1";
+                            fileNum = 0;
                         } else {
                             alert("게시글 수정에 실패하였습니다.");
                             location.href="list.bo?currentPage=1";
+                            fileNum = 0;
                         }
                         
                     },

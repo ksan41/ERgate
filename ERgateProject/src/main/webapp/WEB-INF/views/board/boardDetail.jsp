@@ -309,8 +309,10 @@
 			<div id="btnArea">
 				<input type="hidden" name="boardNo" value="${b.boardNo }">
 				<button class="bigBtn listBtn" style="background: rgb(26, 188, 156);">목록</button>
+				<c:if test='${loginUser.empName == b.boardWriter }'>
 				<button class="bigBtn updateBtn">수정</button>
 				<button class="bigBtn deleteBtn">삭제</button>
+				</c:if>
 			</div>
 			<br><br>
 			<p style="margin-bottom:5px;font-weight:bold;">댓글작성</p>

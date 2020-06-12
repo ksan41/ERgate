@@ -152,7 +152,16 @@
 	
 	<insert id="insertBoardAttachment" parameterType="BoardAttachment">
 		insert into Board_Attachment 
-		values(seq_atboard_no.nextval, #{originName}, #{changeName}, 'B', seq_board_no.currval, #{boardFileSize}, #{boardFilePath})
+		values(seq_atboard_no.nextval, #{originName}, #{changeName}, 'B', 
+		<choose> 
+			<when test='refBoardNo != ""'> 
+			#{refBoardNo}
+			</when> 
+			<otherwise> 
+			seq_board_no.currval
+			</otherwise> 
+		</choose>
+		, #{boardFileSize}, #{boardFilePath})
 	</insert>
 	
 	<update id="updateBoardFlag">
@@ -222,6 +231,19 @@
 		from Board_Attachment
 		where attachment_no = #{fno}
 	</select>
+	
+	<delete id="fileDbDelete" parameterType="_int">
+		delete from board_attachment
+		where attachment_no = #{nowFno}
+	</delete>
+	
+	<update id="updateBoard" parameterType="Board">
+		update Board set
+		board_title = #{boardTitle},
+		board_content = #{boardContent},
+		board_modify_date = sysdate
+		where board_no = #{boardNo}
+	</update>
 	
 </mapper>
 
