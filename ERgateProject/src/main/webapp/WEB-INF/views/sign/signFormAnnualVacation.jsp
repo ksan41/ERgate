@@ -516,7 +516,7 @@ h2, h3 {
 			
 			var result = (end - start) / 1000 / 60 / 60 / 24 + 1;
 			
-			if(start != null && end != null){
+			if(!isNaN(result)){
 				//console.log(result);
 				$("input[name=holidayUsecount]").attr("value",result);
 				$("#remainDay").text(remainDay-result);
@@ -532,7 +532,7 @@ h2, h3 {
 			
 			var result = (end - start) / 1000 / 60 / 60 / 24 + 1;
 			//console.log(result);
-			if(start != null && end != null){
+			if(!isNaN(result)){
 				$("input[name=holidayUsecount]").attr("value",result);
 				$("#remainDay").text(remainDay-result);
 			}
