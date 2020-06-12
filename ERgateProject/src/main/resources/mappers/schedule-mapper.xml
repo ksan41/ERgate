@@ -54,7 +54,7 @@
 	<delete id="deleteSchedule" parameterType="_int">
 		delete
 		from schedule
-		where schedule_no=${ScheduleNo}
+		where schedule_no=#{scheduleNo}
 	</delete>
 
 </mapper>

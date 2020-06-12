@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -94,22 +96,19 @@ public class ScheduleController {
 		  
 		  
 	  }
-	  
+	  @ResponseBody
 	  @RequestMapping("delete.sc")
-	  public String deleteSchedule(int ScheduleNo, Model model, HttpSession session) {
+	  public String deleteSchedule(int scheduleNo, Model model) {
+		  //int scc =Integer.parseInt(scheduleNo);
 		  
-		  int result = sService.deleteSchedule(ScheduleNo);
+	
+		  int result = sService.deleteSchedule(scheduleNo);
 		  
-		  if(result > 0) {
+		
+		
+			  return String.valueOf(result);
 			  
-			  session.invalidate();
-			  return "redirect:selectList.sc";
-			  
-		  }else {
-			  
-			  model.addAttribute("msg", "일정 삭제 실패!!!!");
-			  return "common/errorPage";
-		  }
+		
 	  }
 	  
 	 

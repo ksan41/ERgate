@@ -104,8 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
         		data:"scheduleNo="+event.event.id,
         		asyns:false,
           		success:function(data){
-
+					
           			if(data.scheduleKind=="개인일정"){
+          				$("#postForm").find('input[id=tempNo]').val(data.scheduleNo);
           			 	$("#list_schedule_Ga").find('input[name=scheduleNo]').val(data.scheduleNo);
           			 	$("#list_schedule_Ga").find('input[name=empId]').val(data.empId);
 	                    $("#list_schedule_Ga").find('input[name=scheduleTitle]').val(data.scheduleTitle);
@@ -122,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	                    $('#list_schedule_Ga').modal('show');
           			}
           			else if(data.scheduleKind=="업무일정"){
+          				$("#postForm").find('input[id=tempNo]').val(data.scheduleNo);
           				$("#list_schedule_Up").find('input[name=scheduleNo]').val(data.scheduleNo);
           			 	$("#list_schedule_Up").find('input[name=empId]').val(data.empId);
 	                    $("#list_schedule_Up").find('input[name=scheduleTitle]').val(data.scheduleTitle);
@@ -138,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	                    $('#list_schedule_Up').modal('show');
                        
                     }else if(data.scheduleKind=="공유일정"){
+                    	$("#postForm").find('input[id=tempNo]').val(data.scheduleNo);
                     	$("#list_schedule_Go").find('input[name=scheduleNo]').val(data.scheduleNo);
           			 	$("#list_schedule_Go").find('input[name=empId]').val(data.empId);
 	                    $("#list_schedule_Go").find('input[name=scheduleTitle]').val(data.scheduleTitle);
@@ -720,13 +723,15 @@ html, body {
                                   
                   <div class="btns">
 		            <button id="updateBtn" type="submit">수정하기</button>
-		            <button type="button" onclick="$('#postForm').submit();" id="updateBtn">삭제하기</button>
+		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
 		            <button id="resetBtn" type="reset">취소</button>
 		         </div> 
 		      </form>   
-          
+            
             </div>                
   </div>
+  
+  
   <div id="list_schedule_Up" class="modal">
    <div class="modal-title">업무일정 상세보기</div>
          <div class="modal-content">
@@ -801,12 +806,14 @@ html, body {
                     
                   <div class="btns">
 		            <button id="updateBtn" type="button">수정하기</button>
-		            <button type="button" onclick="$('#postForm').submit();" id="updateBtn">삭제하기</button>
+		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
 		            <button id="resetBtn" type="reset">취소</button>
 		         </div> 
              </form>
+             
             </div>                
-</div>
+       </div>
+          
 
   <div id="list_schedule_Go" class="modal">
    <div class="modal-title">공유일정 상세보기</div>
@@ -860,17 +867,35 @@ html, body {
                     
                   <div class="btns">
 		            <button id="updateBtn" type="button">수정하기</button>
-		            <button type="button" onclick="$('#postForm').submit();" id="updateBtn">삭제하기</button>
+		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
 		            <button id="resetBtn" type="reset">취소</button>
 		         </div> 
 		       </form>
-          </div>
-          
-          <form id="postForm" action="delete.sc" method="post">
-          	<input type="hidden" name="ScheduleNo" value="${ scloginUser.empId }">
-          </form>	 
+          </div>      
                         
-</div>   
+   </div>
+   <script>
+   
+   $(document).ready(function(){
+	   		
+	   		
+	   		$(".tempnn").on("click",function(){
+	   			var thisNo = $(this).parent().parent().find('input[name=scheduleNo]').val();
+	   			$.ajax({
+	        		url:"delete.sc",      		
+	        		type:"GET",        		
+	        		data:"scheduleNo="+thisNo,
+	        		asyns:false,
+	          		success:function(data){
+						location.href="selectList.sc";
+	          		} 
+
+	        	});   
+	      	});
+   });
+
+   	
+   </script>   
 
    <!-- 모달용 스크립트 -->
    <script>
