@@ -333,18 +333,16 @@
                            }
                            
                     	   var html = "";
-                           html += "<tr id='nowfileTr_" + fileNum + "'>";
+                           html += "<tr id='nowfileTr_" + result.attachmentNo + "'>";
                            html += "    <td id='dropZone' class='left' >";
                            html += result.originName + " (" + nowfileSizeStr +") " 
-                                   + "<span id='deleteBtn' class='material-icons' onclick='deleteFile(" + fileNum + "); return false;'>highlight_off</span>"
+                                   + "<span id='deleteBtn' class='material-icons nowDelete' onclick='deleteNowFile(" + result.attachmentNo +"); return false;'>highlight_off</span>"
                            html += "    </td>"
                            html += "</tr>"
                
                            $('#fileTableTbody').append(html);
                     	   $("#fileDragDesc").hide(); 
                            $("#fileListTable").show();
-                           
-                           fileNum = fileNum + 1;
                        },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
     	 					console.log("ajax 통신 실패!");
     	 			   }
@@ -552,7 +550,13 @@
                  $("fileListTable").hide();
              }
          }
- 
+ 		 
+         function deleteNowFile(nowNum) {
+        	 console.log(nowNum);
+        	 $("#nowfileTr_" + nowNum).remove();
+         }
+         
+         
          // 파일 등록
          function uploadFile() {
              // 등록할 파일 리스트
