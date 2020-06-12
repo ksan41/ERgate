@@ -337,14 +337,14 @@
 			<table class="boardTable">
 				<thead>
 					<tr>
-						<th>상태</th>
+						<th width="100">상태</th>
 						<th width="130">문서분류</th>
-						<th width="130">문서번호</th>
-						<th>기안부서</th>
-						<th>기안자</th>
-						<th>결재자</th>
-						<th width="400">제목</th>
-						<th>기안일시</th>
+						<th width="200">문서번호</th>
+						<th width="100">기안부서</th>
+						<th width="150">기안자</th>
+						<th width="150">결재자</th>
+						<th>제목</th>
+						<th width="120">기안일시</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -447,14 +447,14 @@
 					</c:when>
 					<c:otherwise>
 						<ul class="pagingBar">
-							<li><a href="expenseListM.si?currentPage=1?year=${sds.year }?month=${sds.month}">&lt;&lt;</a></li>
+							<li><a href="expenseListM.si?currentPage=1&year=${sds.year }&month=${sds.month}">&lt;&lt;</a></li>
 							<c:choose>
 								<c:when test="${pi.currentPage eq 1 }">
 									<li><a href="#" class="pageNoClick">&lt;</a></li>
 								</c:when>
 								<c:otherwise>
 									<li><a
-										href="expenseListM.si?currentPage=${pi.currentPage -1 }?year=${sds.year }?month=${sds.month}">&lt;</a></li>
+										href="expenseListM.si?currentPage=${pi.currentPage -1 }&year=${sds.year }&month=${sds.month}">&lt;</a></li>
 								</c:otherwise>
 							</c:choose>
 							<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
@@ -463,7 +463,7 @@
 										<li><span>${p}</span>
 									</c:when>
 									<c:otherwise>
-										<li><a href="expenseListM.si?currentPage=${p}?year=${sds.year }?month=${sds.month}">${p}</a></li>
+										<li><a href="expenseListM.si?currentPage=${p}&year=${sds.year }&month=${sds.month}">${p}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -474,10 +474,10 @@
 								</c:when>
 								<c:otherwise>
 									<li><a
-										href="expenseListM.si?currentPage=${pi.currentPage + 1 }?year=${sds.year }?month=${sds.month}">&gt;</a></li>
+										href="expenseListM.si?currentPage=${pi.currentPage + 1 }&year=${sds.year }&month=${sds.month}">&gt;</a></li>
 								</c:otherwise>
 							</c:choose>
-							<li><a href="expenseListM.si?currentPage=${pi.maxPage }?year=${sds.year }?month=${sds.month}">&gt;&gt;</a></li>
+							<li><a href="expenseListM.si?currentPage=${pi.maxPage }&year=${sds.year }&month=${sds.month}">&gt;&gt;</a></li>
 						</ul>
 					</c:otherwise>
 				</c:choose>
