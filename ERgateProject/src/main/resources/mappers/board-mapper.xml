@@ -214,6 +214,13 @@
 		board_status = 'N'
 		where board_no = #{bno}
 	</update>
+	
+	<select id="fileOne" parameterType="_int" resultMap="attachResultSet">
+		select *
+		from Board_Attachment
+		where attachment_no = #{fno}
+	</select>
+	
 </mapper>
 
 

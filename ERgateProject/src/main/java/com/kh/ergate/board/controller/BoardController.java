@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -184,7 +185,6 @@ public class BoardController {
 		
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources + "\\uploadFiles\\board\\";
-		System.out.println("생성시 : " + resources);
 		// 원본명 (aaa.jpg)
 		String originName = file.getOriginalFilename();
 		
@@ -211,7 +211,6 @@ public class BoardController {
 	public void deleteFile(String fileName, HttpServletRequest request) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources + "\\uploadFiles\\board\\";
-		System.out.println("삭제시: " + resources);
 		File deleteFile = new File(savePath + fileName);
 		deleteFile.delete();
 	}
@@ -319,6 +318,31 @@ public class BoardController {
 		}
 
 	}
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="nowFile.bo", produces="application/json; charset=utf-8")
+	public MultipartFile nowFileList(int fno, HttpServletRequest request) {
+		
+		 BoardAttachment fileOne = bodService.fileOne(fno); 
+		 
+		 String resources = request.getSession().getServletContext().getRealPath("resources");
+		 String filePath = resources + "\\uploadFiles\\board\\";
+		 String fileName=fileOne.getChangeName(); 
+		 
+		 MultipartFile nowFile = (MultipartFile) new File(filePath + fileName);
+		 
+		
+		return nowFile;
+	}
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 * @RequestMapping("delete.bo") public String deleteBoard(int bno, String
 	 * fileName, HttpServletRequest request, Model model) {

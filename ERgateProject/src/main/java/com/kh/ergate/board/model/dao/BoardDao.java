@@ -121,6 +121,10 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.deleteBoard", bno);
 	}
 
+	public BoardAttachment fileOne(SqlSessionTemplate sqlSession, int fno) {
+		return sqlSession.selectOne("boardMapper.fileOne", fno);
+	}
+
 	
 	
 	

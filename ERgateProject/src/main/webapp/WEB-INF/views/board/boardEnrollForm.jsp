@@ -241,9 +241,15 @@
 							            </table>
 							        </div>
 							        <input type="hidden" id="bff" name="boardFileFlag" value="${b.boardFileFlag }">
-							        <input type="hidden" id="fileListSize" name="fileListSize" value="${fn:length(btList)-1}">
-							        <div class="fileNameList" style="display:none">
-							        
+							        <input type="hidden" id="fileListSize" name="fileListSize" value="${fn:length(btList)}">
+							        <div class="fileNameList" style="display:none;">
+							        	<table class="fnoTable" border="1">
+							        	<tr>
+							        	<c:forEach items="${ btList }" var="bt">
+							        		<td><input type="hidden" name="fno" value="${bt.attachmentNo}">${bt.attachmentNo}</td>
+							        	</c:forEach>
+							        	</tr>
+							        	</table>
 							        </div>
 						</td>
 					</tr>
@@ -256,7 +262,12 @@
 				</table>
 				<input type="hidden" name="boardWriter" value="${ loginUser.empName }">
 				<input type="hidden" name="empId" value="${ loginUser.empId }">
-				<input type="hidden" name="boardNo" value="${b.boardNo }">
+				<input type="hidden" id="boardNo" name="boardNo" value="${b.boardNo }">
+				<div class="ffnos" style="display:none;">
+				<c:forEach items="${ btList }" var="bt">
+					<input type="file" id="ffno" name="ffno" value="">
+				</c:forEach>
+				</div>
 			</form>
 			<br>
 			<div id="btnArea">
@@ -286,7 +297,34 @@
                  //this.files[0].size gets the size of your file.
                  //alert(this.files[0].size);
              });
-             
+           var bno = $("#boardNo").val();
+           var fl = $("#bff").val();
+           var flsize = $("#fileListSize").val();
+           var fno = new Array();
+           var fileLt = new Array();
+           var fname = 1;
+           var fileNum = 0;
+           if(fl == 'Y'){
+        	   for (var i = 0; i < flsize; i++) {
+        		   
+				   fno[i] = $(".fnoTable tr td:nth-child("+ fname +")").find('input').val();
+				   fname = fname + 1;
+        		   $.ajax({
+                       url : "nowFile.bo",
+                       traditional : true,
+                       data : {fno:fno[i]},
+                       type : 'POST',
+                       success : function(result) {
+              
+                    	   fileLt[fileNum] = result;
+                    	   fileNum = fileNum + 1;
+                       },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+    	 					console.log("ajax 통신 실패!");
+    	 			   }
+                   });
+               }
+        	   selectFileJava(fileLt);
+           }
              
          });
 	     
@@ -363,10 +401,11 @@
          // 파일 선택시
          function selectFile(fileObject) {
              var files = null;
- 
+ 			 console.log(fileObject);
              if (fileObject != null) {
                  // 파일  등록시
                  files = fileObject;
+                 console.log(files);
              }
  
              // 다중파일 등록
@@ -443,7 +482,7 @@
                  alert("ERROR");
              }
          }
- 
+         
          // 업로드 파일 목록 생성
          function addFileList(fIndex, fileName, fileSizeStr) {
              /* if (fileSize.match("^0")) {
@@ -536,7 +575,8 @@
 	 				}
                 });
          }
-		
+		 
+         
          
          function updateLoadFile() { // 수정
              // 등록할 파일 리스트

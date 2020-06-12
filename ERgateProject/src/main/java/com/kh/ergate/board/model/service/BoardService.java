@@ -62,6 +62,7 @@ public interface BoardService {
 	
 	// 5. 게시글 수정용 서비스
 	int updateBoard(Board b);
+	BoardAttachment fileOne(int fno);
 	
 	
 
