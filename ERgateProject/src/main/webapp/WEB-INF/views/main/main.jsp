@@ -122,6 +122,9 @@
     	background: none;
     	margin-top: 10px;
     }
+    .cursorPointer:hover{
+    	cursor:pointer;
+    }
     /* 각 영역 제목, 버튼 */
     
     /* 일정관리 영역 */
@@ -265,8 +268,8 @@
 						<table id="mainScheduleTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="${ pageContext.servletContext.contextPath }/resources/icons/event.png">
-									<span style="vertical-align: top;">일정관리</span>
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/event.png" onclick="location.href='selectList.sc';" class="cursorPointer">
+									<span style="vertical-align: top;" onclick="location.href='selectList.sc';" class="cursorPointer">일정관리</span>
 								</th>
 								<td class="mainNextArea">
 									<div id="mainScheduleRadio">
@@ -277,7 +280,9 @@
 										<input type="radio" id="share" class="mainRadioBtn" checked>
 										<label for="share" class="mainRadioLabel">공유</label>
 									</div>
-									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
+									<button class="mainNextBtn cursorPointer" onclick="location.href='selectList.sc';">
+										<img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png">
+									</button>
 								</td>
 							</tr>
 							<tr>
@@ -327,11 +332,13 @@
 						<table id="mainMailTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="${ pageContext.servletContext.contextPath }/resources/icons/mail.png">
-									<span style="vertical-align: top;">전자메일</span>
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/mail.png" onclick="location.href='mailbox.ml';" class="cursorPointer">
+									<span style="vertical-align: top;" onclick="location.href='mailbox.ml';" class="cursorPointer">전자메일</span>
 								</th>
 								<td class="mainNextArea">
-									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
+									<button class="mainNextBtn cursorPointer" onclick="location.href='mailbox.ml';">
+										<img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png">
+									</button>
 								</td>
 							</tr>
 							<tr>
@@ -393,11 +400,13 @@
 						<table id="mainNoticeTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="${ pageContext.servletContext.contextPath }/resources/icons/notice.png">
-									<span style="vertical-align: top;">공지사항</span>
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/notice.png" onclick="location.href='list.no?currentPage=1';" class="cursorPointer">
+									<span style="vertical-align: top;" onclick="location.href='list.no?currentPage=1';" class="cursorPointer">공지사항</span>
 								</th>
 								<td class="mainNextArea">
-									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
+									<button class="mainNextBtn cursorPointer" onclick="location.href='list.no?currentPage=1';">
+										<img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png">
+									</button>
 								</td>
 							</tr>
 							<tr>
@@ -449,11 +458,13 @@
 						<table id="mainSignTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="${ pageContext.servletContext.contextPath }/resources/icons/sign.png">
-									<span style="vertical-align: top;">전자결재</span>
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/sign.png" onclick="location.href='waitingList.si?currentPage=1';" class="cursorPointer">
+									<span style="vertical-align: top;" onclick="location.href='waitingList.si?currentPage=1';" class="cursorPointer">전자결재</span>
 								</th>
 								<td class="mainNextArea">
-									<button class="mainNextBtn"><img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png"></button>
+									<button class="mainNextBtn cursorPointer" onclick="location.href='waitingList.si?currentPage=1';">
+										<img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png">
+									</button>
 								</td>
 							</tr>
 							<tr>
