@@ -339,11 +339,12 @@
 				</thead>
 				<c:choose>
 					<c:when test="${empty list }">
-						<td colspan="6" rowspan="10">조회된 결과가 없습니다.</td>
+						<td colspan="6" rowspan="10"  class="pageNoClick">조회된 결과가 없습니다.</td>
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${list}" var="l">
 							<tr>
+								<input type="hidden" name="signTypeNo" value="${l.signTypeNo }">
 								<c:choose>
 									<c:when test="${l.signStatus eq 0 }">
 										<td>진행중</td>
@@ -379,9 +380,9 @@
 			<script>
 				$(function(){
 					$(".boardTable>tbody tr").click(function(){
-						var documentNo = $(this).children().eq(2).text();
-						//var signTypeNo = 
-						window.open("signDetail.si?documentNo="+ documentNo + "&signTypeNo=", "ddd",'_blank') ;
+						var documentNo = $(this).children().eq(3).text();
+						var signTypeNo = $(this).children().eq(0).val();
+						window.open("signDetail.si?documentNo="+ documentNo + "&signTypeNo="+signTypeNo, "ddd",'_blank') ;
 						
 					});
 					

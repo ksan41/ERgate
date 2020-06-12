@@ -44,12 +44,7 @@ public class SignServiceImpl implements SignService{
 		return siDao.signDetailSigner(sqlSession,sdd);
 	}
 	
-	@Override
-	public ArrayList<SignDocument> ongoingList(String month, SignDocument sd) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
 	// 상신내역 게시글수 조회용
 	@Override
 	public int selectRlistCount(SignDateSearch sds) {
@@ -85,7 +80,6 @@ public class SignServiceImpl implements SignService{
 	
 	@Override
 	public ArrayList<SignDocument> hrList(SignDocument sd) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -126,6 +120,18 @@ public class SignServiceImpl implements SignService{
 	@Override
 	public int selectRemainHoliday(String empId) {
 		return siDao.selectRemainHoliday(sqlSession,empId);
+	}
+	
+	// 진행결재함 게시글 수 조회용
+	@Override
+	public int selectOlistCount(String empId) {
+		return siDao.selectOlistCount(sqlSession,empId);
+	}
+	
+	// 진행결재함 리스트 요청용
+	@Override
+	public ArrayList<SignDocument> ongoingList(PageInfo pi, String empId) {
+		return siDao.ongoingList(sqlSession,pi,empId);
 	}
 
 }

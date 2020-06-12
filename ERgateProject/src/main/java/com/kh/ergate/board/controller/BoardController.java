@@ -297,6 +297,7 @@ public class BoardController {
 		String writer[] = form.getParameterValues("boardWriter");
 		String empId[] = form.getParameterValues("empId");
 		String boardNo[] = form.getParameterValues("boardNo");
+		String nowFnoTemp[] = form.getParameterValues("nowFno");
 		//System.out.println("제목값은? : " + title[0]); 
 		//System.out.println("내용값은? : " + content[0]);
 		//System.out.println("이름은? : " + content[0]);
@@ -306,8 +307,15 @@ public class BoardController {
 		insertB.setBoardWriter(writer[0]);
 		insertB.setEmpId(empId[0]);
 		insertB.setBoardNo(Integer.parseInt(boardNo[0]));
-		
-		System.out.println(insertB);
+		int deresult = 0;
+		if(!nowFnoTemp[0].isEmpty()) {
+			String [] nowFno = nowFnoTemp[0].split(",");
+			for(int i=0; i<nowFno.length; i++) {
+				BoardAttachment fileOne = bodService.fileOne(Integer.parseInt(nowFno[i]));
+				deresult = bodService.fileDbDelete(Integer.parseInt(nowFno[i]));
+				deleteFile(fileOne.getChangeName(), form);
+			}
+		}
 		
 		int result = 0;
 		result = bodService.updateBoard(insertB);
@@ -330,10 +338,9 @@ public class BoardController {
 				bt.setOriginName(files[i].getOriginalFilename());
 				bt.setBoardFileSize(String.valueOf(files[i].getSize()));
 				bt.setBoardFilePath(filePath);
+				bt.setRefBoardNo(Integer.parseInt(boardNo[0]));
 				result += bodService.insertBoardAttachment(bt);
 			}
-		}else {
-			result = bodService.updateBoardFlag();
 		}
 		
 		

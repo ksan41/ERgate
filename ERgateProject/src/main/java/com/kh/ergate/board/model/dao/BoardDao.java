@@ -125,24 +125,15 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.fileOne", fno);
 	}
 
-	
-	
-	
-	
-	
-	
-	/*
-	 * public int insertBoard(SqlSessionTemplate sqlSession, Board b) { return
-	 * sqlSession.insert("boardMapper.insertBoard", b); }
-	 * 
+	public int fileDbDelete(SqlSessionTemplate sqlSession, int nowFno) {
+		return sqlSession.delete("boardMapper.fileDbDelete", nowFno);
+	}
 
-	 * 
-	 * public int deleteBoard(SqlSessionTemplate sqlSession, int bno) { return
-	 * sqlSession.update("boardMapper.deleteBoard", bno); }
-	 * 
-	 * public int updateBoard(SqlSessionTemplate sqlSession, Board b) { return
-	 * sqlSession.update("boardMapper.updateBoard", b); }
-	 */
+	public int updateBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.update("boardMapper.updateBoard", b);
+	}
+
+	
 
 }
 

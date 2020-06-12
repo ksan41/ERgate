@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -172,13 +174,7 @@
 	zoom: 1.7;
 }
 
-/* 스케줄관련 아이콘스타일 */
-.schedule_icons {
-	fill: rgb(190, 190, 190); /* 검은색 : rgb(94, 94, 94)*/
-	width: 35px;
-	vertical-align: bottom;
-}
-/* 스케줄관련 아이콘스타일 */
+
 
 .material-icons{
 	font-size:40px;
@@ -187,7 +183,10 @@
 .material-icons:hover{
 	cursor:pointer;
 }
-
+.pageNoClick{
+	pointer-events: none;
+    cursor: default;
+}
 </style>
 </head>
 <body>
@@ -203,136 +202,127 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn" onclick="location.href='waitingList.si';">결재대기함</button></li>
-				<li><button class="subBtn subActive" onclick="location.href='ongoingList.si';">진행결재함</button></li>
-				<li><button class="subBtn" onclick="location.href='reportList.si';">상신내역</button></li>
-				<li><button class="subBtn" onclick="location.href='expenseList.si';">지출결의내역</button></li>
-				<li><button class="subBtn">외근&휴가내역</button></li>
+				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
+				<li><button class="subBtn" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
+				<c:if test="${loginUser.deptCode eq 'D2' }">
+					<li><button class="subBtn"
+							onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+				</c:if>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
+				</c:if>		
 			</ul>
 		</div>
 		<div class="contentArea">
 			<button class="bigBtn" onclick="location.href='formSelect.si';">기안</button>
 			<h2 style="display: inline-block; margin-left: 400px;">
-				<span class="material-icons"> arrow_left </span> 2020년 5월
-				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
-				<path
-						d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
-				<path d="M0 0h24v24H0z" fill="none" /></svg>
-				<span class="material-icons"> arrow_right </span>
+				
+				<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
+				 
 			</h2>
 			<br> <br>
-
+			
+	<script>
+		$(document).ready(function() {
+			// 기본적으로 문서 열었을때 오늘날짜 보여지도록 변수에 저장해둠
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;				
+			var day = date.getDate();
+			
+			$("#calYear").text(year);
+			$("#calMonth").text(month);
+			$("#calDay").text(day);
+		
+			
+		});
+	</script>			
+			
+			
 			<table class="boardTable">
 				<thead>
 					<tr>
-						<th>상태</th>
-						<th>문서분류</th>
-						<th>문서번호</th>
-						<th>결재자</th>
+						<th width="150">상태</th>
+						<th width="200">문서분류</th>
+						<th width="250">문서번호</th>
+						<th width="150">결재자</th>
 						<th>제목</th>
-						<th>기안일시</th>
+						<th width="150">기안일시</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
+				<c:choose>
+					<c:when test="${empty list }">
+						<td colspan="6" rowspan="10"  class="pageNoClick">조회된 결과가 없습니다.</td>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${list}" var="l">
+							<tr>
+								<input type="hidden" name="signTypeNo" value="${l.signTypeNo }">
+								<c:if test="${l.signStatus eq 0 }">
+									<td>진행중</td>
+								</c:if>
+								<td>${l.signTypeName }</td>
+								<td>${l.documentNo }</td>
+								<td>${l.empName }</td>
+								<td>${l.signTitle }</td>
+								<td>${l.draftDate }</td>
+							</tr>
+						</c:forEach>
+						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
+    						<tr>
+							<td class="pageNoClick">&nbsp;</td>
+							<td class="pageNoClick">&nbsp;</td>
+							<td class="pageNoClick">&nbsp;</td>
+							<td class="pageNoClick">&nbsp;</td>
+							<td class="pageNoClick">&nbsp;</td>
+							<td class="pageNoClick">&nbsp;</td>
+						</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</table>
 			<br>
+			
+			
+			
 			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
-			</ul>
+		<c:if test="${!empty pi}">				
+						<ul class="pagingBar">
+							<li><a href="ongoingList.si?currentPage=1">&lt;&lt;</a></li>
+							<c:choose>
+								<c:when test="${pi.currentPage eq 1 }">
+									<li><a href="#" class="pageNoClick">&lt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="ongoingList.si?currentPage=${pi.currentPage -1 }">&lt;</a></li>
+								</c:otherwise>
+							</c:choose>
+							<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+								<c:choose>
+									<c:when test="${pi.currentPage eq p }">
+										<li><span>${p}</span>
+									</c:when>
+									<c:otherwise>
+										<li><a href="ongoingList.si?currentPage=${p}">${p}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+	
+							<c:choose>
+								<c:when test="${pi.currentPage eq pi.maxPage }">
+									<li><a href="#" class="pageNoClick">&gt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a
+										href="ongoingList.si?currentPage=${pi.currentPage + 1 }">&gt;</a></li>
+								</c:otherwise>
+							</c:choose>
+							<li><a href="ongoingList.si?currentPage=${pi.maxPage }">&gt;&gt;</a></li>
+						</ul>
+					<!-- 페이징바 -->
+			</c:if>
 			<!-- 페이징바 -->
 		</div>
 	</div>
