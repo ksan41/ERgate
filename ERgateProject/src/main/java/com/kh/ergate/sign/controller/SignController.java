@@ -34,14 +34,23 @@ public class SignController {
 	  @Autowired private SignServiceImpl siService;
 	  
 	  // 결재대기리스트
-	  
 	  @RequestMapping("waitingList.si") public String
-	  selectWaitingList(SignDocument sd, Model model) { 
+	  selectWaitingList(int currentPage,HttpSession session,SignDocument sd, Model model) { 
+		  Employee e = (Employee)session.getAttribute("loginUser");	
+		  
+		  int listCount = siService.selectWlistCount(e.getEmpId());
+		  
+		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		  
+		  ArrayList<SignDocument> list = siService.selectWaitingList(pi,e.getEmpId());
+		  
+		  
+		  model.addAttribute("pi", pi); 
+		  model.addAttribute("list", list);
 		  return "sign/signWaitingList"; 
 	  }
 	  
 	  // 결재상세 요청용
-	  
 	  @RequestMapping("signDetail.si") public String signDetail(String documentNo,String signTypeNo,SignDocument sdd,SignAttachment sat, Model model) {
 		  
 		  sdd.setDocumentNo(Integer.parseInt(documentNo));
@@ -65,12 +74,15 @@ public class SignController {
 		  model.addAttribute("saList",saList);
 		  model.addAttribute("sd",sd);
 		  
+		  String view = "";
+		  // 각 문서 타입에 맞는 상세페이지 요청
 		  switch(signTypeNo) {
-		  case 0:
-		  case 1:
+		  case "0":view="sign/signDetailExpense";break;
+		  case "1":view="sign/signDetailAnnualVacation";break;
+		  case "2":view="sign/signDetailBusinessTrip";break;
 		
 		  }
-		  return "sign/signDetailExpense";
+		  return view;
 	  }
 	  
 	  // 진행결재함요청용

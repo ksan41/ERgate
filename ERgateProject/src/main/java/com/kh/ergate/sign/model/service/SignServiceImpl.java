@@ -22,11 +22,8 @@ public class SignServiceImpl implements SignService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	@Override
-	public ArrayList<SignDocument> selectWaitingList(SignDocument sd) {
-		return null;
-	}
 
+	
 	@Override
 	public SignDocument signDetail(SignDocument sdd) {
 		return siDao.signDetail(sqlSession,sdd);
@@ -132,6 +129,18 @@ public class SignServiceImpl implements SignService{
 	@Override
 	public ArrayList<SignDocument> ongoingList(PageInfo pi, String empId) {
 		return siDao.ongoingList(sqlSession,pi,empId);
+	}
+	
+	// 결재대기함 게시글 수 조회용
+	@Override
+	public int selectWlistCount(String empId) {
+		return siDao.selectWlistCount(sqlSession,empId);
+	}
+	
+	// 결재대기함 리스트 요청용
+	@Override
+	public ArrayList<SignDocument> selectWaitingList(PageInfo pi,String empId) {
+		return siDao.selectWaitingList(sqlSession,pi,empId);
 	}
 
 }

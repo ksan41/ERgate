@@ -99,4 +99,17 @@ public class SignDao {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.ongoingList",empId,rowBounds);
 	}
+	
+	// 결재대기함 게시글 수 조회용
+	public int selectWlistCount(SqlSessionTemplate sqlSession,String empId) {
+		return sqlSession.selectOne("signMapper.selectWlistCount",empId);
+	}
+	
+	// 결재대기함 리스트 요청용
+	public ArrayList<SignDocument> selectWaitingList(SqlSessionTemplate sqlSession,PageInfo pi,String empId){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectWaitingList",empId,rowBounds);
+	}
 } 

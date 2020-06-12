@@ -22,6 +22,7 @@
 		<result column="HOLIDAY_START" property="holidayStart"/>
 		<result column="HOLIDAY_END" property="holidayEnd"/>
 		<result column="HOLIDAY_USECOUNT" property="holidayUsecount"/>
+		<result column="SIGN_TYPE" property="signType"/>
 	</resultMap>
 	
 	<resultMap type="SignAttachment" id="signAttResultSet">
@@ -182,5 +183,25 @@
 		  FROM SIGN_DOCUMENT
 		WHERE EMP_ID = #{empId} AND
       		  SIGN_STATUS = 0
+	</select>
+	
+	<!-- 결재대기함 게시글 수 조회용 -->
+	<select id="selectWlistCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		 FROM SIGN_DOCUMENT SD
+	  	 JOIN SIGNER SG ON(SD.DOCUMENT_NO=SG.DOCUMENT_NO)
+		WHERE SG.EMP_ID = #{empId} AND
+      		  SG.SIGNED = 'N' AND
+      		  SD.SIGN_STATUS=0
+	</select>
+	
+	<!-- 결재대기함 리스트 조회용 -->
+	<select id="selectWaitingList" parameterType="string" resultMap="signDocResultSet">
+		SELECT SD.DOCUMENT_NO,SD.SIGN_TYPE_NO,SD.EMP_ID,SD.SIGN_TYPE_NAME,SD.EMP_NAME,SD.DEPT_TITLE,SD.SIGN_TITLE,SD.DRAFT_DATE,SD.SIGN_STEP,SD.SIGN_STATUS,SG.SIGN_TYPE
+		 FROM SIGN_DOCUMENT SD
+	  	 JOIN SIGNER SG ON(SD.DOCUMENT_NO=SG.DOCUMENT_NO)
+		WHERE SG.EMP_ID = #{empId} AND
+      		  SG.SIGNED = 'N' AND
+      		  SD.SIGN_STATUS=0
 	</select>
 </mapper>

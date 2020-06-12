@@ -7,15 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>sign waiting list</title>
-<jsp:include page="../common/menubar.jsp" />
-<!-- <link rel="stylesheet" href="http://www.w3ii.com/lib/w3.css"> -->
 
-<!-- 모달 사용페이지에 복사해주세요 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-<!-- 모달 사용페이지에 복사해주세요 -->
 <style>
 /* ==========페이지영역========== */
 .outer {
@@ -226,15 +218,17 @@
 	border:1px solid lightgray;
 	margin:auto;
 }
-
+.pageNoClick{
+	pointer-events: none;
+    cursor: default;
+}
 /* 모달팝업 스타일 */
 </style>
 </head>
 <body>
-	<!-- 이곳에 메뉴바 include -->
 	
-	<!-- 이곳에 메뉴바 include -->
-
+	<jsp:include page="../common/menubar.jsp" />
+	
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -285,7 +279,7 @@
 			<table class="boardTable">
 				<thead>
 					<tr>
-						<th width="40"><input class="checkBox" type="checkbox"></th>
+						<th>결재구분</th>
 						<th>상태</th>
 						<th>문서분류</th>
 						<th>문서번호</th>
@@ -295,108 +289,60 @@
 						<th>기안일시</th>
 					</tr>
 				</thead>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td><input class="checkBox" type="checkbox"></td>
-					<td>진행중</td>
-					<td>지출결의서</td>
-					<td>25</td>
-					<td>경영부</td>
-					<td>김길동</td>
-					<td>경영1팀 지출결의서</td>
-					<td>2020/05/10</td>
-				</tr>
+				<c:choose>
+					<c:when test="${empty list }">
+						<td colspan="6" rowspan="10"  class="pageNoClick">조회된 결과가 없습니다.</td>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${list}" var="l">
+							<tr>
+								<input type="hidden" name="signTypeNo" value="${l.signTypeNo }">
+								<c:choose>
+									<c:when test="${l.signType eq 1 }">
+										<td>결재</td>
+									</c:when>
+									<c:otherwise>
+										<td>수신참조</td>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${l.signStatus eq 0 }">
+										<td>진행중</td>
+									</c:when>
+									<c:when test="${l.signStatus eq 1 }">
+										<td>결재완료</td>
+									</c:when>
+									<c:otherwise>
+										<td>미결</td>
+									</c:otherwise>
+								</c:choose>
+								<td>${l.signTypeName }</td>
+								<td>${l.documentNo }</td>
+								<td>${l.deptTitle}</td>
+								<td>${l.empName }</td>
+								<td>${l.signTitle }</td>
+								<td>${l.draftDate }</td>
+							</tr>
+						</c:forEach>
+						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
+	    					<tr>
+								<td class="pageNoClick">&nbsp;</td>
+								<td class="pageNoClick">&nbsp;</td>
+								<td class="pageNoClick">&nbsp;</td>
+								<td class="pageNoClick">&nbsp;</td>
+								<td class="pageNoClick">&nbsp;</td>
+								<td class="pageNoClick">&nbsp;</td>
+								<td class="pageNoClick">&nbsp;</td>
+								<td class="pageNoClick">&nbsp;</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</table>
 			<br>
+			
+			
+			
 			<!-- 페이징바 -->
 			<ul class="pagingBar">
 				<li><a href="#">&lt;&lt;</a></li>
@@ -416,8 +362,6 @@
 			</ul>
 			<!-- 페이징바 -->
 
-
-			<!-- 모달팝업 -->
 		</div>
 	</div>
 </body>

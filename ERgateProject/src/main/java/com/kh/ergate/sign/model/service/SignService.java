@@ -10,8 +10,11 @@ import com.kh.ergate.sign.model.vo.Signer;
 
 public interface SignService {
 	
+	//결재 대기리스트 게시글 수 요청용
+	public int selectWlistCount(String empId);
+	
 	//결재대기리스트요청용
-	public ArrayList<SignDocument> selectWaitingList(SignDocument sd);
+	public ArrayList<SignDocument> selectWaitingList(PageInfo pi,String empId);
 	
 	//결재상세 요청용
 	public SignDocument signDetail(SignDocument sd);

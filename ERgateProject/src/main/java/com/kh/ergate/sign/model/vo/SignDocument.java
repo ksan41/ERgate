@@ -34,4 +34,5 @@ public class SignDocument {
 	private String holidayEnd; //휴가종료일시(휴가계)
 	private String holidayUsecount; //휴가사용일수(휴가계)
 	
+	private int signType; // 결재유형(0:수신참조/1:결재)
 }

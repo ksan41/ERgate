@@ -284,6 +284,17 @@
 			</table>
 			<br>
 			
+			<script>
+				$(function(){
+					$(".boardTable>tbody tr").click(function(){
+						var documentNo = $(this).children().eq(3).text();
+						var signTypeNo = $(this).children().eq(0).val();
+						window.open("signDetail.si?documentNo="+ documentNo + "&signTypeNo="+signTypeNo, "ddd",'_blank') ;
+						
+					});
+					
+				});
+			</script>			
 			
 			
 			<!-- 페이징바 -->
