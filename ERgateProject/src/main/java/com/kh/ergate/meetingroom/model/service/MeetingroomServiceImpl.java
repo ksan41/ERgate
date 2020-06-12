@@ -23,8 +23,8 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 
 
 	@Override
-	public ArrayList<MeetingroomReservation> currentStatusList(MeetingroomDate md) {
-		return mrDao.currentStatusList(sqlSession, md);
+	public ArrayList<MeetingroomReservation> currentStatusList(String date) {
+		return mrDao.currentStatusList(sqlSession, date);
 	}
 
 	

@@ -29,10 +29,8 @@ import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 
 
-@Controller
 public class MeetingroomController {
 
-	@Autowired
 	private MeetingroomServiceImpl mrService;
 
 	// 회의실 예약용 

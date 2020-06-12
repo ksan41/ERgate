@@ -19,8 +19,8 @@ public class MeetingroomDao {
 		return sqlSession.selectOne("meetingroomMapper.statusListCount");
 	}
 	
-	public ArrayList<MeetingroomReservation> currentStatusList(SqlSessionTemplate sqlSession, MeetingroomDate md){
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.currentStatusList", md);
+	public ArrayList<MeetingroomReservation> currentStatusList(SqlSessionTemplate sqlSession, String date){
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.currentStatusList", date);
 	}
 	
 	public ArrayList<MeetingroomReservation> statusList(SqlSessionTemplate sqlSession, PageInfo pi){
