@@ -219,10 +219,10 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">받은메일함</button></li>
-				<li><button class="subBtn">보낸메일함</button></li>
-				<li><button class="subBtn">중요메일함</button></li>
-				<li><button class="subBtn subActive">메일작성</button></li>
+				<li><button class="subBtn" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="ilist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>중요메일함</button></li>
+				<li><button class="subBtn subActive" onclick='location.href="enrollForm.mil"'>메일작성</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -518,7 +518,7 @@
                 
                 // 밑에 url에는 나중에 제대로 동작하는 controller 만들어주자. 지금은 일단 보드 작성 컨트롤러랑 연결해둠
                 $.ajax({
-                    url : "<%= contextPath %>/testFileload.bo",
+                    url : "testFileload.bo",
                     data : formData,
                     type : 'POST',
                     enctype : 'multipart/form-data',

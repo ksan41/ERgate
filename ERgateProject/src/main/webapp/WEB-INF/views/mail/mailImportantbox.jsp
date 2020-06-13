@@ -269,7 +269,7 @@
 				<li><button class="subBtn" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
 				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
 				<li><button class="subBtn subActive" onclick='location.href="ilist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>중요메일함</button></li>
-				<li><button class="subBtn">메일작성</button></li>
+				<li><button class="subBtn" onclick='location.href="enrollForm.mil"'>메일작성</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -332,7 +332,8 @@
 						<th width="80">
 								<label><input type="checkbox" class="importbox" id="importAll" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg"></label>
 						</th>
-						<th width="220">받는사람</th>
+						<th width="150">받는사람</th>
+						<th width="150">보낸사람</th>
 						<th>제목</th>
 						<th width="150">받은날짜</th>
 					</tr>
@@ -352,6 +353,7 @@
 								<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg"></label>
 							</td>
 							<td><span data-tooltip-text="${b.mailTo }@ergate.com">${b.mailnameTo }</span></td>
+							<td><span data-tooltip-text="${b.mailFrom }@ergate.com">${b.mailnameFrom }</span></td>
 							<td>${b.mailTitle }</td>
 							<td>${b.mailDateStr }</td>
 						</tr>
@@ -370,6 +372,7 @@
 								<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg"></label>
 							</td>
 							<td><span data-tooltip-text="${b.mailTo }@ergate.com">${b.mailnameTo }</span></td>
+							<td><span data-tooltip-text="${b.mailFrom }@ergate.com">${b.mailnameFrom }</span></td>
 							<td>${b.mailTitle }</td>
 							<td>${b.mailDateStr }</td>
 						</tr>
@@ -384,6 +387,7 @@
 							<td class="nonContent">
 								
 							</td>
+							<td class="nonContent"></td>
 							<td class="nonContent"></td>
 							<td class="nonContent"></td>
 							<td class="nonContent"></td>
@@ -512,12 +516,12 @@
 			} 
 		}); 
 		
-		$(".mailTable>tbody>tr>td:nth-child(n+4):nth-child(-n+5)").on('click', function(){
+		$(".mailTable>tbody>tr>td:nth-child(n+5):nth-child(-n+6)").on('click', function(){
 			
 			$(".mailTable>tbody>tr").on('click', function(){
 				var mailNo = $(this).children().find('input[name=mailNo]').val();
 				if($.trim(mailNo).length > 0){
-					location.href="detail.mil?mailNo=" + mailNo + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}' + "&pt=" + "Importbox";
+					location.href="detail.mil?mailNo=" + mailNo + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}' + "&pt=" + "importbox";
 				}
 			});
 			

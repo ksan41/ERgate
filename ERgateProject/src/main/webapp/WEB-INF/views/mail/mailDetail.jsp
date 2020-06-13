@@ -206,8 +206,8 @@
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
 				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
-				<li><button class="subBtn">중요메일함</button></li>
-				<li><button class="subBtn">메일작성</button></li>
+				<li><button class="subBtn" onclick='location.href="ilist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>중요메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="enrollForm.mil"'>메일작성</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -300,6 +300,8 @@
 			$("#subMenuList li:nth-child(1) button").attr('class', 'subBtn subActive');
 		}else if('${param.pt}'=='sentbox'){
 			$("#subMenuList li:nth-child(2) button").attr('class', 'subBtn subActive');
+		}else if('${param.pt}'=='importbox'){
+			$("#subMenuList li:nth-child(3) button").attr('class', 'subBtn subActive');
 		}
 	});
 	

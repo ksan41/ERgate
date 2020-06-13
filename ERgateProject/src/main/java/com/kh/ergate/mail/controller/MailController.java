@@ -196,4 +196,10 @@ public class MailController {
 		return new Gson().toJson(list);
 	}
 	
+	
+	@RequestMapping("enrollForm.mil")
+	public String enrollForm() {
+		return "mail/mailSendForm";
+	}
+	
 }
