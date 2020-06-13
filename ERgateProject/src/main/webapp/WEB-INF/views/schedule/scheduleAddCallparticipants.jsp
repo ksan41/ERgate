@@ -266,8 +266,8 @@ div {
 <body>
 
 
-	<div class="popup-outer">
-		<div class="popup-title">참석자/수신자</div>
+	<div class="popup-outer" >
+		<div class="popup-title">수신자 지정</div>
 		<div class="popup-content">
 			<!-- 검색바 -->
 			<div class="searchBar">
@@ -282,97 +282,38 @@ div {
 									<path
 						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
-			<button type="button" class="bigBtn" id="signerSubmit" style="margin-left: 680px;">등록</button>
+			<button type="button" class="bigBtn" id="callSubmit" style="margin-left: 680px;">등록</button>
 			
 			
 			<script>
-				$(document).on("click","#signerSubmit",function(){
+				$(document).on("click","#callSubmit",function(){				
 					
-					//opener.testConsole("zzzz");
-					//window.close();
 					
-					var v = $(".signSel tbody").text();
-					if(v==""){
-						alert("결재자는 1명 이상 존재해야 합니다.");
-						return false;
-					}else{
-						
-						// 결재자 정보 부모화면에 출력
-						var n1 = $("#signList tbody tr").eq(0).children().eq(2).text();
-						opener.document.getElementById("n1").innerHTML=n1;
-						
-						var n2 = $("#signList tbody tr").eq(1).children().eq(2).text();
-						opener.document.getElementById("n2").innerHTML=n2;
-						
-						var n3 = $("#signList tbody tr").eq(2).children().eq(2).text();
-						opener.document.getElementById("n3").innerHTML=n3;
-						
-						var n4 = $("#signList tbody tr").eq(3).children().eq(2).text();
-						opener.document.getElementById("n4").innerHTML=n4;
-						
-						var n5 = $("#signList tbody tr").eq(4).children().eq(2).text();
-						opener.document.getElementById("n5").innerHTML=n5;
-						
-						var n6 = $("#signList tbody tr").eq(5).children().eq(2).text();
-						opener.document.getElementById("n6").innerHTML=n6;
-						
-						//결재자 아이디 배열에 담기
-						var signerId=new Array();
-						var cnt = $("#signList tbody input[name=empId]").length;
-						for(var i=0;i<cnt;i++){
-							signerId.push($("#signList tbody input[name=empId]").eq(i).val());
-						}
-						//결재자 이름 배열에 담기
-						var signerName=new Array();
-						cnt = $("#signList tbody input[name=empName]").length;
-						for(var i=0;i<cnt;i++){
-							signerName.push($("#signList tbody input[name=empName]").eq(i).val());
-						}
-
-						
-						opener.getSid(signerId);
-						opener.getSname(signerName);
-						
-						//결재자 직책 출력
-						var j1 = $("#signList tbody tr").eq(0).children().eq(4).text();
-						opener.document.getElementById("j1").innerHTML=j1;
-						
-						var j2 = $("#signList tbody tr").eq(1).children().eq(4).text();
-						opener.document.getElementById("j2").innerHTML=j2;
-						
-						var j3 = $("#signList tbody tr").eq(2).children().eq(4).text();
-						opener.document.getElementById("j3").innerHTML=j3;
-						
-						var j4 = $("#signList tbody tr").eq(3).children().eq(4).text();
-						opener.document.getElementById("j4").innerHTML=j4;
-						
-						var j5 = $("#signList tbody tr").eq(4).children().eq(4).text();
-						opener.document.getElementById("j5").innerHTML=j5;
-						
-						var j6 = $("#signList tbody tr").eq(5).children().eq(4).text();
-						opener.document.getElementById("j6").innerHTML=j6;
-						
+					var v = $(".callView tbody").text();
+					
+						if(v !=""){
 						
 						// 수신참조자이름 출력/변수에 담기
-						var refName=new Array();
-						cnt = $("#refList tbody input[name=empName]").length;
+						var callName=new Array();
+						cnt = $("#callList tbody input[name=empName]").length;
 						for(var i=0;i<cnt;i++){
-							refName.push($("#refList tbody input[name=empName]").eq(i).val());
-							opener.document.getElementById("refArea").innerHTML+= 
-										"@"+ $("#refList tbody input[name=empName]").eq(i).val()+" ";
+							
+							callName.push($("#callList tbody input[name=empName]").eq(i).val());
+							opener.document.getElementById("callArea").innerHTML+= 
+										$("#callList tbody input[name=empName]").eq(i).val()+" ";
 						}
 						
 						
 						// 수신참조자 아이디 변수에 담기
-						var refId=new Array();
-						cnt = $("#refList tbody input[name=empId]").length;
+						var callId=new Array();
+						cnt = $("#callList tbody input[name=empId]").length;
 						for(var i=0;i<cnt;i++){
-							refId.push($("#refList tbody input[name=empId]").eq(i).val());
+							callId.push($("#callList tbody input[name=empId]").eq(i).val());
 						}
 						
 						
-						opener.getRefId(refId);
-						opener.getRefName(refName);
+						opener.getCallId(callId);
+						opener.getCallName(callName);
 						
 						window.close();
 					
@@ -420,32 +361,13 @@ div {
 
 				<!-- 우측 선택영역 -->
 				<div id="selectArea">
-					<div id="signArea">
-						<button class="middleBtn selSigner">선택추가</button>
-						<h2 style="display:inline-block;margin:0;">결재</h2>
-						<br><br>
-						<div style="width:100%;height:280px;overflow:auto;">
-								<table id="signList" class="boardTable signSel">
-									<thead>
-										<tr>
-											<th width="100">이름</th>
-											<th>부서</th>
-											<th width="120">직책/직급</th>
-											<th width="40"></th>
-										</tr>
-									</thead>
-									<tbody></tbody>
-								</table>
-						</div>	
-					</div>
-					
-					<div id="refArea">
+					<div id="callArea">
 						<button class="middleBtn selRef">선택추가</button>
-						<h2 style="display:inline-block;margin:0;">수신/참조</h2>
+						<h2 style="display:inline-block;margin:0;">수신자</h2>
 						<br><br>
 						<div id="signSelDiv">
-							<div style="width:100%;height:280px;overflow:auto;">
-								<table id="refList" class="boardTable refSel">
+							<div style="width:100%;height:645px;overflow:auto;">
+								<table id="callList" class="boardTable callView">
 								<thead>
 									<tr>
 										<th width="100">이름</th>
@@ -465,7 +387,7 @@ div {
 		</div>
 	</div>
 
-
+ 
 	<script>
 		//최상단 체크박스 클릭
 		$("#checkall").click(function(){
@@ -486,43 +408,7 @@ div {
 		});
 		
 		
-		// 결재자 추가
-		
-		var value1 = "";
-		
-		$(document).on("click",".selSigner",function(){
-			
-			 $('.checkBox:checked').each(function() {
-				var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
-				var nameVal = $(this).parent().parent().children("input[name=empName]").clone().wrapAll("<div/>").parent().html();
-				var name = $(this).parent().parent().children(".name").clone().wrapAll("<div/>").parent().html();
-				var dept = $(this).parent().parent().children(".dept").clone().wrapAll("<div/>").parent().html();
-				var jobRank = $(this).parent().parent().children(".jobRank").clone().wrapAll("<div/>").parent().html();
-				
-			
-				var regExp = new RegExp($(this).parent().parent().children("input[name=empId]").val());
-		       	
-				//$(this).removeAttr("checked");
-				
-				if(regExp.test($(".signSel tbody").html())){
-					console.log("중복");
-					return false;
-				}
-				 
-				value1 += '<tr>' +  id +nameVal+ name + dept + jobRank
-		       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
-		       			+ '</tr>';
-		       			
-				$(".signSel tbody").append(value1);
-				value1="";
-				//var test1 = $(".signSel").html();
-			//console.log("출력!!!"+test1);
-		   });
-			
-		});
-		
-		
-	</script>
+	</script> 
 
 	<script>
 	
@@ -542,7 +428,7 @@ div {
 	       	
 			//$(this).removeAttr("checked");
 			
-			if(regExp.test($(".refSel tbody").html())){
+			if(regExp.test($(".callView tbody").html())){
 				console.log("중복");
 				return false;
 			}
@@ -551,7 +437,7 @@ div {
 	       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
 	       			+ '</tr>';
 	       			
-			$(".refSel tbody").append(value2);
+			$(".callView tbody").append(value2);
 			value2="";
 		});
 		

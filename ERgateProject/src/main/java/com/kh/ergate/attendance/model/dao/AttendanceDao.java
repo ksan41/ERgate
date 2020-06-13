@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.attendance.model.vo.Holiday;
+import com.kh.ergate.attendance.model.vo.WorkRecord;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
 
@@ -30,6 +31,13 @@ public class AttendanceDao {
 
 	public Holiday selectHoli(SqlSessionTemplate sqlSession, Holiday holiday) {
 		return sqlSession.selectOne("attendanceMapper.selectHoli", holiday);
+	}	
+	public int clockInAt(SqlSessionTemplate sqlSession, WorkRecord wr) {		
+		return sqlSession.insert("attendanceMapper.clockInAt", wr);
+	}
+	
+	public int clockOutAt(SqlSessionTemplate sqlSession, WorkRecord wr) {		
+		return sqlSession.update("attendanceMapper.clockOutAt", wr);
 	}
 
 	

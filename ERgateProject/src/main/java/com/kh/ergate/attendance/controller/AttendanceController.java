@@ -2,6 +2,8 @@ package com.kh.ergate.attendance.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.ergate.attendance.model.service.AttendanceService;
 import com.kh.ergate.attendance.model.vo.Holiday;
+import com.kh.ergate.attendance.model.vo.WorkRecord;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
 
@@ -81,7 +84,45 @@ public class AttendanceController {
 		//return "";
 	}
 	
-	
+	 //출근요청용(clockIn.at) ---
+	@ResponseBody
+	@RequestMapping(value="startTime.at", produces="application/json; charset=utf-8")
+	 public String clockInAt(HttpSession session,Model model, WorkRecord wr){
+		 System.out.println("wr "+ wr);
+			
+			int result = atService.clockInAt(wr);
+			
+			if(result > 0) {  // 출석 성공
+				
+				session.setAttribute("msg", "출근 성공");
+				return "redirect:/selectList.sc";
+				
+			}else {  // 일정등록 실패
+				
+				model.addAttribute("msg", "일정등록실패");
+				return "common/errorPage";
+				
+			}
+	 }
+	 
+	 //퇴근요청용(clockOut.at) ---
+	@ResponseBody
+	@RequestMapping(value="endTime.at", produces="application/json; charset=utf-8")
+	 public String clockOutAt(WorkRecord wr,HttpSession session,Model model){
+		int result = atService.clockInAt(wr);
+		if(result > 0) {  // 출석 성공
+			
+			session.setAttribute("msg", "퇴근 성공");
+			return "redirect:/selectList.sc";
+			
+		}else {  // 일정등록 실패
+			
+			model.addAttribute("msg", "퇴근 실패");
+			return "common/errorPage";
+			
+		}
+	}
+
 
 			
 

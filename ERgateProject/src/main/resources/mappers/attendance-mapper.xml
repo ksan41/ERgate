@@ -23,6 +23,15 @@
 		<result column="HIRE_DATE" property="hireDate"/>
 	</resultMap>
 	
+	<resultMap id="workRecordResultSet" type="WorkRecord">
+		<id column="WORKRECORD_NO" property="workRecordNo"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="CLOCK_IN" property="clockIn"/>
+		<result column="CLOCK_OUT" property="clockOut"/>
+		<result column="WORK_DATE" property="workDate"/>
+		
+	</resultMap>
+	
 	<!-- 근태관리 리스트 조회용 - 첫페이지에 뿌려지는 ajax -->
 	<select id="selectAtMgListAjax" parameterType="string" resultMap="holidayResultSet">
 		select emp_name, rank_title, job_title, emp_id, dept_title
@@ -93,5 +102,17 @@
 		join department d on(e.dept_code=d.dept_code)
 		where emp_id = #{empId} and year = #{year}
 	</select>
+	
+	<insert id="clockInAt" parameterType="WorkRecord">	
+		insert into Work_Record
+		values(seq_wrecord_no.nextval, #{empId}, #{clockIn}, null ,#{workDate})
+	</insert>
+	
+	<update id="clockOutAt" parameterType="WorkRecord">
+		update Work_Record
+		set 			
+			CLOCK_OUT=#{clockOut}	
+		where EMP_ID=#{empId}		
+	</update>
 	
 </mapper>

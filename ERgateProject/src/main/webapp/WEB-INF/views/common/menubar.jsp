@@ -164,7 +164,7 @@ button:focus{
 			<img src="${pageContext.servletContext.contextPath }/resources/siteImgs/logo.png" alt="">
 		</div>
 		<!-- 로고영역 -->
-		<div id="infoArea" onclick="매핑값">
+		<div id="infoArea" onclick="">
 			<!-- 프로필사진 영역 -->
 			<div id="profile_area">
 				<div id="profileImg">
@@ -207,8 +207,9 @@ button:focus{
 			<!-- 출,퇴근버튼 영역 -->
 			<div id="info_btnArea">
 				<div id="infoBtns">
-					<button class="middleBtn">출근</button>
-					<button class="middleBtn">퇴근</button>
+					<button type="button" class="middleBtn" id="startBtn">출근</button>					
+					<button type="button" class="middleBtn" id="endBtn">퇴근</button>
+					<input id="test" type="hidden" value="">
 				</div>
 			</div>
 			<!-- 출,퇴근버튼 영역 -->
@@ -310,6 +311,131 @@ button:focus{
         });
     </script>
 	<!-- 메뉴아이콘 효과용 스크립트 -->
+	<script>
+/* 	  $(function(){
+          $.ajax({
+             url:"selectAtt.em",
+             data:{empId:"${loginUser.empId}"},
+             type:"post",
+             success:function(att){
+                console.log(att);
+                if(att == null){
+                   
+                }else if(att.startTime != null ){
+                   $("#startTime").attr('disabled',true);
+                   
+                }
+                if(att.endTime != null){
+                   $("#endTime").attr('disabled',true);
+                }
+             },errorPage:function(){
+                console.log("조회에러");
+             }
+          });
+          selectMyAttendance()
+          $("#startTime").click(function(){
+             $.ajax({
+                url:"attinsert.em",
+                data:{empId:"${loginUser.empId}"},
+                type:"post",
+                success:function(status){
+                   //console.log(status)
+                   if(status == "success"){
+                      selectMyAttendance()
+                      $("#startTime").attr('disabled',true);
+                      
+                   }
+                   
+                },errorPage:function(){
+                   console.log("출근 실패");
+                }
+             })
+          });
+       });
+       //퇴근
+       $(function(){
+          $("#endTime").click(function(){
+             $.ajax({
+                url:"attupdate.em",
+                data:{empId:"${loginUser.empId}"},
+                type:"post",
+                success:function(status){
+                   if(status == "success"){
+                      selectMyAttendance()
+                      $("#endTime").attr('disabled',true);
+                      
+                   }else{
+                      console.log("퇴근업데이트 실패");
+                   }
+                   
+                },errorPage:function(){
+                   console.log("퇴근실패");
+                }
+                
+             })
+          });
+       });
+       //출퇴근 시간 조회
+       function selectMyAttendance(){
+          $.ajax({
+             url:"todayAtt.em",
+             data:{empId:"${loginUser.empId}"},
+             type:"post",
+             success:function(att){
+                console.log(att);
+                $("#atStart").html(att.startTime);
+                $("#atEnd").html(att.endTime);
+                
+             },errorPage:function(){
+                console.log("출석 갱신 실패");
+             }
+          });
+       } */
+	 	$("#startBtn").on("click",function(){
+			var now =new Date();
+			var d = now.getFullYear()+"."+(now.getMonth()+1)+"."+now.getDate();
+			var c= now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
+			//document.getElementById("clock").innerHTML=s;
+			 $.ajax({
+	             url:"startTime.at",
+	             data:{empId:"${loginUser.empId}", workDate:d , clockIn:c},
+	             type:"POST",
+	             success:function(att){
+	            	 $("#test").find('input[name=workRecordNo]').val(att.workRecordNo);
+	            	 alert("test");
+	                console.log(att);
+	               // $("#atStart").html(att.startTime);
+	                //$("#atEnd").html(att.endTime);
+	                
+	             },errorPage:function(){
+	                console.log("출석 갱신 실패");
+	             }
+	          });			
+  		}); 
+       
+	 	$("#endBtn").on("click",function(){
+	 		var t =$("#test").val();
+	 		alert(t);
+			var now =new Date();
+			//var d = now.getFullYear()+"."+(now.getMonth()+1)+"."+now.getDate();
+			var c= now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
+			//document.getElementById("clock").innerHTML=s;
+			 $.ajax({
+	             url:"endTime.at",
+	             data:{empId:"${loginUser.empId}", clockOut:c},
+	             type:"POST",
+	             success:function(att){
+	            	 alert("퇴근성공");
+	                console.log(att);
+	               // $("#atStart").html(att.startTime);
+	                //$("#atEnd").html(att.endTime);
+	                
+	             },errorPage:function(){
+	                console.log("퇴근 갱신 실패");
+	             }
+	          });			
+  		}); 
+	</script>
 
 </body>
 </html>

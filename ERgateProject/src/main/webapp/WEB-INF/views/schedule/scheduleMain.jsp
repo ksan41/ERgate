@@ -135,8 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	                    $("#list_schedule_Up").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
 	                    $("#list_schedule_Up").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
 	                    $("#list_schedule_Up").find('textarea[name=scheduleContent]').val(data.scheduleContent);
-	                    $("#list_schedule_Up").find('textarea[name=callPeople]').val(data.callPeople);
-	                    $("#list_schedule_Up").find('textarea[name=joinPeople]').val(data.joinPeople);
+	                    $("#list_schedule_Up").find('input[name=callPeople]').val(data.callPeople);
+	                    $("#list_schedule_Up").find('input[name=joinPeople]').val(data.joinPeople);
 	                    $('#list_schedule_Up').modal('show');
                        
                     }else if(data.scheduleKind=="공유일정"){
@@ -566,10 +566,8 @@ html, body {
                          <tr>
                            <td id="r1">참석자</td>
                            <td id="r2">
-                         	<button id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddparticipants','_blank');">참석자 지정</button> 
-                           	  <!--  <button id="" class="searchBtn" onclick="location.href='joinPeople.sc'">참석자 지정</button> -->
-                         
-                           	  <textarea cols="60" rows="4" id="joinPeople" name="joinPeople"></textarea>  
+                         		<button type="button" id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddJoinparticipants','_blank');">참석자 지정</button> 
+                               <textarea cols="60" rows="4" id="joinArea" name="joinPeople"></textarea>  
                            	    
                            </td>
                         </tr>
@@ -577,8 +575,8 @@ html, body {
                         <tr>
                            <td id="r1">수신자</td>
                            <td id="r2">
-                           <button id="searchBtn2" class="searchBtn" >수신자 지정</button>
-       							<textarea cols="60" rows="4" id="callPeople" name="callPeople"></textarea> 
+                          		<button type="button" id="" class="searchBtn" onclick="window.open('callPeople.sc','scheduleAddCallparticipants','_blank');">수신자 지정</button> 
+       							<textarea cols="60" rows="4" id="callArea" name="callPeople"></textarea> 
                            </td>
                         </tr> 
                        
@@ -746,7 +744,7 @@ html, body {
                         <tr>
                            <td id="r1">제목</td>
                            <td id="r2">
-                              <input type="text"  class="inputs" id="scheduleTitle" name="scheduleTitle">
+                          	 <input type="text" class="inputs" id="scheduleTitle" name="scheduleTitle" value="">                            
                            </td>
                         </tr>
                         <tr>
@@ -808,7 +806,7 @@ html, body {
                      </table>
                     
                   <div class="btns">
-		            <button id="updateBtn" type="button">수정하기</button>
+		            <button id="updateBtn" type="submit">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
 		            <button id="resetBtn" type="reset">취소</button>
 		         </div> 
@@ -869,7 +867,7 @@ html, body {
 	                     </table>  
                     
                   <div class="btns">
-		            <button id="updateBtn" type="button">수정하기</button>
+		            <button id="updateBtn" type="submit">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
 		            <button id="resetBtn" type="reset">취소</button>
 		         </div> 
@@ -947,6 +945,33 @@ html, body {
       // 탭 초기화 및 설정
       tabSetting();
    });
+</script>
+<script>
+var joinId = new Array();
+var joinName = new Array();
+
+// 참석자 아이디 받아오기
+function getJoinId(data){
+	joinId = data;
+}
+
+// 참석자 이름 받아오기
+function getJoinName(data){
+	joinName = data;
+}
+
+var callId = new Array();
+var callName = new Array();
+
+// 수신자 아이디 받아오기
+function getCallId(data){
+	callId = data;
+}
+
+// 수신자 이름 받아오기
+function getCallName(data){
+	callName = data;
+}
 </script>
 </body>
 </html>

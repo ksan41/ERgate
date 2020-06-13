@@ -41,10 +41,17 @@ public class ScheduleController {
 	
 	  // 참석자 팝업 요청용
 	  @RequestMapping("joinPeople.sc") 
-	  public String approvalPath() { 
-		  return "schedule/scheduleAddparticipants"; 
+	  public String addJoinPeople() { 
+		  return "schedule/scheduleAddJoinparticipants"; 
+	  }
+	  
+	  // 수신자 팝업 요청용
+	  @RequestMapping("callPeople.sc") 
+	  public String addCallPeople() { 
+		  return "schedule/scheduleAddCallparticipants"; 
 	  }
 	
+  	  
 	
 	@RequestMapping("insert.sc")
 	public String insertSchedule(Schedule s, Model model,HttpSession session) {
@@ -72,7 +79,8 @@ public class ScheduleController {
 	 // @ResponseBody
 	  @RequestMapping(value="slist.sc")
 	  public void selectScheduleDetail(String scheduleNo, HttpServletResponse response ) throws JsonIOException, IOException{		
-		  int scNo=Integer.parseInt(scheduleNo);			
+		  int scNo=Integer.parseInt(scheduleNo);
+		  System.out.println("scNo"+ scNo);
 		  Schedule sc = sService.selectScheduleDetail(scNo);	
 		  response.setContentType("application/json; charset=utf-8");
 		   new Gson().toJson(sc, response.getWriter());		 
@@ -82,7 +90,7 @@ public class ScheduleController {
 	  
 	  @RequestMapping("update.sc")
 	  public String updateSchedule(Schedule sc, Model model, HttpSession session) {
-	
+		  System.out.println("sc: "+ sc);
 		  int result = sService.updateSchedule(sc);
 		  
 		  if(result > 0) {  // 수정 성공
@@ -97,15 +105,12 @@ public class ScheduleController {
 			  return "common/errorPage";
 			  
 		  }
-		  
-		  
 	  }
+	  
 	  @ResponseBody
 	  @RequestMapping("delete.sc")
 	  public String deleteSchedule(int scheduleNo, Model model) {
 		  //int scc =Integer.parseInt(scheduleNo);
-		  
-	
 		  int result = sService.deleteSchedule(scheduleNo);
 		  
 		
@@ -115,5 +120,7 @@ public class ScheduleController {
 		
 	  }
 	  
+	  
+
 	 
 }
