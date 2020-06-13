@@ -3,6 +3,7 @@ package com.kh.ergate.main.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.Cookie;
@@ -18,15 +19,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ergate.main.model.service.MainService;
 import com.kh.ergate.main.model.vo.Employee;
+import com.kh.ergate.schedule.model.service.ScheduleService;
+import com.kh.ergate.schedule.model.vo.Schedule;
 
 @Controller
 public class MainController {
 	
 	@Autowired
 	private MainService mService;
+	
+	@Autowired
+	private ScheduleService sService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -257,8 +264,14 @@ public class MainController {
 	
 	// 메인 페이지로 이동
 	@RequestMapping("main.ma")
-	public String mainPage() {
-		return "main/main";
+	public ModelAndView mainPage() {
+		ArrayList<Schedule> slist = sService.selectScheduleList();
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main/main");
+		mv.addObject("slist", slist);
+		
+		return mv;
+		
 	}
 	
 	
@@ -308,5 +321,7 @@ public class MainController {
 		deleteFile.delete(); // 실제 서버의 파일 찾아 삭제 처리
 		
 	}
+	
+	
 	
 }

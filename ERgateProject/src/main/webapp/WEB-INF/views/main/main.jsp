@@ -302,26 +302,14 @@
 												<th>일정 내용</th>
 											</tr>
 										</thead>
-										<tr>
-											<td>10:00</td>
-											<td>일정있습니다~~~</td>
+										<c:forEach var="list" items="${slist}" begin="1" end="5">										
+										<tr>										
+											<td>${list.scheduleStartTime}</td>
+											<td>${list.scheduleTitle}</td>										
 										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-										</tr>
+
+										</c:forEach>
+										
 									</table>
 									<!-- 게시판 -->
 								</td>

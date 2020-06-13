@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,6 +18,7 @@ import com.kh.ergate.attendance.model.vo.Holiday;
 import com.kh.ergate.attendance.model.vo.WorkRecord;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
+import com.kh.ergate.schedule.model.vo.Schedule;
 
 @Controller
 public class AttendanceController {
@@ -27,8 +29,13 @@ public class AttendanceController {
 	// ------------- 페이지 이동 -------------
 	// 출퇴근내역 리스트 조회용
 	@RequestMapping(value="atList.at")
-	public String selectAtList(String empId, Model model) {
-		return "attendance/attendanceList";
+	public ModelAndView selectAtList() {
+		ArrayList<WorkRecord> wrlist = atService.selectAtList();
+		System.out.println("wrlist: "+wrlist);		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("attendance/attendanceList");
+		mv.addObject("wrlist", wrlist);
+		return mv;
 	}
 	
 	// 근태현황 조회용
@@ -88,13 +95,12 @@ public class AttendanceController {
 	@ResponseBody
 	@RequestMapping(value="startTime.at", produces="application/json; charset=utf-8")
 	 public String clockInAt(HttpSession session,Model model, WorkRecord wr){
-		 System.out.println("wr "+ wr);
+		
 			
-			int result = atService.clockInAt(wr);
-			
+			int result = atService.clockInAt(wr);			
 			if(result > 0) {  // 출석 성공
 				
-				session.setAttribute("msg", "출근 성공");
+				session.setAttribute("wrNo", "출근 성공");
 				return "redirect:/selectList.sc";
 				
 			}else {  // 일정등록 실패
@@ -109,10 +115,13 @@ public class AttendanceController {
 	@ResponseBody
 	@RequestMapping(value="endTime.at", produces="application/json; charset=utf-8")
 	 public String clockOutAt(WorkRecord wr,HttpSession session,Model model){
-		int result = atService.clockInAt(wr);
-		if(result > 0) {  // 출석 성공
+		 System.out.println("wr 퇴근: "+ wr);
+		
+		 int result = atService.clockOutAt(wr);	
+		 System.out.println("result: "+ result);
+		if(result > 0) {  // 퇴근 성공
 			
-			session.setAttribute("msg", "퇴근 성공");
+			session.setAttribute("wrNo", "퇴근 성공");
 			return "redirect:/selectList.sc";
 			
 		}else {  // 일정등록 실패

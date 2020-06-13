@@ -23,7 +23,7 @@
 		<result column="HIRE_DATE" property="hireDate"/>
 	</resultMap>
 	
-	<resultMap id="workRecordResultSet" type="WorkRecord">
+	<resultMap id="workRecordResult" type="WorkRecord">
 		<id column="WORKRECORD_NO" property="workRecordNo"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="CLOCK_IN" property="clockIn"/>
@@ -101,6 +101,10 @@
 		join rank r on e.rank_code=r.rank_code
 		join department d on(e.dept_code=d.dept_code)
 		where emp_id = #{empId} and year = #{year}
+	</select>
+	
+	<select id="selectAtList" resultMap="workRecordResult">
+		select * from Work_Record
 	</select>
 	
 	<insert id="clockInAt" parameterType="WorkRecord">	

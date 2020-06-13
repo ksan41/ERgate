@@ -35,6 +35,7 @@
 		select * from schedule where schedule_no= #{scNo}
 	</select>
 	
+	
 	<update id="updateSchedule" parameterType="Schedule">
 		update Schedule
 		set 			

@@ -97,6 +97,7 @@
 		 WHERE EMP_ID=#{empId}
 		 	   AND EMP_PRI_EMAIL=#{empPriEmail}
 		 	   AND RESIGN_FLAG='N'
-	</update>
+	</update>	
+
 	
 </mapper>

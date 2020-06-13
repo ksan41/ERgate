@@ -312,85 +312,6 @@ button:focus{
     </script>
 	<!-- 메뉴아이콘 효과용 스크립트 -->
 	<script>
-/* 	  $(function(){
-          $.ajax({
-             url:"selectAtt.em",
-             data:{empId:"${loginUser.empId}"},
-             type:"post",
-             success:function(att){
-                console.log(att);
-                if(att == null){
-                   
-                }else if(att.startTime != null ){
-                   $("#startTime").attr('disabled',true);
-                   
-                }
-                if(att.endTime != null){
-                   $("#endTime").attr('disabled',true);
-                }
-             },errorPage:function(){
-                console.log("조회에러");
-             }
-          });
-          selectMyAttendance()
-          $("#startTime").click(function(){
-             $.ajax({
-                url:"attinsert.em",
-                data:{empId:"${loginUser.empId}"},
-                type:"post",
-                success:function(status){
-                   //console.log(status)
-                   if(status == "success"){
-                      selectMyAttendance()
-                      $("#startTime").attr('disabled',true);
-                      
-                   }
-                   
-                },errorPage:function(){
-                   console.log("출근 실패");
-                }
-             })
-          });
-       });
-       //퇴근
-       $(function(){
-          $("#endTime").click(function(){
-             $.ajax({
-                url:"attupdate.em",
-                data:{empId:"${loginUser.empId}"},
-                type:"post",
-                success:function(status){
-                   if(status == "success"){
-                      selectMyAttendance()
-                      $("#endTime").attr('disabled',true);
-                      
-                   }else{
-                      console.log("퇴근업데이트 실패");
-                   }
-                   
-                },errorPage:function(){
-                   console.log("퇴근실패");
-                }
-                
-             })
-          });
-       });
-       //출퇴근 시간 조회
-       function selectMyAttendance(){
-          $.ajax({
-             url:"todayAtt.em",
-             data:{empId:"${loginUser.empId}"},
-             type:"post",
-             success:function(att){
-                console.log(att);
-                $("#atStart").html(att.startTime);
-                $("#atEnd").html(att.endTime);
-                
-             },errorPage:function(){
-                console.log("출석 갱신 실패");
-             }
-          });
-       } */
 	 	$("#startBtn").on("click",function(){
 			var now =new Date();
 			var d = now.getFullYear()+"."+(now.getMonth()+1)+"."+now.getDate();
@@ -400,13 +321,8 @@ button:focus{
 	             url:"startTime.at",
 	             data:{empId:"${loginUser.empId}", workDate:d , clockIn:c},
 	             type:"POST",
-	             success:function(att){
-	            	 $("#test").find('input[name=workRecordNo]').val(att.workRecordNo);
-	            	 alert("test");
-	                console.log(att);
-	               // $("#atStart").html(att.startTime);
-	                //$("#atEnd").html(att.endTime);
-	                
+	             success:function(att){	            	
+	            	 alert("출근성공");	                
 	             },errorPage:function(){
 	                console.log("출석 갱신 실패");
 	             }
@@ -414,21 +330,16 @@ button:focus{
   		}); 
        
 	 	$("#endBtn").on("click",function(){
-	 		var t =$("#test").val();
-	 		alert(t);
-			var now =new Date();
-			//var d = now.getFullYear()+"."+(now.getMonth()+1)+"."+now.getDate();
+			var now =new Date();			
 			var c= now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
-			//document.getElementById("clock").innerHTML=s;
+			
+		
 			 $.ajax({
 	             url:"endTime.at",
 	             data:{empId:"${loginUser.empId}", clockOut:c},
 	             type:"POST",
 	             success:function(att){
 	            	 alert("퇴근성공");
-	                console.log(att);
-	               // $("#atStart").html(att.startTime);
-	                //$("#atEnd").html(att.endTime);
 	                
 	             },errorPage:function(){
 	                console.log("퇴근 갱신 실패");

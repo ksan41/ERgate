@@ -24,9 +24,12 @@ public interface AttendanceService {
 	// 사원별 근태현황 상세 조회용1
 	Holiday selectHoli(Holiday holiday);
 	
-	 ///출근요청용 ---
+	//
+	ArrayList<WorkRecord> selectAtList();
+	
+	 ///출근요청용 
 	 int clockInAt(WorkRecord wr);
-	 //퇴근요청용 ---
+	 //퇴근요청용 
 	 int clockOutAt(WorkRecord wr);
 
 

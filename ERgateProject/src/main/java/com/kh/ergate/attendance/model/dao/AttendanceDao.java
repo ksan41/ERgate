@@ -36,8 +36,13 @@ public class AttendanceDao {
 		return sqlSession.insert("attendanceMapper.clockInAt", wr);
 	}
 	
-	public int clockOutAt(SqlSessionTemplate sqlSession, WorkRecord wr) {		
+	public int clockOutAt(SqlSessionTemplate sqlSession, WorkRecord wr) {
 		return sqlSession.update("attendanceMapper.clockOutAt", wr);
+	}
+
+	 //출퇴근내역리스트조회용 ---
+	public ArrayList<WorkRecord> selectAtList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("attendanceMapper.selectAtList");
 	}
 
 	

@@ -45,15 +45,17 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public Holiday selectHoli(Holiday holiday) {
 		return atDao.selectHoli(sqlSession, holiday);
 	}
-
 	@Override
-	public int clockInAt(WorkRecord wr) {	
-		System.out.println("wr : "+ wr );
+	public ArrayList<WorkRecord> selectAtList() {
+		
+		return atDao.selectAtList(sqlSession);
+	}
+	@Override
+	public int clockInAt(WorkRecord wr) {		
 		return atDao.clockInAt(sqlSession, wr);
 	}
 	@Override
-	public int clockOutAt(WorkRecord wr) {
-		// TODO Auto-generated method stub
+	public int clockOutAt(WorkRecord wr) {		
 		return atDao.clockOutAt(sqlSession, wr);
 	}
 }

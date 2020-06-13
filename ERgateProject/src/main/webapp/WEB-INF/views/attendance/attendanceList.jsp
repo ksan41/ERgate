@@ -199,108 +199,16 @@
 								<th width="200">퇴근시간</th>
 							</tr>
 						</thead>
+					
 						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
+							<c:forEach var="list" items="${wrlist}">
+								<td>출근</td>
+								<td>${list.workDate}</td>
+								<td>${list.clockIn}</td>
+								<td>${list.clockOut}</td>
+							</c:forEach>
 						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
-						<tr>
-							<td>출근</td>
-							<td>2020.02.11</td>
-							<td>08:50</td>
-							<td>18:50</td>
-						</tr>
+						
 					</table>
 				</div>	
 			</div>
