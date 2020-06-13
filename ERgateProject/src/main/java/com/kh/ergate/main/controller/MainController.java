@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ergate.common.template.MyAuthentication;
 import com.kh.ergate.main.model.service.MainService;
 import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.schedule.model.service.ScheduleService;
@@ -335,63 +337,80 @@ public class MainController {
 	// ---------- 인증메일 전송 메소드 ----------
 	
 	@RequestMapping("emailAuth.ma")
-	public ModelAndView emailAuth(HttpServletResponse response, HttpServletRequest request) {
+	public void emailAuth(HttpServletResponse response, HttpServletRequest request)throws Exception {
 		
+		// 여기에 발송할 사람 메일주소 들어가야 함. dddd@gmail.com
 		String email = request.getParameter("email");
+		System.out.println(email);
+		
+		// 인증코드 들어갈 변수선언
 		String authNum = "";
 		
-		authNum = RandomNum();
+		//랜덤값 변수에 저장
+		authNum = RandomNum(); 
 		
-		sendEmail(email.toString(), authNum);
+		//매개변수에 주소와 인증코드 입력하고, 메일 전송 메소드 호출.
+		sendEmail(email, authNum); 
 		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/main/findId.jsp");
-		mv.addObject("email", email);
-		mv.addObject("authNum", authNum);
 		
-		return mv;
+		// authNum만 전달해서, 화면 단에서 사용자가 입력한 인증코드와 비교하면 되겠습니다.(ajax처리)
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("/main/findId.jsp");
+//		mv.addObject("email", email);
+//		mv.addObject("authNum", authNum);
+		
+		//return mv;
 	}
 	
 	private void sendEmail(String email, String authNum) {
 		
-		String host = "smtp.gmail.com";
-		String subject = "ERgate 인증번호";
-		String fromName = "ERgate";
-		String from = "dlfroal06@gmail.com";
-		String to1 = email;
+		Properties props = System.getProperties(); 
 		
-		String content = "인증번호 [" + authNum + "]";
+		props.put("mail.smtp.starttls.enable", "true");
+		//props.put("mail.transport.protocol", "smtp"); 
+		props.put("mail.smtp.host", "smtp.gmail.com"); // smtp 서버주소
+		//props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory.class");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "587"); // gmail 포트번호
+		//props.put("mail.smtp.user", from);
 		
+		Authenticator auth = new MyAuthentication();
+		
+		Session session = Session.getDefaultInstance(props,auth);
+		MimeMessage msg = new MimeMessage(session);
+
 		try {
-			Properties props = new Properties();
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.transport.protocol", "smtp");
-			props.put("mail.smtp.host", host);
-			props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory.class");
-			props.put("mail.smtp.port", "465");
-			props.put("mail.smtp.user", from);
-			props.put("mail.smtp.auth", "true");
+		
+			msg.setSentDate(new Date()); // 메일 발송시간(현재시간)
 			
-			Session mailSession = Session.getInstance(props, 
-					new javax.mail.Authenticator() {
-						protected PasswordAuthentication getPasswordAuthentication() {
-							return new PasswordAuthentication("dlfroal06", "ant200616");
-						}
-					});
-			Message msg = new MimeMessage(mailSession);
-			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(
-						fromName, "UTF-8", "b")));
-			InternetAddress[] address1 = { new InternetAddress(to1)};
-			msg.setRecipients(Message.RecipientType.TO, address1);
-			msg.setSubject(subject);
-			msg.setSentDate(new java.util.Date());
-			msg.setContent(content, "text/html;charset=euc-kr");
 			
-			Transport.send(msg);
+			InternetAddress from = new InternetAddress("dlfroal06@gmail.com");//발신자 메일주소
 			
-		} catch (MessagingException e) {
+			// 이메일 발신자
+			msg.setFrom(from);
+			
+			
+			// 이메일 수신자
+			InternetAddress to = new InternetAddress(email); // 수신자 메일주소
+			
+			
+			msg.setRecipient(Message.RecipientType.TO, to);
+			
+			// 이메일 제목
+			msg.setSubject("테스트트트","UTF-8");
+			
+			// 이메일 내용
+			msg.setText("인증번호 ["+authNum+"]","UTF-8");
+			
+			// 이메일 헤더
+			msg.setHeader("content-Type", "text/html");
+			
+			// 메일 보내기
+			javax.mail.Transport.send(msg);
+			
+		} catch (AddressException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
+		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 		
@@ -406,5 +425,6 @@ public class MainController {
 		}
 		return buffer.toString();
 	}
+	
 	
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,9 +108,12 @@
 	height: 35px;
 }
 
-.boardTable tr:hover td {
-	background-color: rgb(224, 224, 224);
-	cursor: pointer;
+.boardTable tr:hover .haveContent {
+	background-color : rgb(224, 224, 224);
+	cursor : pointer;
+}
+.boardTable tr:hover .nonContent {
+	cursor : default;
 }
 
 /* 게시판 스타일 */
@@ -189,12 +194,17 @@
 	font-size: 15px;
 }
 
-.pagingBar li>span {
+.pagingBar .pstyle>span {
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
 
-.pagingBar li a:hover {
+.pagingBar .pstyle a:hover {
+	color: rgb(26, 188, 156);
+	border: 1px solid rgb(26, 188, 156);
+}
+
+.pagingBar li .crt{
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
@@ -220,26 +230,36 @@
 		</div>
 		<div class="contentArea">
 
-			<button class="bigBtn">작성</button>
+			<button class="bigBtn">글쓰기</button>
 
 			<!-- 검색바 -->
-			<form id="searchForm" action="" method="get">
+			<form id="searchForm" action="search.no" method="get">
 			<div class="searchBar">
 				<select name="condition">
-					<option>작성자</option>
-					<option>제목</option>
-					<option>내용</option>
-					<option>재목+내용</option>
+					<option value="boardTitle">제목</option>
+					<option value="boardContent">내용</option>
+					<option value="boardWriter">작성자</option>
 				</select> 
-				<input name="keyword" type="text">
+				<input name="keyword" type="text" value="${ keyword }">
+				<input type="hidden" name="currentPage" value="1">
 				<svg onclick="document.getElementById('searchForm').submit();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 					fill="black" width="48px" height="48px">
-		<path
-						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-		<path d="M0 0h24v24H0z" fill="none" /></svg>
+					<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+					<path d="M0 0h24v24H0z" fill="none" />
+				</svg>
 			</div>
 			</form>
 			<!-- 검색바 -->
+			
+			<script>
+			$(function(){
+				switch('${condition}'){    
+				case "boardTitle" : $("#searchForm option").eq(0).attr("selected", true);  break;
+				case "boardContent": $("#searchForm option").eq(1).attr("selected", true);  break;
+				case "boardWriter": $("#searchForm option").eq(2).attr("selected", true);  break;
+				}
+			});
+			</script>
 			
 			<br>
 			<!-- 게시판 -->
@@ -253,101 +273,133 @@
 						<th width="150">조회수</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
-				<tr>
-					<td>200</td>
-					<td>공지사항제목</td>
-					<td>김관리</td>
-					<td>2020/05/10</td>
-					<td>23</td>
-				</tr>
+				<tbody>
+					<c:choose>
+						<c:when test="${empty list }">
+							<tr>
+								<td colspan="5" rowspan="10" class="nonContent">조회된 게시글이 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${ list }" var="n">
+								<tr>
+									<td class="haveContent">${n.noticeNo }</td>
+									<td class="haveContent">${n.noticeTitle }</td>
+									<td class="haveContent">${n.noticeWriter }</td>
+									<td class="haveContent">${n.noticeEnrollDate }</td>
+									<td class="haveContent">${n.noticeCount }</td>
+								</tr>
+								</c:forEach>
+								<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
+		    					<tr>
+									<td class="nonContent">&nbsp;</td>
+									<td class="nonContent">&nbsp;</td>
+									<td class="nonContent">&nbsp;</td>
+									<td class="nonContent">&nbsp;</td>
+									<td class="nonContent">&nbsp;</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					</tbody>
 			</table>
 			<!-- 게시판 -->
 			
 			<br>
 	
 			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
-			</ul>
+			<c:choose>
+				<c:when test="${sc eq 1}">
+					<!-- 페이징바 -->
+					<ul class="pagingBar">
+						<li class="pstyle"><a class="pstyle" href="search.no?condition=${condition}&keyword=${keyword}&currentPage=1">&lt;&lt;</a></li>
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li><a class="pstyle disabled" href="#">&lt;</a></li>
+							</c:when>
+			                <c:otherwise>
+			                	<li class="pstyle"><a href="search.no?condition=${condition}&keyword=${keyword}&currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+			                </c:otherwise>
+			            </c:choose>
+			        
+			        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            <c:choose>
+		                    <c:when test="${ p eq pi.currentPage }">
+		                    	<li><a class="crt disabled" href="#">${p}</a></li>
+		                    </c:when>
+			                <c:otherwise>
+			                    <li class="pstyle"><a href="search.no?condition=${condition}&keyword=${keyword}&currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+		                </c:choose>
+					 </c:forEach>
+						
+						<c:choose>
+			                <c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li><a class="disabled" href="#">&gt;</a></li>
+							</c:when>
+				            <c:otherwise>
+				                <li class="pstyle"><a href="search.no?condition=${condition}&keyword=${keyword}&currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+				            </c:otherwise>
+			            </c:choose>
+					<li class="pstyle"><a href="search.no?condition=${condition}&keyword=${keyword}&currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
+					</ul>
+					<!-- 페이징바 -->
+				</c:when>
+				<c:otherwise>
+					<!-- 페이징바 -->
+					<ul class="pagingBar">
+						<li class="pstyle"><a class="pstyle" href="list.no?currentPage=1">&lt;&lt;</a></li>
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li><a class="pstyle disabled" href="#">&lt;</a></li>
+							</c:when>
+			                <c:otherwise>
+			                	<li class="pstyle"><a href="list.no?currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+			                </c:otherwise>
+			            </c:choose>
+			        
+			        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            <c:choose>
+		                    <c:when test="${ p eq pi.currentPage }">
+		                    	<li><a class="crt disabled" href="#">${p}</a></li>
+		                    </c:when>
+			                <c:otherwise>
+			                    <li class="pstyle"><a href="list.no?currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+		                </c:choose>
+					 </c:forEach>
+						
+						<c:choose>
+			                <c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li><a class="disabled" href="#">&gt;</a></li>
+							</c:when>
+				            <c:otherwise>
+				                <li class="pstyle"><a href="list.no?currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+				            </c:otherwise>
+			            </c:choose>
+					<li class="pstyle"><a href="list.no?currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
+					</ul>
+					<!-- 페이징바 -->
+				</c:otherwise>
+			</c:choose>
 			<!-- 페이징바 -->
-
 		</div>
 	</div>
+	
+	<script>
+	$(document).ready(function() { 
+		
+		$(".boardTable tbody tr").click(function(){
+			var nno = $(this).children().eq(0).text();
+			if($.trim(bno).length > 0){
+				location.href="detail.no?nno=" + nno + "&currentPage=" + ${pi.currentPage};
+			}
+		});
+	});
+	
+	$('.disabled').click(function () {return false;});
+	
+	</script>	
+	
 </body>
 </html>
