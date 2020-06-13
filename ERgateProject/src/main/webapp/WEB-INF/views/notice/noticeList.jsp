@@ -391,7 +391,7 @@
 		
 		$(".boardTable tbody tr").click(function(){
 			var nno = $(this).children().eq(0).text();
-			if($.trim(bno).length > 0){
+			if($.trim(nno).length > 0){
 				location.href="detail.no?nno=" + nno + "&currentPage=" + ${pi.currentPage};
 			}
 		});
