@@ -251,8 +251,8 @@
 			</ul>
 		</div>
 		<div class="contentArea">
-			<button class="bigBtn">선택결재</button>
-			<h2 style="display: inline-block; margin-left: 400px;">
+			
+			<h2 style="display: inline-block; margin-left: 600px;">
 
 				<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
 		

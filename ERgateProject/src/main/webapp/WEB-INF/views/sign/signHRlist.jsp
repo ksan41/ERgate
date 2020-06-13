@@ -221,7 +221,7 @@
 			</ul>
 		</div>
 		<div class="contentArea">
-			<h2 style="display: inline-block; margin-left: 530px;">
+			<h2 style="display: inline-block; margin-left: 550px;">
 				<span id="arrowLeft" class="material-icons"> arrow_left </span> 
 				
 					<b id="calYear"></b>년 <b id="calMonth"></b>월

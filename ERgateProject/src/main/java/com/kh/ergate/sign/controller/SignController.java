@@ -239,9 +239,25 @@ public class SignController {
 	  }
 	  
 	  // 결재용
-	  @RequestMapping("sign.si") public String updateSign(Signer si, SignDocument
-	  sd, Model model) {
-	  
+	  @RequestMapping("sign.si") 
+	  public void updateSign(Signer si, Model model) {
+		  
+		  int result = 1;
+		  
+		  // 현재 결재순서가 마지막일 경우, 결재문서의 상태 변경함
+		  if(si.getIsLast().equals("Y")) {
+			  result = siService.updateSign(si);
+			  result *= siService.updateSignDoc(si);
+		  }else { // 마지막이 아닐경우, 결재자테이블의 결재상태만 변경됨
+			result *= siService.updateSign(si); 
+		  }
+		  
+		  
+		  if(result>0) { // 결재처리 성공
+			  model.addAttribute("msg","해당 문서가 성공적으로 결재되었습니다.");
+		  }else { //결재처리 실패
+			  model.addAttribute("msg","해당 문서의 결재에 실패했습니다.");
+		  }
 	  }
 	  
 	  // 미결처리용

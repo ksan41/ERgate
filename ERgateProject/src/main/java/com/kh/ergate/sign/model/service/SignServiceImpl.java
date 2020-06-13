@@ -79,24 +79,6 @@ public class SignServiceImpl implements SignService{
 		return siDao.searchList(sqlSession,pi,sds);
 	}
 	
-	// 외근휴가내역 게시글 수 조회용
-	@Override
-	public int selectHRlistCount(SignDateSearch sds) {
-		return 0;
-	}
-	
-
-	@Override
-	public int updateSign(Signer si, SignDocument sd) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int noUpdateSign(Signer si, SignDocument sd) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	// 결재자 등록요청용
 	@Override
@@ -147,6 +129,19 @@ public class SignServiceImpl implements SignService{
 	@Override
 	public ArrayList<SignDocument> selectWaitingList(PageInfo pi,String empId) {
 		return siDao.selectWaitingList(sqlSession,pi,empId);
+	}
+
+	
+	// 결재처리용
+	@Override
+	public int updateSign(Signer si) {
+		return siDao.updateSign(sqlSession,si);
+	}
+
+
+	@Override
+	public int updateSignDoc(Signer si) {
+		return siDao.updateSignDoc(sqlSession,si);
 	}
 
 
