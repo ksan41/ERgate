@@ -271,7 +271,7 @@
 						<tr>
 							<td colspan="8">
 										<div class="fileWrap" style="display:none;" style="text-align:left;">
-								        <div id="dropZone" style="width: 1140px; height: 100px; border: 1px solid lightgray;">
+								        <div id="dropZone" style="width: 1300px; height: 100px; border: 1px solid lightgray;">
 								            <table id="fileListTable" width="100%" border="0px">
 								                <tbody id="fileTableTbody">
 								                </tbody>
@@ -280,6 +280,7 @@
 							</td>
 						</tr>
 					</table>
+					<br><br>
 				</div>
 			</div>
 			<br><br>

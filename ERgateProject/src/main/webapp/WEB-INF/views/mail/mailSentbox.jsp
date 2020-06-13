@@ -510,10 +510,18 @@
 			} 
 		}); 
 		
-		$(".mailTable>tbody>tr").click(function(){
-			var mailNo = $(this).children().find('input[name=mailNo]').val();
-			location.href="detail.mil?mailNo=" + mailNo + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}' + "&pt=" + "sentbox";
+		$(".mailTable>tbody>tr>td:nth-child(n+4):nth-child(-n+5)").on('click', function(){
+			
+			$(".mailTable>tbody>tr").on('click', function(){
+				var mailNo = $(this).children().find('input[name=mailNo]').val();
+				if($.trim(mailNo).length > 0){
+					location.href="detail.mil?mailNo=" + mailNo + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}' + "&pt=" + "sentbox";
+				}
+			});
+			
 		});
+		
+		
 	});
 
 	
