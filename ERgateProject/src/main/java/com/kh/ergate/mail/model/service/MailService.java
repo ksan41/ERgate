@@ -8,8 +8,10 @@ import com.kh.ergate.mail.model.vo.Email;
 
 public interface MailService {
 
-	int selectListCount();
-	ArrayList<Email> selectList(PageInfo pi);
+	int selectListCount(String mailTo);
+	ArrayList<Email> selectList(PageInfo pi, String mailTo);
+	int fselectListCount(String mailFrom);
+	ArrayList<Email> fselectList(PageInfo pi, String mailFrom);
 	int searchListCount(SearchCondition sc);
 	ArrayList<Email> searchList(PageInfo pi, SearchCondition sc);
 	

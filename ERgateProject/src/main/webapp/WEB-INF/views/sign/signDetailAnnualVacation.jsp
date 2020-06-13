@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -247,38 +249,36 @@ h2, h3 {
 				<table id="signInfo2">
 					<tr>
 						<th rowspan="2" width="120">결재라인</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
-						<th>팀장</th>
+						<c:forEach var="sg" items="${sgList }">
+							<c:if test="${sg.signType eq 1 }">
+								<th>${sg.jobTitle }</th>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<th></th>
+						</c:forEach>
 					</tr>
 					<tr>
-						<td width="150"><h2>1</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>2</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>3</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>4</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>5</h2>
-							<h3>전지현</h3></td>
-						<td width="150"><h2>6</h2>
-							<h3>전지현</h3></td>
+						<c:forEach var="sg" items="${sgList }">
+							<c:if test="${sg.signType eq 1 }">
+								<td width="150"><h2>${sg.signTurn}</h2>
+									<h3>${sg.empName }</h3></td>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<td width="150"><h2></h2>
+								<h3></h3></td>
+						</c:forEach>
 					</tr>
 					<tr>
 						<th>수신참조</th>
-						<td colspan="6" align="left">
-							<c:if test="${!empty sgList }">
+						<td colspan="6" align="left"><c:if test="${!empty sgList }">
 								<c:forEach var="sg" items="${sgList }">
 									<c:if test="${sg.signType eq 0 }">
 										<span>@${sg.empName } </span>
 									</c:if>
 								</c:forEach>
-							</c:if>
-						</td>
+							</c:if></td>
 					</tr>
 				</table>
 
@@ -286,44 +286,71 @@ h2, h3 {
 				<table id="checkArea">
 					<tr>
 						<th width="120"></th>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
-						<td width="150"><span class="material-icons circle">
-								panorama_fish_eye </span></td>
+						<c:forEach var="sg" items="${sgList }" varStatus="status">
+							<c:if test="${sg.signType eq 1}">
+								<c:choose>
+									<c:when test="${sg.signed eq 'Y' }">
+										<td width="150"><span class="material-icons circle">
+										panorama_fish_eye </span></td>
+									</c:when>
+									<c:otherwise>
+										<td width="150"></td>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="b" begin="${sgCnt+1 }" end="6">
+							<td width="150"></td>
+						</c:forEach>
 					</tr>
 				</table>
+	<script>
+		var holidayType = "${sd.holidayType}";
+		
+		
+	 	$(document).ready(function(){
+			switch(holidayType){
+			case "연차":$("#holidayType option:eq(0)").attr("selected","selected");break;
+			case "오전반차":$("#holidayType option:eq(1)").attr("selected","selected");break;
+			case "오후반차":$("#holidayType option:eq(2)").attr("selected","selected");break;
+			case "경조사":$("#holidayType option:eq(3)").attr("selected","selected");break;
+			case "공가":$("#holidayType option:eq(4)").attr("selected","selected");break;
+			case "병가":$("#holidayType option:eq(5)").attr("selected","selected");break;
+			case "휴직":$("#holidayType option:eq(6)").attr("selected","selected");break;
+			}
+			
+			//모든 input요소 readonly처리
+			$('input').prop('readonly', true);
+			$('textarea').attr('readonly',true);
+			$('option').attr('disabled', true);
+
+		});
+	</script>			
+				
+				
 				<table id="signInfo3">
 					<thead>
 						<tr>
-							<th>휴가구분</th>
-							<td align="left"><select class="inputs" name=""
+							<th width="100">휴가구분</th>
+							<td align="left"><select id="holidayType" class="inputs" name="holidayType"
 								style="height: 35px;">
-									<option selected>연차</option>
-									<option>오전반차</option>
-									<option>오후반차</option>
-									<option>경조사</option>
-									<option>공가</option>
-									<option>병가</option>
-									<option>휴직</option>
+									<option value="0">연차</option>
+									<option value="1">오전반차</option>
+									<option value="2">오후반차</option>
+									<option value="3">경조사</option>
+									<option value="4">공가</option>
+									<option value="5">병가</option>
+									<option value="6">휴직</option>
 							</select></td>
-							<th >잔여연차</th>
-							<td align="left">15 일</td>
 						</tr>
 						<tr>
 							<th>기간</th>
-							<td align="left"><input class="inputs" name="" type="date" value="${sd.holidayStart }"> ~ <input
-								class="inputs" name="" type="date" value="${sd.holidayEnd }"></td>
+							<td align="left">${sd.holidayStart } ~ ${sd.holidayEnd }</td>
+						</tr>
+						<tr>
 							<th>사용일수</th>
-							<td align="left"><input type="text" class="inputs" value="1">
-								일</td>
+							<td align="left">
+								<input type="text" class="inputs" value="${sd.holidayUsecount }">일</td>
 						</tr>
 						<tr>
 							<th>제목</th>
@@ -337,12 +364,12 @@ h2, h3 {
 						<tr>
 							<c:choose>
 								<c:when test="${empty saList }">
-									<td colspan="2">
+									<td colspan="3">
 										첨부된 파일이 없습니다.
 									</td>
 								</c:when>
 								<c:otherwise>
-									<td colspan="2" rowspan="2">
+									<td colspan="3" rowspan="2">
 										<div id="fileArea">
 											<c:forEach var="i" items="${saList }">
 												<a href="${pageContext.servletContext.contextPath}/resources/uploadFiles/sign/${i.changeName }" download="${i.originName }">${i.originName }</a><br>											
@@ -361,14 +388,6 @@ h2, h3 {
 				<input type="hidden" name="contentTable">
 				<table id="contentTable">
 						${sd.signContent }
-						<!-- <tr>
-							<th>휴가사유</th>
-						</tr>
-						<tr>
-							<td rowspan="8" colspan="8">
-								<textarea id="signContent" cols="168" rows="24">연차사용</textarea>
-							</td>								
-						</tr> -->
 					</tbody>
 				</table>
 
@@ -381,10 +400,6 @@ h2, h3 {
 
 	<!-- 팝업창 자동 사이즈맞춤용 스크립트 -->
 	<script>
-		//모든 input요소 readonly처리
-		$('input').prop('readonly', true);
-		$('textarea').attr('readonly',true);
-		$('option').attr('disabled', true);
 
 		
 		$(document)

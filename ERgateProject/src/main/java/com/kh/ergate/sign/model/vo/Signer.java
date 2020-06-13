@@ -19,4 +19,6 @@ public class Signer {
 	private int signType; //결재종류
 	private String signed; //결재여부 (기본'N')
 	private String jobTitle; //결재자 직급
+	
+	private String isLast; // 해당 결재자의 결재순서 마지막 여부, 'Y','N'
 }

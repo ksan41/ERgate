@@ -216,7 +216,7 @@
 		</div>
 		<div class="contentArea">
 			<button class="bigBtn" onclick="location.href='formSelect.si';">기안</button>
-			<h2 style="display: inline-block; margin-left: 400px;">
+			<h2 style="display: inline-block; margin-left: 450px;">
 				
 				<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
 				 

@@ -47,18 +47,15 @@ public interface SignService {
 	public int searchListCount(SignDateSearch sds);
 	
 	//지출결의내역 월조회 게시글 조회용
-	
 	public ArrayList<SignDocument> searchList(PageInfo pi,SignDateSearch sds);
 	
-	//외근&휴가내역요청용 
-	public ArrayList<SignDocument> hrList(SignDocument sd);
 	
-	//결재용
-	public int updateSign(Signer si,SignDocument sd);
+	//결재- 결재자 상태 변경용
+	public int updateSign(Signer si);
 	
-	//미결처리용
-	public int noUpdateSign(Signer si,SignDocument sd);
-	
+	//결재 - 결재문서 상태 변경용
+	public int updateSignDoc(Signer si);
+
 	//결재라인 등록요청용 
 	public int insertSigner(Signer si);
 	

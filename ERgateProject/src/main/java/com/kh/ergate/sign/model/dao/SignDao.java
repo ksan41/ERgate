@@ -112,4 +112,14 @@ public class SignDao {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectWaitingList",empId,rowBounds);
 	}
+	
+	// 결재처리- 결재자상태 변경용
+	public int updateSign(SqlSessionTemplate sqlSession,Signer si) {
+		return sqlSession.update("signMapper.updateSign",si);
+	}
+	
+	// 결재처리 - 결재문서 상태 변경용
+	public int updateSignDoc(SqlSessionTemplate sqlSession,Signer si) {
+		return sqlSession.update("signMapper.updateSignDoc",si);
+	}
 } 

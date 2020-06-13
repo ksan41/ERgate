@@ -13,18 +13,30 @@ import com.kh.ergate.mail.model.vo.Email;
 @Repository("milDao")
 public class MailDao {
 
-	public int selectListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("mailMapper.selectListCount");
+	public int selectListCount(SqlSessionTemplate sqlSession, String mailTo) {
+		return sqlSession.selectOne("mailMapper.selectListCount", mailTo);
 	}
 
-	public ArrayList<Email> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Email> selectList(SqlSessionTemplate sqlSession, PageInfo pi, String mailTo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("mailMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("mailMapper.selectList", mailTo, rowBounds);
+	}
+	
+	public int fselectListCount(SqlSessionTemplate sqlSession, String mailFrom) {
+		return sqlSession.selectOne("mailMapper.fselectListCount", mailFrom);
 	}
 
+	public ArrayList<Email> fselectList(SqlSessionTemplate sqlSession, PageInfo pi, String mailFrom) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.fselectList", mailFrom, rowBounds);
+	}
+	
 	public int searchListCount(SqlSessionTemplate sqlSession, SearchCondition sc) {
 		return sqlSession.selectOne("mailMapper.searchListCount", sc);
 	}
@@ -36,6 +48,8 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.searchList", sc, rowBounds);
 	}
+
+
 	
 
 }

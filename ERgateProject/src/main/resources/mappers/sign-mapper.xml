@@ -77,6 +77,9 @@
               <if test="condition == 1">
               	AND SIGN_TYPE_NO = 0
               </if>
+               <if test="condition == 2">
+              	AND SIGN_TYPE_NO IN(1,2)
+              </if>
 	</select>
 	
 	<select id="searchList" parameterType="com.kh.ergate.sign.model.vo.SignDateSearch" resultMap="signDocResultSet">
@@ -89,6 +92,9 @@
               </if>
               <if test="condition == 1">
               	AND SIGN_TYPE_NO = 0
+              </if>
+              <if test="condition == 2">
+              	AND SIGN_TYPE_NO IN(1,2)
               </if>
         ORDER BY DRAFT_DATE DESC 
 	</select>
@@ -204,4 +210,19 @@
       		  SG.SIGNED = 'N' AND
       		  SD.SIGN_STATUS=0
 	</select>
+	
+	<!-- 결재자 - 결재상태 업데이트용 -->
+	<update id="updateSign" parameterType="Signer">
+		UPDATE SIGNER
+		 SET SIGNED = 'Y'
+		WHERE DOCUMENT_NO = #{documentNo} AND 
+      		  EMP_ID = #{empId}
+	</update>
+	
+	<!--  결재문서 -결재상태 업데이트용 -->
+	<update id="updateSignDoc" parameterType="Signer">
+	UPDATE SIGN_DOCUMENT
+	  SET SIGN_STATUS = 1
+	WHERE DOCUMENT_NO = #{documentNo}
+	</update>
 </mapper>

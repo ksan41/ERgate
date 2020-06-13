@@ -266,8 +266,8 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn subActive">받은메일함</button></li>
-				<li><button class="subBtn">보낸메일함</button></li>
+				<li><button class="subBtn subActive" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
 				<li><button class="subBtn">중요메일함</button></li>
 				<li><button class="subBtn">메일작성</button></li>
 			</ul>
@@ -295,6 +295,7 @@
 								</select> 
 								<input type="text" name="keyword" value="${ keyword }">
 								<input type="hidden" name="currentPage" value="1">
+								<input type="hidden" name="mailOwn" value="${ loginUser.empId }">
 								<svg onclick="document.getElementById('searchForm').submit();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="48px" height="48px">
 									<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" />
@@ -329,7 +330,7 @@
 						<th width="80">
 								<label><input type="checkbox" class="importbox" id="importAll" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
 						</th>
-						<th width="220">계정</th>
+						<th width="220">보낸사람</th>
 						<th>제목</th>
 						<th width="150">받은날짜</th>
 					</tr>
@@ -434,13 +435,13 @@
 				<c:otherwise>
 					<!-- 페이징바 -->
 					<ul class="pagingBar">
-						<li class="pstyle"><a class="pstyle" href="list.mil?currentPage=1">&lt;&lt;</a></li>
+						<li class="pstyle"><a class="pstyle" href="list.mil?currentPage=1&mailOwn=${loginUser.empId }">&lt;&lt;</a></li>
 						<c:choose>
 							<c:when test="${ pi.currentPage eq 1 }">
 								<li><a class="pstyle disabled" href="#">&lt;</a></li>
 							</c:when>
 			                <c:otherwise>
-			                	<li class="pstyle"><a href="list.mil?currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+			                	<li class="pstyle"><a href="list.mil?currentPage=${ pi.currentPage-1 }&mailOwn=${loginUser.empId }">&lt;</a></li>
 			                </c:otherwise>
 			            </c:choose>
 			        
@@ -450,7 +451,7 @@
 		                    	<li><a class="crt disabled" href="#">${p}</a></li>
 		                    </c:when>
 			                <c:otherwise>
-			                    <li class="pstyle"><a href="list.mil?currentPage=${ p }">${ p }</a></li>
+			                    <li class="pstyle"><a href="list.mil?currentPage=${ p }&mailOwn=${loginUser.empId }">${ p }</a></li>
 			                </c:otherwise>
 		                </c:choose>
 					 </c:forEach>
@@ -460,10 +461,10 @@
 			                    <li><a class="disabled" href="#">&gt;</a></li>
 							</c:when>
 				            <c:otherwise>
-				                <li class="pstyle"><a href="list.mil?currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+				                <li class="pstyle"><a href="list.mil?currentPage=${ pi.currentPage+1 }&mailOwn=${loginUser.empId }">&gt;</a></li>
 				            </c:otherwise>
 			            </c:choose>
-					<li class="pstyle"><a href="list.mil?currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
+					<li class="pstyle"><a href="list.mil?currentPage=${ pi.maxPage }&mailOwn=${loginUser.empId }">&gt;&gt;</a></li>
 					</ul>
 					<!-- 페이징바 -->
 				</c:otherwise>
@@ -507,7 +508,13 @@
 			}else { 
 				$(this).parent().find('img').attr('src','${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg');
 			} 
-		}); 
+		});
+		
+		$(".mailTable>tbody>tr").click(function(){
+			var bno = $(this).children().find('input[name=mailNo]').val();
+			location.href="detail.mil?bno=" + bno + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}';
+		});
+		
 	});
 
 	

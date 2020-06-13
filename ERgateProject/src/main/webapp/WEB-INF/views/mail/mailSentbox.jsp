@@ -158,12 +158,17 @@
 	font-size: 15px;
 }
 
-.pagingBar li>span {
+.pagingBar .pstyle>span {
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
 
-.pagingBar li a:hover {
+.pagingBar .pstyle a:hover {
+	color: rgb(26, 188, 156);
+	border: 1px solid rgb(26, 188, 156);
+}
+
+.pagingBar li .crt{
 	color: rgb(26, 188, 156);
 	border: 1px solid rgb(26, 188, 156);
 }
@@ -246,11 +251,6 @@
 	z-index: 9999;
 }
 
-.readOrNot {
-	font-size:13px;
-	color:orangered;
-}
-
 </style>   
 </head>
 <body>
@@ -266,8 +266,8 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">받은메일함</button></li>
-				<li><button class="subBtn subActive">보낸메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
+				<li><button class="subBtn subActive" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
 				<li><button class="subBtn">중요메일함</button></li>
 				<li><button class="subBtn">메일작성</button></li>
 			</ul>
@@ -280,24 +280,38 @@
 				<table class="bas">
 					<tr>
 						<td id="leftArea">
-							<button class="middleBtn">답장</button>&nbsp;
-							<button class="middleBtn" style="background:gray;">전달</button>&nbsp;
-							<button class="middleBtn takeManyBtn" style="background:rgb(190, 190, 190);">삭제</button>
+							<button class="middleBtn" type="button">답장</button>&nbsp;
+							<button class="middleBtn" type="button" style="background:gray;">전달</button>&nbsp;
+							<button class="middleBtn takeManyBtn" type="button" style="background:rgb(190, 190, 190);">삭제</button>
 						</td>
 						<td id="rightArea">
 							<!-- 검색바 -->
+							<form id="searchForm" action="fsearch.mil" method="get">
 							<div class="searchBar">
-								<select>
-									<option>제목</option>
-									<option>내용</option>
-								</select> <input type="text">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-									fill="black" width="48px" height="48px">
-									<path
-										d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-									<path d="M0 0h24v24H0z" fill="none" /></svg>
+								<select name="condition">
+									<option value="mailTitle">제목</option>
+									<option value="mailContent">내용</option>
+									<option value="mailnameTo">받는사람</option>
+								</select> 
+								<input type="text" name="keyword" value="${ keyword }">
+								<input type="hidden" name="currentPage" value="1">
+								<input type="hidden" name="mailOwn" value="${ loginUser.empId }">
+								<svg onclick="document.getElementById('searchForm').submit();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="48px" height="48px">
+									<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+									<path d="M0 0h24v24H0z" fill="none" />
+								</svg>
 							</div>
+							</form>
 							<!-- 검색바 -->
+							<script>
+							$(function(){
+								switch('${condition}'){    
+								case "mailTitle" : $("#searchForm option").eq(0).attr("selected", true);  break;
+								case "mailContent": $("#searchForm option").eq(1).attr("selected", true);  break;
+								case "mailnameTo": $("#searchForm option").eq(2).attr("selected", true);  break;
+								}
+							});
+							</script>
 						</td>
 					</tr>
 				</table>
@@ -314,160 +328,147 @@
 					        </div>
    						</th>
 						<th width="80">
-								<label><input type="checkbox" class="importbox" id="importAll" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
+								<label><input type="checkbox" class="importbox" id="importAll" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
 						</th>
-						<th width="220">계정</th>
-						<th width="80">열람</th>
+						<th width="220">받는사람</th>
 						<th>제목</th>
-						<th width="150">보낸날짜</th>
+						<th width="150">받은날짜</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot"></span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot">&lt;읽지않음&gt;</span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot">&lt;읽지않음&gt;</span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot">&lt;읽지않음&gt;</span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot"></span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot"></span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot"></span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot"></span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot">&lt;읽지않음&gt;</span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
-				<tr>
-					<td>
-						<label><input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);"></label>
-   					</td>
-					<td>
-						<label><input type="checkbox" class="importbox" name="ichk"><img src="../../resources/icons/star_border-black-48dp.svg"></label>
-					</td>
-					<td><span data-tooltip-text="kevin76@ergate.com">케빈</span></td>
-					<td><span class="readOrNot">&lt;읽지않음&gt;</span></td>
-					<td>메일 제목입니다. 좀 말려주세요</td>
-					<td>2020/05/10</td>
-				</tr>
 				
-				
-				
-				
-				
+				<c:choose>
+					<c:when test="${fn:length(list) eq 10}">
+						<c:forEach items="${ list }" var="b">
+						<tr>
+							<td>
+								<label>
+									<input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);">
+									<input class="mailNo" type="hidden" name="mailNo" value="${b.mailNo}">
+								</label>
+		   					</td>
+							<td>
+								<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
+							</td>
+							<td><span data-tooltip-text="${b.mailTo }@ergate.com">${b.mailnameTo }</span></td>
+							<td>${b.mailTitle }</td>
+							<td>${b.mailDate }</td>
+						</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${ list }" var="b">
+						<tr>
+							<td>
+								<label>
+									<input class="checkbox chk" type="checkbox" name="chk" value="" style="vertical-align: middle; transform: scale(1.5);">
+									<input class="mailNo" type="hidden" name="mailNo" value="${b.mailNo}">
+								</label>
+		   					</td>
+							<td>
+								<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
+							</td>
+							<td><span data-tooltip-text="${b.mailTo }@ergate.com">${b.mailnameTo }</span></td>
+							<td>${b.mailTitle }</td>
+							<td>${b.mailDate }</td>
+						</tr>
+						</c:forEach>
+						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
+    					<tr>
+							<td>
+								<label>
+									
+								</label>
+		   					</td>
+							<td>
+								
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 				
 			</table>
 			<!-- 게시판 -->
 			
 			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
-			</ul>
+			<br>
+			<c:choose>
+				<c:when test="${sc eq 1}">
+					<!-- 페이징바 -->
+					<ul class="pagingBar">
+						<li class="pstyle"><a class="pstyle" href="search.mil?condition=${condition}&keyword=${keyword}&currentPage=1">&lt;&lt;</a></li>
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li><a class="pstyle disabled" href="#">&lt;</a></li>
+							</c:when>
+			                <c:otherwise>
+			                	<li class="pstyle"><a href="search.mil?condition=${condition}&keyword=${keyword}&currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+			                </c:otherwise>
+			            </c:choose>
+			        
+			        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            <c:choose>
+		                    <c:when test="${ p eq pi.currentPage }">
+		                    	<li><a class="crt disabled" href="#">${p}</a></li>
+		                    </c:when>
+			                <c:otherwise>
+			                    <li class="pstyle"><a href="search.mil?condition=${condition}&keyword=${keyword}&currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+		                </c:choose>
+					 </c:forEach>
+						
+						<c:choose>
+			                <c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li><a class="disabled" href="#">&gt;</a></li>
+							</c:when>
+				            <c:otherwise>
+				                <li class="pstyle"><a href="search.mil?condition=${condition}&keyword=${keyword}&currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+				            </c:otherwise>
+			            </c:choose>
+					<li class="pstyle"><a href="search.mil?condition=${condition}&keyword=${keyword}&currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
+					</ul>
+					<!-- 페이징바 -->
+				</c:when>
+				<c:otherwise>
+					<!-- 페이징바 -->
+					<ul class="pagingBar">
+						<li class="pstyle"><a class="pstyle" href="list.mil?currentPage=1">&lt;&lt;</a></li>
+						<c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li><a class="pstyle disabled" href="#">&lt;</a></li>
+							</c:when>
+			                <c:otherwise>
+			                	<li class="pstyle"><a href="list.mil?currentPage=${ pi.currentPage-1 }">&lt;</a></li>
+			                </c:otherwise>
+			            </c:choose>
+			        
+			        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            <c:choose>
+		                    <c:when test="${ p eq pi.currentPage }">
+		                    	<li><a class="crt disabled" href="#">${p}</a></li>
+		                    </c:when>
+			                <c:otherwise>
+			                    <li class="pstyle"><a href="list.mil?currentPage=${ p }">${ p }</a></li>
+			                </c:otherwise>
+		                </c:choose>
+					 </c:forEach>
+						
+						<c:choose>
+			                <c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li><a class="disabled" href="#">&gt;</a></li>
+							</c:when>
+				            <c:otherwise>
+				                <li class="pstyle"><a href="list.mil?currentPage=${ pi.currentPage+1 }">&gt;</a></li>
+				            </c:otherwise>
+			            </c:choose>
+					<li class="pstyle"><a href="list.mil?currentPage=${ pi.maxPage }">&gt;&gt;</a></li>
+					</ul>
+					<!-- 페이징바 -->
+				</c:otherwise>
+			</c:choose>
 			<!-- 페이징바 -->
 
 		</div>
@@ -492,22 +493,27 @@
 	     if($("#importAll").prop("checked")){
 	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
 	            $("input[name=ichk]").prop("checked",true);
-	            $("input[name=ichk]").parent().find('img').attr('src','../../resources/icons/star-black-48dp.svg');
+	            $("input[name=ichk]").parent().find('img').attr('src','${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg');
 	            //클릭이 안되있으면
 	     }else{
 	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
 	            $("input[name=ichk]").prop("checked",false);
-	            $("input[name=ichk]").parent().find('img').attr('src','../../resources/icons/star_border-black-48dp.svg');
+	            $("input[name=ichk]").parent().find('img').attr('src','${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg');
 	     }
 	 });
 	$(document).ready(function() { 
 		$(".importbox").on('click', function() { 
 			if ( $(this).prop('checked') ) {
-				$(this).parent().find('img').attr('src','../../resources/icons/star-black-48dp.svg');
+				$(this).parent().find('img').attr('src','${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg');
 			}else { 
-				$(this).parent().find('img').attr('src','../../resources/icons/star_border-black-48dp.svg');
+				$(this).parent().find('img').attr('src','${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg');
 			} 
 		}); 
+		
+		$(".mailTable>tbody>tr").click(function(){
+			var bno = $(this).children().find('input[name=mailNo]').val();
+			location.href="detail.mil?bno=" + bno + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}';
+		});
 	});
 
 	
@@ -521,6 +527,8 @@
 		 
 		 location.href="";
 	})
+	
+	$('.disabled').click(function () {return false;});
 	</script>
 </body>
 </html>

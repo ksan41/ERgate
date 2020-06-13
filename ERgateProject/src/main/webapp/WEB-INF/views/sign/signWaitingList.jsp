@@ -251,8 +251,8 @@
 			</ul>
 		</div>
 		<div class="contentArea">
-			<button class="bigBtn">선택결재</button>
-			<h2 style="display: inline-block; margin-left: 400px;">
+			
+			<h2 style="display: inline-block; margin-left: 600px;">
 
 				<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
 		
@@ -340,7 +340,17 @@
 				</c:choose>
 			</table>
 			<br>
-			
+			<script>
+				$(function(){
+					$(".boardTable>tbody tr").click(function(){
+						var documentNo = $(this).children().eq(4).text();
+						var signTypeNo = $(this).children().eq(0).val();
+						window.open("signDetail.si?documentNo="+ documentNo + "&signTypeNo="+signTypeNo, "ddd",'_blank') ;
+						
+					});
+					
+				});
+			</script>			
 			
 			
 			<!-- 페이징바 -->

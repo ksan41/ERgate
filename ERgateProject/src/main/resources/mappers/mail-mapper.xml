@@ -17,16 +17,29 @@
 		<result column="mail_status" property="mailStatus"/>
 	</resultMap>
 
-	<select id="selectListCount" resultType="_int">
+	<select id="selectListCount" parameterType="String" resultType="_int">
 		select count(*)
 		  from email
-		 where mail_status='Y'
+		 where mail_status='Y' and mail_to=#{mailTo}
 	</select>
 	
-	<select id="selectList" resultMap="emailResultSet">
+	<select id="selectList" parameterType="String" resultMap="emailResultSet">
 		select * 
 		  from email
-		 where mail_status='Y'
+		 where mail_status='Y' and mail_to=#{mailTo}
+		 order by mail_no desc
+	</select>
+	
+	<select id="fselectListCount" parameterType="String" resultType="_int">
+		select count(*)
+		  from email
+		 where mail_status='Y' and mail_from=#{mailFrom}
+	</select>
+	
+	<select id="fselectList" parameterType="String" resultMap="emailResultSet">
+		select * 
+		  from email
+		 where mail_status='Y' and mail_from=#{mailFrom}
 		 order by mail_no desc
 	</select>
 
@@ -34,8 +47,17 @@
 		select count(*)
 		  from email
 		 where mail_status='Y'
+		    <if test="mailTo != null">
+		    	and mail_To=#{mailTo}
+		    </if>
+		    <if test="mailFrom != null">
+		    	and mail_from=#{mailFrom}
+		    </if>
 		    <if test="mailnameFrom != null">
 				AND mailname_from LIKE '%' || #{mailnameFrom} || '%'  
+			</if>
+			<if test="mailnameTo != null">
+				AND mailname_to LIKE '%' || #{mailnameTo} || '%'
 			</if>
 			<if test="mailTitle != null">
 				AND mail_TITLE LIKE '%' || #{mailTitle} || '%'
@@ -43,14 +65,24 @@
 			<if test="mailContent != null">
 				AND mail_CONTENT LIKE '%' || #{mailContent} || '%'
 			</if>
+			
 	</select>
 	
 	<select id="searchList" parameterType="com.kh.ergate.mail.model.vo.SearchCondition" resultMap="emailResultSet">
 		select * 
 		  from email
 		 where mail_status='Y'
+		 	<if test="mailTo != null">
+		    	and mail_To=#{mailTo}
+		    </if>
+		    <if test="mailFrom != null">
+		    	and mail_from=#{mailFrom}
+		    </if>
 		 	<if test="mailnameFrom != null">
 				AND mailname_From LIKE '%' || #{mailnameFrom} || '%'  
+			</if>
+			<if test="mailnameTo != null">
+				AND mailname_to LIKE '%' || #{mailnameTo} || '%'
 			</if>
 			<if test="mailTitle != null">
 				AND mail_TITLE LIKE '%' || #{mailTitle} || '%'

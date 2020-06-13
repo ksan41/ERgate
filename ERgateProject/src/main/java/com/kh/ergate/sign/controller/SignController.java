@@ -53,7 +53,7 @@ public class SignController {
 	  // 결재상세 요청용
 	  @RequestMapping("signDetail.si") public String signDetail(String documentNo,String signTypeNo,SignDocument sdd,SignAttachment sat, Model model) {
 		  
-		  sdd.setDocumentNo(Integer.parseInt(documentNo));
+		  sdd.setDocumentNo(Long.parseLong(documentNo));
 		  sdd.setSignTypeNo(signTypeNo);
 		  
 		  SignDocument sd = siService.signDetail(sdd);
@@ -86,7 +86,6 @@ public class SignController {
 	  }
 	  
 	  // 진행결재함요청용
-	  
 	  @RequestMapping("ongoingList.si") 
 	  public String ongoingList(int currentPage,HttpSession session,SignDocument sd,Model model) {
 		  Employee e = (Employee)session.getAttribute("loginUser");
@@ -153,9 +152,8 @@ public class SignController {
 	  }
 	  
 	  // 지출결의내역요청용
-	  
-	  @RequestMapping("expenseList.si") public String expenseList(int currentPage,
-	  SignDocument sd, Model model) {
+	  @RequestMapping("expenseList.si") 
+	  public String expenseList(int currentPage,SignDocument sd, Model model) {
 	  
 	  int listCount = siService.selectElistCount();
 	  
@@ -195,35 +193,80 @@ public class SignController {
 	  }
 	  
 	  // 외근&휴가내역요청용
+	  @RequestMapping("hrList.si") 
+	  public String hrList(int currentPage,SignDocument sd, Model model) {
+		  SignDateSearch sds = new SignDateSearch();
+		  sds.setCondition(2);
+		  
+		  java.util.Date d = new java.util.Date();
+		  SimpleDateFormat format = new SimpleDateFormat("yyyy/MM");
+		  String sysdate = format.format(d);
+		  String[] array = sysdate.split("/");
+		  
+		  sds.setYear(array[0]);
+		  sds.setMonth(array[1]);
+		  
+		  int listCount = siService.searchListCount(sds);
+		  
+		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		  
+		  ArrayList<SignDocument> list = siService.searchList(pi,sds);
+		  
+		  
+		  model.addAttribute("pi", pi); 
+		  model.addAttribute("list", list);
+		  
+		  return "sign/signHRlist";
+	  }
+
 	  
-	  @RequestMapping("hrList.si") public String hrList(int currentPage,SignDocument sd, Model
-	  model) {
+	  // 외근휴가 월선택용
+	  @RequestMapping("hrListM.si") 
+	  public String hrListMonth(SignDateSearch sds,Integer currentPage,SignDocument sd, Model model) {
+		  sds.setCondition(2);
+		  int listCount = siService.searchListCount(sds);
+		  
+		  
+		  PageInfo pi = Pagination.getPageInfo(listCount, currentPage.intValue(), 5, 10);
+		  
+		  ArrayList<SignDocument> list = siService.searchList(pi,sds);
+		  
+		  model.addAttribute("pi",pi); 
+		  model.addAttribute("sds",sds);
+		  model.addAttribute("list",list); 
+		  
 		  return "sign/signHRlist";
 	  }
 	  
-	  // 외근휴가 월선택용
-	  
-	  @RequestMapping("hrListM.si") public String hrListMonth(String month,
-	  SignDocument sd, Model model) {
-	  
-	  }
-	  
 	  // 결재용
-	  
-	  @RequestMapping("sign.si") public String updateSign(Signer si, SignDocument
-	  sd, Model model) {
-	  
+	  @RequestMapping("sign.si") 
+	  public void updateSign(Signer si, Model model) {
+		  
+		  int result = 1;
+		  
+		  // 현재 결재순서가 마지막일 경우, 결재문서의 상태 변경함
+		  if(si.getIsLast().equals("Y")) {
+			  result = siService.updateSign(si);
+			  result *= siService.updateSignDoc(si);
+		  }else { // 마지막이 아닐경우, 결재자테이블의 결재상태만 변경됨
+			result *= siService.updateSign(si); 
+		  }
+		  
+		  
+		  if(result>0) { // 결재처리 성공
+			  model.addAttribute("msg","해당 문서가 성공적으로 결재되었습니다.");
+		  }else { //결재처리 실패
+			  model.addAttribute("msg","해당 문서의 결재에 실패했습니다.");
+		  }
 	  }
 	  
 	  // 미결처리용
-	  
 	  @RequestMapping("noSign.si") public String noUpdateSign(Signer si,
 	  SignDocument sd, Model model) {
 	  
 	  }
 	  
 	  // 기안작성폼메인요청용
-	  
 	  @RequestMapping("formSelect.si") 
 	  public String formSelectPage() { 
 		  return "sign/signFormMain"; 
