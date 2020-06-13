@@ -265,13 +265,14 @@ h2, h3 {
 							//console.log("첫번째다");
 							$("#signUpdate").submit();
 							alert("결재가 완료되었습니다.");
-							opener.parent.location='waitingList.si?currentPage=1';
+							opener.reloadPage();
+							//opener.parent.location='waitingList.si?currentPage=1';
 							window.close();
 						}else if(signTurn > 1 && $("#checkArea tr").children().eq(signTurn-1).html() != ""){ //결재순서가 1보다 크며, 내 전단계 사람이 결재를 했을 경우
 							//console.log("전 사람 결재함");
 							$("#signUpdate").submit();
 							alert("결재가 완료되었습니다.");
-							opener.parent.location='waitingList.si?currentPage=1';							
+							opener.reloadPage();							
 							window.close();
 						}else{ // 결재순서가 1보다 크며, 내 전단계 사람이 결재를 안했을 경우
 							alert("현재 결재순서가 아닙니다.");

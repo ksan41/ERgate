@@ -50,6 +50,13 @@ public class SignController {
 		  return "sign/signWaitingList"; 
 	  }
 	  
+	  // 결재대기리스트 재요청용
+	  @RequestMapping("waitingListRe.si")
+	  public String redirectWaitingList(int currentPage,Model model) {
+		  model.addAttribute("currentPage",currentPage);
+		  return "redirect:waitingList.si";
+	  }
+	  
 	  // 결재상세 요청용
 	  @RequestMapping("signDetail.si") public String signDetail(String documentNo,String signTypeNo,SignDocument sdd,SignAttachment sat, Model model) {
 		  

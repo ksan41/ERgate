@@ -259,6 +259,11 @@
 				</h2>
 			<br> <br>
 	<script>
+		function reloadPage() {
+			location.href='waitingListRe.si?currentPage=1';
+		}
+
+	
 		$(document).ready(function() {
 			// 기본적으로 문서 열었을때 오늘날짜 보여지도록 변수에 저장해둠
 			var date = new Date();
