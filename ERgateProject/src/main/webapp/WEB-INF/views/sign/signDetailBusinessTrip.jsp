@@ -230,8 +230,70 @@ h2, h3 {
 		<div class="popup-content">
 			<h1>외근신청서</h1>
 			<div id="btnArea">
-				<button class="bigBtn" id="signSubmit" style="margin-left: 150px;">결재</button>
+			
+				<c:set var="cnt" value="0" />
+				<c:forEach var="c" items="${sgList }">
+					<c:if test="${c.signType eq 1 }">
+						<c:set var="cnt" value="${cnt + 1 }"/>
+					</c:if>
+				</c:forEach>
+				
+				<form id="signUpdate" action="sign.si" method="post">
+				<c:if test="${sd.signStatus eq 0 }">
+					<c:forEach var="i" items="${sgList}">
+						<c:if test="${i.empId eq loginUser.empId }">
+							<button type="button" class="bigBtn" id="signSubmit" style="margin-left: 150px;">결재</button>
+								<input type="hidden" name="empId" value="${i.empId }">
+								<input type="hidden" name="documentNo" value="${sd.documentNo }">
+								<input type="hidden" name="signTurn" value="${i.signTurn }">
+								<c:choose>
+									<c:when test="${cnt eq i.signTurn }">
+										<input type="hidden" name="isLast" value="Y">
+									</c:when>
+									<c:otherwise>
+										<input type="hidden" name="isLast" value="N">
+									</c:otherwise>
+								</c:choose>
+						</c:if>
+					</c:forEach>
+				</c:if>
+				</form>			
 			</div>
+			
+			<script>
+			
+				$(document).ready(function(){
+					// 결재버튼 눌렀을 때 실행
+					$("#signSubmit").click(function(){
+						var signTurn = Number($("#signUpdate input[name=signTurn]").val());
+						console.log(signTurn);
+						console.log($("#checkArea tr").children().eq(signTurn-1).html());
+						
+						if( signTurn == 1){ // 결재순서가 첫번째일 경우
+							//console.log("첫번째다");
+							$("#signUpdate").submit();
+							alert("결재가 완료되었습니다.");
+							opener.reloadPage();
+							//opener.parent.location='waitingList.si?currentPage=1';
+							window.close();
+						}else if(signTurn > 1 && $("#checkArea tr").children().eq(signTurn-1).html() != ""){ //결재순서가 1보다 크며, 내 전단계 사람이 결재를 했을 경우
+							//console.log("전 사람 결재함");
+							$("#signUpdate").submit();
+							alert("결재가 완료되었습니다.");
+							opener.reloadPage();							
+							window.close();
+						}else{ // 결재순서가 1보다 크며, 내 전단계 사람이 결재를 안했을 경우
+							alert("현재 결재순서가 아닙니다.");
+						}
+						
+					});
+				});
+			</script>			
+			
+			
+			
+			
+			
 			<br>
 			<form id="signForm" action="#" method="get">
 				<table id="signInfo1">
@@ -326,7 +388,7 @@ h2, h3 {
 						<tr>
 							<c:choose>
 								<c:when test="${empty saList }">
-									<td colspan="2">
+									<td colspan="2" rowspan="2">
 										첨부된 파일이 없습니다.
 									</td>
 								</c:when>
@@ -341,46 +403,13 @@ h2, h3 {
 								</c:otherwise>
 							</c:choose>
 						</tr>
-						<tr></tr>
-						<tr>
-
-						</tr>
 						<tr>
 							<td colspan="8"></td>
 						</tr>
 					</thead>
 				</table>
 
-				<!-- 테이블값 가져올 el -->
-				<c:set var="contentVal" scope="page" />
-				<input type="hidden" name="contentTable">
-				<table id="contentTable">
-						${sd.signContent}			
-						<!-- <tr>
-							<th width="160">출장기간</th>
-							<td><textarea cols="145" class="textareaStyle"> 2020/05/14 ~ 2020/05/14</textarea></td>
-						</tr>
-						<tr>
-							<th>출장지</th>
-							<td><textarea cols="145" class="textareaStyle">(주)헌빛소프트 강남지점</textarea></td>	
-						</tr>
-						<tr>
-							<th rowspan="2">출장목적</th>
-							<td rowspan="2"><textarea cols="145" class="textareaStyle">ㅇㅇ프로젝트 헌빛소프트 협업 건 회의</textarea></td>
-						</tr>
-						<tr></tr>
-						<tr>
-							<th rowspan="2">출장자 정보<br>
-								(부서명/직급/사원명)
-							</th>
-							<td rowspan="2"><textarea cols="145" class="textareaStyle">마케팅1팀/차장/김기철, 마케팅1팀/과장/정윤아, 마케팅1팀/대리/이지영</textarea></td>
-						</tr>
-						<tr></tr>
-						<tr>
-							<th rowspan="3">비고</th>
-							<td rowspan="3"><textarea cols="145" class="textareaStyle">이후 정기적으로 면대면 회의 일정이 잡힐 수 있음.</textarea></td>
-						</tr> -->
-				</table>
+						${sd.signContent}
 
 			</form>
 		</div>
