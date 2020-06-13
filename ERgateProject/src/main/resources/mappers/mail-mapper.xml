@@ -16,6 +16,17 @@
 		<result column="mail_read_flag" property="mailReadFlag"/>
 		<result column="mail_status" property="mailStatus"/>
 	</resultMap>
+	
+	<resultMap id="attachResultSet" type="MailAttachment">
+		<id column="file_no" property="fileNo"/>
+		<result column="mail_no" property="mailNo"/>
+		<result column="origin_name" property="originName"/>
+		<result column="change_name" property="changeName"/>
+		<result column="file_path" property="filePath"/>
+		<result column="upload_date" property="uploadDate"/>
+		<result column="status" property="status"/>
+		<result column="file_size" property="mailFileSize"/>
+	</resultMap>
 
 	<select id="selectListCount" parameterType="String" resultType="_int">
 		select count(*)
@@ -91,6 +102,24 @@
 				AND mail_CONTENT LIKE '%' || #{mailContent} || '%'
 			</if>
 		 order by mail_no desc
+	</select>
+	
+	<update id="readFlagUpdate" parameterType="_int">
+		update email set
+		mail_read_flag = 'Y'
+		where mail_no = #{mailNo}
+	</update>
+	
+	<select id="selectMail" parameterType="_int" resultMap="emailResultSet">
+		select * from email
+		where mail_no = #{mailNo}
+	</select>
+	
+	<select id="fileList" parameterType="_int" resultMap="attachResultSet">
+		select * 
+		  from mail_attachment
+		 where mail_no=#{mailNo}
+		 order by file_no desc
 	</select>
 
 </mapper>

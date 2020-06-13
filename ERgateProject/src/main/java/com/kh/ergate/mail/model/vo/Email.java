@@ -1,6 +1,7 @@
 package com.kh.ergate.mail.model.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Email {
 	private String mailContent;
 	private String mailAttachment;
 	private Date mailDate;
+	private String mailDateStr;
 	private String mailReadFlag;
 	private String mailStatus;
 }

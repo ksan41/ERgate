@@ -351,7 +351,7 @@
 							</td>
 							<td><span data-tooltip-text="${b.mailFrom }@ergate.com">${b.mailnameFrom }</span></td>
 							<td>${b.mailTitle }</td>
-							<td>${b.mailDate }</td>
+							<td>${b.mailDateStr }</td>
 						</tr>
 						</c:forEach>
 					</c:when>
@@ -369,7 +369,7 @@
 							</td>
 							<td><span data-tooltip-text="${b.mailFrom }@ergate.com">${b.mailnameFrom }</span></td>
 							<td>${b.mailTitle }</td>
-							<td>${b.mailDate }</td>
+							<td>${b.mailDateStr }</td>
 						</tr>
 						</c:forEach>
 						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
@@ -511,8 +511,8 @@
 		});
 		
 		$(".mailTable>tbody>tr").click(function(){
-			var bno = $(this).children().find('input[name=mailNo]').val();
-			location.href="detail.mil?bno=" + bno + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}';
+			var mailNo = $(this).children().find('input[name=mailNo]').val();
+			location.href="detail.mil?mailNo=" + mailNo + "&currentPage=" + ${param.currentPage} + "&mailOwn="+'${param.mailOwn}' + "&pt=" + "inbox";
 		});
 		
 	});

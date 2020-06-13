@@ -10,6 +10,7 @@ import com.kh.ergate.mail.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.mail.model.dao.MailDao;
 import com.kh.ergate.mail.model.vo.Email;
+import com.kh.ergate.mail.model.vo.MailAttachment;
 
 @Service("milService")
 public class MailServiceImpl implements MailService {
@@ -50,6 +51,21 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Email> searchList(PageInfo pi, SearchCondition sc) {
 		return milDao.searchList(sqlSession,  pi, sc);
+	}
+
+	@Override
+	public int readFlagUpdate(int mailNo) {
+		return milDao.readFlagUpdate(sqlSession, mailNo);
+	}
+
+	@Override
+	public Email selectMail(int mailNo) {
+		return milDao.selectMail(sqlSession, mailNo);
+	}
+
+	@Override
+	public ArrayList<MailAttachment> fileList(int mailNo) {
+		return milDao.fileList(sqlSession, mailNo);
 	}
 
 	

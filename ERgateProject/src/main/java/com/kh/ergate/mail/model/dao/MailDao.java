@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.ergate.mail.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.mail.model.vo.Email;
+import com.kh.ergate.mail.model.vo.MailAttachment;
 
 @Repository("milDao")
 public class MailDao {
@@ -47,6 +48,18 @@ public class MailDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.searchList", sc, rowBounds);
+	}
+
+	public int readFlagUpdate(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.update("mailMapper.readFlagUpdate", mailNo);
+	}
+
+	public Email selectMail(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.selectOne("mailMapper.selectMail", mailNo);
+	}
+
+	public ArrayList<MailAttachment> fileList(SqlSessionTemplate sqlSession, int mailNo) {
+		return (ArrayList)sqlSession.selectList("mailMapper.fileList", mailNo);
 	}
 
 

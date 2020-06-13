@@ -126,7 +126,7 @@
 		float:left;
 	}
 	.mailTitleZone, .mailAttachFile {
-		height:60px; 
+		min-height:60px; 
 		background-color:rgba(211, 211, 211, 0.226);
 		width:80%;
 	}
@@ -167,6 +167,28 @@
 		margin-left:10px;
 	}
 /* ==========페이지영역========== */
+/* 파일테이블 */
+.fileTable {
+	text-align:left;
+}
+.fileTable tr:nth-child(1) td:nth-child(1) b {
+	margin-left:1px;
+}
+.fileTable tr:nth-child(1) td:nth-child(2) {
+	width:25px;
+}
+.fileTable tr:nth-child(1) td:nth-child(2) img {
+	margin-left:-10px;
+	margin-top:8px;
+}
+.fileShow:hover {
+	cursor:pointer;
+}
+/* 파일 첨부 관련 */
+.pageNoClick{
+   pointer-events: none;
+    cursor: default;
+}
 </style>   
 </head>
 <body>
@@ -182,8 +204,8 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn subActive">받은메일함</button></li>
-				<li><button class="subBtn">보낸메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
 				<li><button class="subBtn">중요메일함</button></li>
 				<li><button class="subBtn">메일작성</button></li>
 			</ul>
@@ -205,8 +227,8 @@
 				<br>
 				<div class="mailTitleZone">
 					<div>
-						<div class="importantIcon"><img src="../../resources/icons/star_border-black-48dp.svg"></div>
-						<div class="titleZone" name="mailTitle">안녕하세요, lessMoni팀입니다.</div>
+						<div class="importantIcon"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></div>
+						<div class="titleZone" name="mailTitle">${e.mailTitle }</div>
 					</div>
 				</div>
 				
@@ -214,43 +236,50 @@
 				<table class="infoBar">
 					<tr>
 						<td>보낸사람</td>
-						<td>lessmoni@ergate.com</td>
+						<td>${e.mailFrom }@ergate.com</td>
 					</tr>
 					<tr>
 						<td>받는사람</td>
-						<td>kevin166@ergate.com</td>
+						<td>${e.mailTo }@ergate.com</td>
 					</tr>
 					<tr>
 						<td>보낸날짜</td>
-						<td>2020-05-05 19:22</td>
+						<td>${e.mailDateStr }</td>
 					</tr>
 				</table>
 				<div style="height:1px;"></div>
 				<hr>
 				<div class="onlyContent">
-					<pre class="contentPre" name="mailContent">
-피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이
-
-피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀
-					
-이 없으면 
-					
-인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 
-					
-찾아다녀도 목숨이 있는 때까지 방황하여
-					
-도 보이는 것은
-					</pre>
+					<pre class="contentPre" name="mailContent">${e.mailContent }</pre>
 				</div>
 				<div style="height:1px;"></div>
 				<hr>
 				</div>
 				
 				<div class="mailAttachFile">
-					<div>
-						<div class="attachFileList">첨부파일 : </div>
-						<div class="fileZone"><a href="">4월 생일자 명단.xlsx</a></div>
-					</div>
+					<table class="fileTable">
+						<tr>
+							<td width="65">
+								<b class="fileShow">첨부파일</b>
+							</td>
+							<td>
+								<img class="fileShow"src="${pageContext.servletContext.contextPath }/resources/icons/save_alt.png" style="transform:translate(0,-2px) scale(0.5);" class="bigBtn fileShow">
+							</td>
+							<td colspan="6">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="8">
+										<div class="fileWrap" style="display:none;" style="text-align:left;">
+								        <div id="dropZone" style="width: 1140px; height: 100px; border: 1px solid lightgray;">
+								            <table id="fileListTable" width="100%" border="0px">
+								                <tbody id="fileTableTbody">
+								                </tbody>
+								            </table>
+								        </div>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 			<br><br>
@@ -263,5 +292,45 @@
 	</div>
 		</div>
 	</div>
+	
+	<script>
+	$(document).ready(function() { 
+		if('${param.pt}'=='inbox'){
+			$("#subMenuList li:nth-child(1) button").attr('class', 'subBtn subActive');
+		}else if('${param.pt}'=='sentbox'){
+			$("#subMenuList li:nth-child(2) button").attr('class', 'subBtn subActive');
+		}
+	});
+	
+	$(".fileShow").click(function() {
+		if($(".fileWrap").is(":visible")){
+			$(".fileWrap").slideUp(100);
+		}else {
+			$(".fileWrap").slideDown(100);
+		}
+		$.ajax({
+			url:"detailFile.mil",
+			data:{mailNo:${e.mailNo}},
+			success:function(list){
+				var value = "";
+				if(list == ""){
+					value +="<tr>" +
+							"<td>" + "첨부파일이 없습니다." + "</td>" +
+							"</tr>";
+				}else{
+					for(var i in list){
+						value += "<tr>" +
+									"<td>" + "<a href='"+"${pageContext.servletContext.contextPath }/resources/uploadFiles/mail/"+list[i].changeName+"' download=" +list[i].originName+ ">"+ list[i].originName +"</a>" +"</td>" +
+								 "<tr>";
+					}
+				}
+				console.log(value);
+				$("#fileListTable tbody").html(value);
+			},error:function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+	});
+	</script>
 </body>
 </html>
