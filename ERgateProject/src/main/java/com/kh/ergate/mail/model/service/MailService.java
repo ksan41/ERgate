@@ -30,6 +30,11 @@ public interface MailService {
 	int readFlagUpdate(int mailNo);
 	Email selectMail(int mailNo);
 	ArrayList<MailAttachment> fileList(int mailNo);
+	
+	//메일작성
+	int insertMail(Email insertE);
+	int insertMailAttachment(MailAttachment mt);
+	int updateMailFlag();
 
 	
 	

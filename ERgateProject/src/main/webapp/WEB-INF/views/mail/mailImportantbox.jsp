@@ -269,7 +269,7 @@
 				<li><button class="subBtn" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
 				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
 				<li><button class="subBtn subActive" onclick='location.href="ilist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>중요메일함</button></li>
-				<li><button class="subBtn" onclick='location.href="enrollForm.mil"'>메일작성</button></li>
+				<li><button class="subBtn" onclick='location.href="enrollForm.mil?currentPage=1&pageFrom=import"'>메일작성</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
