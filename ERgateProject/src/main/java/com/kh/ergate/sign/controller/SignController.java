@@ -252,12 +252,7 @@ public class SignController {
 			result *= siService.updateSign(si); 
 		  }
 		  
-		  
-		  if(result>0) { // 결재처리 성공
-			  model.addAttribute("msg","해당 문서가 성공적으로 결재되었습니다.");
-		  }else { //결재처리 실패
-			  model.addAttribute("msg","해당 문서의 결재에 실패했습니다.");
-		  }
+
 	  }
 	  
 	  // 미결처리용
