@@ -44,7 +44,8 @@
 		  FROM VEHICLE_RESERVATION
 		  JOIN VEHICLE USING(VHCL_CODE)
 		  JOIN EMPLOYEE USING(EMP_ID)
-		 WHERE VHCL_START_DATE = #{date}
+		 WHERE VHCL_START_DATE=#{date}
+		 	   AND VHCL_RESERVE_STATUS='Y'
 	</select>
 	
 	<select id="myReserveVehicle" parameterType="string" resultMap="vehicleReservationResultSet">
@@ -65,7 +66,7 @@
 	
 	<insert id="reserveVehicle" parameterType="VehicleReservation">
 		INSERT INTO VEHICLE_RESERVATION
-		VALUES(SEQ_VRESERV_NO.NEXTVAL, #{empId}, #{vhclCode}, SYSDATE, #{deptTitle}, #{vhclStartDate}, #{vhclStartTime},
+		VALUES(SEQ_VRESERVE_NO.NEXTVAL, #{empId}, #{vhclCode}, SYSDATE, #{deptTitle}, #{vhclStartDate}, #{vhclStartTime},
 			   #{vhclEndDate}, #{vhclEndTime}, #{vhclPurpose}, 'Y')
 	</insert>
 	

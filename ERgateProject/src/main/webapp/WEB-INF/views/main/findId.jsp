@@ -166,13 +166,13 @@
 	            <tr>
 	                <td class="findIdLabel">이메일 주소</td>
 	                <td>
-	                	<input name="empEmail" id="findIdEmail1" type="text" required>
+	                	<input name="email" id="findIdEmail1" type="text" required>
 	                	<input id="findIdEmail2" type="text" value="@gmail.com" readonly>
 	                </td>
 	            </tr>
 	            <tr>
 		        	<td colspan="2" class="findIdTd">
-			        	<button id="findIdSendNoBtn" class="middleBtn">인증번호 발송</button>
+			        	<button id="findIdSendNoBtn" class="middleBtn" type="button" onclick="location.href='emailAuth.ma'">인증번호 발송</button>
 		                <input id="findIdNo" type="text" placeholder="인증번호 입력">
 	                </td>
 	            </tr>

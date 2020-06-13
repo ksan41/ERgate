@@ -47,7 +47,7 @@ public class VehicleController {
 		
 		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
 		
-		ArrayList<VehicleReservation> list = vService.currentStatusList(month + "/" + calDay + "/" + calYear);
+		ArrayList<VehicleReservation> list = vService.currentStatusList(calYear + "/" + month + "/" + calDay);
 		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(list, response.getWriter());

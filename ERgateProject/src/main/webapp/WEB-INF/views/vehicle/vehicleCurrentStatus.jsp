@@ -586,9 +586,9 @@
 						<tr>
 							<td id="r1">사용기간</td>
 							<td id="r2">
-								<input name="vhclStartDate" type="text" class="inputs" style="width:140px" required readonly>
-								<select name="vhclStartTime" class="inputs" style="width:110px" required>
-									<option disabled selected>시작 시각</option>
+								<input name="vhclStartDate" id="vhclStartDate" type="text" class="inputs" style="width:140px" required readonly>
+								<select name="vhclStartTime" id="vhclStartTime" class="inputs" style="width:110px" required onFocus='this.initialSelect = this.selectedIndex;' onChange='this.selectedIndex = this.initialSelect;'>
+									<option disabled>시작 시각</option>
 									<option value="10">10:00</option>
 									<option value="11">11:00</option>
 									<option value="12">12:00</option>
@@ -601,8 +601,8 @@
 									<option value="19">7:00</option>
 								</select>
 								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-								<input name="vhclEndDate" type="text" class="inputs" style="width:140px" required readonly>
-								<select name="vhclEndTime" class="inputs" style="width:110px" required>
+								<input name="vhclEndDate" id="vhclEndDate" type="text" class="inputs" style="width:140px" required readonly>
+								<select name="vhclEndTime" id="vhclEndTime" class="inputs" style="width:110px" required>
 									<option disabled selected>종료 시각</option>
 									<option value="10">10:00</option>
 									<option value="11">11:00</option>
@@ -614,6 +614,7 @@
 									<option value="17">5:00</option>
 									<option value="18">6:00</option>
 									<option value="19">7:00</option>
+									<option value="20">8:00</option>
 								</select>
 							</td>
 						</tr>
@@ -621,7 +622,7 @@
 							<td id="r1">업무차량</td>
 							<td id="r2">
 								<select id="vehicleSelect" name="vhclCode" class="inputs" style="width:180px; height:33px;" required>
-									<option disabled selected>업무차량 선택</option>
+									<option disabled>업무차량 선택</option>
 									<option value="111">그랜저 33허 3333</option>
 									<option value="112">소나타 33허 3333</option>
 									<option value="113">카니발 33허 3333</option>
@@ -814,17 +815,6 @@
 		
 	</script>
 
-	<!-- 예약하기 모달 ajax -->	
-	<script>
-		function myReserveList(today, startTime, endTime, vhclInfo){
-			
-			$.ajax({
-				url:"reserveInfo.ve",
-				data:
-			});
-		}
-	</script>
-	
 	<!-- 나의 예약 현황 리스트 조회 ajax -->
 	<script>
 		function myReserveList(cur){
@@ -864,8 +854,8 @@
 							"</tr>" + 
 							"<tr>" + 
 								"<td class='vcTdContent'>" +
-									"<span class='vcContent3'>" + map.list[i].vhclStartDate + " " + map.list[i].vhclStartTime + "<br>" +
-									 "~" + map.list[i].vhclEndDate + " " + map.list[i].vhclEndTime + "</span>" +
+									"<span class='vcContent3'>" + map.list[i].vhclStartDate + " " + map.list[i].vhclStartTime + ":00<br>" +
+									 "~" + map.list[i].vhclEndDate + " " + map.list[i].vhclEndTime + ":00</span>" +
 								"</td>" +
 							"</tr>" +
 							"<tr>" +
@@ -992,9 +982,6 @@
 			//13
 			// 14 ~ 19 
 			
-			console.log(code);
-			console.log(time);
-			
 			var reser;
 			for(var t=Number(time)+1; t<=19; t++){
 				//console.log($("#" + t + " ." + code));
@@ -1003,10 +990,66 @@
 				}
 			}
 			
-			console.log(reser);
-			
-			
+			/* 예약하기 모달 열림 */
 			$("#reservation").click();
+			
+			var year = $("#calYear").text();
+			var month = $("#calMonth").text();
+			var day = $("#calDay").text();
+			
+			
+			
+			console.log(month);
+			
+			var realMonth;
+			if(month.length = 1){
+				realMonth = "0" + month;
+			}else{
+				realMont = month;
+			}
+			
+			console.log(realMonth);
+			
+			var today = year + "/" + realMonth + "/" + day;
+			
+			$("#vhclStartDate").val(today);
+			$("#vhclEndDate").val(today);
+			
+			
+			var vhclOption = $("#vehicleSelect>option").map(function() { return $(this).val(); });
+
+			for(var vo in vhclOption){
+				if(code == vhclOption[vo]){
+					$("#vehicleSelect").val(code).attr("selected", true);
+				}
+			}
+			$("#vehicleSelect option:not(:selected)").prop("disabled", true);
+			
+			
+			
+			var startOption = $("#vhclStartTime>option").map(function() { return $(this).val(); });
+			
+			for(var so in startOption){
+				if(time == startOption[so]){
+					$("#vhclStartTime").val(time).attr("selected", true);
+				}
+			}
+			$("#vhclStartTime option:not(:selected)").prop("disabled", true);
+				
+			
+			
+			var endOption = $("#vhclEndTime>option").map(function() { return $(this).val(); });
+			
+			for(var eo in endOption){
+				var r= endOption[eo];
+				if(endOption[eo] >= reser){
+					$("#vhclEndTime option[value="+ r +"]").prop("disabled", true);
+				}
+				if(endOption[eo] <= time){
+					$("#vhclEndTime option[value="+ r +"]").prop("disabled", true);
+				}
+			}
+			
 		});
 	</script>
 	

@@ -5,7 +5,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -323,5 +332,79 @@ public class MainController {
 	}
 	
 	
+	// ---------- 인증메일 전송 메소드 ----------
+	
+	@RequestMapping("emailAuth.ma")
+	public ModelAndView emailAuth(HttpServletResponse response, HttpServletRequest request) {
+		
+		String email = request.getParameter("email");
+		String authNum = "";
+		
+		authNum = RandomNum();
+		
+		sendEmail(email.toString(), authNum);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/main/findId.jsp");
+		mv.addObject("email", email);
+		mv.addObject("authNum", authNum);
+		
+		return mv;
+	}
+	
+	private void sendEmail(String email, String authNum) {
+		
+		String host = "smtp.gmail.com";
+		String subject = "ERgate 인증번호";
+		String fromName = "ERgate";
+		String from = "dlfroal06@gmail.com";
+		String to1 = email;
+		
+		String content = "인증번호 [" + authNum + "]";
+		
+		try {
+			Properties props = new Properties();
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.host", host);
+			props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory.class");
+			props.put("mail.smtp.port", "465");
+			props.put("mail.smtp.user", from);
+			props.put("mail.smtp.auth", "true");
+			
+			Session mailSession = Session.getInstance(props, 
+					new javax.mail.Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication("dlfroal06", "ant200616");
+						}
+					});
+			Message msg = new MimeMessage(mailSession);
+			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(
+						fromName, "UTF-8", "b")));
+			InternetAddress[] address1 = { new InternetAddress(to1)};
+			msg.setRecipients(Message.RecipientType.TO, address1);
+			msg.setSubject(subject);
+			msg.setSentDate(new java.util.Date());
+			msg.setContent(content, "text/html;charset=euc-kr");
+			
+			Transport.send(msg);
+			
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public String RandomNum() {
+		
+		StringBuffer buffer = new StringBuffer();
+		for(int i = 0; i <= 6; i++) {
+			int n = (int)(Math.random() * 10);
+			buffer.append(n);
+		}
+		return buffer.toString();
+	}
 	
 }
