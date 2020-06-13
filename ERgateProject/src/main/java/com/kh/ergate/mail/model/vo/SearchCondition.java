@@ -19,4 +19,5 @@ public class SearchCondition {
 	private String mailnameTo;
 	private String mailTo;
 	private String mailFrom;
+	private String mailOwn;
 }

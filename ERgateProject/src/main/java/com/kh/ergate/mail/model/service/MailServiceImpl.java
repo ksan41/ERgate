@@ -24,21 +24,29 @@ public class MailServiceImpl implements MailService {
 	public int selectListCount(String mailTo) {
 		return milDao.selectListCount(sqlSession, mailTo);
 	}
-	
 	@Override
 	public ArrayList<Email> selectList(PageInfo pi, String mailTo) {
 		return milDao.selectList(sqlSession, pi, mailTo);
 	}
-
+	
 	@Override
 	public int fselectListCount(String mailFrom) {
 		return milDao.fselectListCount(sqlSession, mailFrom);
 	}
-
 	@Override
 	public ArrayList<Email> fselectList(PageInfo pi, String mailFrom) {
 		return milDao.fselectList(sqlSession, pi, mailFrom);
 	}
+	
+	@Override
+	public int iselectListCount(String mailOwn) {
+		return milDao.iselectListCount(sqlSession, mailOwn);
+	}
+	@Override
+	public ArrayList<Email> iselectList(PageInfo pi, String mailOwn) {
+		return milDao.iselectList(sqlSession, pi, mailOwn);
+	}
+	
 	
 	
 	
@@ -47,12 +55,23 @@ public class MailServiceImpl implements MailService {
 	public int searchListCount(SearchCondition sc) {
 		return milDao.searchListCount(sqlSession, sc);
 	}
-
 	@Override
 	public ArrayList<Email> searchList(PageInfo pi, SearchCondition sc) {
 		return milDao.searchList(sqlSession,  pi, sc);
 	}
-
+	@Override
+	public int isearchListCount(SearchCondition sc) {
+		return milDao.isearchListCount(sqlSession, sc);
+	}
+	@Override
+	public ArrayList<Email> isearchList(PageInfo pi, SearchCondition sc) {
+		return milDao.isearchList(sqlSession,  pi, sc);
+	}
+	
+	
+	
+	
+	
 	@Override
 	public int readFlagUpdate(int mailNo) {
 		return milDao.readFlagUpdate(sqlSession, mailNo);
@@ -67,6 +86,9 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<MailAttachment> fileList(int mailNo) {
 		return milDao.fileList(sqlSession, mailNo);
 	}
+
+
+
 
 	
 	

@@ -60,6 +60,24 @@ public class MailController {
 
 		return "mail/mailSentbox";
 	}
+	@RequestMapping("ilist.mil")
+	public String selectImportToList(int currentPage, String mailOwn, Model model) {
+
+		int listCount = milService.iselectListCount(mailOwn);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Email> list = milService.iselectList(pi, mailOwn);
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setMailDateStr(format1.format(list.get(i).getMailDate()));
+		}
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+
+		return "mail/mailImportantbox";
+	}
+	
 	
 	@RequestMapping("search.mil")
 	public String searchEmailList(String condition, String keyword, String mailOwn, int currentPage, Model model) {
@@ -122,6 +140,40 @@ public class MailController {
 		model.addAttribute("sc", 1);	// 검색된 값인지 일반 게시글 리스트인지 구별하기 위한 값 반환 (sc가 1이면 검색결과, sc라는 키값이 없으면 일반 글목록)
 		return "mail/mailSentbox";
 	}
+	
+	@RequestMapping("isearch.mil")
+	public String isearchEmailList(String condition, String keyword, String mailOwn, int currentPage, Model model) {
+		
+		SearchCondition sc = new SearchCondition();
+		sc.setMailOwn(mailOwn);
+		
+		switch(condition) {
+		case "mailTitle" : sc.setMailTitle(keyword);  break;
+		case "mailContent" : sc.setMailContent(keyword); break;
+		case "mailnameTo" : sc.setMailnameTo(keyword); break;
+		case "mailnameFrom" : sc.setMailnameFrom(keyword); break;
+		}
+		
+		
+		
+		int searchListCount = milService.isearchListCount(sc);
+		
+		PageInfo pi = Pagination.getPageInfo(searchListCount, currentPage, 5, 10);
+		
+		ArrayList<Email> slist = milService.isearchList(pi,sc);
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+		for(int i=0; i<slist.size(); i++) {
+			slist.get(i).setMailDateStr(format1.format(slist.get(i).getMailDate()));
+		}
+		
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", slist);
+		model.addAttribute("sc", 1);	// 검색된 값인지 일반 게시글 리스트인지 구별하기 위한 값 반환 (sc가 1이면 검색결과, sc라는 키값이 없으면 일반 글목록)
+		return "mail/mailImportantbox";
+	}
+	
 	
 	@RequestMapping("detail.mil")
 	public String detailMail(int mailNo, int currentPage, String mailOwn, Model model, String pt) {

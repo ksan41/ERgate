@@ -27,13 +27,13 @@
 		<result column="status" property="status"/>
 		<result column="file_size" property="mailFileSize"/>
 	</resultMap>
-
+	
+	<!-- 받은 메일 -->
 	<select id="selectListCount" parameterType="String" resultType="_int">
 		select count(*)
 		  from email
 		 where mail_status='Y' and mail_to=#{mailTo}
 	</select>
-	
 	<select id="selectList" parameterType="String" resultMap="emailResultSet">
 		select * 
 		  from email
@@ -41,12 +41,14 @@
 		 order by mail_no desc
 	</select>
 	
+	
+	
+	<!-- 보낸 메일 -->
 	<select id="fselectListCount" parameterType="String" resultType="_int">
 		select count(*)
 		  from email
 		 where mail_status='Y' and mail_from=#{mailFrom}
 	</select>
-	
 	<select id="fselectList" parameterType="String" resultMap="emailResultSet">
 		select * 
 		  from email
@@ -54,6 +56,25 @@
 		 order by mail_no desc
 	</select>
 
+	<!-- 중요 메일 -->
+	<select id="iselectListCount" parameterType="String" resultType="_int">
+		select count(*)
+		from (select * 
+			  from email
+			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+		where mail_status='Y' and mail_import_flag='Y'
+	</select>
+	<select id="iselectList" parameterType="String" resultMap="emailResultSet">
+		select *
+		from (select * 
+			  from email
+			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+		where mail_status='Y' and mail_import_flag='Y'
+		order by mail_date desc
+	</select>
+	
+	
+	
 	<select id="searchListCount" parameterType="com.kh.ergate.mail.model.vo.SearchCondition" resultType="_int">
 		select count(*)
 		  from email
@@ -103,6 +124,49 @@
 			</if>
 		 order by mail_no desc
 	</select>
+	
+	<select id="isearchListCount" parameterType="com.kh.ergate.mail.model.vo.SearchCondition" resultType="_int">
+		select count(*)
+		from (select * 
+			  from email
+			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+		where mail_status='Y' and mail_import_flag='Y'
+		    <if test="mailnameFrom != null">
+				and mailname_from LIKE '%' || #{mailnameFrom} || '%'  
+			</if>
+			<if test="mailnameTo != null">
+				and mailname_to LIKE '%' || #{mailnameTo} || '%'
+			</if>
+			<if test="mailTitle != null">
+				and mail_TITLE LIKE '%' || #{mailTitle} || '%'
+			</if>
+			<if test="mailContent != null">
+				and mail_CONTENT LIKE '%' || #{mailContent} || '%'
+			</if>
+			
+	</select>
+	
+	<select id="isearchList" parameterType="com.kh.ergate.mail.model.vo.SearchCondition" resultMap="emailResultSet">
+		select *
+		from (select * 
+			  from email
+			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+		where mail_status='Y' and mail_import_flag='Y'
+		 	<if test="mailnameFrom != null">
+				and mailname_From LIKE '%' || #{mailnameFrom} || '%'  
+			</if>
+			<if test="mailnameTo != null">
+				and mailname_to LIKE '%' || #{mailnameTo} || '%'
+			</if>
+			<if test="mailTitle != null">
+				and mail_TITLE LIKE '%' || #{mailTitle} || '%'
+			</if>
+			<if test="mailContent != null">
+				and mail_CONTENT LIKE '%' || #{mailContent} || '%'
+			</if>
+		 order by mail_no desc
+	</select>
+	
 	
 	<update id="readFlagUpdate" parameterType="_int">
 		update email set
