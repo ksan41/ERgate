@@ -1,8 +1,56 @@
 package com.kh.ergate.notice.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kh.ergate.board.model.vo.SearchCondition;
+import com.kh.ergate.common.model.vo.PageInfo;
+import com.kh.ergate.notice.model.vo.Notice;
 
 @Repository("noDao")
 public class NoticeDao {
-
+	
+	// 공지사항 게시글 수 조회용
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("noticeMapper.selectListCount");
+	}
+	
+	// 공지사항 리스트 조회용
+	public ArrayList<Notice> selectNoticeList(SqlSessionTemplate sqlSession,PageInfo pi){
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectNoticeList",null,rowBounds);
+	}
+	
+	// 공지사항 검색 시 게시글 수 조회용
+	public int searchListCount(SqlSessionTemplate sqlSession,SearchCondition sc) {
+		return sqlSession.selectOne("noticeMapper.searchListCount",sc);
+	}
+	
+	// 공지사항 검색 시 게시글 리스트 조회용
+	public ArrayList<Notice> searchNoticeList(SqlSessionTemplate sqlSession, PageInfo pi, SearchCondition sc){
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchNoticeList",sc,rowBounds);
+	}
+	
+	// 공지사항 조회수 증가용
+	public int increaseCount(SqlSessionTemplate sqlSession,int nno) {
+		return sqlSession.update("noticeMapper.increaseCount",nno);
+	}
+	
+	// 공지사항 상세조회용
+	public Notice selectNotice(SqlSessionTemplate sqlSession,int nno) {
+		return sqlSession.selectOne("noticeMapper.selectNotice",nno);
+	}
+	
 }

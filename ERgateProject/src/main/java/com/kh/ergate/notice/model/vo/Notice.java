@@ -23,4 +23,5 @@ public class Notice {
 	private Date noticeModifyDate; //수정일
 	private int noticeCount; //조회수
 	private String noticeStatus; //노출여부
+	private String noticeFileFlag; //파일첨부여부
 }
