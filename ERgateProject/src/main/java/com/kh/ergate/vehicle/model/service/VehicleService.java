@@ -29,7 +29,10 @@ public interface VehicleService {
 	int cancelReserveVehicle(int vhclReserveNo);
 	
 	// 차량 예약 현황 조회용 서비스 (월별) - 관리자
-	ArrayList<VehicleReservation> reserveVehicleList(String month, PageInfo pi);
+	ArrayList<VehicleReservation> reserveVehicleList(String date, PageInfo pi);
+	
+	// 월별 예약 현황 총 개수 조회용 서비스
+	int reserveVehicleListCount(String date);
 	
 	// 차량 리스트 총 개수 조회용 서비스
 	int selectVehicleListCount();

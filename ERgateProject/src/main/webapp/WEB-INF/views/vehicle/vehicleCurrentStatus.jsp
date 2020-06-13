@@ -207,10 +207,8 @@
 	    font-size: 14px;
 	    color: #333;
 	}
-	
 	.reserved{
 		background-color: rgba(22, 160, 133, 0.20);
-		padding-left: 10px;
 		font-size: 15px;
 		color: dimgray;
 	}
@@ -629,7 +627,7 @@
 									<option value="114">스타렉스 33허 3333</option>
 									<option value="115">스파크 33허 3333</option>
 								</select>
-								<button id="searchBtn1" class="searchBtn" type="button">가용차량 검색</button> 
+								<button id="searchBtn1" class="searchBtn" type="button">업무차량 정보</button> 
 								<br>
 								<span style="color:gray; font-size:14px;">차량을 선택하고 추가 정보를 확인하세요.</span>
 								<br> 
@@ -662,7 +660,6 @@
 	</div>
 	
 	
-	
 	<!-- 캘린더 테이블 -->	
 	<script>
 		$(document).ready(function(){
@@ -690,8 +687,6 @@
 			/* 이전으로  */
 			$("#arrowLeft").click(function() {
 				
-				// 버튼 처음 눌렀을때.
-				// 오늘날짜 -1 
 				date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
 	
 				year = date.getFullYear();
@@ -710,11 +705,9 @@
 	
 			});	
 			
-			
+			/* 다음으로  */
 			$("#arrowRight").click(function() {
 				
-				// 버튼 처음 눌렀을때.
-				// 오늘날짜 -1 
 				date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
 	
 				year = date.getFullYear();
@@ -797,18 +790,18 @@
 
 			var count = data.vhclEndTime - data.vhclStartTime;
 			
-			var info = data.deptTitle + "  " + data.empName;
+			var info = "&nbsp;&nbsp;&nbsp;" + data.deptTitle + "  " + data.empName;
 			
 			if(count > 1){
 				
-				$("#" + time + " ." + code).attr("rowspan", count).text(info).addClass("reserved").removeClass("reservationBtn");
+				$("#" + time + " ." + code).attr("rowspan", count).html(info).addClass("reserved").removeClass("reservationBtn");
 				
 				for(var i=time+1; i<data.vhclEndTime; i++){
 					$("#" + i + " ." + code).remove();
 				}
 				
 			}else{
-				$("#" + time + " ." + code).text(info).addClass("reserved").attr("disabled", "true").removeClass("reservationBtn");
+				$("#" + time + " ." + code).html(info).addClass("reserved").attr("disabled", "true").removeClass("reservationBtn");
 			}
 			
 		}

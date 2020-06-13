@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,8 @@
 <!-- 모달 사용페이지에 복사해주세요 -->
 
 <style>
+
+/* ==========페이지영역========== */
 	.outer {
 		padding-left: 320px;
 		float: left;
@@ -94,7 +97,6 @@
 	.subBtn:hover {
 		cursor: pointer;
 	}
-	
 	/* 서브메뉴바 메뉴버튼(기본) */
 	/* 서브메뉴바 메뉴버튼(현재페이지일때) */
 	.subActive {
@@ -106,34 +108,25 @@
 	.checkBox {
 		zoom: 1.7;
 	}
-	
+
 	/* 스케줄관련 아이콘스타일 */
-	.schedule_icons {
-		fill: rgb(190, 190, 190); /* 검은색 : rgb(94, 94, 94)*/
-		width: 35px;
-		vertical-align: bottom;
+	.material-icons {
+		font-size: 40px;
+		vertical-align: middle;
 	}
-	
+	.material-icons:hover {
+		cursor: pointer;
+	}
+	.pageNoClick {
+		pointer-events: none;
+		cursor: default;
+	}
 	/* 스케줄관련 아이콘스타일 */
-	.material-icons{
-		font-size:40px;
-		vertical-align:middle;
-	}
-	.material-icons:hover{
-		cursor:pointer;
-	}
-	#labelBackground{
-		width: 1400px;
-		height: 70px;
-		background: #eeee;
-		padding-bottom: 20px;
-		text-align: center;
-	}
 	
 	/* 게시판 스타일 */
 	.boardTable {
 		width: 1400px;
-		height: 400px;
+		height: auto;
 		margin-top: 10px;
 	}
 	.boardTable, .boardTable th, .boardTable td {
@@ -161,14 +154,15 @@
 	/* 페이징바 스타일 */
 	.pagingBar {
 		list-style: none;
-		margin-left: 400px;
+		margin-left: 520px;
 		margin-top:50px;
 	}
-	
+	.pagingBar:hover{
+		cursor:pointer;
+	}
 	.pagingBar li {
 		float: left;
 	}
-	
 	.pagingBar li * {
 		float: left;
 		padding: 4px;
@@ -181,18 +175,17 @@
 		text-decoration: none;
 		font-size: 15px;
 	}
-	
 	.pagingBar li>span {
 		color: rgb(26, 188, 156);
 		border: 1px solid rgb(26, 188, 156);
 	}
-	
 	.pagingBar li a:hover {
 		color: rgb(26, 188, 156);
 		border: 1px solid rgb(26, 188, 156);
 	}
 	/* 페이징바 스타일 */
 
+/* ==========페이지영역========== */
 </style>
 </head>
 <body>
@@ -212,123 +205,233 @@
 
 		<div class="contentArea">
 			<!-- 달력 설정 부분 -->
-			<div id="labelBackground">
-				<h2 style="display: inline-block">
-					<span class="material-icons"> arrow_left </span> 2020년 5월
-					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="48px" height="48px">
-					<path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+			<div id="midContentArea">
+	
+				<h2 style="display: inline-block; margin-left: 540px;">
+					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
+						
+						<b id="calYear"></b>년 <b id="calMonth"></b>월&nbsp;
+	
+					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24" fill="black" width="30px" height="30px" style="vertical-align: text-top;">
+					<path
+							d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
 					<path d="M0 0h24v24H0z" fill="none" /></svg>
-					<span class="material-icons"> arrow_right </span>
+					<span id="arrowRight" class="material-icons"> arrow_right </span>
 				</h2>
+	
+				<form id="changeMonthForm" action="currentStatusD.me" method="get">
+					<input type="hidden" name="year"> 
+					<input type="hidden" name="month">
+					<input type="hidden" name="day">
+				</form>
+	
 			</div>
-				<br> <br>
-			
-
+	
 			<!-- 게시판 -->
-			<table class="boardTable">
+			<table id="vrTable" class="boardTable">
 				<thead>
 					<tr>
-						<th>부서명</th>
-						<th>예약자</th>
-						<th>업무차량</th>
-						<th style="width:400px">사용목적</th>
-						<th style="width:350px">사용기간</th>
+						<th style="width:200px">부서명</th>
+						<th style="width:200px">예약자</th>
+						<th style="width:200px">업무차량</th>
+						<th style="width:200px">사용목적</th>
+						<th style="width:400px">사용기간</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>그랜저 33허 3333</td>
-					<td>외근</td>
-					<td>2020-05-01 10:00 ~ 2020-05-01 12:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>그랜저 33허 3333</td>
-					<td>외근</td>
-					<td>2020-05-01 15:00 ~ 2020-05-10 16:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>그랜저 33허 3333</td>
-					<td>외근</td>
-					<td>2020-05-10 11:00 ~ 2020-05-10 13:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>그랜저 33허 3333</td>
-					<td>외근</td>
-					<td>2020-05-10 14:00 ~ 2020-05-10 16:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>그랜저 33허 3333</td>
-					<td>외근</td>
-					<td>2020-05-10 14:00 ~ 2020-05-10 17:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>그랜저 33허 3333</td>
-					<td>외근</td>
-					<td>2020-05-10 13:00 ~ 2020-05-10 16:00</td>
-				</tr>
-				<tr>
-					<td>인사팀</td>
-					<td>앨리스</td>
-					<td>그랜저 33허 3333</td>
-					<td>외근</td>
-					<td>2020-05-10 10:00 ~ 2020-05-10 10:00</td>
-				</tr>
-
+				<tbody>
+				
+				</tbody>
 			</table>
-
-			<!-- 페이징바 -->
-			<ul class="pagingBar">
-				<li><a href="#">&lt;&lt;</a></li>
-				<li><a href="#">&lt;</a></li>
-				<li><span>1</span></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&gt;</a></li>
-				<li><a href="#">&gt;&gt;</a></li>
-			</ul>
-			<!-- 페이징바 -->
-
+				
+			<div id="pagingArea"></div>
+			
 		</div>
 
 	</div>
 
-		<!-- 모달팝업 (head부분에 링크들도 복사해주셔야합니다) 모달 사용시엔 메뉴바를 head맨 윗부분에 include해주셔야 합니다. -->
-		<!-- 모달 타겟. href의 #xxx와 모달영역의 id(xxx)가 한셋트입니다.  용도에 따라 href와 id는 변경해주세요.(여러개 가능)  모달타겟으로 쓸 요소에 class와 href 복사해주세요. -->
-		<!-- <a class="open-modal" href="#modal-form">모달열기</a> <br> -->
+	
+	<!-- 캘린더 -->	
+	<script>
+		$(document).ready(function(){
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			
+			var newYear = "<c:out value='${md.year}'/>";
+			var newMonth = "<c:out value='${md.month}'/>";
+			
+			// 날짜 변경값 있을 경우
+			if (newYear != "") {
+				$("#calYear").text(newYear);
+				$("#calMonth").text(newMonth);
+				
+			} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
+				$("#calYear").text(year);
+				$("#calMonth").text(month);
+			}
+			
+			listAjax(1);
+			
+			/* 이전으로  */
+			$("#arrowLeft").click(function() {
+				
+				month = month - 1;
+				if (month < 1) {
+					month = 12;
+					year = year - 1;
+				}
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+				
+				if(newYear != ""){
+					newMonth = newMonth - 1;
+					if (newMonth < 1) {
+						newMonth = 12;
+						newYear = newYear - 1;
+					}
+					$("#calMonth").text(newMonth);
+					$("#calYear").text(newYear);
+					
+					$("input[name=month]").attr("value",newMonth);
+					$("input[name=year]").attr("value",newYear);
+				}
+				
+				listAjax(1);
+				
+			});	
+			
+			
+			$("#arrowRight").click(function() {
+				
+				month = parseInt(month) + 1;
+				if (month > 12) {
+					month = 1;
+					year = parseInt(year) + 1;
+				}
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+				
+				if(newYear != ""){
+					newMonth = parseInt(newMonth) + 1;
+					if (newMonth > 12) {
+						newMonth = 1;
+						newYear = parseInt(newYear) + 1;
+					}
+					$("#calMonth").text(newMonth);
+					$("#calYear").text(newYear);
+					
+					$("input[name=month]").attr("value",newMonth);
+					$("input[name=year]").attr("value",newYear);
+				}
+				
+				listAjax(1);
+				
+			});	
+		
+		});
+	</script>
+	
+	<!-- 월별 예약 현황 조회 -->
+	<script>
+		function listAjax(cur){
+			
+			$.ajax({
+				url:"reserveListAjax.ve",
+				data:{calYear:$("#calYear").text(),
+					  calMonth:$("#calMonth").text(),
+					  currentPage:cur},
+				type:"post",
+				success:function(map){
+					
+					var value1 = "";
+					
+					if(map.list == null){
+						value1 += 
+							"<td colspan='5' rowspan='10'>조회된 결과가 없습니다.</td>";
+							
+					}else{
+						for(var i in map.list){
+						value1 +=
+								"<tr>" +
+									"<td>" + map.list[i].deptTitle + "</td>" + 
+									"<td>" + map.list[i].empName + "</td>" +
+									"<td>" + map.list[i].vhclModel + " " + map.list[i].vhclNo + "</td>" +
+									"<td>" + map.list[i].vhclPurpose + "</td>" + 
+									"<td>" + map.list[i].vhclStartDate + " " + map.list[i].vhclStartTime + ":00 ~ " + map.list[i].vhclEndDate + " " + map.list[i].vhclEndTime + ":00" + "</td>" +
+								"</tr>";
+						}
+					}
 
-		<div id="meetingroomManage" class="modal">
-			<div class="modal-title">모달타이틀</div>
-			<div class="modal-content">모달내용작성해주세요</div>
-		</div>
-
-		<!-- 모달용 스크립트 -->
-		<script>
-			$('.open-modal').click(function() {
-				$(this).modal({
-					fadeDuration : 150
-				});
-
+					var value2 = "";
+					
+					if(map.pi.endPage > 1){
+						value2 += 
+							"<ul class='pagingBar'>";
+							
+							if(map.pi.currentPage == 1){
+								value2 += 
+									"<li><a href='#'>&lt;&lt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + map.pi.startPage + ")';>&lt;&lt;</a></li>";
+							}
+							
+							if(map.pi.currentPage == 1){
+								value2 += 
+									"<li><a href='#'>&lt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + (map.pi.currentPage - 1) + ")';>&lt;</a></li>";
+							}
+							
+							for(var p = map.pi.startPage; p <= map.pi.endPage; p++){
+								
+								if(map.pi.currentPage == p){
+									value2 +=
+										"<li><span>" + p + "</span></li>";
+								}else{
+									value2 +=
+										"<li><a onclick='listAjax(" + p + ")';>" + p + "</a></li>";
+								}
+							}
+							
+							if(map.pi.currentPage == map.pi.maxPage){
+								value2 += 
+									"<li><a href='#'>&gt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + (map.pi.currentPage + 1) + ")';>&gt;</a></li>";
+							}
+							
+							if(map.pi.currentPage == map.pi.maxPage){
+								value2 +=
+									"<li><a href='#'>&gt;&gt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + map.pi.endPage + ")';>&gt;&gt;</a></li>";
+							}
+							
+							value2 += "</ul>";
+					}
+					
+					$("#vrTable tbody").html(value1);
+					$("#pagingArea").html(value2);
+						
+				},error:function(){
+					console.log("월별 예약 현황 모달 리스트 조회 ajax 통신 실패");
+				}
 			});
-		</script>
-
-
+		}
+	</script>
+	
 </body>
 </html>

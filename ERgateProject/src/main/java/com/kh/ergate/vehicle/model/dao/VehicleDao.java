@@ -41,10 +41,14 @@ public class VehicleDao {
 		return sqlSession.update("vehicleMapper.cancelReserveVehicle", vhclReserveNo);
 	}
 	
-	public ArrayList<VehicleReservation> reserveVehicleList(SqlSessionTemplate sqlSession, String month, PageInfo pi) {
+	public ArrayList<VehicleReservation> reserveVehicleList(SqlSessionTemplate sqlSession, String date, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("vehicleMapper.reserveVehicleList", month, rowBounds);
+		return (ArrayList)sqlSession.selectList("vehicleMapper.reserveVehicleList", date, rowBounds);
+	}
+	
+	public int reserveVehicleListCount(SqlSessionTemplate sqlSession, String date) {
+		return sqlSession.selectOne("vehicleMapper.reserveVehicleListCount", date);
 	}
 	
 	public int selectVehicleListCount(SqlSessionTemplate sqlSession) {

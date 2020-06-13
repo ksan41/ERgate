@@ -70,6 +70,24 @@
 			   #{vhclEndDate}, #{vhclEndTime}, #{vhclPurpose}, 'Y')
 	</insert>
 	
+	<select id="reserveVehicleListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+      	  FROM VEHICLE_RESERVATION
+      	 WHERE SUBSTR(VHCL_START_DATE,0,7)=#{date}
+		 	   AND VHCL_RESERVE_STATUS='Y'
+	</select>
+	
+	<select id="reserveVehicleList" parameterType="string" resultMap="vehicleReservationResultSet">
+		SELECT VHCL_RESERVE_NO, EMP_ID, VHCL_CODE, VHCL_RESERVE_DATE, DEPT_TITLE, VHCL_START_DATE, VHCL_START_TIME, 
+			   VHCL_END_DATE, VHCL_END_TIME, VHCL_PURPOSE, VHCL_RESERVE_STATUS, VHCL_MODEL, VHCL_NO, EMP_NAME
+		  FROM VEHICLE_RESERVATION
+		  JOIN VEHICLE USING(VHCL_CODE)
+		  JOIN EMPLOYEE USING(EMP_ID)
+		 WHERE SUBSTR(VHCL_START_DATE,0,7)=#{date}
+		 	   AND VHCL_RESERVE_STATUS='Y'
+		 ORDER BY VHCL_RESERVE_DATE
+	</select>
+	
 	<select id="selectVehicleListCount" resultType="_int">
 		SELECT COUNT(*)
       	  FROM VEHICLE
@@ -80,6 +98,7 @@
 		SELECT *
 		  FROM VEHICLE
 		 WHERE VHCL_STATUS='Y'
+		 ORDER BY VHCL_ENROLL_DATE DESC
 	</select>
 	
 	<insert id="insertVehicle" parameterType="Vehicle">

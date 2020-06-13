@@ -46,12 +46,12 @@ public class VehicleController {
 	public void currentStatusListAjax(String calYear, String calMonth, String calDay, HttpServletResponse response) throws JsonIOException, IOException {
 		
 		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
+		String date = calYear + "/" + month + "/" + calDay;
 		
-		ArrayList<VehicleReservation> list = vService.currentStatusList(calYear + "/" + month + "/" + calDay);
+		ArrayList<VehicleReservation> list = vService.currentStatusList(date);
 		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(list, response.getWriter());
-
 	}
 
 	// 나의 예약 현황 리스트 조회 ajax
@@ -104,6 +104,34 @@ public class VehicleController {
 		}
 		
 	}
+
+	// 차량 예약 현황 조회 (월별) - 관리자
+	@RequestMapping("reserveList.ve")
+	public String reserveVehicleList() {
+		return "vehicle/vehicleReservationList";
+	}
+	
+	// 차량 예약 현황 조회 (월별) ajax - 관리자
+	@ResponseBody
+	@RequestMapping(value="reserveListAjax.ve", produces="application/json; charset=utf-8")
+	public String reserveVehicleListAjax(String calYear, String calMonth, int currentPage, Model model) {
+		
+		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
+		String date = calYear + "/" + month;
+
+		int listCount = vService.reserveVehicleListCount(date);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		
+		ArrayList<VehicleReservation> list = vService.reserveVehicleList(date, pi);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return new Gson().toJson(map);
+	}
 	
 	// 차량 리스트 조회 - 관리자
 	@RequestMapping("vehicleList.ve")
@@ -120,6 +148,7 @@ public class VehicleController {
 		
 		return "vehicle/vehicleManagement";
 	}
+	
 	// 차량 등록 - 관리자
 	@RequestMapping("insert.ve")
 	public String insertVehicle(Vehicle v, HttpSession session,
@@ -199,17 +228,7 @@ public class VehicleController {
 		
 	}
 	
-	
-	// ---------- 페이지 이동용 ----------
 
-	
-	// 차량 예약 현황 조회 (월별) - 관리자
-	@RequestMapping("reserveList.ve")
-	public String reserveVehicleList() {
-		return "vehicle/vehicleReservationList";
-	}
-	
-	
 	// ---------- 메소드 선언 ----------
 	
 	// 공유해서 쓸 수 있게끔 따로 정의해놓은 메소드
@@ -256,6 +275,5 @@ public class VehicleController {
 		deleteFile.delete(); // 실제 서버의 파일 찾아 삭제 처리
 		
 	}
-	
 
 }

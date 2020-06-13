@@ -60,8 +60,14 @@ public class VehicleServiceImpl implements VehicleService {
 
 	// 차량 예약 현황 조회용 서비스 (월별) - 관리자
 	@Override
-	public ArrayList<VehicleReservation> reserveVehicleList(String month, PageInfo pi) {
-		return vDao.reserveVehicleList(sqlSession, month, pi);
+	public ArrayList<VehicleReservation> reserveVehicleList(String date, PageInfo pi) {
+		return vDao.reserveVehicleList(sqlSession, date, pi);
+	}
+
+	// 월별 예약 현황 총 개수 조회용 서비스
+	@Override
+	public int reserveVehicleListCount(String date) {
+		return vDao.reserveVehicleListCount(sqlSession, date);
 	}
 	
 	// 차량 리스트 총 개수 조회용 서비스
