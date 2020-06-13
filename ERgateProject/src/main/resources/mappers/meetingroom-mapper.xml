@@ -7,44 +7,41 @@
 		<result column="MTRM_NAME" property="mtrmName"/>
 		<result column="MTRM_LOCATION" property="mtrmLocation"/>
 		<result column="MTRM_CAPACITY" property="mtrmCapacity"/>
+		<result column="MTRM_ENROLL_DATE" property="mtrmEnrollDate"/>
 		<result column="MTRM_IMAGE" property="mtrmImage"/>
 		<result column="MTRM_STATUS" property="mtrmStatus"/>
-		<result column="MTRM_ENROLL_DATE" property="mtrmEnrollDate"/>
 	</resultMap>
 	
 	<resultMap id="MeetingroomReservationResultSet" type="MeetingroomReservation" >
-		<id column="MTRM_RESERV_NO" property="mtrmReservNo"/>
+		<id column="MTRM_RESERVE_NO" property="mtrmReserveNo"/>
 		<result column="EMP_ID" property="empId"/>
 		<result column="MTRM_CODE" property="mtrmCode"/>
-		<result column="MTRM_NAME" property="mtrmName"/>
-		<result column="MTRM_RESERV_DATE" property="mtrmReservDate"/>
-		<result column="MTRM_DEPT_TITLE" property="mtrmDeptTitle"/>
+		<result column="MTRM_RESERVE_DATE" property="mtrmReserveDate"/>
+		<result column="DEPT_TITLE" property="deptTitle"/>
 		<result column="MTRM_START_DATE" property="mtrmStartDate"/>
 		<result column="MTRM_START_TIME" property="mtrmStartTime"/>
 		<result column="MTRM_END_DATE" property="mtrmEndDate"/>
 		<result column="MTRM_END_TIME" property="mtrmEndTime"/>
 		<result column="MTRM_PURPOSE" property="mtrmPurpose"/>
-		<result column="MTRM_RESERV_STATUS" property="mtrmReservStatus"/>
+		<result column="MTRM_RESERVE_STATUS" property="mtrmReserveStatus"/>
+		<result column="MTRM_NAME" property="mtrmName"/>
 		<result column="MTRM_IMAGE" property="mtrmImage"/>
 	</resultMap>
-
 
 	<select id="statusListCount" resultType="_int">
 		select count(*)
 		  from meetingroom_reservation
-		 where mtrm_reserv_status='Y'
+		where mtrm_reserve_status='Y'
 	</select>
 
+	<!-- 관리자 예약리스트 조회용 -->
 	<select id="statusList" resultMap="MeetingroomReservationResultSet">
 		select *
 		  from meetingroom_reservation
-		 where mtrm_reserv_status='Y'
+		 where mtrm_reserve_status='Y'
 	</select>
 
-	<!-- <select id="searchListt" parameterType="MeetingroomDate" resultMap="MeetingroomReservationResultSet">
-		SELECT TO_CHAR(SYSDATE-1, 'YY/MM/DD') FROM MEETINGROOM_RESERVATION
-	</select> -->
-	
+	<!--  -->
 	<select id="currentStatusList" resultMap="MeetingroomReservationResultSet">
 		SELECT *
 		FROM MEETINGROOM_RESERVATION
@@ -58,42 +55,48 @@
 		 WHERE MTRM_STATUS = 'Y'
 	</select>
 
-	  <select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
+	<!-- 회의실 관리 첨 들어가는 페이지 -->
+	<select id="selectMtroomDetail" resultMap="MeetingroomResultSet">
 		SELECT *
 		  FROM MEETINGROOM
 		 WHERE MTRM_STATUS = 'Y'
 	</select>
 	
+	<!-- 회의실 예약하기 -->
 	<insert id="reserveMtroom" parameterType="MeetingroomReservation">
 		insert into meetingroom_reservation 
-		values(seq_mreserv_no.nextval, #{empId}, #{mtrmCode}, #{mtrmName}, SYSDATE, #{mtrmDeptTitle},
+		values(seq_mreserv_no.nextval, #{empId}, #{mtrmCode}, SYSDATE, #{deptTitle},
 			   #{mtrmStartDate}, #{mtrmStartTime},  #{mtrmEndDate}, #{mtrmEndTime}, #{mtrmPurpose}, 'Y')
 	</insert>
 	
+	<!-- 회의실 등록 -->
 	<insert id="insertMeetingroom" parameterType="Meetingroom">
 		INSERT INTO MEETINGROOM
-		VALUES(SEQ_MROOM_NO.NEXTVAL , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, #{mtrmImage}, 'Y', SYSDATE)	
+		VALUES(SEQ_MROOM_NO.NEXTVAL , #{mtrmName}, #{mtrmLocation}, #{mtrmCapacity}, SYSDATE, #{mtrmImage}, 'Y')	
 	</insert>
 
 	<select id="selectRvListCount" parameterType="string" resultType="_int">
 		select count(*)
           from meetingroom_reservation
          where emp_id=#{empId}
-           and mtrm_reserv_status='Y'
+           and mtrm_reserve_status='Y'
 	</select>
-
+	
+	<!-- 나의 예약현황용 -->
 	<select id="myReserveList" parameterType="string" resultMap="MeetingroomReservationResultSet">
-		select mr.emp_id, m.mtrm_code, mr.mtrm_name, mr.mtrm_start_date, mr.mtrm_start_time, mr.mtrm_end_date, mr.mtrm_end_time, mr.mtrm_purpose, mr.mtrm_reserv_status, m.mtrm_image
-		  from meetingroom_reservation mr,
-		       meetingroom m
-		 where m.mtrm_code = mr.mtrm_code
-		   and emp_id = #{empId}
+		select mtrm_reserve_no, emp_id, mtrm_code, mtrm_reserve_date, dept_title, mtrm_start_date, mtrm_start_time, mtrm_end_date,
+           	   mtrm_end_time, mtrm_purpose, mtrm_reserve_status, mtrm_name, mtrm_image
+		  from meetingroom_reservation
+		  join meetingroom using(mtrm_code)
+		 where emp_id = #{empId}
+		   and mtrm_reserve_status='Y'
+		 order by mtrm_reserve_date desc
 	</select>
 	
 	<update id="cancelReserve" parameterType="string">
 		UPDATE MEETINGROOM_RESERVATION
-		   SET MTRM_RESERV_STATUS='N'
-		 WHERE MTRM_RESERV_NO=#{mtrmReservNo}
+		   SET MTRM_RESERVE_STATUS='N'
+		 WHERE MTRM_RESERVE_NO=#{mtrmReserveNo}
 	</update>
 	
 	<update id="updateMeetingroom" parameterType="Meetingroom">
@@ -104,4 +107,17 @@
 		 WHERE MTRM_CODE=#{mtrmCode}
 	</update>
 
+	<select id="selectMeetingroom" parameterType="string" resultMap="MeetingroomResultSet">
+		SELECT *
+		  FROM MEETINGROOM
+		 WHERE MTRM_CODE=#{mtrmCode}
+	</select>
+	
+	<update id="deleteMeetingroom" parameterType="Meetingroom">
+		UPDATE MEETINGROOM
+		   SET MTRM_STATUS='N'
+		 WHERE MTRM_CODE=#{mtrmCode}
+	</update>
+	
+	
 </mapper>

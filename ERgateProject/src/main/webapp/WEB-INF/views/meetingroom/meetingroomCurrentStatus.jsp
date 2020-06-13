@@ -82,10 +82,10 @@
 
 /* 콘텐츠영역 */
 .contentArea {
-	margin-top: 20px;
+	margin-top: 0px;
 	margin-left: 100px;
 	width: 1600px;
-	height: 1000px;
+	height:auto;
 	float: left;
 }
 /* 콘텐츠영역 */
@@ -111,7 +111,7 @@ html, body {
 	background: rgb(26, 188, 156);
 	color: white;
 	font-size: 18px;
-	margin-left: 50px;
+	margin-left: 20px;
 }
 
 #reservationBtn:hover {
@@ -127,7 +127,7 @@ html, body {
 	font-size: 18px;
 	font-weight: 550;
 	margin-top: -33px;
-	margin-left: 900px;
+	margin-left: 980px;
 	float: left;
 	text-decoration: none;
 }
@@ -469,13 +469,20 @@ p {
 }
 
 .boram{
-	background:red;
+	background:rgba(22, 160, 133, 0.39);
 }
 
 /* ==========나의 예약 현황 모달========== */
 </style>
 </head>
 <body>
+
+	<c:if test="${ !empty msg }">
+		<script>
+			alert('${ msg }');
+		</script>
+		<c:remove var="msg" scope="session"/>
+	</c:if>
 
 	<!-- 메뉴바 -->
 
@@ -495,16 +502,15 @@ p {
 			</ul>
 		</div>
 		<div class="contentArea">
-
 			<div id="midContentArea">
 
-				<h2 style="display: inline-block; margin-left: 430px;">
+				<h2 style="display: inline-block; margin-left: 400px; margin-bottom:30px;">
 					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
 						
 						<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
 	
 					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24" fill="black" width="48px" height="48px">
+						viewBox="0 0 24 24" fill="black" width="30px" height="30px">
 					<path
 							d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
 					<path d="M0 0h24v24H0z" fill="none" /></svg>
@@ -517,107 +523,11 @@ p {
 					<input type="hidden" name="date">
 				</form>
 	
-				<script>
-						$(document).ready(function(){
-							var date = new Date();
-							var year = date.getFullYear();
-							var month = date.getMonth() + 1;
-							var day = date.getDate();
-							
-							console.log(year);
-							console.log(month);
-							console.log(day);
-							
-							var newYear = "<c:out value='${md.year}'/>";
-							var newMonth = "<c:out value='${md.month}'/>";
-							var newDay =  "<c:out value='${md.day}'/>";
-							
-							// 날짜 변경값 있을 경우
-							if (newYear != "") {
-								$("#calYear").text(newYear);
-								$("#calMonth").text(newMonth);
-								$("#calDay").text(newDay);
-								
-							} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
-								$("#calYear").text(year);
-								$("#calMonth").text(month);
-								$("#calDay").text(day);
-							}
-							
-							
-						
-						/* 이전으로  */
-						$("#arrowLeft").click(function() {
-							
-							// 버튼 처음 눌렀을때.
-							// 오늘날짜 -1 
-							date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
-
-							year = date.getFullYear();
-							month = date.getMonth() + 1;
-							day = date.getDate();
-							
-							
-							console.log(year);
-							console.log(month);
-							console.log(day);
-							
-							$("#calMonth").text(month);
-							$("#calYear").text(year);
-							$("#calDay").text(day);
-							
-							$("input[name=month]").attr("value", month);
-							$("input[name=year]").attr("value", year);
-							$("input[name=date]").attr("value", day);
-							
-						
-							
-							listAjax();
-
-							//$("#changeMonthForm").submit();
-						});	
-						
-						/* 다음으로 */
-						
-						$("#arrowRight").click(function() {
-							
-							// 버튼 처음 눌렀을때.
-							// 오늘날짜 -1 
-							date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
-
-							year = date.getFullYear();
-							month = date.getMonth() + 1;
-							day = date.getDate();
-							
-							
-							console.log(year);
-							console.log(month);
-							console.log(day);
-							
-							$("#calMonth").text(month);
-							$("#calYear").text(year);
-							$("#calDay").text(day);
-							
-							$("input[name=month]").attr("value", month);
-							$("input[name=year]").attr("value", year);
-							$("input[name=date]").attr("value", day);
-							
-							
-							listAjax();
-							
-
-							//$("#changeMonthForm").submit();
-						});	
-						
-						
-					});
-				</script>
 				
 			</div>
 			
 			
 				<div class="subBtns">
-					<button id="reservationBtn">예약하기</button>
 					<a id="reservation" class="open-modal" href="#open_reservation"style="display: none;">모달</a> <br> 
 					<a id="myReservation" class="open-modal" href="#myReservation_open_modal">나의 예약 현황</a>
 				</div>
@@ -646,11 +556,11 @@ p {
 					<table class="table_resource" id="mtrmSC" style="float: left;" cellpadding="0" cellspacing="0">
 						<thead>
 							<tr>
-								<th><p>3층회의실</p></th>
-								<th><p>3층회의실2</p></th>
-								<th><p>5층회의실</p></th>
-								<th><p>5층회의실2</p></th>
-								<th><p>6층회의실</p></th>
+								<th><p>미팅룸1</p></th>
+								<th><p>미팅룸2</p></th>
+								<th><p>미팅룸3</p></th>
+								<th><p>컨퍼런스룸1</p></th>
+								<th><p>컨퍼런스룸2</p></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -674,19 +584,19 @@ p {
 		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
 			<div class="modal-content">
-				<form action="" id="reservationForm" name="reservationForm">
+				<form action="reserveMtroom.me" id="reservationForm" name="reservationForm">
 					<table class="reservationContent">
+						<input type="hidden" name="empId" value="${ loginUser.empId }"/>
 						<input type="hidden" name="deptTitle" value="${ loginUser.deptTitle }"/>
 						<tr>
 							<td id="r1">신청자</td>
-							<td id="r2">
-							<input type="hidden" name="empId" value="${ loginUser.empId }"><span>${ loginUser.empName }</span></td>
+							<td id="r2">${ loginUser.empName }</td>
 						</tr>
 						<tr>
 							<td id="r1">사용기간</td>
 							<td id="r2">
-								<input type="date" name="mtrmStartDate" class="inputs" style="width: 140px"> 
-								<select type="time" name="mtrmStartTime" class="inputs" style="width: 120px">
+								<input type="text" name="mtrmStartDate" class="inputs" style="width: 140px" required readonly> 
+								<select name="mtrmStartTime" class="inputs" style="width: 120px" required>
 									<option disabled selected>시작 시각</option>
 									<option value="10">10:00</option>
 									<option value="11">11:00</option>
@@ -700,8 +610,8 @@ p {
 									<option value="19">7:00</option>
 								</select>
 								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg"> 
-								<input type="date" name="mtrmEndDate" class="inputs" style="width: 140px"> 
-								<select type="time" name="mtrmEndTime" class="inputs" style="width: 120px">
+								<input type="text" name="mtrmEndDate" class="inputs" style="width: 140px" required readonly> 
+								<select name="mtrmEndTime" class="inputs" style="width: 120px" required>
 									<option disabled selected>종료 시각</option>
 									<option value="10">10:00</option>
 									<option value="11">11:00</option>
@@ -719,25 +629,24 @@ p {
 						</tr>
 						<tr>
 							<td id="r1">회의실</td>
-							<td id="r2"><select name="mtrmCode" class="inputs" style="width: 120px">
+							<td id="r2">
+							<select id="meetingroomSelect" name="mtrmCode" class="inputs" style="width: 120px">
 									<option selected disabled>회의실 선택</option>
-									<option value="1">3F 회의실</option>
-									<option value="2">5F 회의실1</option>
-									<option value="3">5F 회의실2</option>
-									<option value="4">6F 회의실1</option>
-									<option value="5">6F 회의실2</option>
-							</select> <br>
-								<button id="searchBtn1" class="searchBtn">가용회의실 검색</button> <br>
-								<input type="text" id="meetingroomBox" class="inputs" style="height: 30px" readonly></td>
+									<option value="1">미팅룸1</option>
+									<option value="2">미팅룸2</option>
+									<option value="3">미팅룸3</option>
+									<option value="4">컨퍼런스룸1</option>
+									<option value="5">컨퍼런스룸2</option>
+							</select>
+								<button id="searchBtn1" class="searchBtn" type="button">가용회의실 검색</button> <br>
+								<span style="color:gray; font-size:14px;">회의실을 선택하고 추가 정보를 확인하세요.</span> <br>
+								<textarea cols="60" rows="4" id="partArea" readonly></textarea>
 						</tr>
 						<tr>
 							<td id="r1">사용목적</td>
-							<td id="r2"><input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }"></td>
-						</tr>
-						
-						<tr>
-							<td id="r3">참석자(외부)</td>
-							<td id="r4"><input type="text" name="outside" class="inputs" name=""></td>
+							<td id="r2">
+								<input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }">
+							</td>
 						</tr>
 					</table>
 				</form>
@@ -754,13 +663,110 @@ p {
 		<!-- 모달(나의 예약 현황) -->
 		<div id="myReservation_open_modal" class="modal">
 			<div class="modal-title">나의 예약현황</div>
-			<div class="modal-content" id="mtrmCurrentInnerPage"></div>
+			<div class="modal-content2" id="mtrmCurrentInnerPage"></div> <!-- 아이디랑 클래스명 다시 확인하자 지혜야 -->
 		</div>
 
 	</div>
 
+	
+	<!-- 날짜 이동 관련(캘린더) 스크립트 -->
+	<script>
+			$(document).ready(function(){
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				
+				console.log(year);
+				console.log(month);
+				console.log(day);
+				
+				var newYear = "<c:out value='${md.year}'/>";
+				var newMonth = "<c:out value='${md.month}'/>";
+				var newDay =  "<c:out value='${md.day}'/>";
+				
+				// 날짜 변경값 있을 경우
+				if (newYear != "") {
+					$("#calYear").text(newYear);
+					$("#calMonth").text(newMonth);
+					$("#calDay").text(newDay);
+					
+				} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
+					$("#calYear").text(year);
+					$("#calMonth").text(month);
+					$("#calDay").text(day);
+				}
+				
+				
+			
+			/* 이전으로  */
+			$("#arrowLeft").click(function() {
+				
+				// 버튼 처음 눌렀을때.
+				// 오늘날짜 -1 
+				date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
 
-	<!-- 모달용 스크립트 -->
+				year = date.getFullYear();
+				month = date.getMonth() + 1;
+				day = date.getDate();
+				
+				
+				console.log(year);
+				console.log(month);
+				console.log(day);
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				$("#calDay").text(day);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+				$("input[name=date]").attr("value", day);
+				
+			
+				
+				listAjax();
+
+				//$("#changeMonthForm").submit();
+			});	
+			
+			/* 다음으로 */
+			
+			$("#arrowRight").click(function() {
+				
+				// 버튼 처음 눌렀을때.
+				// 오늘날짜 +1 
+				date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일 후
+
+				year = date.getFullYear();
+				month = date.getMonth() + 1;
+				day = date.getDate();
+				
+				
+				console.log(year);
+				console.log(month);
+				console.log(day);
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				$("#calDay").text(day);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+				$("input[name=date]").attr("value", day);
+				
+				
+				listAjax();
+				
+
+				//$("#changeMonthForm").submit();
+			});	
+			
+			
+		});
+	</script>
+
+	<!-- 모달용 스크립트(예약 테이블 칠해지는 부분 스크립트) -->
 	<script>
 		var time = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 		var code = [1, 2, 3, 4, 5];
@@ -827,51 +833,67 @@ p {
 							// 15				12
 			var count = data.mtrmEndTime - data.mtrmStartTime;
 			
+			var info = data.deptTitle + " " + data.empName;				
+							
 			if(count > 1){
 				
 				// 12 => rowspan  $("#" + time + " ." + code)
 				// 13 => 삭제		
 				// 14 => 삭제
 				
-				$("#" + time + " ." + code).attr("rowspan", count).text(data.empId).addClass("boram");
+				$("#" + time + " ." + code).attr("rowspan", count).text(info).addClass("boram").removeClass("reservationBtn");
 				
 				for(var i=time+1; i<data.mtrmEndTime; i++){
 					$("#" + i + " ." + code).remove();
 				}
 				
 			}else{
-				$("#" + time + " ." + code).text(data.empId).addClass("boram");
+				$("#" + time + " ." + code).text(info).addClass("boram").attr("disabled", "true").removeClass("reservationBtn");
 			}
 			
 		}
-		
+	</script>
 	
-	
+	<!-- 공통 모달 여는 function -->
+	<script>
 		$('.open-modal').click(function() {
 			$(this).modal({
 				fadeDuration : 150
 			});
 		});
-
+	
 		/* 예약하기 모달 여는 function */
-		$("#reservationBtn").on("click", function() {
+		$(document).on("click", ".reservationBtn", function(){
+			
+			//console.log($(this).attr("class").substring(0, 3));
+			//console.log($(this).parent().attr("id"));
+			
+			var code = $(this).attr("class").substring(0, 3);
+			var time = $(this).parent().attr("id");
+			//13
+			// 14 ~ 19 
+			
+			console.log(code);
+			console.log(time);
+			
+			var reser;
+			for(var t=Number(time)+1; t<=19; t++){
+				//console.log($("#" + t + " ." + code));
+				if($("#" + t + " ." + code).attr("disabled") == "disabled"){
+					reser = t;
+				}
+			}
+			
+			console.log(reser);
+			
+			
 			$("#reservation").click();
 		});
-
-/* 		$(function() {
-			$("#mtrmCurrentInnerPage tr").click(
-					function() {
-						location.href = "reserveDetail.me?mno"
-								+ $(this).children().eq(0).text();
-				});
-		});
- */
 	</script>
 	
+	
+	<!-- 나의 예약현황 ajax -->
 	<script>
-	
-	
-	
 		$("#myReservation").click(function(){
 
 			$.ajax({
@@ -972,20 +994,16 @@ p {
 						value2 += "</ul>";
 					}
 
-					$("#modal-content").html(value+value2);
+					$(".modal-content2").html(value+value2);
 					
 				},error:function(){
 					console.log("나의 예약황 리스트 조회 실패");
 				}
 			}); 
 		});
-		
-		
-
-	
 	</script>
 	
-		<!-- 차량 예약 취소 ajax -->
+	<!-- 차량 예약 취소 ajax -->
 	<script>
 		$(document).on("click", ".reserveCancelBtn", function(){
 			
@@ -1014,18 +1032,6 @@ p {
 		});
 	</script>
 
-<!-- 	
-
-	<script>
-		$(function(){
-			$("#mtrmSC").click(function(){
-				window.open('${ pageContext.servletContext.contextPath }/WEB-INF/views/meetingroom/meetingroomCurrentStatusPopup.jsp','popup_name','_blank');
-			});
-			
-		});
-	</script> -->
-
-<!-- 	
 	<script>
 		$(function(){
 			$("#mcBtn").click(function(){
@@ -1034,13 +1040,11 @@ p {
 			});
 		});
 	</script>
-	 -->
+	
 	<!-- 예약하기 모달 스크립트 -->
 	
 	<script>
-
 		/* 예약하기 ajax*/
-		
 		$(function(){
 
 			$("#reservBtn").click(function(){
@@ -1067,52 +1071,35 @@ p {
 				
 			});
 		});
-		
-	
 	</script>
 	
-	<!-- 등록하기 ajax -->
+	<!-- 가용회의실 검색  -->
 	<script>
-		
-		$(function(){
+		$("#searchBtn1").click(function(){
 			
-			$("#reservBtn").click(function(){
+			$.ajax({
+				url:"select.me",
+				data:{mtrmCode:$("meetingroomSelect").val()},
+				type="post",
+				success:function(meetingroom){
+					
+					var mtrmCode = meetingroom.mtrmCode;
+					var mtrmName = meetingroom.mtrmName;
+					var mtrmLocation = meetingroom.mtrmLocation;
+					var mtrmCapacity = meetingroom.mtrmCapacity;
+					var mtrmEnrollDate = meetingroom.mtrmEnrollDate;
+					var mtrmImage = meetingroom.mtrmImage;
+					var mtrmStatus = meetingroom.mtrmStatus;
+					
+					$("partArea").html("회의실 이름: " + mtrmName + ", " + "회의실 위치: " + mtrmLocation + ", " + "회의실 수용 인원: " + ", " + mtrmCapacity);
+				},error:function(){
+					console.log("가용회의실 검색 실패")
+				}
 				
-				$.ajax({
-					url:"currentStatus.me",
-					dataType:"html",
-					type:"post",
-					success:function(data){
-						$("#reservationForm").html(data);
-					},error:function(){
-						console.log("실패");
-					}
-				});
-			
 			});
-			
-		});
-
+		});	
 	
 	</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

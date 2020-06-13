@@ -214,31 +214,30 @@
 		<div class="contentArea">
 			<!-- 달력 설정 부분 -->
 			<h2 style="display: inline-block; margin-left: 430px;">
-					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
-						
-						<b id="calYear"></b>년 <b id="calMonth"></b>월<b id="calDay"></b>일
-	
-					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24" fill="black" width="48px" height="48px">
+				<span id="arrowLeft" class="material-icons"> arrow_left </span> 
+				<b id="calYear"></b>년 <b id="calMonth"></b>월
+
+				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
 					<path
-							d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+						d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
 					<path d="M0 0h24v24H0z" fill="none" /></svg>
-					<span id="arrowRight" class="material-icons"> arrow_right </span>
-				</h2>
-	
-				<form id="changeMonthForm" action="statusM.me" method="get">
-					<input type="hidden" name="year"> 
-					<input type="hidden" name="month">
-				</form>
-	
-				<script>
+				<span id="arrowRight" class="material-icons"> arrow_right </span>
+			</h2>
+
+			<form id="changeMonthForm" action="statusM.me" method="get">
+				<input type="hidden" name="year"> 
+				<input type="hidden" name="month">
+			</form>
+
+			<script>
 					$(document).ready(function() {
 						var date = new Date();
 						var year = date.getFullYear();
 						var month = date.getMonth() + 1;
 	
-						var newYear = "<c:out value='${mds.year}'/>";
-						var newMonth = "<c:out value='${mds.month}'/>";
+						var newYear = "<c:out value='${md.year}'/>";
+						var newMonth = "<c:out value='${md.month}'/>";
 						
 						// 날짜 변경값 있을 경우
 						if (newYear != "") {
@@ -253,32 +252,21 @@
 						
 						/* 이전으로  */
 						$("#arrowLeft").click(function() {
-							month = month - 1;
-							if (month < 1) {
-								month = 12;
-								year = year - 1;
-								
-							}
+							
+							date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
+
+							year = date.getFullYear();
+							month = date.getMonth() + 1;
+							
+							console.log(year);
+							console.log(month);
+							
 							$("#calMonth").text(month);
 							$("#calYear").text(year);
 							
-	
 							$("input[name=month]").attr("value", month);
 							$("input[name=year]").attr("value", year);
-	
-							if (newYear != "") {
-								newMonth = newMonth - 1;
-								if (newMonth < 1) {
-									newMonth = 12;
-									newYear = newYear - 1;
-								}
-								$("#calMonth").text(newMonth);
-								$("#calYear").text(newYear);
-	
-								$("input[name=month]").attr("value", newMonth);
-								$("input[name=year]").attr("value", newYear);
-							}
-	
+
 							$("#changeMonthForm").submit();
 	
 						});
@@ -286,22 +274,29 @@
 						
 						/* 다음으로 */
 						$("#arrowRight").click(function() {
-							date = date.getDate() + 1
-							newYear = date.getFullYear();
-							newMonth = date.getMonth() + 1;
 							
-							$("input[name=month]").attr("value", newMonth);
-							$("input[name=year]").attr("value", newYear);
+							date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
+
+							year = date.getFullYear();
+							month = date.getMonth() + 1;
 							
-	
+							console.log(year);
+							console.log(month);
+							
+							$("#calMonth").text(month);
+							$("#calYear").text(year);
+							
+							$("input[name=month]").attr("value", month);
+							$("input[name=year]").attr("value", year);
+							
 							$("#changeMonthForm").submit(); 
 						});
 	
 					});
 				</script>
-				
-				<br> <br>
-			
+
+			<br> <br>
+
 
 			<!-- 게시판 -->
 			<table id="reservationList" class="boardTable">
@@ -310,75 +305,65 @@
 						<th>부서명</th>
 						<th>예약자</th>
 						<th>회의실</th>
-						<th style="width:400px">사용목적</th>
-						<th style="width:350px">사용기간</th>
+						<th style="width: 400px">사용목적</th>
+						<th style="width: 350px">사용기간</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="mr" items="${ list }">
-					<tr>
-						<td>${ mr.mtrmDeptTitle }</td>
-						<td>${ mr.empId }</td>
-						<td>${ mr.mtrmName }</td>
-						<td>${ mr.mtrmPurpose }</td>
-						<td>${ mr.mtrmStartDate }${ mr.mtrmStartTime } ~ ${ mr.mtrmEndDate }${ mr.mtrmEndTime }</td>
-					</tr>
+						<tr>
+							<td>${ mr.deptTitle }</td>
+							<td>${ mr.empId }</td>
+							<td>${ mr.mtrmName }</td>
+							<td>${ mr.mtrmPurpose }</td>
+							<td>${ mr.mtrmStartDate }${ mr.mtrmStartTime }~ ${ mr.mtrmEndDate }${ mr.mtrmEndTime }</td>
+						</tr>
 					</c:forEach>
-					
 				</tbody>
-
 			</table>
-			
-		
 
 			<!-- 페이징바 -->
-			         <div id="pagingArea">
-                <ul class="pagination">
-                
-                   <c:choose>
-                      <c:when test="${ pi.currentPage eq 1 }">
-                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                       </c:when>
-                       <c:otherwise>
-                          <li class="page-item "><a class="page-link" href="statusList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
-                  </c:otherwise>                   
-                   </c:choose>
-                    
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                       <c:choose>
-                          <c:when test="${ p eq pi.currentPage }">
-                             <li class="page-item disabled"><a class="page-link" href="#">${ p }</a></li>
-                          </c:when>
-                          <c:otherwise>
-                             <li class="page-item"><a class="page-link" href="statusList.me?currentPage=${ p }">${ p }</a></li>
-                     </c:otherwise>                       
-                       </c:choose>
-                    </c:forEach>
-                
-                    <c:choose>
-                       <c:when test="${ pi.currentPage eq pi.maxPage }">
-                          <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                       </c:when>
-                       <c:otherwise>
-                          <li class="page-item"><a class="page-link" href="statusList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
-                  </c:otherwise>
-               </c:choose>                
-                </ul>
-            </div>
+			<div id="pagingArea">
+				<ul class="pagination">
+
+					<c:choose>
+						<c:when test="${ pi.currentPage eq 1 }">
+							<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item "><a class="page-link"
+								href="statusList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+						</c:otherwise>
+					</c:choose>
+
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<c:choose>
+							<c:when test="${ p eq pi.currentPage }">
+								<li class="page-item disabled"><a class="page-link"
+									href="#">${ p }</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link"
+									href="statusList.me?currentPage=${ p }">${ p }</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+					<c:choose>
+						<c:when test="${ pi.currentPage eq pi.maxPage }">
+							<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a class="page-link"
+								href="statusList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
 			<!-- 페이징바 -->
-			<br clear="both"><br>
+			<br clear="both">
+			<br>
 		</div>
-
-
-		<!-- 모달팝업 (head부분에 링크들도 복사해주셔야합니다)
-			 모달 사용시엔 메뉴바를 head맨 윗부분에 include해주셔야 합니다.
-		-->
-
-		<!-- 모달 타겟. href의 #xxx와 모달영역의 id(xxx)가 한셋트입니다.
-		     용도에 따라 href와 id는 변경해주세요.(여러개 가능)
-		     모달타겟으로 쓸 요소에 class와 href 복사해주세요.
-		-->
-		<!-- <a class="open-modal" href="#modal-form">모달열기</a> <br> -->
 
 
 		<div id="meetingroomManage" class="modal">
@@ -394,16 +379,7 @@
 				});
 
 			});
-			
-			
-		/* 	 페이징 처리 스크립트(회의실 리스트)
-			$(function(){
-				$("#reservationList tbody tr").click(function(){
-					location.href = "statusList.me?mno" + $(this).children().eq(0).text();
-				});
-			}); */
 		</script>
-
 	</div>
 
 </body>

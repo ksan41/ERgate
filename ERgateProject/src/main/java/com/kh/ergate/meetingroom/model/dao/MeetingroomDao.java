@@ -73,22 +73,19 @@ public class MeetingroomDao {
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", date);
 	}
 	
-	public int cancelReserve(SqlSessionTemplate sqlSession, int mtrmReservNo) {
-		return sqlSession.update("meetingroomMapper.cancelReserve", mtrmReservNo);
+	public int cancelReserve(SqlSessionTemplate sqlSession, int mtrmReserveNo) {
+		return sqlSession.update("meetingroomMapper.cancelReserve", mtrmReserveNo);
 	}
 	
 	public ArrayList<MeetingroomReservation> statusListMonth(SqlSessionTemplate sqlSession, String month){
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", month);
 	}
 	
-	/*
-	 * public ArrayList<MeetingroomReservation> searchListt(SqlSessionTemplate
-	 * sqlSeesion, MeetingroomDate md){ return
-	 * (ArrayList)sqlSession.selectList("meetingroomMapper.searchListt", md); }
-	 */
-	
 	public int deleteMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
 		return sqlSession.update("meetingroomMapper.deleteMeetingroom", m);
 	}
 	
+	public Meetingroom selectMeetingroom(SqlSessionTemplate sqlSession, String mtrmCode) {
+		return sqlSession.selectOne("meetingroomMapper.selectMeetingroom", mtrmCode);
+	}
 }

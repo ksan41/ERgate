@@ -418,7 +418,8 @@
 					
 						<tr>
 							<td class="mmTdContent">
-								<button class="mmBtn" type="button" onclick="open_modal2();">수정하기</button>
+								<input type="hidden" class="mtrmCode" name="mtrmCode" value="${ m.mtrmCode }"/>
+								<button class="mmBtn editMtrm" type="button" onclick="open_modal2();">수정하기</button>
 								<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
 							</td>
 						</tr>
@@ -537,30 +538,26 @@
 		
 		
 		
-		<!-- 수정하기 부분 내용 -->
+		<!-- 수정하기 부분 모달 -->
 		<div id="edit" class="modal">
 			<div class="modal-title">회의실 수정</div>
 			<div class="modal-content">
-				<form id="updataForm" method="post" action=""
-					enctype="multipart/form-data">
+				<form id="updataForm" method="post" action="" enctype="multipart/form-data">
 					<div>
 						<table class="meetingroomModalTable">
 							<tr>
 								<td class="mmName">회의실 명</td>
-								<td class="mmName2"><input id="editMtrmName" class="mmModalInput" type="text"
-									name="mtrmName" value=""></td>
+								<td class="mmName2"><input id="editMtrmName" class="mmModalInput" type="text" name="mtrmName" value=""></td>
 							</tr>
 
 							<tr>
 								<td class="mmLocation">회의실 위치</td>
-								<td class="mmLocation2"><input id="editMtrmLocation" class="mmModalInput"
-									type="text" name="mtrmLocation" value=""></td>
+								<td class="mmLocation2"><input id="editMtrmLocation" class="mmModalInput" type="text" name="mtrmLocation" value=""></td>
 							</tr>
 
 							<tr>
 								<td class="mmPersonnel">최대 수용인원</td>
-								<td class="mmPersonnel2"><input id="editMtrmCapacity" class="mmModalInput"
-									type="text" name="mtrmCapacity" value=""></td>
+								<td class="mmPersonnel2"><input id="editMtrmCapacity" class="mmModalInput" type="text" name="mtrmCapacity" value=""></td>
 							</tr>
 
 							<tr>
@@ -581,16 +578,17 @@
 					<!-- 예약/취소 버튼 -->
 					<div class=btns>
 						<button class="mmSubmitBtn" type="submit" id="editUpdateBtn">수정하기</button>
-						<button class="mmResetBtn" type="submit" id="editUpdateBtn">삭제하기</button>
+						<button class="mmResetBtn" type="submit" id="editDeleteBtn">삭제하기</button>
 					</div>
 
 					<div id="fileArea2">
 						<input type="file" name="reUploadFile" id="fileInput2" onchange="loadImg2(this, 1);">
 					</div>
 					
+					<input id="editMtrmImage" name="mtrmImage" type="hidden" value="">
 					<input id="editMtrmCode" name="mtrmCode" type="hidden" value="">
-					<input id="editMtrmStatus" name="mtrmStatus" type="hidden" value="">
 					<input id="editMtrmEnrollDate" name="mtrmEnrollDate" type="hidden" value="">
+					<input id="editMtrmStatus" name="mtrmStatus" type="hidden" value="">
 					
 					
 				</form>
@@ -623,55 +621,55 @@
 		</script>
 		
 		<!-- 수정하기 모달 값 전달 ajax  -->
-			<script>
-				$("#editUpdateBtn").click(function(){
-					
-					$.ajax({
-						url:"select.me",
-						data:{vhclCode:$("#mtrmCode").val()},
-						type:"post",
-						success:function(meetingroom){
-							
-							var mtrmName = meetingroom.mtrmName;
-							var mtrmLocation = meetingroom.mtrmLocation;
-							var mtrmCapacity = meetingroom.mtrmCapacity;
-							var mtrmImage = meetingroom.mtrmImage;
-							var mtrmCode = meetingroom.mtrmCode;
-							var mtrmStatus = meetingroom.mtrmStatus;
-							var mtrmEnrollDate = meetingroom.mtrmEnrollDate;
-							
-							$("#editMtrmName").val(mtrmName);
-							$("#editMtrmLocation").val(mtrmLocation);
-							$("#editMtrmCapacity").val(mtrmCapacity);
-							
-							$("#editMtrmCode").val(mtrmImage);
-							$("#editMtrmStatus").val(mtrmStatus);
-							$("#editMtrmEnrollDate").val(mtrmEnrollDate);
-							
-							if(mtrmImage == null){
-								$("#mmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg");
-							}else{
-								$("#mmImgEdit").attr("src", "${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/"+mtrmImage);
-							}
-							
-						},error:function(){
-							console.log(" ajax 통신 실패");
+		<script>
+			$(".editMtrm").click(function(){
+				
+				$.ajax({
+					url:"select.me",
+					data:{mtrmCode:$(this).prev().val()},
+					type:"post",
+					success:function(meetingroom){
+						
+						var mtrmCode = meetingroom.mtrmCode;
+						var mtrmName = meetingroom.mtrmName;
+						var mtrmLocation = meetingroom.mtrmLocation;
+						var mtrmCapacity = meetingroom.mtrmCapacity;
+						var mtrmEnrollDate = meetingroom.mtrmEnrollDate;
+						var mtrmImage = meetingroom.mtrmImage;
+						var mtrmStatus = meetingroom.mtrmStatus;
+						
+						$("#editMtrmCode").val(mtrmCode);
+						$("#editMtrmName").val(mtrmName);
+						$("#editMtrmLocation").val(mtrmLocation);
+						$("#editMtrmCapacity").val(mtrmCapacity);
+						$("#editMtrmEnrollDate").val(mtrmEnrollDate);
+						$("#editMtrmImage").val(mtrmImage);
+						$("#editMtrmStatus").val(mtrmStatus);
+						
+						if(mtrmImage == null){
+							$("#mmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg");
+						}else{
+							$("#mmImgEdit").attr("src", "${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/"+mtrmImage);
 						}
-					});
+						
+					},error:function(){
+						console.log(" ajax 통신 실패");
+					}
 				});
-			</script>
+			});
+		</script>
 
-			<!-- 수정하기 모달에서 수정하기/삭제하기 form -->
-			<script>
-				$("#editUpdateBtn").click(function () {
-			       $("#updateModalForm").attr("action", "insertMtroom.me");
-				});
-				 
-				$("#editDeleteBtn").click(function () {
-				       $("#updateModalForm").attr("action", "deleteMtroom.me");
-				});
-			</script>
-		
+		<!-- 수정하기 모달에서 수정하기/삭제하기 form -->
+		<script>
+			$("#editUpdateBtn").click(function () {
+		       $("#updataForm").attr("action", "updateMtroom.me");
+			});
+			 
+			$("#editDeleteBtn").click(function () {
+			       $("#updataForm").attr("action", "deleteMtroom.me");
+			});
+		</script>
+	
 		
 		<!-- 사진 첨부  -->
 		<script>
