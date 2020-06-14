@@ -332,11 +332,11 @@
 						<table id="mainMailTable">
 							<tr>
 								<th class="mainLabel">
-									<img src="${ pageContext.servletContext.contextPath }/resources/icons/mail.png" onclick="location.href='mailbox.ml';" class="cursorPointer">
+									<img src="${ pageContext.servletContext.contextPath }/resources/icons/mail.png" onclick="location.href='list.mil?currentPage=1&mailOwn=${loginUser.empId}';" class="cursorPointer">
 									<span style="vertical-align: top;" onclick="location.href='list.mil?currentPage=1&mailOwn=${loginUser.empId}';" class="cursorPointer">전자메일</span>
 								</th>
 								<td class="mainNextArea">
-									<button class="mainNextBtn cursorPointer" onclick="location.href='mailbox.ml';">
+									<button class="mainNextBtn cursorPointer" onclick="location.href='list.mil?currentPage=1&mailOwn=${loginUser.empId}';">
 										<img src="${ pageContext.servletContext.contextPath }/resources/icons/next.png">
 									</button>
 								</td>
@@ -362,6 +362,22 @@
 												<td class="mainMailInnerContent">27</td>
 											</tr>
 										</table>
+										<script>
+										$(document).ready(function() {
+											$.ajax({
+									            url : "mailCount.mil",
+									            data : {mailOwn:${loginUser.empId}},
+									            type : 'POST',
+									            success : function(result) {
+									                
+									            	console.log("하하");
+									                
+									            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+														console.log("ajax 통신 실패!");
+												}
+									        });
+										});
+										</script>
 									</div>
 								</td>
 							</tr>
