@@ -87,23 +87,21 @@ public class NoticeServiceImpl implements NoticeService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	// 공지사항 작성용 서비스
 	@Override
 	public int insertNotice(Notice n) {
-		// TODO Auto-generated method stub
-		return 0;
+		return noDao.insertNotice(sqlSession,n);
 	}
-
+	// 공지사항 첨부파일 서비스
 	@Override
 	public int insertNoticeAttachment(BoardAttachment bt) {
-		// TODO Auto-generated method stub
-		return 0;
+		return noDao.insertNoticeAttachment(sqlSession,bt);
 	}
-
+	//공지사항 첨부파일 없는 게시글 flag 수정용 서비스
 	@Override
 	public int updateNoticeFlag() {
-		// TODO Auto-generated method stub
-		return 0;
+		return noDao.updateNoticeFlag(sqlSession);
 	}
 
 	@Override

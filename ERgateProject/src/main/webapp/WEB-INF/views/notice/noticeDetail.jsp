@@ -165,7 +165,7 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn subActive">공지사항</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='list.no?currentPage=1';">공지사항</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
@@ -178,7 +178,7 @@
 					<hr>
 					<br> <br>
 					<div id="noticeContent">${n.noticeContent }</div>
-					<c:if test="${b.boardFileFlag eq 'Y' }">
+					<c:if test="${n.noticeFileFlag eq 'Y' }">
 					<table class="fileTable">
 						<tr>
 							<td width="65">

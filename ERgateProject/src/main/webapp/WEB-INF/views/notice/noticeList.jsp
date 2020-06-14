@@ -225,13 +225,15 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn subActive">공지사항</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='list.no?currentPage=1';">공지사항</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
 			
-			<button class="bigBtn insertBoardBtn" onclick="location.href='enrollForm.no?currentPage=${param.currentPage}'">글쓰기</button>
-
+			<c:if test="${loginUser.deptCode eq 'D4' }">
+				<button class="bigBtn insertBoardBtn" onclick="location.href='enrollForm.no';">글쓰기</button>
+			</c:if>
+			
 			<!-- 검색바 -->
 			<form id="searchForm" action="search.no" method="get">
 			<div class="searchBar">

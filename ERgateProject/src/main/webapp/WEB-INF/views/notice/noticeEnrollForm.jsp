@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 	
 <!DOCTYPE html>
 <html>
 <head>
@@ -204,12 +206,12 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn subActive">공지사항</button></li>
+				<li><button class="subBtn subActive"  onclick="location.href='list.no?currentPage=1';">공지사항</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
 			<h4 style="margin-left: 1200px;">공지사항 작성</h4>
-			<form name="noticeEnroll" action="#" method="post">
+			<form name="uploadForm" id="uploadForm" enctype="multipart/form-data">
 				<table id="noticeDetail">
 					<tr>
 						<th colspan="2">제목</th>
@@ -244,12 +246,14 @@
 								cols="160" rows="25"></textarea></td>
 					</tr>
 				</table>
+				<input type="hidden" name="noticeWriter" value="${ loginUser.empName }">
+				<input type="hidden" name="empId" value="${ loginUser.empId }">
 			</form>
 			<br>
 			<div id="btnArea">
 				<button id="submitBoard" class="bigBtn" onclick="uploadFile();"
 					style="background: rgb(26, 188, 156);">등록</button>
-				<button class="bigBtn">취소</button>
+				<button class="bigBtn" onclick="location.href='list.no?currentPage=1';">취소</button>
 			</div>
 			<br> <br> <br>
 		</div>
@@ -464,17 +468,22 @@
            var form = $('#uploadForm');
            console.log(form[0]);
            var formData = new FormData(form[0]);
-           formData.append('noticeTitle', form[0].boardTitle.innerText);
-           formData.append('noticeContent', form[0].boardContent.innerText);
+           formData.append('noticeTitle', form[0].noticeTitle.innerText);
+           formData.append('noticeContent', form[0].noticeContent.innerText);
+           formData.append('noticeWriter', form[0].noticeWriter.innerText);
+           formData.append('empId', form[0].empId.innerText);
            for (var i = 0; i < uploadFileList.length; i++) {
                formData.append('files', fileList[uploadFileList[i]]);
            }
-           console.log(formData.getAll('noticeTitle'));
-           console.log(formData.getAll('noticeContent'));
-           console.log(formData.getAll('files'));
+           
+           /* console.log(formData.getAll('boardTitle'));
+           console.log(formData.getAll('boardContent'));
+           console.log(formData.getAll('boardWriter'));
+           console.log(formData.getAll('empId'));
+           console.log(formData.getAll('files')); */
            
            $.ajax({
-               url : "<%= contextPath %>/testFileload.bo",
+               url : "insert.no",
                data : formData,
                type : 'POST',
                enctype : 'multipart/form-data',
@@ -483,12 +492,12 @@
                dataType : 'json',
                cache : false,
                success : function(result) {
-                   if (result.length > 0) {
-                       alert("성공");
-                       location.reload();
+                   if (result >= 1) {
+                       alert("게시글이 등록되었습니다.");
+                       location.href="list.no?currentPage=1";
                    } else {
-                       alert("성공");
-                       location.reload();
+                       alert("게시글 등록에 실패하였습니다.");
+                       location.href="list.no?currentPage=1";
                    }
                    
                },
@@ -500,6 +509,8 @@
 				}
            });
     }
+	 
+    
 	
 	</script>
 </body>

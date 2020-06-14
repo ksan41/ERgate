@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
@@ -69,5 +70,19 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.afterB",refBoardNo);
 	}
 	
+	//공지사항 작성용
+	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.insert("noticeMapper.insertNotice", n);
+	}
+	
+	//공지사항-파일 첨부용
+	public int insertNoticeAttachment(SqlSessionTemplate sqlSession, BoardAttachment bt) {
+		return sqlSession.insert("noticeMapper.insertNoticeAttachment", bt);
+	}
+	
+	//공지사항 flag 변경용
+	public int updateNoticeFlag(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("noticeMapper.updateNoticeFlag");
+	}
 	
 }
