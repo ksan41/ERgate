@@ -38,7 +38,8 @@
 	
 	<update id="updateSchedule" parameterType="Schedule">
 		update Schedule
-		set 			
+		set 
+			schedule_title=#{scheduleTitle},			
 			schedule_startday=#{scheduleStartDay},
 		    schedule_starttime=#{scheduleStartTime},
 		    schedule_endday=#{scheduleEndDay},

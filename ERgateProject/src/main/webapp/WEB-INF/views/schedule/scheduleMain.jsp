@@ -445,6 +445,14 @@ html, body {
 </head>
 <body>
 
+	<c:if test="${!empty msg1 }">
+			<script>
+				alert("${msg1}");
+				
+			</script>
+		<c:remove var="msg1" scope="session"/>
+	</c:if>
+
    <!-- 메뉴바 -->
 
    <div class="outer">
@@ -530,7 +538,7 @@ html, body {
                      </table>
                     <div class="btns">
 		            <button id="scheduleBtn" type="submit">확인</button>
-		            <button id="resetBtn" type="reset">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		         </div>
                </div>		          
                </form>
@@ -607,7 +615,7 @@ html, body {
                      <!-- 예약/취소 버튼 -->
 		         <div class="btns">
 		            <button id="scheduleBtn" type="submit">확인</button>
-		            <button id="resetBtn" type="reset">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		         </div>
                		</div>
 
@@ -661,7 +669,7 @@ html, body {
 	            <!-- 예약/취소 버튼 -->
 		         <div class="btns">
 		            <button id="scheduleBtn" type="submit">확인</button>
-		            <button id="resetBtn" type="reset">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		            
 		         </div>                  
 	              	</div>
@@ -725,7 +733,7 @@ html, body {
                   <div class="btns">
 		            <button id="updateBtn" type="submit">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
-		            <button id="resetBtn" type="reset">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		         </div> 
 		      </form>   
             
@@ -772,6 +780,9 @@ html, body {
                            </td>
                         </tr>
                  
+                 <button type="button" id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddJoinparticipants','_blank');">참석자 지정</button> 
+                               <textarea cols="60" rows="4" id="joinArea" name="joinPeople"></textarea>
+                 
                         <tr>
                            <td id="r1">수신자</td>
                            <td id="r2">
@@ -808,7 +819,7 @@ html, body {
                   <div class="btns">
 		            <button id="updateBtn" type="submit">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
-		            <button id="resetBtn" type="reset">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		         </div> 
              </form>
              
@@ -869,7 +880,7 @@ html, body {
                   <div class="btns">
 		            <button id="updateBtn" type="submit">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
-		            <button id="resetBtn" type="reset">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		         </div> 
 		       </form>
           </div>      

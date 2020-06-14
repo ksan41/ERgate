@@ -35,6 +35,8 @@ public class ScheduleController {
 		mv.setViewName("schedule/scheduleMain");
 		mv.addObject("slist", slist);
 		
+		
+		
 		return mv;
 	}
 	
@@ -62,12 +64,12 @@ public class ScheduleController {
 		
 		if(result > 0) {  // 일정등록 성공
 			
-			session.setAttribute("msg", "일정등록 성공");
+			session.setAttribute("msg1", "일정등록되셨습니다.");
 			return "redirect:/selectList.sc";
 			
 		}else {  // 일정등록 실패
 			
-			model.addAttribute("msg", "일정등록실패");
+			model.addAttribute("msg", "일정등록실패하셨습니다.");
 			return "common/errorPage";
 			
 		}
@@ -90,12 +92,12 @@ public class ScheduleController {
 	  
 	  @RequestMapping("update.sc")
 	  public String updateSchedule(Schedule sc, Model model, HttpSession session) {
-		  System.out.println("sc: "+ sc);
+		 
 		  int result = sService.updateSchedule(sc);
 		  
 		  if(result > 0) {  // 수정 성공
 			  
-			  session.setAttribute("scloginUser", sService.selectScheduleDetail(sc.getScheduleNo() ));
+			  session.setAttribute("msg", "일정 수정하셨습니다.");
 			  
 			  return "redirect:selectList.sc";
 			  

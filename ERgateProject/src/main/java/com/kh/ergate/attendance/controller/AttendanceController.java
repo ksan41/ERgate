@@ -100,8 +100,8 @@ public class AttendanceController {
 			int result = atService.clockInAt(wr);			
 			if(result > 0) {  // 출석 성공
 				
-				session.setAttribute("wrNo", "출근 성공");
-				return "redirect:/selectList.sc";
+				session.setAttribute("msg2", "출근 활기찬하루되세요.");
+				return "redirect:/atList.at";
 				
 			}else {  // 일정등록 실패
 				
@@ -115,14 +115,14 @@ public class AttendanceController {
 	@ResponseBody
 	@RequestMapping(value="endTime.at", produces="application/json; charset=utf-8")
 	 public String clockOutAt(WorkRecord wr,HttpSession session,Model model){
-		 System.out.println("wr 퇴근: "+ wr);
+		
 		
 		 int result = atService.clockOutAt(wr);	
-		 System.out.println("result: "+ result);
+		 
 		if(result > 0) {  // 퇴근 성공
 			
-			session.setAttribute("wrNo", "퇴근 성공");
-			return "redirect:/selectList.sc";
+			session.setAttribute("msg2", "퇴근 오늘도고생하셨습니다.");
+			return "redirect:/atList.at";
 			
 		}else {  // 일정등록 실패
 			

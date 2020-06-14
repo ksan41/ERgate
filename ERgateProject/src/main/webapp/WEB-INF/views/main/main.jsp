@@ -306,8 +306,8 @@
 										<tr>										
 											<td>${list.scheduleStartTime}</td>
 											<td>${list.scheduleTitle}</td>										
-										</tr>
-
+										</tr><br>
+	
 										</c:forEach>
 										
 									</table>

@@ -160,6 +160,15 @@
 	</style>
 	</head>
 	<body>
+	
+		<c:if test="${!empty msg2 }">
+			<script>
+				alert("${msg2}");
+				
+			</script>
+			<c:remove var="msg2" scope="session"/>
+		</c:if>
+		
 		<!-- 이곳에 메뉴바 include -->
 		<jsp:include page="../common/menubar.jsp" />
 		<!-- 이곳에 메뉴바 include -->
@@ -199,15 +208,17 @@
 								<th width="200">퇴근시간</th>
 							</tr>
 						</thead>
-					
-						<tr>
-							<c:forEach var="list" items="${wrlist}">
-								<td>출근</td>
+						<c:forEach var="list" items="${wrlist}">
+						
+							<tr>
+							
+								<td>정상출근</td>
 								<td>${list.workDate}</td>
 								<td>${list.clockIn}</td>
 								<td>${list.clockOut}</td>
-							</c:forEach>
-						</tr>
+							
+							</tr>
+						</c:forEach>	
 						
 					</table>
 				</div>	
