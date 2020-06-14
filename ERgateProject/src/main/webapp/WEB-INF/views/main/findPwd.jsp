@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>findPwd</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 /* ==========페이지영역========== */
 
@@ -164,14 +165,15 @@
 	            <tr>
 	                <td class="findPwdLabel">이메일 주소</td>
 	                <td>
-	                	<input name="empEmail" id="findPwdEmail1" type="text" required>
+	                	<input name="email" id="findPwdEmail1" type="text" required>
 	                	<input id="findPwdEmail2" type="text" value="@gmail.com" readonly>
 	                </td>
 	            </tr>
 	            <tr>
 		        	<td colspan="2" class="findPwdTd">
 		        		<button id="findPwdSendNoBtn" type="button" class="middleBtn">인증번호 발송</button>
-	                	<input id="findPwdNo" type="text" placeholder="인증번호 입력">
+	                	<input id="findPwdNo" type="text" placeholder="인증번호 입력"><br>
+		                <div id="checkResult" style="font-size:0.8em; padding-top:20px; text-align: center">&nbsp;</div>
 	                </td>
 	            </tr>
 	            <tr>
@@ -182,5 +184,36 @@
 	        </table>
 	    </form>
 	</div>
+		
+		
+	<script>
+		$("#findPwdSendNoBtn").click(function(){
+			
+			$.ajax({
+				url:"emailAuth.ma",
+				data:{id:$("#findPwdEmail1").val()},
+				type:"post",
+				success:function(authNum){
+					
+					alert("메일이 발송되었습니다. 인증번호를 확인해 주세요.");
+					
+					$("#findPwdNo").keyup(function(){
+					
+						if($("#findPwdNo").val() == authNum){
+							$("#checkResult").css("color", "rgb(26, 188, 156)").text("인증되었습니다.");
+			    			$("#findPwdBtn").removeAttr("disabled");
+						}else{
+							$("#checkResult").css("color", "red").text("입력하신 값이 인증번호와 일치하지 않습니다.");
+			    			$("#findPwdBtn").attr("disabled", "true");
+						}
+					});
+				},error:function(){
+					console.log("인증 이메일 발송용 ajax 통신 실패");
+				}
+			});
+			
+		});
+	</script>
+	
 </body>
 </html>

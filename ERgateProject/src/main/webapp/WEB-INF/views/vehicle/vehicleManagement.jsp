@@ -530,7 +530,7 @@
 				<!-- 예약/취소 버튼 -->
 				<div class=btns>
 					<button class="vmSubmitBtn" type="submit">등록하기</button>
-					<button class="vmResetBtn" type="reset">취소</button>
+					<button class="vmResetBtn" type="reset" onclick="history.go(0)">취소</button>
 				</div>
 				
 				<div id="fileArea">

@@ -389,7 +389,7 @@
                     <tr>
                         <td colspan="2" id="mypageBtnArea">
                         	<button id="mypageSubmitBtn" class="bigBtn" type="submit">수정</button>
-                        	<button id="mypageCancelBtn" class="bigBtn" type="button">취소</button>
+                        	<button id="mypageCancelBtn" class="bigBtn" type="button" onclick="location.href='main.ma'">취소</button>
                         </td>
                     </tr>
                 </table>

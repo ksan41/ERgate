@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>findId</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 /* ==========페이지영역========== */
 
@@ -172,8 +173,9 @@
 	            </tr>
 	            <tr>
 		        	<td colspan="2" class="findIdTd">
-			        	<button id="findIdSendNoBtn" class="middleBtn" type="button" onclick="location.href='emailAuth.ma'">인증번호 발송</button>
-		                <input id="findIdNo" type="text" placeholder="인증번호 입력">
+			        	<button id="findIdSendNoBtn" class="middleBtn" type="button">인증번호 발송</button>
+		                <input id="findIdNo" type="text" placeholder="인증번호 입력"><br>
+		                <div id="checkResult" style="font-size:0.8em; padding-top:20px; text-align: center">&nbsp;</div>
 	                </td>
 	            </tr>
 	            <tr>
@@ -184,6 +186,36 @@
 	        </table>
 	    </form>
 	</div>
+	
+	
+	<script>
+		$("#findIdSendNoBtn").click(function(){
+			
+			$.ajax({
+				url:"emailAuth.ma",
+				data:{id:$("#findIdEmail1").val()},
+				type:"post",
+				success:function(authNum){
+					
+					alert("메일이 발송되었습니다. 인증번호를 확인해 주세요.");
+					
+					$("#findIdNo").keyup(function(){
+					
+						if($("#findIdNo").val() == authNum){
+							$("#checkResult").css("color", "rgb(26, 188, 156)").text("인증되었습니다.");
+			    			$("#findIdBtn").removeAttr("disabled");
+						}else{
+							$("#checkResult").css("color", "red").text("입력하신 값이 인증번호와 일치하지 않습니다.");
+			    			$("#findIdBtn").attr("disabled", "true");
+						}
+					});
+				},error:function(){
+					console.log("인증 이메일 발송용 ajax 통신 실패");
+				}
+			});
+			
+		});
+	</script>
 	
 </body>
 </html>

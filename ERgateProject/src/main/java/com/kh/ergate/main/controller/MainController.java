@@ -50,6 +50,22 @@ public class MainController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	
+	
+	// 메인 페이지로 이동
+	@RequestMapping("main.ma")
+	public ModelAndView mainPage() {
+		ArrayList<Schedule> slist = sService.selectScheduleList();
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main/main");
+		mv.addObject("slist", slist);
+		
+		return mv;
+		
+	}
+	
+	
+	// ---------- 로그인 관련 ----------
+	
 	// 로그인
 	@RequestMapping("login.ma")
 	public String loginMember(Employee e, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -183,10 +199,10 @@ public class MainController {
 	
 	// 아이디 찾기
 	@RequestMapping("findId.ma")
-	public String findId(Employee e, String empEmail, HttpSession session) {
+	public String findId(Employee e, String email, HttpSession session) {
 		
-		e.setEmpPriEmail(empEmail + "@gmail.com");
-		
+		e.setEmpPriEmail(email + "@gmail.com");
+
 		Employee loginUser = mService.findId(e);
 		
 		if(loginUser != null) {
@@ -200,9 +216,9 @@ public class MainController {
 	
 	// 비밀번호 찾기
 	@RequestMapping("findPwd.ma")
-	public String findPwd(Employee e, String empEmail, HttpSession session) {
+	public String findPwd(Employee e, String email, HttpSession session) {
 		
-		e.setEmpPriEmail(empEmail + "@gmail.com");
+		e.setEmpPriEmail(email + "@gmail.com");
 		
 		Employee loginUser = mService.findPwd(e);
 		
@@ -237,12 +253,6 @@ public class MainController {
 	
 	// ---------- 페이지 이동용 ----------
 
-	// 로그인 페이지로 이동
-	@RequestMapping("loginTest.ma")
-	public String loginTest() {
-		return "main/loginIndex";
-	}
-	
 	// 계정등록 페이지로 이동
 	@RequestMapping("accountForm.ma")
 	public String accountForm() {
@@ -273,16 +283,86 @@ public class MainController {
 		return "main/mypage";
 	}
 	
-	// 메인 페이지로 이동
-	@RequestMapping("main.ma")
-	public ModelAndView mainPage() {
-		ArrayList<Schedule> slist = sService.selectScheduleList();
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main/main");
-		mv.addObject("slist", slist);
+	
+	// ---------- 인증메일 전송 메소드 ----------
+	
+	@ResponseBody
+	@RequestMapping("emailAuth.ma")
+	public String emailAuth(String id)throws Exception {
 		
-		return mv;
+		// 여기에 발송할 사람 메일주소 들어가야 함. dddd@gmail.com
+		String email = id + "@gmail.com";
 		
+		// 인증코드 들어갈 변수선언
+		String authNum = "";
+		
+		//랜덤값 변수에 저장
+		authNum = RandomNum(); 
+		
+		//매개변수에 주소와 인증코드 입력하고, 메일 전송 메소드 호출.
+		sendEmail(email, authNum); 
+		
+		return authNum;
+	}
+	
+	private void sendEmail(String email, String authNum) {
+		
+		Properties props = System.getProperties(); 
+		
+		props.put("mail.smtp.starttls.enable", "true");
+		//props.put("mail.transport.protocol", "smtp"); 
+		props.put("mail.smtp.host", "smtp.gmail.com"); // smtp 서버주소
+		//props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory.class");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "587"); // gmail 포트번호
+		//props.put("mail.smtp.user", from);
+		
+		Authenticator auth = new MyAuthentication();
+		
+		Session session = Session.getDefaultInstance(props,auth);
+		MimeMessage msg = new MimeMessage(session);
+
+		try {
+		
+			msg.setSentDate(new Date()); // 메일 발송시간(현재시간)
+			
+			InternetAddress from = new InternetAddress("dlfroal06@gmail.com");//발신자 메일주소
+			
+			// 이메일 발신자
+			msg.setFrom(from);
+			
+			// 이메일 수신자
+			InternetAddress to = new InternetAddress(email); // 수신자 메일주소
+			
+			msg.setRecipient(Message.RecipientType.TO, to);
+			
+			// 이메일 제목
+			msg.setSubject("ERgate 인증 이메일","UTF-8");
+			
+			// 이메일 내용
+			msg.setText("ERgate 인증번호 ["+authNum+"]","UTF-8");
+			
+			// 이메일 헤더
+			msg.setHeader("content-Type", "text/html");
+			
+			// 메일 보내기
+			javax.mail.Transport.send(msg);
+			
+		} catch (AddressException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String RandomNum() {
+		
+		StringBuffer buffer = new StringBuffer();
+		for(int i = 0; i <= 6; i++) {
+			int n = (int)(Math.random() * 10);
+			buffer.append(n);
+		}
+		return buffer.toString();
 	}
 	
 	
@@ -332,99 +412,5 @@ public class MainController {
 		deleteFile.delete(); // 실제 서버의 파일 찾아 삭제 처리
 		
 	}
-	
-	
-	// ---------- 인증메일 전송 메소드 ----------
-	
-	@RequestMapping("emailAuth.ma")
-	public void emailAuth(HttpServletResponse response, HttpServletRequest request)throws Exception {
-		
-		// 여기에 발송할 사람 메일주소 들어가야 함. dddd@gmail.com
-		String email = request.getParameter("email");
-		System.out.println(email);
-		
-		// 인증코드 들어갈 변수선언
-		String authNum = "";
-		
-		//랜덤값 변수에 저장
-		authNum = RandomNum(); 
-		
-		//매개변수에 주소와 인증코드 입력하고, 메일 전송 메소드 호출.
-		sendEmail(email, authNum); 
-		
-		
-		// authNum만 전달해서, 화면 단에서 사용자가 입력한 인증코드와 비교하면 되겠습니다.(ajax처리)
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("/main/findId.jsp");
-//		mv.addObject("email", email);
-//		mv.addObject("authNum", authNum);
-		
-		//return mv;
-	}
-	
-	private void sendEmail(String email, String authNum) {
-		
-		Properties props = System.getProperties(); 
-		
-		props.put("mail.smtp.starttls.enable", "true");
-		//props.put("mail.transport.protocol", "smtp"); 
-		props.put("mail.smtp.host", "smtp.gmail.com"); // smtp 서버주소
-		//props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory.class");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "587"); // gmail 포트번호
-		//props.put("mail.smtp.user", from);
-		
-		Authenticator auth = new MyAuthentication();
-		
-		Session session = Session.getDefaultInstance(props,auth);
-		MimeMessage msg = new MimeMessage(session);
-
-		try {
-		
-			msg.setSentDate(new Date()); // 메일 발송시간(현재시간)
-			
-			
-			InternetAddress from = new InternetAddress("dlfroal06@gmail.com");//발신자 메일주소
-			
-			// 이메일 발신자
-			msg.setFrom(from);
-			
-			
-			// 이메일 수신자
-			InternetAddress to = new InternetAddress(email); // 수신자 메일주소
-			
-			
-			msg.setRecipient(Message.RecipientType.TO, to);
-			
-			// 이메일 제목
-			msg.setSubject("테스트트트","UTF-8");
-			
-			// 이메일 내용
-			msg.setText("인증번호 ["+authNum+"]","UTF-8");
-			
-			// 이메일 헤더
-			msg.setHeader("content-Type", "text/html");
-			
-			// 메일 보내기
-			javax.mail.Transport.send(msg);
-			
-		} catch (AddressException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public String RandomNum() {
-		
-		StringBuffer buffer = new StringBuffer();
-		for(int i = 0; i <= 6; i++) {
-			int n = (int)(Math.random() * 10);
-			buffer.append(n);
-		}
-		return buffer.toString();
-	}
-	
 	
 }
