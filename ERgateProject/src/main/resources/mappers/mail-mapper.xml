@@ -222,7 +222,10 @@
 		where rownum = 1
 	</select>
 
-
+	<select id="loadMailnameTo" parameterType="String" resultType="String">
+		select emp_name from employee
+		where emp_id = #{toname}
+	</select>
 
 
 

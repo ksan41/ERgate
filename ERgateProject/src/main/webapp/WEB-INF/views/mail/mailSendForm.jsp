@@ -205,6 +205,17 @@
 		display: inline-block;
 		margin: 5px;
 	}
+	.inputDual1 {
+		border-right:none;
+	}
+	.inputDual {
+		border-right:none;
+		border-left:none;
+	}
+	.inputDual3 {
+		border-left:none;
+	}
+	
 </style>
 </head>
 <body>
@@ -232,13 +243,37 @@
 				<table class="mailUpload" id="boardDetail">
 					<tr>
 						<th>받는사람</th>
-						<td><input type="text" class="inputs" name="mailTo" style="width:770px;">
-							<input type="hidden" class="inputs" name="mailnameTo"></td>
-						<td><button class="middleBtn2">주소록</button></td>
+						<td>
+							<div><input id="n1" type="text" class="inputs inputDual1" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n2" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n3" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n4" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n5" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n6" type="text" class="inputs inputDual3" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="m1" type="hidden" class="inputs" name="mailnameTo"></td></div>
+							<div><input id="m2" type="hidden" class="inputs" name="mailnameTo"></td></div>
+							<div><input id="m3" type="hidden" class="inputs" name="mailnameTo"></td></div>
+							<div><input id="m4" type="hidden" class="inputs" name="mailnameTo"></td></div>
+							<div><input id="m5" type="hidden" class="inputs" name="mailnameTo"></td></div>
+							<div><input id="m6" type="hidden" class="inputs" name="mailnameTo"></td></div>
+						<td><button type="button" class="middleBtn2" onclick="window.open('openSigner.mil','mailAddToList','_blank');">주소록</button></td>
 					</tr>
 					<tr>
 						<th>참조</th>
-						<td><input type="text" class="inputs" name="mailWith" style="width:770px;"></td>
+						<td>
+							<div><input id="l1" type="text" class="inputs inputDual1" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l2" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l3" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l4" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l5" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l6" type="text" class="inputs inputDual3" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="i1" type="hidden" class="inputs" name="mailWithName"></td></div>
+							<div><input id="i2" type="hidden" class="inputs" name="mailWithName"></td></div>
+							<div><input id="i3" type="hidden" class="inputs" name="mailWithName"></td></div>
+							<div><input id="i4" type="hidden" class="inputs" name="mailWithName"></td></div>
+							<div><input id="i5" type="hidden" class="inputs" name="mailWithName"></td></div>
+							<div><input id="i6" type="hidden" class="inputs" name="mailWithName"></td></div>
+						</td>
 					</tr>
 					<tr>
 						<th>제목</th>
@@ -319,6 +354,32 @@
 		</div>
 	</div>
 	<script>
+	var signerId = new Array();
+	var signerName = new Array();
+	
+	// 받는사람아이디 받아오기
+	function getSid(data){
+		signerId = data;
+	}
+	
+	// 받는사람이름 받아오기
+	function getSname(data){
+		signerName = data;
+	}
+	
+	var refId = new Array();
+	var refName = new Array();
+	
+	// 참조 아이디 받아오기
+	function getRefId(data){
+		refId = data;
+	}
+	
+	// 참조 이름 받아오기
+	function getRefName(data){
+		refName = data;
+	}
+	
 	function cancleBack(){
 		if('${param.pageFrom}'=='inbox'){
 			location.href="list.mil?currentPage=1&mailOwn=" + '${loginUser.empId}';
@@ -577,10 +638,10 @@
 	            success : function(result) {
 	                if (result >= 1) {
 	                    alert("게시글이 등록되었습니다.");
-	                    location.href="list.bo?currentPage=1";
+	                    location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId}";
 	                } else {
 	                    alert("게시글 등록에 실패하였습니다.");
-	                    location.href="list.bo?currentPage=1";
+	                    location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId}";
 	                }
 	                
 	            },

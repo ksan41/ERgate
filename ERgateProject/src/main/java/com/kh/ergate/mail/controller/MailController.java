@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -221,13 +222,24 @@ public class MailController {
 		String toname[] = form.getParameterValues("mailnameTo");
 		String from[] = form.getParameterValues("empId");
 		String fromname[] = form.getParameterValues("mailnameFrom");
+		
+		
+		
+		
 		Email insertE = new Email();
 		insertE.setMailTitle(title[0]);
 		insertE.setMailContent(content[0]);
 		insertE.setMailTo(to[0]);
 		insertE.setMailFrom(from[0]);
 		insertE.setMailnameTo(toname[0]);
+		
+		if(toname[0].length() == 0) {
+			insertE.setMailnameTo(milService.loadMailnameTo(to[0]));
+		}
+		
 		insertE.setMailnameFrom(fromname[0]);
+		
+		System.out.println(insertE.getMailnameTo());
 		
 		int result = 0;
 		result = milService.insertMail(insertE);
@@ -295,5 +307,13 @@ public class MailController {
 		File deleteFile = new File(savePath + fileName);
 		deleteFile.delete();
 	}
+	
+	  //결재라인등록팝업 요청용
+	  @RequestMapping("openSigner.mil")
+	  public String openSigner(String documentNo,HttpSession session,Model model) {
+
+		  model.addAttribute("documentNo",documentNo);
+		  return "mail/mailAddToList";
+	  }
 	
 }

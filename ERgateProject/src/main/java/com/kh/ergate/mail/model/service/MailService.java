@@ -36,6 +36,7 @@ public interface MailService {
 	int insertMailAttachment(MailAttachment mt);
 	int updateMailFlag(int currNo);
 	Email nowMailNo();
+	String loadMailnameTo(String toname);
 	
 
 	
