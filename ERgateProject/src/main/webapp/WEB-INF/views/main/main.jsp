@@ -401,43 +401,24 @@
 								<td colspan="2">
 									<!-- 게시판 -->
 									<table id="mainNoticeBoard" class="boardTable">
-										<tr>
-											<td>[공지]</td>
-											<td>공지사항 여기에 보일거임~~~</td>
-											<td>2020.05.20 10:00</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
+									<c:choose>
+										<c:when test="${empty nlist }">
+											<tr>
+												<td colspan="3" rowspan="7">조회된 게시글이 없습니다.</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="i" items="${nlist }">
+												<tr>
+													<input type="hidden" name="noticeNo" value="${i.noticeNo }">
+													<td>No.${i.noticeNo }</td>
+													<td>${i.noticeTitle }</td>
+													<td>${i.noticeEnrollDate}&nbsp;|&nbsp;${i.noticeWriter}</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 									</table>
-									<!-- 게시판 -->
 								</td>
 							</tr>
 						</table>
@@ -510,6 +491,7 @@
 	<script>
 	
 	$(document).ready(function() {
+		// 현재날짜 출력용
 		var date = new Date();
 		var year = date.getFullYear();
 		var month = date.getMonth() + 1;
@@ -518,6 +500,7 @@
 		$("#calYear").text(year);
 		$("#calMonth").text(month);
 		$("#calDay").text(day);
+		
 	});
 	
 	$(function(){
@@ -541,9 +524,8 @@
 		
 	});
 	
-	
 	</script>
-	<!-- script 작성 영역 -->
 	
+		
 </body>
 </html>

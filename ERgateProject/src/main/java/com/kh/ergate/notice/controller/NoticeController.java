@@ -267,6 +267,25 @@ public class NoticeController {
 			}
 	  }
 	  
+	  //메인페이지-공지사항 리스트 표시용
+	@ResponseBody
+	@RequestMapping("mainList.no")
+		public String selectMainNoticeList(Model model) {
+			System.out.println("호출했어요");
+			int currentPage = 1;
+			
+			int listCount = noService.selectListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 7);
+			
+			ArrayList<Notice> list = noService.selectNoticeList(pi);
+			
+			return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(list);
+	}
+	
+		
+		
+	  
 	  
 	  // 파일 저장용 
 	  public String saveFile(MultipartFile file, HttpServletRequest request, int flag) {

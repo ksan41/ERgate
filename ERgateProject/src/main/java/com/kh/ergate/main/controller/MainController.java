@@ -11,11 +11,9 @@ import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,9 +29,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.common.template.MyAuthentication;
+import com.kh.ergate.common.template.Pagination;
 import com.kh.ergate.main.model.service.MainService;
 import com.kh.ergate.main.model.vo.Employee;
+import com.kh.ergate.notice.model.service.NoticeServiceImpl;
+import com.kh.ergate.notice.model.vo.Notice;
 import com.kh.ergate.schedule.model.service.ScheduleService;
 import com.kh.ergate.schedule.model.vo.Schedule;
 
@@ -49,16 +51,25 @@ public class MainController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	
+	@Autowired
+	private NoticeServiceImpl noService;
 	
 	// 메인 페이지로 이동
 	@RequestMapping("main.ma")
 	public ModelAndView mainPage() {
 		ArrayList<Schedule> slist = sService.selectScheduleList();
+		
+		int currentPage = 1;
+		int listCount = noService.selectListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 7);
+		ArrayList<Notice> nlist = noService.selectNoticeList(pi);
+		System.out.println("요청됨");
+		System.out.println(nlist);
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main/main");
 		mv.addObject("slist", slist);
-		
+		mv.addObject("nlist",nlist);
 		return mv;
 		
 	}
@@ -91,7 +102,7 @@ public class MainController {
 	        
 	        response.addCookie(c);
 			
-			return "main/main";
+			return "redirect:main.ma";
 			
 		}else {
 			session.setAttribute("msg", "로그인에 실패하였습니다. 알맞은 아이디와 비밀번호를 입력해주세요.");
