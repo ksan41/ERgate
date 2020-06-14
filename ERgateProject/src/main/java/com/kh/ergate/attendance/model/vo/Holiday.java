@@ -20,6 +20,7 @@ public class Holiday {
 	private int hday;					// 총 휴가일수(생성연차)
 	private int useday;					// 사용일수(총 휴가중 사용한 일수)
 	private int remainDay;				// 잔여일수(총 휴가중 남은 일수)
+	private String useday;				// 사용일수(총 휴가중 사용한 일수)
 	private String year;				// 년도
 	 
 	// UseHoliday VO
