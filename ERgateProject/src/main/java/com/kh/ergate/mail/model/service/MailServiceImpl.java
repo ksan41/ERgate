@@ -122,6 +122,18 @@ public class MailServiceImpl implements MailService {
 	public int unImportFlagUpdate(int mailNo) {
 		return milDao.unImportFlagUpdate(sqlSession, mailNo);
 	}
+	@Override
+	public int notReadMail(String mailOwn) {
+		return milDao.notReadMail(sqlSession, mailOwn);
+	}
+	@Override
+	public int fromMail(String mailOwn) {
+		return milDao.fromMail(sqlSession, mailOwn);
+	}
+	@Override
+	public int importMail(String mailOwn) {
+		return milDao.importMail(sqlSession, mailOwn);
+	}
 
 
 

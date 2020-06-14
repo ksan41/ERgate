@@ -245,4 +245,21 @@
 		mail_import_flag = 'N'
 		where mail_no = #{mailNo}
 	</update>
+	
+	<select id="notReadMail" parameterType="String" resultType="_int">
+	select count(*)
+	from email
+	where mail_To = #{mailOwn} and mail_Read_Flag = 'N' and mail_status='Y'
+	</select>
+	<select id="fromMail" parameterType="String" resultType="_int">
+	select count(*)
+	from email
+	where mail_To = #{mailOwn} and mail_status='Y'
+	</select>
+	<select id="importMail" parameterType="String" resultType="_int">
+	select count(*)
+	from email
+	where mail_To = #{mailOwn} and mail_import_Flag = 'Y' and mail_status='Y'
+	</select>
+	
 </mapper>

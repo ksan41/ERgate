@@ -41,6 +41,12 @@ public interface MailService {
 	int importFlagUpdate(int mailNo);
 	int unImportFlagUpdate(int mailNo);
 	
+	
+	
+	int notReadMail(String mailOwn);
+	int fromMail(String mailOwn);
+	int importMail(String mailOwn);
+	
 
 	
 	

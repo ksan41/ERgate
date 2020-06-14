@@ -123,6 +123,15 @@ public class MailDao {
 	public int unImportFlagUpdate(SqlSessionTemplate sqlSession, int mailNo) {
 		return sqlSession.update("mailMapper.unImportFlagUpdate", mailNo);
 	}
+	public int notReadMail(SqlSessionTemplate sqlSession, String mailOwn) {
+		return sqlSession.selectOne("mailMapper.notReadMail", mailOwn);
+	}
+	public int fromMail(SqlSessionTemplate sqlSession, String mailOwn) {
+		return sqlSession.selectOne("mailMapper.fromMail", mailOwn);
+	}
+	public int importMail(SqlSessionTemplate sqlSession, String mailOwn) {
+		return sqlSession.selectOne("mailMapper.importMail", mailOwn);
+	}
 
 
 

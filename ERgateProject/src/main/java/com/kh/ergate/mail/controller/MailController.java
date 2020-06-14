@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.ergate.mail.model.vo.SearchCondition;
+import com.kh.ergate.mail.model.vo.mainCount;
 import com.google.gson.Gson;
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
@@ -356,5 +357,18 @@ public class MailController {
 		model.addAttribute("f", 1);
 		return "mail/mailSentDetail";
 	}
+	
+	@ResponseBody
+	@RequestMapping("mailCount.mil")
+	public mainCount mailCount(String mailOwn) {
+		
+		mainCount mc = new mainCount();
+		mc.setNotReadMail(milService.notReadMail(mailOwn));
+		mc.setFromMail(milService.fromMail(mailOwn));
+		mc.setImportMail(milService.importMail(mailOwn));
+			
+		return mc;
+	}
+	
 	
 }

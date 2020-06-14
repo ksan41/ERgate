@@ -357,21 +357,21 @@
 												</td>
 											</tr>
 											<tr>
-												<td class="mainMailInnerContent">130</td>
-												<td class="mainMailInnerContent">120</td>
-												<td class="mainMailInnerContent">27</td>
+												<td class="mainMailInnerContent nrmail">130</td>
+												<td class="mainMailInnerContent fmail">120</td>
+												<td class="mainMailInnerContent imail">27</td>
 											</tr>
 										</table>
 										<script>
 										$(document).ready(function() {
 											$.ajax({
 									            url : "mailCount.mil",
-									            data : {mailOwn:${loginUser.empId}},
+									            data : {mailOwn:'${loginUser.empId}'},
 									            type : 'POST',
 									            success : function(result) {
-									                
-									            	console.log("하하");
-									                
+									                $(".nrmail").html(result.notReadMail);
+									                $(".fmail").html(result.fromMail);
+									                $(".imail").html(result.importMail);
 									            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
 														console.log("ajax 통신 실패!");
 												}
