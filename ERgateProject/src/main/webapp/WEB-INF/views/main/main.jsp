@@ -501,6 +501,13 @@
 		$("#calMonth").text(month);
 		$("#calDay").text(day);
 		
+		$("#mainNoticeBoard tr").click(function(){
+			var nno = $(this).children().eq(0).val();
+			if($.trim(nno).length > 0){
+				location.href="detail.no?nno=" + nno +"&currentPage=" + ${pi.currentPage};
+			}
+		});
+		
 	});
 	
 	$(function(){

@@ -63,13 +63,12 @@ public class MainController {
 		int listCount = noService.selectListCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 7);
 		ArrayList<Notice> nlist = noService.selectNoticeList(pi);
-		System.out.println("요청됨");
-		System.out.println(nlist);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main/main");
 		mv.addObject("slist", slist);
 		mv.addObject("nlist",nlist);
+		mv.addObject("pi",pi);
 		return mv;
 		
 	}
