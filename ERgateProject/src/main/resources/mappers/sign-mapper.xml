@@ -173,6 +173,7 @@
 		WHERE EMP_ID = #{empId} AND
       		  EXTRACT(YEAR FROM DRAFT_DATE) = #{year} AND
       		  EXTRACT(MONTH FROM DRAFT_DATE) = #{month}
+      	ORDER BY DRAFT_DATE DESC	  
 	</select>
 	
 	<!-- 진행결재함 게시글 수 조회용 -->
@@ -189,6 +190,7 @@
 		  FROM SIGN_DOCUMENT
 		WHERE EMP_ID = #{empId} AND
       		  SIGN_STATUS = 0
+      	ORDER BY DRAFT_DATE DESC	  
 	</select>
 	
 	<!-- 결재대기함 게시글 수 조회용 -->
@@ -207,6 +209,7 @@
 	  	 JOIN SIGNER SG ON(SD.DOCUMENT_NO=SG.DOCUMENT_NO)
 		WHERE SG.EMP_ID = #{empId} AND
       		  SD.SIGN_STATUS=0
+      	ORDER BY DRAFT_DATE DESC	  
 	</select>
 	
 	<!-- 결재자 - 결재상태 업데이트용 -->

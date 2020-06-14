@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -200,6 +201,10 @@
     #mainMailBoard, #mainSignBoard{
     	width: 100%;
     }
+    #mainSignBoard{
+    	overflow:hidden;
+    }
+    
     #mainSignThArea, #mainMailThArea{
     	text-align: center;
     }
@@ -248,7 +253,9 @@
 		cursor: pointer;
 	}
 	/* 게시판 스타일 */
-
+.nonContent {
+	cursor : default;
+}
 </style>   
 </head>
 <body>
@@ -459,7 +466,7 @@
 							</tr>
 							<tr>
 								<td colspan="2" id="mainSignThArea">
-									<div id="mainSignTh1" class="thDiv">결재대기함</div>
+									<div id="mainSignTh1" class="thDiv" style="border-bottom:2px solid rgb(26, 188, 156);">결재대기함</div>
 									<div id="mainSignTh2" class="thDiv">진행결재함</div>
 									<div id="mainSignTh3" class="thDiv">상신내역</div>
 								</td>
@@ -469,50 +476,97 @@
 									<!-- 게시판 -->
 									<div id="mainSignDiv1">
 										<table id="mainSignBoard1" class="boardTable mainSignBoard">
-											<tr>
-												<td>user01</td>
-												<td>111</td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-											</tr>
+										<c:choose>
+											<c:when test="${empty siWlist }">
+												<td colspan="4" rowspan="2" class="nonContent">
+													조회된 문서가 없습니다.
+												</td>
+											</c:when>
+											<c:otherwise>
+												<c:forEach items="${siWlist}" var="w">
+													<tr>
+														<input type="hidden" name="documentNo" value="${w.documentNo }">
+														<td>${w.empName }</td>
+														<td style="overflow:hidden;text-overflow:ellipsis;">${w.deptTitle }</td>
+														<td>${w.signTitle }</td>
+														<td>${w.draftDate }</td>
+													</tr>
+												</c:forEach>
+												<c:forEach var="b" begin="1" end="${2-fn:length(siWlist)}">
+							    					<tr>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 										</table>
 									</div>
 									<div id="mainSignDiv2" style="display:none;">
 										<table id="mainSignBoard2" class="boardTable mainSignBoard">
-											<tr>
-												<td>user01</td>
-												<td>dd</td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-											</tr>
+										<c:choose>
+											<c:when test="${empty siOlist }">
+												<td colspan="3" rowspan="2">
+													조회된 문서가 없습니다.
+												</td>
+											</c:when>
+											<c:otherwise>
+												<c:forEach items="${siOlist}" var="o">
+													<tr>
+														<input type="hidden" name="documentNo" value="${o.documentNo }">
+														<td style="overflow:hidden;text-overflow:ellipsis;">${o.signTypeName }</td>
+														<td style="overflow:hidden;text-overflow:ellipsis;">${o.signTitle }</td>
+														<td>${o.draftDate }</td>
+													</tr>
+												</c:forEach>
+												<c:forEach var="b" begin="1" end="${2-fn:length(siOlist)}">
+							    					<tr>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 										</table>
 									</div>
 									<div id="mainSignDiv3" style="display:none;">
 										<table id="mainSignBoard3" class="boardTable mainSignBoard">
-											<tr>
-												<td>user01</td>
-												<td>dfd</td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-											</tr>
+										<c:choose>
+											<c:when test="${empty siRlist }">
+												<td colspan="4" rowspan="2">
+													조회된 문서가 없습니다.
+												</td>
+											</c:when>
+											<c:otherwise>
+												<c:forEach items="${siRlist}" var="r">
+													<tr>
+														<input type="hidden" name="documentNo" value="${r.documentNo }">
+														<c:choose>
+															<c:when test="${r.signStatus eq 0}">
+																<td>진행중</td>
+															</c:when>
+															<c:otherwise>
+																<td>결재완료</td>
+															</c:otherwise>
+														</c:choose>
+														<td>${r.signTypeName }</td>
+														<td>${r.signTitle }</td>
+														<td>${r.draftDate }</td>
+													</tr>
+												</c:forEach>
+												<c:forEach var="b" begin="1" end="${2-fn:length(siRlist)}">
+							    					<tr>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+														<td class="nonContent">&nbsp;</td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 										</table>
 									</div>
 									<!-- 게시판 -->
