@@ -373,9 +373,10 @@
 										</table>
 										<script>
 										$(document).ready(function() {
-											$(document).on("click","#mailMailBoard",function(){
+											$("#mainMailBoard").on("click","tr",function(){
 												var mailNo = $(this).find('input[name=mailNo]').val();
-												console.log("gg");
+												location.href="detail.mil?mailNo=" + mailNo + "&currentPage=1&mailOwn=" + '${loginUser.empId}' + "&pt=inbox";
+												
 											})
 											$.ajax({
 									            url : "mailCount.mil",
