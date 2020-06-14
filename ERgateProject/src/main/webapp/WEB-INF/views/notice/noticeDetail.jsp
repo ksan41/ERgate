@@ -222,8 +222,8 @@
 						<span class="material-icons">arrow_drop_up</span>
 					</div>
 					<p style="display: inline;">다음글</p>
-					<p class="afterBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
-					<p class="afterBoardInfo" align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;">2020/05/10 | 김관리</p>
+					<p class="afterBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;"></p>
+					<p class="afterBoardInfo" align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;"></p>
 				</div>		
 					<hr>
 				<div class="baShow1">	
@@ -231,8 +231,8 @@
 						<span class="material-icons">arrow_drop_down</span>
 					</div>
 					<p style="display: inline;">이전글</p>
-					<p class="beforeBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
-					<p class="beforeBoardInfo" align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;">2020/05/10 | 김관리</p>
+					<p class="beforeBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;"></p>
+					<p class="beforeBoardInfo" align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;"></p>
 				</div>		
 			</div>
 			<br> <br> <br>
@@ -266,7 +266,7 @@
 			}
 			$.ajax({
 				url:"detailFile.no",
-				data:{refBoardNo:${b.noticeNo}},
+				data:{refBoardNo:${n.noticeNo}},
 				success:function(list){
 					var value = "";
 					for(var i in list){
@@ -281,6 +281,7 @@
 			});
 		});
 		
+	});	
 		var afterBno = "";
 		var beforeBno = "";
 		$.ajax({
@@ -335,7 +336,6 @@
 					console.log("여기는 어떻게");
 				}
 			});	
-		});	
 	</script>
 </body>
 </html>

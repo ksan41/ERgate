@@ -109,6 +109,9 @@ public class NoticeController {
 		ArrayList<Notice> list = new ArrayList<>();
 		list.add(noService.beforeB(refBoardNo));
 		list.add(noService.afterB(refBoardNo));
+		System.out.println(list.get(0));
+		System.out.println(list.get(1));
+		
 		return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(list);
 	}
 	
