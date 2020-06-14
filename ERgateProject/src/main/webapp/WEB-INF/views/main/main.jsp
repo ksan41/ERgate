@@ -445,8 +445,8 @@
 												<td class="mainSignInnerLabel">결재 진행 문서</td>
 											</tr>
 											<tr>
-												<td class="mainSignInnerContent">130</td>
-												<td class="mainSignInnerContent">120</td>
+												<td class="mainSignInnerContent">${siWcount }</td>
+												<td class="mainSignInnerContent">${siOcount }</td>
 											</tr>
 										</table>
 									</div>
