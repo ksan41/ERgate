@@ -67,4 +67,12 @@ public interface SignService {
 	
 	//사용자 잔여연차 조회용
 	public int selectRemainHoliday(String empId);
+	
+	//메인-결재대기함 요청용
+	public ArrayList<SignDocument> selectWaitingListMain(String empId);
+	//메인-진행결재함 요청용
+	public ArrayList<SignDocument> ongoingListMain(String empId);
+	//메인-상신내역 요청용
+	public ArrayList<SignDocument> reportListMain(SignDateSearch sds); 
+	
 }
