@@ -486,6 +486,7 @@
 												<c:forEach items="${siWlist}" var="w">
 													<tr>
 														<input type="hidden" name="documentNo" value="${w.documentNo }">
+														<input type="hidden" name=signTypeNo value="${w.signTypeNo }">
 														<td>${w.empName }</td>
 														<td style="overflow:hidden;text-overflow:ellipsis;">${w.deptTitle }</td>
 														<td>${w.signTitle }</td>
@@ -516,6 +517,7 @@
 												<c:forEach items="${siOlist}" var="o">
 													<tr>
 														<input type="hidden" name="documentNo" value="${o.documentNo }">
+														<input type="hidden" name=signTypeNo value="${o.signTypeNo }">
 														<td style="overflow:hidden;text-overflow:ellipsis;">${o.signTypeName }</td>
 														<td style="overflow:hidden;text-overflow:ellipsis;">${o.signTitle }</td>
 														<td>${o.draftDate }</td>
@@ -544,6 +546,7 @@
 												<c:forEach items="${siRlist}" var="r">
 													<tr>
 														<input type="hidden" name="documentNo" value="${r.documentNo }">
+														<input type="hidden" name=signTypeNo value="${r.signTypeNo }">
 														<c:choose>
 															<c:when test="${r.signStatus eq 0}">
 																<td>진행중</td>
@@ -599,6 +602,12 @@
 			if($.trim(nno).length > 0){
 				location.href="detail.no?nno=" + nno +"&currentPage=" + ${pi.currentPage};
 			}
+		});
+		
+		$(".mainSignBoard tr").click(function(){
+			var documentNo = $(this).children().eq(0).val();
+			var signTypeNo = $(this).children().eq(1).val();
+			window.open("signDetail.si?documentNo="+documentNo+"&signTypeNo="+signTypeNo, "ddd",'_blank');
 		});
 		
 	});
