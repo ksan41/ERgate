@@ -11,6 +11,7 @@ import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
+import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 
 @Repository("mrDao")
 public class MeetingroomDao {
@@ -88,4 +89,16 @@ public class MeetingroomDao {
 	public Meetingroom selectMeetingroom(SqlSessionTemplate sqlSession, String mtrmCode) {
 		return sqlSession.selectOne("meetingroomMapper.selectMeetingroom", mtrmCode);
 	}
+
+	public ArrayList<MeetingroomReservation> reserveMeetingroomList(SqlSessionTemplate sqlSession, String date, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.reserveMeetingroomList", date, rowBounds);
+	}
+	
+	public int reserveMeetingroomListCount(SqlSessionTemplate sqlSession, String date) {
+		return sqlSession.selectOne("meetingroomMapper.reserveMeetingroomListCount", date);
+	}
+
+
 }

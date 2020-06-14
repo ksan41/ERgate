@@ -225,78 +225,11 @@
 				<span id="arrowRight" class="material-icons"> arrow_right </span>
 			</h2>
 
-			<form id="changeMonthForm" action="statusM.me" method="get">
+			<form id="changeMonthForm" action="currentStatusD.me" method="get">
 				<input type="hidden" name="year"> 
 				<input type="hidden" name="month">
+				<input type="hidden" name="day">
 			</form>
-
-			<script>
-					$(document).ready(function() {
-						var date = new Date();
-						var year = date.getFullYear();
-						var month = date.getMonth() + 1;
-	
-						var newYear = "<c:out value='${md.year}'/>";
-						var newMonth = "<c:out value='${md.month}'/>";
-						
-						// 날짜 변경값 있을 경우
-						if (newYear != "") {
-							$("#calYear").text(newYear);
-							$("#calMonth").text(newMonth);
-							
-						} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
-							$("#calYear").text(year);
-							$("#calMonth").text(month);
-						}
-						
-						
-						/* 이전으로  */
-						$("#arrowLeft").click(function() {
-							
-							date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
-
-							year = date.getFullYear();
-							month = date.getMonth() + 1;
-							
-							console.log(year);
-							console.log(month);
-							
-							$("#calMonth").text(month);
-							$("#calYear").text(year);
-							
-							$("input[name=month]").attr("value", month);
-							$("input[name=year]").attr("value", year);
-
-							$("#changeMonthForm").submit();
-	
-						});
-	
-						
-						/* 다음으로 */
-						$("#arrowRight").click(function() {
-							
-							date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
-
-							year = date.getFullYear();
-							month = date.getMonth() + 1;
-							
-							console.log(year);
-							console.log(month);
-							
-							$("#calMonth").text(month);
-							$("#calYear").text(year);
-							
-							$("input[name=month]").attr("value", month);
-							$("input[name=year]").attr("value", year);
-							
-							$("#changeMonthForm").submit(); 
-						});
-	
-					});
-				</script>
-
-			<br> <br>
-
 
 			<!-- 게시판 -->
 			<table id="reservationList" class="boardTable">
@@ -310,77 +243,184 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="mr" items="${ list }">
-						<tr>
-							<td>${ mr.deptTitle }</td>
-							<td>${ mr.empId }</td>
-							<td>${ mr.mtrmName }</td>
-							<td>${ mr.mtrmPurpose }</td>
-							<td>${ mr.mtrmStartDate }${ mr.mtrmStartTime }~ ${ mr.mtrmEndDate }${ mr.mtrmEndTime }</td>
-						</tr>
-					</c:forEach>
+					
 				</tbody>
 			</table>
 
 			<!-- 페이징바 -->
-			<div id="pagingArea">
-				<ul class="pagination">
-
-					<c:choose>
-						<c:when test="${ pi.currentPage eq 1 }">
-							<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item "><a class="page-link"
-								href="statusList.me?currentPage=${ pi.currentPage-1 }">Previous</a></li>
-						</c:otherwise>
-					</c:choose>
-
-					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						<c:choose>
-							<c:when test="${ p eq pi.currentPage }">
-								<li class="page-item disabled"><a class="page-link"
-									href="#">${ p }</a></li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link"
-									href="statusList.me?currentPage=${ p }">${ p }</a></li>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-
-					<c:choose>
-						<c:when test="${ pi.currentPage eq pi.maxPage }">
-							<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item"><a class="page-link"
-								href="statusList.me?currentPage=${ pi.currentPage+1 }">Next</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
+			<div id="pagingArea"></div>
 			<!-- 페이징바 -->
-			<br clear="both">
-			<br>
+			
 		</div>
+	</div>
 
+	
+	<script>
+		$(document).ready(function() {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
 
-		<div id="meetingroomManage" class="modal">
-			<div class="modal-title">모달타이틀</div>
-			<div class="modal-content">모달내용작성해주세요</div>
-		</div>
+			var newYear = "<c:out value='${md.year}'/>";
+			var newMonth = "<c:out value='${md.month}'/>";
+			
+			// 날짜 변경값 있을 경우
+			if (newYear != "") {
+				$("#calYear").text(newYear);
+				$("#calMonth").text(newMonth);
+				
+			} else { // 날짜변경값 없을경우(처음 페이지 요청했을때)
+				$("#calYear").text(year);
+				$("#calMonth").text(month);
+			}
+			
+			
+			/* 이전으로  */
+			$("#arrowLeft").click(function() {
+				
+				date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
 
-		<!-- 모달용 스크립트 -->
-		<script>
-			$('.open-modal').click(function() {
-				$(this).modal({
-					fadeDuration : 150
-				});
+				year = date.getFullYear();
+				month = date.getMonth() + 1;
+				
+				console.log(year);
+				console.log(month);
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+
+				$("#changeMonthForm").submit();
 
 			});
-		</script>
-	</div>
+
+			
+			/* 다음으로 */
+			$("#arrowRight").click(function() {
+				
+				date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
+
+				year = date.getFullYear();
+				month = date.getMonth() + 1;
+				
+				console.log(year);
+				console.log(month);
+				
+				$("#calMonth").text(month);
+				$("#calYear").text(year);
+				
+				$("input[name=month]").attr("value", month);
+				$("input[name=year]").attr("value", year);
+				
+				$("#changeMonthForm").submit(); 
+			});
+
+		});
+	</script>
+
+		
+	<!-- 월별 예약 현황 조회 -->
+	<script>
+		function listAjax(cur){
+			
+			$.ajax({
+				url:"reserveListAjax.me",
+				data:{calYear:$("#calYear").text(),
+					  calMonth:$("#calMonth").text(),
+					  currentPage:cur},
+				type:"post",
+				success:function(map){
+					
+					var value1 = "";
+					
+					if(map.list == null){
+						value1 += 
+							"<td colspan='5' rowspan='10'>조회된 결과가 없습니다.</td>";
+							
+					}else{
+						for(var i in map.list){
+						value1 +=
+								"<tr>" +
+									"<td>" + map.list[i].deptTitle + "</td>" + 
+									"<td>" + map.list[i].empName + "</td>" +
+									"<td>" + map.list[i].mtrmName + "</td>" +
+									"<td>" + map.list[i].mtrmPurpose + "</td>" + 
+									"<td>" + map.list[i].mtrmStartDate + " " + map.list[i].mtrmStartTime + ":00 ~ " + map.list[i].mtrmEndDate + " " + map.list[i].mtrmEndTime + ":00" + "</td>" +
+								"</tr>";
+						}
+					}
+
+					var value2 = "";
+					
+					if(map.pi.endPage > 1){
+						value2 += 
+							"<ul class='pagingBar'>";
+							
+							if(map.pi.currentPage == 1){
+								value2 += 
+									"<li><a href='#'>&lt;&lt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + map.pi.startPage + ")';>&lt;&lt;</a></li>";
+							}
+							
+							if(map.pi.currentPage == 1){
+								value2 += 
+									"<li><a href='#'>&lt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + (map.pi.currentPage - 1) + ")';>&lt;</a></li>";
+							}
+							
+							for(var p = map.pi.startPage; p <= map.pi.endPage; p++){
+								
+								if(map.pi.currentPage == p){
+									value2 +=
+										"<li><span>" + p + "</span></li>";
+								}else{
+									value2 +=
+										"<li><a onclick='listAjax(" + p + ")';>" + p + "</a></li>";
+								}
+							}
+							
+							if(map.pi.currentPage == map.pi.maxPage){
+								value2 += 
+									"<li><a href='#'>&gt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + (map.pi.currentPage + 1) + ")';>&gt;</a></li>";
+							}
+							
+							if(map.pi.currentPage == map.pi.maxPage){
+								value2 +=
+									"<li><a href='#'>&gt;&gt;</a></li>";
+							}else{
+								value2 += 
+									"<li><a onclick='listAjax(" + map.pi.endPage + ")';>&gt;&gt;</a></li>";
+							}
+							
+							value2 += "</ul>";
+					}
+					
+					$("#reservationList tbody").html(value1);
+					$("#pagingArea").html(value2);
+						
+				},error:function(){
+					console.log("월별 예약 현황 모달 리스트 조회 ajax 통신 실패");
+				}
+			});
+		}
+	</script>
+		
+		
+	
+		
+		
+		
+		
+
 
 </body>
 </html>

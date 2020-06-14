@@ -109,5 +109,15 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		return mrDao.selectMeetingroom(sqlSession, mtrmCode);
 	}
 
+	@Override
+	public ArrayList<MeetingroomReservation> reserveMeetingroomList(String date, PageInfo pi) {
+		return mrDao.reserveMeetingroomList(sqlSession, date);
+	}
+
+	@Override
+	public int reserveMeetingroomListCount(String date) {
+		return mrDao.reserveMeetingroomListCount(sqlSession);
+	}
+
 	
 }

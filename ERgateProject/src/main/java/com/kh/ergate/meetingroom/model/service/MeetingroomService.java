@@ -40,6 +40,12 @@ public interface MeetingroomService {
 	// 회의실 예약현황(관리자쪽)
 	public ArrayList<MeetingroomReservation> statusListMonth(String month);
 
+	// 
+	ArrayList<MeetingroomReservation> reserveMeetingroomList(String date, PageInfo pi);
+	
+	// 월별 예약 형황 총 개수 조회용
+	int reserveMeetingroomListCount(String date);
+	
 	// 회의실 등록용 ---insertMeetingroom(Meetingroom)
 	int insertMeetingroom(Meetingroom m);
 

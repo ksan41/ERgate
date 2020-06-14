@@ -119,5 +119,22 @@
 		 WHERE MTRM_CODE=#{mtrmCode}
 	</update>
 	
+	 <select id="reserveMeetingroomListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+      	  FROM MEETINGROOM_RESERVATION
+      	 WHERE SUBSTR(MTRM_START_DATE,0,7)=#{date}
+		 	   AND MTRM_RESERVE_STATUS='Y'
+	</select>
+	
+	<select id="reserveMeetingroomList" parameterType="string" resultMap="MeetingroomReservationResultSet">
+		SELECT MTRM_RESERVE_NO, EMP_ID, MTRM_CODE, MTRM_RESERVE_DATE, DEPT_TITLE, MTRM_START_DATE, MTRM_START_TIME, 
+			   MTRM_END_DATE, MTRM_END_TIME, MTRM_PURPOSE, MTRM_RESERVE_STATUS, VHCL_NAME,EMP_NAME
+		  FROM MEETINGROOM_RESERVATION
+		  JOIN MEETINGROOM USING(MTRM_CODE)
+		  JOIN EMPLOYEE USING(EMP_ID)
+		 WHERE SUBSTR(MTRM_START_DATE,0,7)=#{date}
+		 	   AND MTRM_RESERVE_STATUS='Y'
+		 ORDER BY MTRM_RESERVE_DATE
+	</select>
 	
 </mapper>

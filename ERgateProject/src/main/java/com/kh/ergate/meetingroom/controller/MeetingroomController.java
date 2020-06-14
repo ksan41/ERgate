@@ -49,9 +49,9 @@ public class MeetingroomController {
 		}
 	}
 
-	// 처음 들어갔을 때 페이지 조회용(예약하기)
+	// 처음 들어갔을 때 페이지 조회용(예약하기 메인)
    @RequestMapping("currentStatus.me")
-   public String currentStatusList(MeetingroomReservation mr, Model model) {
+   public String currentStatusList() {
       return "meetingroom/meetingroomCurrentStatus";
    }
    
@@ -66,8 +66,9 @@ public class MeetingroomController {
 		//String[] array = today1.split("/");
 		
 		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
+		String date = calYear + "/" + month + "/" + calDay;
 		
-		ArrayList<MeetingroomReservation> list = mrService.currentStatusList(month + "/" + calDay + "/" + calYear);
+		ArrayList<MeetingroomReservation> list = mrService.currentStatusList(date);
 		
 		//System.out.println(list);
 		//model.addAttribute("list", list);
@@ -79,20 +80,33 @@ public class MeetingroomController {
 	
 	// 회의실 예약 현황 리스트 조회용 - 관리자용
 	@RequestMapping("statusList.me")
-	public String statusList(int currentPage, Model model) {
-
-		int listCount = mrService.statusListCount();
-
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-
-		ArrayList<MeetingroomReservation> list = mrService.statusList(pi);
-
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-
+	public String statusList() {
 		return "meetingroom/meetingroomReservationList";
 	}
+	//회의실예약현황 월선택 조회용(statusM.me) ---statusListMonth(String month,Meetingroom,Model)
+	@ResponseBody
+	@RequestMapping(value="reserveListAjax.me", produces="application/json; charset=utf-8")
+	public String reserveMeetingroomListAjax(String calYear, String calMonth, int currentPage, Model model) {
+		
+		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
+		String date = calYear + "/" + month;
 
+		int listCount = mrService.reserveMeetingroomListCount(date);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		
+		ArrayList<MeetingroomReservation> list = mrService.reserveMeetingroomList(date, pi);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		return new Gson().toJson(map);
+	}
+	
+	
+	
 	// 예약 상세 조회용
 	@RequestMapping("reserveDetail.me")
 	public String reserveDetail(int reservNo, Model model) {

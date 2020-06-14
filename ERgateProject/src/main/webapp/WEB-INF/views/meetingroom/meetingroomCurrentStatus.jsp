@@ -566,11 +566,11 @@ p {
 						<tbody>
 							<c:forEach var="t" begin="10" end="19">
 								<tr id="${ t }" class="">
-									<td class="1"><p></p></td>
-									<td class="2"><p></p></td>
-									<td class="3"><p></p></td>
-									<td class="4"><p></p></td>
-									<td class="5"><p></p></td>
+									<td class="1 reservationBtn"><p></p></td>
+									<td class="2 reservationBtn"><p></p></td>
+									<td class="3 reservationBtn"><p></p></td>
+									<td class="4 reservationBtn"><p></p></td>
+									<td class="5 reservationBtn"><p></p></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -623,7 +623,7 @@ p {
 									<option value="17">5:00</option>
 									<option value="18">6:00</option>
 									<option value="19">7:00</option>
-								
+									<option value="20">8:00</option>
 								</select>
 							</td>
 						</tr>
@@ -663,7 +663,7 @@ p {
 		<!-- 모달(나의 예약 현황) -->
 		<div id="myReservation_open_modal" class="modal">
 			<div class="modal-title">나의 예약현황</div>
-			<div class="modal-content2" id="mtrmCurrentInnerPage"></div> <!-- 아이디랑 클래스명 다시 확인하자 지혜야 -->
+			<div class="modal-content" id="mtrmCurrentInnerPage"></div> <!-- 아이디랑 클래스명 다시 확인하자 지혜야 -->
 		</div>
 
 	</div>
@@ -782,11 +782,11 @@ p {
 			
 			for(var t=10; t<=19; t++){
 				value += '<tr id="' + t + '">' + 
-							'<td class="1"><p></p></td>' + 
-							'<td class="2"><p></p></td>' +
-							'<td class="3"><p></p></td>' +
-							'<td class="4"><p></p></td>' +
-							'<td class="5"><p></p></td>' +
+							'<td class="1 reservationBtn"><p></p></td>' + 
+							'<td class="2 reservationBtn"><p></p></td>' +
+							'<td class="3 reservationBtn"><p></p></td>' +
+							'<td class="4 reservationBtn"><p></p></td>' +
+							'<td class="5 reservationBtn"><p></p></td>' +
 						 '</tr>';			
 			}
 			
@@ -865,16 +865,8 @@ p {
 		/* 예약하기 모달 여는 function */
 		$(document).on("click", ".reservationBtn", function(){
 			
-			//console.log($(this).attr("class").substring(0, 3));
-			//console.log($(this).parent().attr("id"));
-			
 			var code = $(this).attr("class").substring(0, 3);
 			var time = $(this).parent().attr("id");
-			//13
-			// 14 ~ 19 
-			
-			console.log(code);
-			console.log(time);
 			
 			var reser;
 			for(var t=Number(time)+1; t<=19; t++){
@@ -884,10 +876,64 @@ p {
 				}
 			}
 			
-			console.log(reser);
-			
-			
 			$("#reservation").click();
+			
+			var year = $("#calYear").text();
+			var month = $("#calMonth").text();
+			var day = $("#calDay").text();
+			
+			console.log(month);
+			
+			var realMonth;
+			if(month.length = 1){
+				realMonth = "0" + month;
+			}else{
+				realMont = month;
+			}
+			
+			console.log(realMonth);
+			
+			var today = year + "/" + realMonth + "/" + day;
+			
+			$("#mtrmStartDate").val(today);
+			$("#mtrmEndDate").val(today);
+			
+			
+			var vhclOption = $("#meetingroomSelect>option").map(function() { return $(this).val(); });
+
+			for(var vo in vhclOption){
+				if(code == vhclOption[vo]){
+					$("#meetingroomSelect").val(code).attr("selected", true);
+				}
+			}
+			$("#meetingroomSelect option:not(:selected)").prop("disabled", true);
+			
+			
+			
+			var startOption = $("#mtrmStartTime>option").map(function() { return $(this).val(); });
+			
+			for(var so in startOption){
+				if(time == startOption[so]){
+					$("#mtrmStartTime").val(time).attr("selected", true);
+				}
+			}
+			$("#mtrmStartTime option:not(:selected)").prop("disabled", true);
+				
+			
+			
+			var endOption = $("#mtrmEndTime>option").map(function() { return $(this).val(); });
+			
+			for(var eo in endOption){
+				var r= endOption[eo];
+				if(endOption[eo] >= reser){
+					$("#mtrmEndTime option[value="+ r +"]").prop("disabled", true);
+				}
+				if(endOption[eo] <= time){
+					$("#mtrmEndTime option[value="+ r +"]").prop("disabled", true);
+				}
+			}
+			
+			
 		});
 	</script>
 	
@@ -994,7 +1040,7 @@ p {
 						value2 += "</ul>";
 					}
 
-					$(".modal-content2").html(value+value2);
+					$("#mtrmCurrentInnerPage").html(value+value2);
 					
 				},error:function(){
 					console.log("나의 예약황 리스트 조회 실패");
