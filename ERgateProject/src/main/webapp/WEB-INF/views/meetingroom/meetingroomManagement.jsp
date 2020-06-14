@@ -362,7 +362,7 @@
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='currentStatus.me'">회의실 예약</button></li>
-				<li><button class="subBtn" style="width: 170px" onclick="location.href='statusList.me?currentPage=1'">회의실 예약현황</button></li>
+				<li><button class="subBtn" style="width: 170px" onclick="location.href='statusList.me'">회의실 예약현황</button></li>
 				<li><button class="subBtn subActive" onclick="location.href='mtroomDetail.me?currentPage=1'">회의실 관리</button></li>
 				
 			</ul>
@@ -542,36 +542,41 @@
 		<div id="edit" class="modal">
 			<div class="modal-title">회의실 수정</div>
 			<div class="modal-content">
-				<form id="updataForm" method="post" action="" enctype="multipart/form-data">
+				<form action="" method="post" id="updataForm" enctype="multipart/form-data">
 					<div>
 						<table class="meetingroomModalTable">
 							<tr>
 								<td class="mmName">회의실 명</td>
-								<td class="mmName2"><input id="editMtrmName" class="mmModalInput" type="text" name="mtrmName" value=""></td>
+								<td class="mmName2">
+									<input id="editMtrmName" class="mmModalInput" type="text" name="mtrmName" value=""></td>
 							</tr>
 
 							<tr>
 								<td class="mmLocation">회의실 위치</td>
-								<td class="mmLocation2"><input id="editMtrmLocation" class="mmModalInput" type="text" name="mtrmLocation" value=""></td>
+								<td class="mmLocation2">
+									<input id="editMtrmLocation" class="mmModalInput" type="text" name="mtrmLocation" value=""></td>
 							</tr>
 
 							<tr>
 								<td class="mmPersonnel">최대 수용인원</td>
-								<td class="mmPersonnel2"><input id="editMtrmCapacity" class="mmModalInput" type="text" name="mtrmCapacity" value=""></td>
+								<td class="mmPersonnel2">
+									<input id="editMtrmCapacity" class="mmModalInput" type="text" name="mtrmCapacity" value=""></td>
 							</tr>
 
 							<tr>
 								<td class="mmImgEnroll">회의실 이미지</td>
-								<td class="mmImgEnroll2"><c:choose>
-										<c:when test="${ empty m.mtrmImage }">
-											<img id="mmImgEdit"
-												src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-										</c:when>
-										<c:otherwise>
-											<img id="mmImgEdit"
-												src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${m.mtrmImage}">
-										</c:otherwise>
-									</c:choose></td>
+								<td class="mmImgEnroll2">
+								
+										<c:choose>
+											<c:when test="${ empty m.mtrmImage }">
+												<img id="mmImgEdit"
+													src="${ pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
+											</c:when>
+											<c:otherwise>
+												<img id="mmImgEdit"
+													src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${m.mtrmImage}">
+											</c:otherwise>
+										</c:choose></td>
 							</tr>
 						</table>
 					</div>
@@ -647,7 +652,7 @@
 						$("#editMtrmStatus").val(mtrmStatus);
 						
 						if(mtrmImage == null){
-							$("#mmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg");
+							$("#mmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png");
 						}else{
 							$("#mmImgEdit").attr("src", "${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/"+mtrmImage);
 						}

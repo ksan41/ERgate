@@ -27,7 +27,7 @@ public interface MeetingroomService {
 	// 예약취소용---cancelReserve(int mtrmReservNo)
 	int cancelReserve(int mtrmReserveNo);
 
-	// 
+	// 회의실 예약 현황 조회용 서비스 (월별) - 관리자
 	ArrayList<MeetingroomReservation> reserveMeetingroomList(String date, PageInfo pi);
 	
 	// 월별 예약 형황 총 개수 조회용

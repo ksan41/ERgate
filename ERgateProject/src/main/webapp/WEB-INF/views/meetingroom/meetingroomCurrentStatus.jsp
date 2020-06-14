@@ -501,7 +501,7 @@ p {
 				</c:if>
 			</ul>
 		</div>
-		<div class="contentArea">
+		<div class="contentArea" style="margin-top: 30px;">
 			<div id="midContentArea">
 
 				<h2 style="display: inline-block; margin-left: 400px; margin-bottom:30px;">
@@ -522,8 +522,7 @@ p {
 					<input type="hidden" name="month">
 					<input type="hidden" name="date">
 				</form>
-	
-				
+
 			</div>
 			
 			
@@ -596,7 +595,7 @@ p {
 							<td id="r1">사용기간</td>
 							<td id="r2">
 								<input type="text" name="mtrmStartDate" class="inputs" style="width: 140px" required readonly> 
-								<select name="mtrmStartTime" class="inputs" style="width: 120px" required>
+								<select name="mtrmStartTime" class="inputs" style="width: 120px" required  onFocus='this.initialSelect = this.selectedIndex;' onChange='this.selectedIndex = this.initialSelect;'>
 									<option disabled>시작 시각</option>
 									<option value="10">10:00</option>
 									<option value="11">11:00</option>
@@ -677,11 +676,7 @@ p {
 				var year = date.getFullYear();
 				var month = date.getMonth() + 1;
 				var day = date.getDate();
-				
-				console.log(year);
-				console.log(month);
-				console.log(day);
-				
+
 				var newYear = "<c:out value='${md.year}'/>";
 				var newMonth = "<c:out value='${md.month}'/>";
 				var newDay =  "<c:out value='${md.day}'/>";
@@ -697,9 +692,7 @@ p {
 					$("#calMonth").text(month);
 					$("#calDay").text(day);
 				}
-				
-				
-			
+
 			/* 이전으로  */
 			$("#arrowLeft").click(function() {
 				
@@ -710,11 +703,7 @@ p {
 				year = date.getFullYear();
 				month = date.getMonth() + 1;
 				day = date.getDate();
-				
-				
-				console.log(year);
-				console.log(month);
-				console.log(day);
+
 				
 				$("#calMonth").text(month);
 				$("#calYear").text(year);
@@ -742,11 +731,7 @@ p {
 				year = date.getFullYear();
 				month = date.getMonth() + 1;
 				day = date.getDate();
-				
-				
-				console.log(year);
-				console.log(month);
-				console.log(day);
+
 				
 				$("#calMonth").text(month);
 				$("#calYear").text(year);
@@ -822,10 +807,10 @@ p {
 							}
 						}
 						
+					},error:function(){
+						console.log("일별 예약 현황 리스트 조회 ajax 통신 실패");
 					}
-					
-					
-					
+
 				}
 			});
 		}
@@ -834,7 +819,7 @@ p {
 							// 15				12
 			var count = data.mtrmEndTime - data.mtrmStartTime;
 			
-			var info = data.deptTitle + " " + data.empName;				
+			var info = "&nbsp;&nbsp;&nbsp;" + data.deptTitle + " " + data.empName;				
 							
 			if(count > 1){
 				
@@ -842,101 +827,20 @@ p {
 				// 13 => 삭제		
 				// 14 => 삭제
 				
-				$("#" + time + " ." + code).attr("rowspan", count).text(info).addClass("boram").removeClass("reservationBtn");
+				$("#" + time + " ." + code).attr("rowspan", count).html(info).addClass("boram").removeClass("reservationBtn");
 				
 				for(var i=time+1; i<data.mtrmEndTime; i++){
 					$("#" + i + " ." + code).remove();
 				}
 				
 			}else{
-				$("#" + time + " ." + code).text(info).addClass("boram").attr("disabled", "true").removeClass("reservationBtn");
+				$("#" + time + " ." + code).html(info).addClass("boram").attr("disabled", "true").removeClass("reservationBtn");
 			}
 			
 		}
 	</script>
 	
-	<!-- 공통 모달 여는 function -->
-	<script>
-		$('.open-modal').click(function() {
-			$(this).modal({
-				fadeDuration : 150
-			});
-		});
 	
-		/* 예약하기 모달 여는 function */
-		$(document).on("click", ".reservationBtn", function(){
-			
-			var code = $(this).attr("class").substring(0, 3);
-			var time = $(this).parent().attr("id");
-			
-			var reser;
-			for(var t=Number(time)+1; t<=19; t++){
-				//console.log($("#" + t + " ." + code));
-				if($("#" + t + " ." + code).attr("disabled") == "disabled"){
-					reser = t;
-				}
-			}
-			
-			$("#reservation").click();
-			
-			var year = $("#calYear").text();
-			var month = $("#calMonth").text();
-			var day = $("#calDay").text();
-			
-			console.log(month);
-			
-			var realMonth;
-			if(month.length = 1){
-				realMonth = "0" + month;
-			}else{
-				realMont = month;
-			}
-			
-			console.log(realMonth);
-			
-			var today = year + "/" + realMonth + "/" + day;
-			
-			$("#mtrmStartDate").val(today);
-			$("#mtrmEndDate").val(today);
-			
-			
-			var vhclOption = $("#meetingroomSelect>option").map(function() { return $(this).val(); });
-
-			for(var vo in vhclOption){
-				if(code == vhclOption[vo]){
-					$("#meetingroomSelect").val(code).attr("selected", true);
-				}
-			}
-			$("#meetingroomSelect option:not(:selected)").prop("disabled", true);
-			
-			
-			
-			var startOption = $("#mtrmStartTime>option").map(function() { return $(this).val(); });
-			
-			for(var so in startOption){
-				if(time == startOption[so]){
-					$("#mtrmStartTime").val(time).attr("selected", true);
-				}
-			}
-			$("#mtrmStartTime option:not(:selected)").prop("disabled", true);
-				
-			
-			
-			var endOption = $("#mtrmEndTime>option").map(function() { return $(this).val(); });
-			
-			for(var eo in endOption){
-				var r= endOption[eo];
-				if(endOption[eo] >= reser){
-					$("#mtrmEndTime option[value="+ r +"]").prop("disabled", true);
-				}
-				if(endOption[eo] <= time){
-					$("#mtrmEndTime option[value="+ r +"]").prop("disabled", true);
-				}
-			}
-			
-			
-		});
-	</script>
 	
 	
 	<!-- 나의 예약현황 ajax -->
@@ -1078,19 +982,90 @@ p {
 			});
 		});
 	</script>
-
+	
+	<!-- 공통 모달 여는 function -->
 	<script>
-		$(function(){
-			$("#mcBtn").click(function(){
-				location.href = "cancelReserve.me?mno"
-					+ $(this).children().eq(0).text();
+		$('.open-modal').click(function() {
+			$(this).modal({
+				fadeDuration : 150
 			});
 		});
+	
+		/* 예약하기 모달 여는 function */
+		$(document).on("click", ".reservationBtn", function(){
+			
+			var code = $(this).attr("class").substring(0, 1);
+			var time = $(this).parent().attr("id");
+			
+			var reser;
+			for(var t=Number(time)+1; t<=19; t++){
+				//console.log($("#" + t + " ." + code));
+				if($("#" + t + " ." + code).attr("disabled") == "disabled"){
+					reser = t;
+				}
+			}
+			
+			$("#reservation").click();
+			
+			var year = $("#calYear").text();
+			var month = $("#calMonth").text();
+			var day = $("#calDay").text();
+			
+			console.log(month);
+			
+			var realMonth;
+			if(month.length = 1){
+				realMonth = "0" + month;
+			}else{
+				realMont = month;
+			}
+			
+			console.log(realMonth);
+			
+			var today = year + "/" + realMonth + "/" + day;
+			
+			$("#mtrmStartDate").val(today);
+			$("#mtrmEndDate").val(today);
+			
+			
+			var mtrmOption = $("#meetingroomSelect>option").map(function() { return $(this).val(); });
+
+			for(var vo in mtrmOption){
+				if(code == mtrmOption[vo]){
+					$("#meetingroomSelect").val(code).attr("selected", true);
+				}
+			}
+			$("#meetingroomSelect option:not(:selected)").prop("disabled", true);
+			
+			
+			
+			var startOption = $("#mtrmStartTime>option").map(function() { return $(this).val(); });
+			
+			for(var so in startOption){
+				if(time == startOption[so]){
+					$("#mtrmStartTime").val(time).attr("selected", true);
+				}
+			}
+			$("#mtrmStartTime option:not(:selected)").prop("disabled", true);
+				
+			
+			
+			var endOption = $("#mtrmEndTime>option").map(function() { return $(this).val(); });
+			
+			for(var eo in endOption){
+				var r= endOption[eo];
+				if(endOption[eo] >= reser){
+					$("#mtrmEndTime option[value="+ r +"]").prop("disabled", true);
+				}
+				if(endOption[eo] <= time){
+					$("#mtrmEndTime option[value="+ r +"]").prop("disabled", true);
+				}
+			}
+			
+			
+		});
 	</script>
-	
-	<!-- 예약하기 모달 스크립트 -->
-	
-	
+
 	
 	<!-- 가용회의실 검색  -->
 	<script>
@@ -1098,7 +1073,7 @@ p {
 			
 			$.ajax({
 				url:"select.me",
-				data:{mtrmCode:$("meetingroomSelect").val()},
+				data:{mtrmCode:$("#meetingroomSelect").val()},
 				type="post",
 				success:function(meetingroom){
 					
@@ -1110,7 +1085,7 @@ p {
 					var mtrmImage = meetingroom.mtrmImage;
 					var mtrmStatus = meetingroom.mtrmStatus;
 					
-					$("partArea").html("회의실 이름: " + mtrmName + ", " + "회의실 위치: " + mtrmLocation + ", " + "회의실 수용 인원: " + ", " + mtrmCapacity);
+					$("#partArea").html("회의실 이름: " + mtrmName + ", " + "회의실 위치: " + mtrmLocation + ", " + "회의실 수용 인원: " + ", " + mtrmCapacity);
 				},error:function(){
 					console.log("가용회의실 검색 실패")
 				}

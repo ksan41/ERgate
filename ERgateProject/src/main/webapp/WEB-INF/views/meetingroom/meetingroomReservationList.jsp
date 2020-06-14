@@ -205,7 +205,7 @@
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='currentStatus.me'">회의실 예약</button></li>
-				<li><button class="subBtn subActive" style="width: 170px" onclick="location.href='statusList.me?currentPage=1'">회의실 예약현황</button></li>
+				<li><button class="subBtn subActive" style="width: 170px" onclick="location.href='statusList.me'">회의실 예약현황</button></li>
 				<li><button class="subBtn" onclick="location.href='mtroomDetail.me?currentPage=1'">회의실 관리</button></li>
 				
 			</ul>
@@ -218,7 +218,7 @@
 				<b id="calYear"></b>년 <b id="calMonth"></b>월&nbsp;
 
 				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
+					viewBox="0 0 24 24" fill="black" width="30px" height="30px" style="vertical-align: text-top;">
 					<path
 						d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
 					<path d="M0 0h24v24H0z" fill="none" /></svg>
