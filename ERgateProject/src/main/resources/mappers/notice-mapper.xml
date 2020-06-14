@@ -82,4 +82,42 @@
 		 FROM NOTICE
 		WHERE NOTICE_NO = #{nno}
 	</select>
+	
+	 <select id="fileList" parameterType="_int" resultMap="attachResultSet">
+		select attachment_no, origin_name, change_name, board_type, ref_board_no 
+		  from board_attachment
+		 where ref_board_no=#{refBoardNo}
+		 order by attachment_no desc
+	</select>
+	
+	
+	<select id="beforeB" parameterType="_int" resultMap="noticeResultSet">
+	<![CDATA[
+		select rownum, n.NOTICE_NO, n.NOTICE_TITLE, n.NOTICE_WRITER, n.NOTICE_ENROLL_DATE 
+		  from NOTICE n
+		where NOTICE_NO in 
+			 (select NOTICE_NO 
+			   from NOTICE
+		 	  where NOTICE_NO < #{refBoardNo})
+			and rownum = 1
+			and n.NOTICE_STATUS = 'Y'
+		order by NOTICE_NO desc
+	]]>
+	</select>
+	
+	<select id="afterB" parameterType="_int" resultMap="noticeResultSet">
+	<![CDATA[
+		select rownum, n.NOTICE_NO, n.NOTICE_TITLE, n.NOTICE_WRITER, n.NOTICE_ENROLL_DATE 
+		  from NOTICE n
+		where NOTICE_NO in 
+			 (select NOTICE_NO 
+			   from NOTICE
+		 	  where NOTICE_NO > #{refBoardNo})
+			and rownum = 1
+			and n.NOTICE_STATUS = 'Y'
+		order by NOTICE_NO asc
+	]]>
+	</select>
+	
+	
 </mapper>

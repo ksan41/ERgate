@@ -57,11 +57,23 @@ public class NoticeServiceImpl implements NoticeService{
 	public Notice selectNotice(int nno) {
 		return noDao.selectNotice(sqlSession,nno);
 	}
+	
+	// 공지사항 이전글/다음글 조회용
+	@Override
+	public Notice beforeB(int refBoardNo) {
+		return noDao.beforeB(sqlSession,refBoardNo);
+	}
 
 	@Override
+	public Notice afterB(int refBoardNo) {
+		return noDao.afterB(sqlSession,refBoardNo);
+	}
+	
+	
+	// 공지사항 상세- 파일 조회용
+	@Override
 	public ArrayList<BoardAttachment> fileList(int refBoardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return noDao.fileList(sqlSession, refBoardNo);
 	}
 
 	@Override
@@ -117,6 +129,8 @@ public class NoticeServiceImpl implements NoticeService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 	
 	
 

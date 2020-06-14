@@ -229,8 +229,8 @@
 			</ul>
 		</div>
 		<div class="contentArea">
-
-			<button class="bigBtn">글쓰기</button>
+			
+			<button class="bigBtn insertBoardBtn" onclick="location.href='enrollForm.no?currentPage=${param.currentPage}'">글쓰기</button>
 
 			<!-- 검색바 -->
 			<form id="searchForm" action="search.no" method="get">

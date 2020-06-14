@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
 import com.kh.ergate.notice.model.vo.Notice;
@@ -52,5 +53,21 @@ public class NoticeDao {
 	public Notice selectNotice(SqlSessionTemplate sqlSession,int nno) {
 		return sqlSession.selectOne("noticeMapper.selectNotice",nno);
 	}
+	
+	//공지사항 상세조회- 첨부파일 요청용
+	public ArrayList<BoardAttachment> fileList(SqlSessionTemplate sqlSession, int refBoardNo) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.fileList", refBoardNo);
+	}
+	
+	//공지사항 이전글 정보 조회용
+	public Notice beforeB(SqlSessionTemplate sqlSession,int refBoardNo) {
+		return sqlSession.selectOne("noticeMapper.beforeB",refBoardNo);
+	}
+	
+	//공지사항  다음글 정보 조회용
+	public Notice afterB(SqlSessionTemplate sqlSession,int refBoardNo) {
+		return sqlSession.selectOne("noticeMapper.afterB",refBoardNo);
+	}
+	
 	
 }

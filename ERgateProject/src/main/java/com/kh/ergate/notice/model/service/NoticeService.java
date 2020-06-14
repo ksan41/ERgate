@@ -26,6 +26,10 @@ public interface NoticeService {
 	//공지사항상세조회용
 	public Notice selectNotice(int nno);
 	
+	//공지사항 이전글/다음글 요청용
+	public Notice beforeB(int refBoardNo);
+	public Notice afterB(int refBoardNo);
+	
 	//공지사항 조회수 증가용
 	public int increaseCount(int nno);
 	

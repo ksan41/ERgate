@@ -209,7 +209,7 @@
 			<br>
 			<div id="btnArea">
 				<input type="hidden" name="noticeNo" value="${b.noticeNo }">
-				<button class="bigBtn listBtn" style="background: rgb(26, 188, 156);">목록</button>
+				<button class="bigBtn listBtn" style="background: rgb(26, 188, 156);" onclick="location.href='list.no?currentPage=1';">목록</button>
 				<c:if test='${loginUser.empName == n.noticeWriter }'>
 				<button class="bigBtn updateBtn">수정</button>
 				<button class="bigBtn deleteBtn">삭제</button>
@@ -217,28 +217,125 @@
 			</div>
 			<br> <br>
 			<div class="bottomArea">
-				<div class="roundIcon">
-					<span class="material-icons">arrow_drop_up</span>
-				</div>
-				<p style="display: inline;">다음글</p>
-				<p
-					style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
-				<p align="right"
-					style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;">2020/05/10
-					| 김관리</p>
-				<hr>
-				<div class="roundIcon">
-					<span class="material-icons">arrow_drop_down</span>
-				</div>
-				<p style="display: inline;">이전글</p>
-				<p
-					style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
-				<p align="right"
-					style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;">2020/05/10
-					| 김관리</p>
+				<div class="baShow2">
+					<div class="roundIcon">
+						<span class="material-icons">arrow_drop_up</span>
+					</div>
+					<p style="display: inline;">다음글</p>
+					<p class="afterBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
+					<p class="afterBoardInfo" align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;">2020/05/10 | 김관리</p>
+				</div>		
+					<hr>
+				<div class="baShow1">	
+					<div class="roundIcon">
+						<span class="material-icons">arrow_drop_down</span>
+					</div>
+					<p style="display: inline;">이전글</p>
+					<p class="beforeBoard" style="display: inline-block; width: 960px; margin: 0px; margin-left: 50px;">제목입니다.</p>
+					<p class="beforeBoardInfo" align="right" style="display: inline-block; width: 200px; margin: 0px; margin-left: 10px;">2020/05/10 | 김관리</p>
+				</div>		
 			</div>
 			<br> <br> <br>
 		</div>
 	</div>
+	
+	<script>
+	// 이 밑으로는 '이벤트'시 수행되는 내용
+	$(document).ready(function() { 
+		
+		$(".listBtn").click(function(){
+			var pno=0; // 페이지 번호가 들어갈꺼임 (나중에 돌아올때 현재 페이지로 오기 위해서)
+			location.href="list.no?currentPage=" + ${currentPage};
+		});		
+		
+		$(".updateBtn").click(function(){
+			var nno=$(this).parent().find('input[name=noticeNo]').val();
+			location.href="update.no?nno=" + nno + "&currentPage=" + ${currentPage};
+		});
+		
+		$(".deleteBtn").click(function(){
+			var nno=$(this).parent().find('input[name=noticeNo]').val();
+			location.href="delete.no?nno=" + nno;
+		});
+		
+		$(".fileShow").click(function() {
+			if($(".fileWrap").is(":visible")){
+				$(".fileWrap").slideUp(100);
+			}else {
+				$(".fileWrap").slideDown(100);
+			}
+			$.ajax({
+				url:"detailFile.no",
+				data:{refBoardNo:${b.noticeNo}},
+				success:function(list){
+					var value = "";
+					for(var i in list){
+						value += "<tr>" +
+									"<td>" + "<a href='"+"${pageContext.servletContext.contextPath }/resources/uploadFiles/board/"+list[i].changeName+"' download=" +list[i].originName+ ">"+ list[i].originName +"</a>" +"</td>" +
+								 "<tr>";
+					}
+					$("#fileListTable tbody").html(value);
+				},error:function(){
+					console.log("ajax 통신 실패");
+				}
+			});
+		});
+		
+		var afterBno = "";
+		var beforeBno = "";
+		$.ajax({
+            url: "beforeAfter.no?"+ Math.random(),
+            data:{refBoardNo:${n.noticeNo}},
+            success:function(list){
+            	var value1 = ""; // 이전글
+            	var value2 = ""; // 다음글
+            	if(list.length==2){
+            		if(list[0]){ // 이전글
+            			value1 = list[0].noticeTitle;
+            			$(".beforeBoard").text(value1);
+            			var info1 = list[0].noticeEnrollDate + " | " + list[0].noticeWriter;
+            			$(".beforeBoardInfo").text(info1);
+            			beforeBno = list[0].noticeNo;
+            		}else {
+            			value1 += "이전 글이 없습니다.";
+            			$(".beforeBoard").text(value1);
+            			beforeBno = "N";
+            		}
+            		if(list[1]){ // 다음글
+            			value2 = list[1].noticeTitle;
+            			$(".afterBoard").text(value2);
+            			var info2 = list[1].noticeEnrollDate + " | " + list[1].noticeWriter;
+            			$(".afterBoardInfo").text(info2);
+            			afterBno = list[1].noticeNo;
+            		}else {
+            			value2 += "다음 글이 없습니다.";
+            			$(".afterBoard").text(value2);
+            			afterBno = "N";
+            		}
+            	}else {
+            		console.log("어떻게하지?");
+            	}
+	            },error: function(){
+	                console.log("ajax 통신 실패");
+	            } 
+        	});
+			
+			$(".afterBoard").click(function(){
+				if(afterBno != "N"){
+					location.href="detail.no?nno=" + afterBno + "&currentPage=" + ${currentPage};
+				}else {
+					console.log("여기는 어떻게");
+				}
+			});
+				
+			$(".beforeBoard").click(function(){
+				if(beforeBno != "N"){
+					location.href="detail.no?nno=" + beforeBno + "&currentPage=" + ${currentPage};
+				}else {
+					console.log("여기는 어떻게");
+				}
+			});	
+		});	
+	</script>
 </body>
 </html>
