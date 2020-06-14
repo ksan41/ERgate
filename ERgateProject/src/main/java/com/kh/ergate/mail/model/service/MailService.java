@@ -34,7 +34,9 @@ public interface MailService {
 	//메일작성
 	int insertMail(Email insertE);
 	int insertMailAttachment(MailAttachment mt);
-	int updateMailFlag();
+	int updateMailFlag(int currNo);
+	Email nowMailNo();
+	
 
 	
 	

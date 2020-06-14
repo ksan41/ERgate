@@ -22,9 +22,10 @@ public class Email {
 	private String mailTo;
 	private String mailnameTo;
 	private String mailTitle;
+	private String mailWith;
 	private String mailContent;
 	private String mailAttachment;
-	private Date mailDate;
+	private Timestamp mailDate;
 	private String mailDateStr;
 	private String mailReadFlag;
 	private String mailStatus;

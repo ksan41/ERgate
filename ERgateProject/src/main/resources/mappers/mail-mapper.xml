@@ -10,6 +10,7 @@
 		<result column="mail_to" property="mailTo"/>
 		<result column="mailname_to" property="mailnameTo"/>
 		<result column="mail_title" property="mailTitle"/>
+		<result column="mail_with" property="mailWith"/>
 		<result column="mail_content" property="mailContent"/>
 		<result column="mail_attachment" property="mailAttachment"/>
 		<result column="mail_date" property="mailDate"/>
@@ -185,5 +186,44 @@
 		 where mail_no=#{mailNo}
 		 order by file_no desc
 	</select>
+
+
+	<!-- 메일작성 -->
+	<insert id="insertMail" parameterType="Email">
+		insert into email
+		values(seq_mail_no.nextval, 'N', #{mailFrom}, #{mailTo}, #{mailTitle}, 
+		#{mailContent}, 'Y', sysdate, 'N', 'Y', #{mailnameFrom}, #{mailnameTo}, #{mailWith})
+	</insert>
+	
+	<insert id="insertMailAttachment" parameterType="MailAttachment">
+		insert into mail_Attachment 
+		values(seq_atmail_no.nextval, 
+		<choose> 
+			<when test='mailNo != ""'> 
+			#{mailNo}
+			</when> 
+			<otherwise> 
+			seq_mail_no.currval
+			</otherwise> 
+		</choose>
+		, #{originName}, #{changeName}, #{filePath}, sysdate, 'Y', #{mailFileSize}) 
+		
+	</insert>
+	
+	<update id="updateMailFlag" parameterType="_int">
+		update email set
+		mail_attachment = 'N'
+		where mail_no = #{currNo}
+	</update>
+	
+	<select id="nowMailNo" resultMap="emailResultSet">
+		select mail_no from (select * from email
+		order by mail_no desc) e
+		where rownum = 1
+	</select>
+
+
+
+
 
 </mapper>

@@ -167,6 +167,7 @@
 	<update id="updateBoardFlag">
 		update Board set
 		board_file_flag = 'N'
+		where board_no = seq_board_no.currval
 	</update>
 	
 	<insert id="insertReReply" parameterType="ReReply">

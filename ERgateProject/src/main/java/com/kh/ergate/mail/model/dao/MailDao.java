@@ -93,6 +93,24 @@ public class MailDao {
 	public ArrayList<MailAttachment> fileList(SqlSessionTemplate sqlSession, int mailNo) {
 		return (ArrayList)sqlSession.selectList("mailMapper.fileList", mailNo);
 	}
+	
+	
+	
+	
+	
+	//메일 작성
+	public int insertMail(SqlSessionTemplate sqlSession, Email insertE) {
+		return sqlSession.insert("mailMapper.insertMail", insertE);
+	}
+	public int insertMailAttachment(SqlSessionTemplate sqlSession, MailAttachment mt) {
+		return sqlSession.insert("mailMapper.insertMailAttachment", mt);
+	}
+	public int updateMailFlag(SqlSessionTemplate sqlSession, int currNo) {
+		return sqlSession.update("mailMapper.updateMailFlag", currNo);
+	}
+	public Email nowMailNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.nowMailNo");
+	}
 
 
 

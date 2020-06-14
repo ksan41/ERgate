@@ -218,12 +218,16 @@ public class MailController {
 		String title[] = form.getParameterValues("mailTitle");
 		String content[] = form.getParameterValues("mailContent");
 		String to[] = form.getParameterValues("mailTo");
+		String toname[] = form.getParameterValues("mailnameTo");
 		String from[] = form.getParameterValues("empId");
+		String fromname[] = form.getParameterValues("mailnameFrom");
 		Email insertE = new Email();
 		insertE.setMailTitle(title[0]);
 		insertE.setMailContent(content[0]);
 		insertE.setMailTo(to[0]);
 		insertE.setMailFrom(from[0]);
+		insertE.setMailnameTo(toname[0]);
+		insertE.setMailnameFrom(fromname[0]);
 		
 		int result = 0;
 		result = milService.insertMail(insertE);
@@ -249,7 +253,9 @@ public class MailController {
 				result += milService.insertMailAttachment(mt);
 			}
 		}else {
-			result = milService.updateMailFlag();
+			Email currMail = milService.nowMailNo();
+			int currNo = currMail.getMailNo();
+			result = milService.updateMailFlag(currNo);
 		}
 		
 		

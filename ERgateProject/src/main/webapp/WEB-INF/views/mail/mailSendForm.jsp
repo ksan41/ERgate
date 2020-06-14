@@ -232,7 +232,8 @@
 				<table class="mailUpload" id="boardDetail">
 					<tr>
 						<th>받는사람</th>
-						<td><input type="text" class="inputs" name="mailTo" style="width:770px;"></td>
+						<td><input type="text" class="inputs" name="mailTo" style="width:770px;">
+							<input type="hidden" class="inputs" name="mailnameTo"></td>
 						<td><button class="middleBtn2">주소록</button></td>
 					</tr>
 					<tr>
@@ -552,6 +553,8 @@
 	        formData.append('mailContent', form[0].mailContent.innerText);
 	        formData.append('mailTo', form[0].mailTo.innerText);
 	        formData.append('empId', form[0].empId.innerText);
+	        formData.append("mailnameTo", form[0].mailnameTo.innerText);
+	        formData.append("mailnameFrom", form[0].mailnameFrom.innerText);
 	        for (var i = 0; i < uploadFileList.length; i++) {
 	            formData.append('files', fileList[uploadFileList[i]]);
 	        }

@@ -86,6 +86,26 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<MailAttachment> fileList(int mailNo) {
 		return milDao.fileList(sqlSession, mailNo);
 	}
+	
+	
+	
+	//메일작성
+	@Override
+	public int insertMail(Email insertE) {
+		return milDao.insertMail(sqlSession, insertE);
+	}
+	@Override
+	public int insertMailAttachment(MailAttachment mt) {
+		return milDao.insertMailAttachment(sqlSession, mt);
+	}
+	@Override
+	public int updateMailFlag(int currNo) {
+		return milDao.updateMailFlag(sqlSession, currNo);
+	}
+	@Override
+	public Email nowMailNo() {
+		return milDao.nowMailNo(sqlSession);
+	}
 
 
 
