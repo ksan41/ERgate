@@ -65,41 +65,37 @@ public class MainController {
 	public ModelAndView mainPage(HttpSession session) {
 		ArrayList<Schedule> slist = sService.selectScheduleList();
 		
-		// 공지사항 리스트요청용
 		// ===공지사항 리스트요청용===
 		int currentPage = 1;
 		int listCount = noService.selectListCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 7);
 		ArrayList<Notice> nlist = noService.selectNoticeList(pi);
-		
-		// 전자결재 요청용
-		Employee e = (Employee)session.getAttribute("loginUser");
+				
 		// ====전자결재 요청용===
 		Employee e = (Employee)session.getAttribute("loginUser");
 		SignDateSearch sds = new SignDateSearch();
-		
+				
 		sds.setCondition(0);
 		sds.setEmpId(e.getEmpId());
-		  
+				  
 		java.util.Date d = new java.util.Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM");
 		String sysdate = format.format(d);
 		String[] array = sysdate.split("/");
 		sds.setYear(array[0]);
 		sds.setMonth(array[1]);
-		
+				
 		//결재 대기문서 게시글 수
 		int siWcount = siService.selectWlistCount(e.getEmpId());
 		//결재 진행문서 게시글 수
-		 int siOcount = siService.selectOlistCount(e.getEmpId());
-		
+		int siOcount = siService.selectOlistCount(e.getEmpId());
 		//결재대기함 요청용
 		ArrayList<SignDocument> siWlist = siService.selectWaitingListMain(e.getEmpId()); 
 		//진행결재함 요청용
 		ArrayList<SignDocument> siOlist = siService.ongoingListMain(e.getEmpId());
 		//상신내역 요청용 
 		ArrayList<SignDocument> siRlist = siService.reportListMain(sds); 
-		 
+				 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main/main");
 		mv.addObject("slist", slist);
