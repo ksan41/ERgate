@@ -168,6 +168,11 @@
 		margin-bottom: 25px;
 		padding-top: 8px;
 	}
+	.mainSignBoard{
+		width:100%;
+	}
+	
+	
     #mainMailInnerTable, #mainSignInnerTable{
     	width: 100%;
     	height: 95%;
@@ -401,43 +406,24 @@
 								<td colspan="2">
 									<!-- 게시판 -->
 									<table id="mainNoticeBoard" class="boardTable">
-										<tr>
-											<td>[공지]</td>
-											<td>공지사항 여기에 보일거임~~~</td>
-											<td>2020.05.20 10:00</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
+									<c:choose>
+										<c:when test="${empty nlist }">
+											<tr>
+												<td colspan="3" rowspan="7">조회된 게시글이 없습니다.</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="i" items="${nlist }">
+												<tr>
+													<input type="hidden" name="noticeNo" value="${i.noticeNo }">
+													<td>No.${i.noticeNo }</td>
+													<td>${i.noticeTitle }</td>
+													<td>${i.noticeEnrollDate}&nbsp;|&nbsp;${i.noticeWriter}</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 									</table>
-									<!-- 게시판 -->
 								</td>
 							</tr>
 						</table>
@@ -464,8 +450,8 @@
 												<td class="mainSignInnerLabel">결재 진행 문서</td>
 											</tr>
 											<tr>
-												<td class="mainSignInnerContent">130</td>
-												<td class="mainSignInnerContent">120</td>
+												<td class="mainSignInnerContent">${siWcount }</td>
+												<td class="mainSignInnerContent">${siOcount }</td>
 											</tr>
 										</table>
 									</div>
@@ -473,28 +459,62 @@
 							</tr>
 							<tr>
 								<td colspan="2" id="mainSignThArea">
-									<div id="mainSignTh1" class="thDiv">결재 대기 문서</div>
-									<div id="mainSignTh2" class="thDiv">결재 진행 문서</div>
-									<div id="mainSignTh3" class="thDiv">참조 문서</div>
+									<div id="mainSignTh1" class="thDiv">결재대기함</div>
+									<div id="mainSignTh2" class="thDiv">진행결재함</div>
+									<div id="mainSignTh3" class="thDiv">상신내역</div>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<!-- 게시판 -->
-									<table id="mainSignBoard" class="boardTable">
-										<tr>
-											<td>user01</td>
-											<td>결제요청합니다.</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-										</tr>
-									</table>
+									<div id="mainSignDiv1">
+										<table id="mainSignBoard1" class="boardTable mainSignBoard">
+											<tr>
+												<td>user01</td>
+												<td>111</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+											</tr>
+										</table>
+									</div>
+									<div id="mainSignDiv2" style="display:none;">
+										<table id="mainSignBoard2" class="boardTable mainSignBoard">
+											<tr>
+												<td>user01</td>
+												<td>dd</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+											</tr>
+										</table>
+									</div>
+									<div id="mainSignDiv3" style="display:none;">
+										<table id="mainSignBoard3" class="boardTable mainSignBoard">
+											<tr>
+												<td>user01</td>
+												<td>dfd</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+											</tr>
+										</table>
+									</div>
 									<!-- 게시판 -->
 								</td>
 							</tr>
@@ -510,6 +530,7 @@
 	<script>
 	
 	$(document).ready(function() {
+		// 현재날짜 출력용
 		var date = new Date();
 		var year = date.getFullYear();
 		var month = date.getMonth() + 1;
@@ -518,6 +539,14 @@
 		$("#calYear").text(year);
 		$("#calMonth").text(month);
 		$("#calDay").text(day);
+		
+		$("#mainNoticeBoard tr").click(function(){
+			var nno = $(this).children().eq(0).val();
+			if($.trim(nno).length > 0){
+				location.href="detail.no?nno=" + nno +"&currentPage=" + ${pi.currentPage};
+			}
+		});
+		
 	});
 	
 	$(function(){
@@ -535,15 +564,44 @@
 			$(this).css("font-weight", "550");
 		});
 		
-		$('.thDiv').click(function(){
+		//결재대기함 클릭시
+		$("#mainSignTh1").click(function(){
 			$(this).css("border-bottom", "2px solid rgb(26, 188, 156)");
+			$("#mainSignTh2").css("border-bottom", "2px solid white");
+			$("#mainSignTh3").css("border-bottom", "2px solid white");
+			
+			$("#mainSignDiv1").css("display","block");
+			$("#mainSignDiv2").css("display","none");
+			$("#mainSignDiv3").css("display","none");
+			
 		});
 		
+		//진행결재함 클릭시
+		//결재대기함 클릭시
+		$("#mainSignTh2").click(function(){
+			$(this).css("border-bottom", "2px solid rgb(26, 188, 156)");
+			$("#mainSignTh1").css("border-bottom", "2px solid white");
+			$("#mainSignTh3").css("border-bottom", "2px solid white");
+			
+			$("#mainSignDiv2").css("display","block");
+			$("#mainSignDiv1").css("display","none");
+			$("#mainSignDiv3").css("display","none");
+		});
+		//상신내역 클릭시
+		//결재대기함 클릭시
+		$("#mainSignTh3").click(function(){
+			$(this).css("border-bottom", "2px solid rgb(26, 188, 156)");
+			$("#mainSignTh1").css("border-bottom", "2px solid white");
+			$("#mainSignTh2").css("border-bottom", "2px solid white");
+			
+			$("#mainSignDiv3").css("display","block");
+			$("#mainSignDiv1").css("display","none");
+			$("#mainSignDiv2").css("display","none");
+		});
 	});
 	
-	
 	</script>
-	<!-- script 작성 영역 -->
 	
+		
 </body>
 </html>

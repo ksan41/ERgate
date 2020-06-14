@@ -28,8 +28,7 @@
 		<result column="EMP_ID" property="empId"/>
 		<result column="CLOCK_IN" property="clockIn"/>
 		<result column="CLOCK_OUT" property="clockOut"/>
-		<result column="WORK_DATE" property="workDate"/>
-		
+		<result column="WORK_DATE" property="workDate"/>	
 	</resultMap>
 	
 	<!-- 근태관리 리스트 조회용 - 첫페이지에 뿌려지는 ajax -->
@@ -116,7 +115,7 @@
 		update Work_Record
 		set 			
 			CLOCK_OUT=#{clockOut}	
-		where EMP_ID=#{empId}		
+		where EMP_ID=#{empId} and clock_out is null	
 	</update>
 	
 </mapper>

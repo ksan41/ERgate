@@ -308,9 +308,9 @@ h2, h3 {
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
 				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
-				<li><button class="subBtn subActive" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
+				<li><button class="subBtn " onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
 				<c:if test="${loginUser.deptCode eq 'D2' }">
-					<li><button class="subBtn subActive"
+					<li><button class="subBtn "
 							onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
 				</c:if>
 				<c:if test="${loginUser.deptCode eq 'D5' }">
@@ -322,7 +322,7 @@ h2, h3 {
 			<!-- 내용 작성 영역 입니다-->
 			<h1>외근신청서</h1>
 			<div id="btnArea">
-				<button type="button" class="bigBtn" id="signSubmit" onclick="uploadFile();">기안등록</button>
+				<button type="button" class="bigBtn" id="signSubmit" style="margin-left: 150px;" onclick="uploadFile();">기안등록</button>
 			</div>
 			<br>
 			<form id="signForm" name="signForm" method="get" enctype="multipart/form-data">

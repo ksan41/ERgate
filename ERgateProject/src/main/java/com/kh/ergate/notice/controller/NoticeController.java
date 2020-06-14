@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.board.model.vo.SearchCondition;
 import com.kh.ergate.common.model.vo.PageInfo;
@@ -170,25 +171,120 @@ public class NoticeController {
 			return result;
 	  }
 	  
-/*	  //공지사항수정폼
-	  
-	  @RequestMapping("updateForm.no") public String updateForm(int nno) {
-	  
+	  //공지사항수정폼
+	  @RequestMapping("updateForm.no") 
+	  public ModelAndView updateForm(int nno,int currentPage, ModelAndView mv) {
+		  Notice n = noService.selectNotice(nno);
+			ArrayList<BoardAttachment> bt = noService.fileList(nno);
+					mv.addObject("n", n);
+					mv.addObject("currentPage", currentPage);
+					mv.addObject("btList", bt);
+					mv.setViewName("notice/noticeUpdateForm");
+		return mv;
 	  }
 	  
 	  //공지사항수정용
-	  
-	  @RequestMapping("update.no") public String
-	  updateNotice(Notice,Model,MultipartFile,HttpServletRequest) {
-	  
+	  @ResponseBody
+	  @RequestMapping(value="update.no", produces="application/json; charset=utf-8")
+	  public int updateNotice(MultipartHttpServletRequest form, @RequestParam(name="files", required=false) MultipartFile[] files) {
+			String title[] = form.getParameterValues("noticeTitle");
+			String content[] = form.getParameterValues("noticeContent");
+			String writer[] = form.getParameterValues("noticeWriter");
+			String empId[] = form.getParameterValues("empId");
+			String boardNo[] = form.getParameterValues("noticeNo");
+			String nowFnoTemp[] = form.getParameterValues("nowFno");
+			//System.out.println("제목값은? : " + title[0]); 
+			//System.out.println("내용값은? : " + content[0]);
+			//System.out.println("이름은? : " + content[0]);
+			Notice insertB = new Notice();
+			insertB.setNoticeTitle(title[0]);
+			insertB.setNoticeContent(content[0]);
+			insertB.setNoticeWriter(writer[0]);
+			insertB.setEmpId(empId[0]);
+			insertB.setNoticeNo(Integer.parseInt(boardNo[0]));
+			int deresult = 0;
+			if(!nowFnoTemp[0].isEmpty()) {
+				String [] nowFno = nowFnoTemp[0].split(",");
+				for(int i=0; i<nowFno.length; i++) {
+					BoardAttachment fileOne = noService.fileOne(Integer.parseInt(nowFno[i]));
+					deresult = noService.fileDbDelete(Integer.parseInt(nowFno[i]));
+					deleteFile(fileOne.getChangeName(), form);
+				}
+			}
+			
+			int result = 0;
+			result = noService.updateNotice(insertB);
+			String resources = form.getSession().getServletContext().getRealPath("resources");
+			String filePath = resources + "\\uploadFiles\\board\\";
+			if(files.length > 0) {
+				int flag = 0;
+				int setFlag = 0;
+				for(int i=0; i<files.length; i++) {
+					setFlag = (int)(Math.random()*99) + 10;
+					if(setFlag != flag) {
+						flag = setFlag;
+					}else {
+						setFlag += 100;
+						flag = setFlag;
+					} // 혹시나 Math.random이 같은 값이 나올경우를 대비해서~
+					String changeName = saveFile(files[i], form, flag);
+					BoardAttachment bt = new BoardAttachment();
+					bt.setChangeName(changeName);
+					bt.setOriginName(files[i].getOriginalFilename());
+					bt.setBoardFileSize(String.valueOf(files[i].getSize()));
+					bt.setBoardFilePath(filePath);
+					bt.setRefBoardNo(Integer.parseInt(boardNo[0]));
+					result += noService.insertNoticeAttachment(bt);
+				}
+			}
+			
+			
+			return result;
 	  }
 	  
 	  //공지사항삭제용
 	  
-	  @RequestMapping("delete.no") public String deleteNotice(int nno,String
-	  fileName,HttpServletRequest request,Model model) {
+	  @RequestMapping("delete.no") 
+	  public String deleteNotice(int nno,HttpServletRequest request,Model model) {
+		  int result = noService.deleteNotice(nno);
+			if(result > 0) {
+				ArrayList<BoardAttachment> list = new ArrayList<>();
+				list = noService.fileList(nno);
+				String[] fileName = new String[list.size()];
+				if(list.size() > 0) {
+					for(int i=0; i<list.size(); i++) {
+						fileName[i] = list.get(i).getChangeName();
+						//System.out.println(fileName[i]);
+						deleteFile(fileName[i], request);
+					}
+					
+				}
+				
+				return "redirect:list.no?currentPage=1&deleteFlag=1";
+			}else {
+				model.addAttribute("msg", "게시글 삭제 실패");
+				return "common/errorPage";
+			}
+	  }
 	  
-	  }*/
+	  //메인페이지-공지사항 리스트 표시용
+	@ResponseBody
+	@RequestMapping("mainList.no")
+		public String selectMainNoticeList(Model model) {
+			System.out.println("호출했어요");
+			int currentPage = 1;
+			
+			int listCount = noService.selectListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 7);
+			
+			ArrayList<Notice> list = noService.selectNoticeList(pi);
+			
+			return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(list);
+	}
+	
+		
+		
 	  
 	  
 	  // 파일 저장용 

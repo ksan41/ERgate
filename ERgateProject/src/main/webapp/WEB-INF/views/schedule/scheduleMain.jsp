@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	                    $("#list_schedule_Ga").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
 	                    $("#list_schedule_Ga").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
 	                    $("#list_schedule_Ga").find('textarea[name=scheduleContent]').val(data.scheduleContent);
-	                    $("#list_schedule_Ga").find('input[name=callPeople]').val(data.callPeople);
-	                    $("#list_schedule_Ga").find('input[name=joinPeople]').val(data.joinPeople);
+	                    $("#list_schedule_Ga").find('textarea[name=callPeople]').val(data.callPeople);
+	                    $("#list_schedule_Ga").find('textarea[name=joinPeople]').val(data.joinPeople);
 	                    $('#list_schedule_Ga').modal('show');
           			}
           			else if(data.scheduleKind=="업무일정"){
@@ -135,8 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	                    $("#list_schedule_Up").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
 	                    $("#list_schedule_Up").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
 	                    $("#list_schedule_Up").find('textarea[name=scheduleContent]').val(data.scheduleContent);
-	                    $("#list_schedule_Up").find('input[name=callPeople]').val(data.callPeople);
-	                    $("#list_schedule_Up").find('input[name=joinPeople]').val(data.joinPeople);
+	                    $("#list_schedule_Up").find('textarea[name=callPeople]').val(data.callPeople);
+	                    $("#list_schedule_Up").find('textarea[name=joinPeople]').val(data.joinPeople);
 	                    $('#list_schedule_Up').modal('show');
                        
                     }else if(data.scheduleKind=="공유일정"){
@@ -152,8 +152,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	                    $("#list_schedule_Go").find('input[name=outMeetingRoom]').val(data.outMeetingRoom);
 	                    $("#list_schedule_Go").find('input[name=inMeetingRoom]').val(data.inMeetingRoom);
 	                    $("#list_schedule_Go").find('textarea[name=scheduleContent]').val(data.scheduleContent);
-	                    $("#list_schedule_Go").find('input[name=callPeople]').val(data.callPeople);
-	                    $("#list_schedule_Go").find('input[name=joinPeople]').val(data.joinPeople);
+	                    $("#list_schedule_Go").find('textarea[name=callPeople]').val(data.callPeople);
+	                    $("#list_schedule_Go").find('textarea[name=joinPeople]').val(data.joinPeople);
  	                    $('#list_schedule_Go').modal('show');
                     	
                     }
@@ -775,19 +775,18 @@ html, body {
                          <tr>
                            <td id="r1">참석자</td>
                            <td id="r2">
-                           <button id="searchBtn2" class="searchBtn" id="" name="" >참석자 지정</button>
-                              <textarea cols="60" rows="4" class="partArea" id="joinPeople" name="joinPeople"></textarea>
+                           		 <button type="button" id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddJoinparticipants','_blank');">참석자 지정</button> 
+                 		   		<textarea cols="60" rows="4" id="joinAreaM" name="joinPeople"></textarea> 
                            </td>
                         </tr>
                  
-                 <button type="button" id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddJoinparticipants','_blank');">참석자 지정</button> 
-                               <textarea cols="60" rows="4" id="joinArea" name="joinPeople"></textarea>
+               
                  
                         <tr>
                            <td id="r1">수신자</td>
                            <td id="r2">
-                           <button id="searchBtn2" class="searchBtn" >수신자 지정</button>
-                              <textarea cols="60" rows="4" class="partArea" id="callPeople" name="callPeople"></textarea>
+                           		<button type="button" id="" class="searchBtn" onclick="window.open('callPeople.sc','scheduleAddCallparticipants','_blank');">수신자 지정</button> 
+       							<textarea cols="60" rows="4" id="callAreaM" name="callPeople"></textarea> 
                            </td>
                         </tr> 
                         

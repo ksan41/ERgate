@@ -382,8 +382,7 @@ public class BoardController {
 		 
 		 String resources = request.getSession().getServletContext().getRealPath("resources");
 		 String filePath = resources + "\\uploadFiles\\board\\";
-		 String fileName=fileOne.getChangeName(); 
-		 System.out.println(filePath);
+		 String fileName=fileOne.getChangeName();
 		 //MultipartFile nowFile = (MultipartFile) new File(filePath + fileName);
 		 
 		

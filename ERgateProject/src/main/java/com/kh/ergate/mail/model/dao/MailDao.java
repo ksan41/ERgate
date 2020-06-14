@@ -111,6 +111,9 @@ public class MailDao {
 	public Email nowMailNo(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("mailMapper.nowMailNo");
 	}
+	public String loadMailnameTo(SqlSessionTemplate sqlSession, String toname) {
+		return sqlSession.selectOne("mailMapper.loadMailnameTo", toname);
+	}
 
 
 

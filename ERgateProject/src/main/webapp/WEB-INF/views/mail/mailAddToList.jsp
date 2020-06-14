@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
@@ -58,7 +58,6 @@ html, body {
 	border-radius: 3px;
 	font-family: inherit;
 	display: inline-block;
-	vertical-align: top;
 }
 
 .searchBar>input {
@@ -238,57 +237,30 @@ div {
 }
 /* 중간버튼 스타일 */
 
-.btnDel{
-	color:rgb(190, 190, 190);
-}
 /* 큰버튼 스타일 */
 .bigBtn {
 	width: 140px;
 	height: 40px;
 	border: 0px;
 	border-radius: 5px;
-	background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
+	background: orange; /* 회색 : rgb(190, 190, 190) */
 	color: white;
 	font-size: 18px;
+	display: inline-block;
 }
 
 .bigBtn:hover {
 	cursor: pointer;
 }
 /* 큰버튼 스타일 */
-
-/* 계정 주소 표시를 위한 ToolTip 설정 */
-[data-tooltip-text]:hover {
-	position: relative;
+#btnArea {
+	margin-left: 910px;
 }
 
-[data-tooltip-text]:hover:after {
-	background-color: #000000;
-	background-color: rgba(0, 0, 0, 0.8);
 
-	-webkit-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-	-moz-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-	box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
 
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-
-	color: #FFFFFF;
-	font-size: 12px;
-	content: attr(data-tooltip-text);
-
-  margin-bottom: 10px;
-	top: 130%;
-	left: 0;    
-	padding: 7px 12px;
-	position: absolute;
-	width: 150px;
-	min-width: 100px;
-	max-width: 300px;
-	word-wrap: break-word;
-
-	z-index: 9999;
+.btnDel{
+	color:rgb(190, 190, 190);
 }
 </style>
 </head>
@@ -296,112 +268,235 @@ div {
 
 
 	<div class="popup-outer">
-		<div class="popup-title">주소록</div>
+		<div class="popup-title">결재라인 설정</div>
 		<div class="popup-content">
 			<!-- 검색바 -->
 			<div class="searchBar">
-				<select name="">
-					<option>이름</option>
-					<option>직급</option>
-					<option>직책</option>
-					<option>부서</option>
-				</select> <input type="text" placeholder="이름/직급/직책/부서 검색">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+				<select id="condition" name="condition">
+					<option value="empName">이름</option>
+					<optio value="rankTitle">직급</option>
+					<option value="jobTitle">직책</option>
+					<option value="deptTitle">부서</option>
+				</select> <input id="keyword" type="text" placeholder="이름/직급/직책/부서 검색">
+				<svg  onclick="searchEmpProfile();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 					fill="black" width="48px" height="48px">
 									<path
 						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
-			</div>
+			<button type="button" class="bigBtn" id="signerSubmit" style="margin-left: 680px;">등록</button>
+			
+			
+			<script>
+				$(document).on("click","#signerSubmit",function(){
+					
+					//opener.testConsole("zzzz");
+					//window.close();
+					
+					var v = $(".signSel tbody").text();
+					if(v==""){
+						alert("결재자는 1명 이상 존재해야 합니다.");
+						return false;
+					}else{
+						
+						// 결재자 정보 부모화면에 출력
+						var m1 = $("#signList tbody tr").eq(0).children().eq(2).text();
+						opener.document.getElementById("m1").value=m1;
+						var m2 = $("#signList tbody tr").eq(1).children().eq(2).text();
+						opener.document.getElementById("m2").value=m2;
+						var m3 = $("#signList tbody tr").eq(2).children().eq(2).text();
+						opener.document.getElementById("m3").value=m3;
+						var m4 = $("#signList tbody tr").eq(3).children().eq(2).text();
+						opener.document.getElementById("m4").value=m4;
+						var m5 = $("#signList tbody tr").eq(4).children().eq(2).text();
+						opener.document.getElementById("m5").value=m5;
+						var m6 = $("#signList tbody tr").eq(5).children().eq(2).text();
+						opener.document.getElementById("m6").value=m6;
+						
+						var n1 = $("#signList tbody tr input[name=empId]").eq(0).val();
+						if(n1){
+							opener.document.getElementById("n1").value=n1;
+						}						
+						
+						var n2 = $("#signList tbody tr input[name=empId]").eq(1).val();
+						if(n2){
+							opener.document.getElementById("n2").value=n2;
+						}
+						
+						var n3 = $("#signList tbody tr input[name=empId]").eq(2).val();
+						if(n3){
+							opener.document.getElementById("n3").value=n3;
+						}
+						var n4 = $("#signList tbody tr input[name=empId]").eq(3).val();
+						if(n4){
+							opener.document.getElementById("n4").value=n4;
+						}
+						var n5 = $("#signList tbody tr input[name=empId]").eq(4).val();
+						if(n5){
+							opener.document.getElementById("n5").value=n5;
+						}
+						
+						var n6 = $("#signList tbody tr input[name=empId]").eq(5).val();
+						if(n6){
+							opener.document.getElementById("n6").value=n6;
 
+						}
+						
+						
+						
+						
+						
+						//결재자 아이디 배열에 담기
+						var signerId=new Array();
+						var cnt = $("#signList tbody input[name=empId]").length;
+						for(var i=0;i<cnt;i++){
+							signerId.push($("#signList tbody input[name=empId]").eq(i).val());
+						}
+						//결재자 이름 배열에 담기
+						var signerName=new Array();
+						cnt = $("#signList tbody input[name=empName]").length;
+						for(var i=0;i<cnt;i++){
+							signerName.push($("#signList tbody input[name=empName]").eq(i).val());
+						}
+
+						
+						opener.getSid(signerId);
+						opener.getSname(signerName);
+						
+						
+						
+						
+						// 참조자 쪽
+						var i1 = $("#refList tbody tr").eq(0).children().eq(2).text();
+						opener.document.getElementById("i1").value=i1;
+						var i2 = $("#refList tbody tr").eq(1).children().eq(2).text();
+						opener.document.getElementById("i2").value=i2;
+						var i3 = $("#refList tbody tr").eq(2).children().eq(2).text();
+						opener.document.getElementById("i3").value=i3;
+						var i4 = $("#refList tbody tr").eq(3).children().eq(2).text();
+						opener.document.getElementById("i4").value=i4;
+						var i5 = $("#refList tbody tr").eq(4).children().eq(2).text();
+						opener.document.getElementById("i5").value=i5;
+						var i6 = $("#refList tbody tr").eq(5).children().eq(2).text();
+						opener.document.getElementById("i6").value=i6;
+						
+						var l1 = $("#refList tbody tr input[name=empId]").eq(0).val();
+						if(l1){
+						opener.document.getElementById("l1").value=l1;
+						}
+						var l2 = $("#refList tbody tr input[name=empId]").eq(1).val();
+						if(l2){
+						opener.document.getElementById("l2").value=l2;
+						}
+						var l3 = $("#refList tbody tr input[name=empId]").eq(2).val();
+						if(l3){
+						opener.document.getElementById("l3").value=l3;
+						}
+						var l4 = $("#refList tbody tr input[name=empId]").eq(3).val();
+						if(l4){
+						opener.document.getElementById("l4").value=l4;
+						}
+						var l5 = $("#refList tbody tr input[name=empId]").eq(4).val();
+						if(l5){
+						opener.document.getElementById("l5").value=l5;
+						}
+						var l6 = $("#refList tbody tr input[name=empId]").eq(5).val();
+						if(l6){
+						opener.document.getElementById("l6").value=l6;
+						}
+						
+						// 수신참조자이름 출력/변수에 담기
+						var refName=new Array();
+						cnt = $("#refList tbody input[name=empName]").length;
+						for(var i=0;i<cnt;i++){
+							refName.push($("#refList tbody input[name=empName]").eq(i).val());
+							opener.document.getElementById("refArea").innerHTML+= 
+										"@"+ $("#refList tbody input[name=empName]").eq(i).val()+" ";
+						}
+						
+						
+						// 수신참조자 아이디 변수에 담기
+						var refId=new Array();
+						cnt = $("#refList tbody input[name=empId]").length;
+						for(var i=0;i<cnt;i++){
+							refId.push($("#refList tbody input[name=empId]").eq(i).val());
+						}
+						
+						
+						opener.getRefId(refId);
+						opener.getRefName(refName);
+						
+						window.self.close();
+					
+					}
+				});
+			</script>
+			 
+			</div>
 			<div id="wrap">
 				<!-- 좌측 조직도영역 -->
 				<div id="groupArea">
 					<ul class="group_tree">
-						<li><input type="checkbox" id="root"> <label
-							for="root"> ERgate</label>
-							<ul>
-								<li><a href="#"> 임원</a></li>
-								<li><a href="#"> 기술팀</a></li>
-								<li><a href="#"> 인사팀</a></li>
-								<li><a href="#"> 회계팀</a></li>
-								<li><a href="#"> 기술팀</a></li>
-							</ul></li>
+						<li><input type="checkbox" id="root"> 
+						<label for="root" class="deptList" key="all"> ERgate</label>
+							 <ul>
+			                        <li class="deptList" key="D0">└ 임원</li>
+			                        <li class="deptList" key="D1">└ 개발팀</li>
+			                        <li class="deptList" key="D2">└ 회계팀</li>
+			                        <li class="deptList" key="D3">└ 기술팀</li>
+			                        <li class="deptList" key="D4">└ 총무팀</li>
+			                        <li class="deptList" key="D5">└ 인사팀</li>
+			                    </ul>
+							</li>
 					</ul>
 				</div>
 
 				<!-- 중앙 리스트영역 -->
 				<div id="listArea">
 					<div style="width:100%;height:100%;overflow:auto;">
-						<table class="boardTable">
+						<table class="boardTable empList">
 							<thead>
 								<tr>
-									<th width="40"><input class="checkBox" type="checkbox" id="checkall"></th>
+									<th width="40"><input class="checkBoxAll" type="checkbox" id="checkall" style="zoom: 1.7;"></th>
 									<th>이름</th>
 									<th>부서</th>
 									<th width="120">직책/직급</th>
 								</tr>
 							</thead>
-							<tr>
-								<td><input name="chk" class="checkBox" type="checkbox"></td>
-								<td><span data-tooltip-text="sunny@ergate.com">써니</span></td>
-								<td>인사부</td>
-								<td>팀장/차장</td>
-							</tr>
-							<tr>
-								<td><input name="chk" class="checkBox" type="checkbox"></td>
-								<td><span data-tooltip-text="sunny@ergate.com">써니</span></td>
-								<td>인사부</td>
-								<td>팀장/차장</td>
-							</tr>
-							<tr>
-								<td><input name="chk" class="checkBox" type="checkbox"></td>
-								<td><span data-tooltip-text="sunny@ergate.com">써니</span></td>
-								<td>인사부</td>
-								<td>팀장/차장</td>
-							</tr>
+							<tbody>
+							<!-- 조회해온 사원정보 들어갈자리 -->
+							</tbody>
 						</table>
 					</div>	
 				</div>
 
 				<!-- 우측 선택영역 -->
 				<div id="selectArea">
-					<div id="signArea" style="height:320px;">
-						<button class="middleBtn">선택추가</button>
+					<div id="signArea">
+						<button class="middleBtn selSigner">선택추가</button>
 						<h2 style="display:inline-block;margin:0;">받는사람</h2>
 						<br><br>
-						<div style="width:100%;height:250px;overflow:auto;">
+						<div style="width:100%;height:280px;overflow:auto;">
 								<table id="signList" class="boardTable signSel">
-								<thead>
-									<tr>
-										<th width="100">이름</th>
-										<th>부서</th>
-										<th width="120">직책/직급</th>
-										<th width="40"></th>
-									</tr>
-								</thead>
-								<tr>
-									<td><span data-tooltip-text="sunny@ergate.com">써니</span></td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
-								<tr>
-									<td><span data-tooltip-text="sunny@ergate.com">써니</span></td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
-							</table>
+									<thead>
+										<tr>
+											<th width="100">이름</th>
+											<th>부서</th>
+											<th width="120">직책/직급</th>
+											<th width="40"></th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
 						</div>	
 					</div>
 					
-					<div id="refArea" style="height:320px;">
-						<button class="middleBtn">선택추가</button>
+					<div id="refArea">
+						<button class="middleBtn selRef">선택추가</button>
 						<h2 style="display:inline-block;margin:0;">참조</h2>
 						<br><br>
 						<div id="signSelDiv">
-							<div style="width:100%;height:250px;overflow:auto;">
-								<table class="boardTable signSel">
+							<div style="width:100%;height:280px;overflow:auto;">
+								<table id="refList" class="boardTable refSel">
 								<thead>
 									<tr>
 										<th width="100">이름</th>
@@ -410,26 +505,11 @@ div {
 										<th width="40"></th>
 									</tr>
 								</thead>
-								<tr>
-									<td><span data-tooltip-text="sunny@ergate.com">써니</span></td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
-								<tr>
-									<td><span data-tooltip-text="sunny@ergate.com">써니</span></td>
-									<td>인사부</td>
-									<td>팀장/차장</td>
-									<td><span class="material-icons btnDel">remove_circle</span></td>
-								</tr>
+								<tbody></tbody>
 								</table>
 							</div>	
 						</div>
 						
-					</div>
-					<div class="finishBtnArea" style="width:100%; height:70px; text-align:center; padding-top:17px;">
-					<button class="bigBtn" style="background: rgb(190, 190, 190);">취소</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="bigBtn">확인</button>
 					</div>
 				</div>
 			</div>
@@ -455,13 +535,182 @@ div {
 		$(document).on("click",".btnDel",function(){
 			$(this).parent().parent().remove();
 		});
+		
+		
+		// 결재자 추가
+		
+		var value1 = "";
+		
+		$(document).on("click",".selSigner",function(){
+			
+			 $('.checkBox:checked').each(function() {
+				var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
+				var nameVal = $(this).parent().parent().children("input[name=empName]").clone().wrapAll("<div/>").parent().html();
+				var name = $(this).parent().parent().children(".name").clone().wrapAll("<div/>").parent().html();
+				var dept = $(this).parent().parent().children(".dept").clone().wrapAll("<div/>").parent().html();
+				var jobRank = $(this).parent().parent().children(".jobRank").clone().wrapAll("<div/>").parent().html();
+				
+			
+				var regExp = new RegExp($(this).parent().parent().children("input[name=empId]").val());
+		       	
+				//$(this).removeAttr("checked");
+				
+				if(regExp.test($(".signSel tbody").html())){
+					console.log("중복");
+					return false;
+				}
+				 
+				value1 += '<tr>' +  id +nameVal+ name + dept + jobRank
+		       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
+		       			+ '</tr>';
+		       			
+				$(".signSel tbody").append(value1);
+				value1="";
+				//var test1 = $(".signSel").html();
+			//console.log("출력!!!"+test1);
+		   });
+			
+		});
+		
+		
 	</script>
 
+	<script>
+	
+	// 수신참조자 추가
+	var value2 = "";
+	
+	$(document).on("click",".selRef",function(){
+		$('.checkBox:checked').each(function() {
+			var id = $(this).parent().parent().children("input[name=empId]").clone().wrapAll("<div/>").parent().html();
+			var nameVal = $(this).parent().parent().children("input[name=empName]").clone().wrapAll("<div/>").parent().html();
+			var name = $(this).parent().parent().children(".name").clone().wrapAll("<div/>").parent().html();
+			var dept = $(this).parent().parent().children(".dept").clone().wrapAll("<div/>").parent().html();
+			var jobRank = $(this).parent().parent().children(".jobRank").clone().wrapAll("<div/>").parent().html();
+			
+		
+			var regExp = new RegExp($(this).parent().parent().children("input[name=empId]").val());
+	       	
+			//$(this).removeAttr("checked");
+			
+			if(regExp.test($(".refSel tbody").html())){
+				console.log("중복");
+				return false;
+			}
+			 
+			value2 += '<tr>' +  id +nameVal+ name + dept + jobRank
+	       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
+	       			+ '</tr>';
+	       			
+			$(".refSel tbody").append(value2);
+			value2="";
+		});
+		
+	});	
+	</script>
+	
+	
+	<script>
+	$(function(){
+		//selectNoList();
+
+		/* 조직도 부서별 사원 조회 */
+		$(".deptList").click(function(){
+			keyword =$(this).attr("key");
+			
+			$.ajax({
+				url: "deptEmpList.gr",
+				type: "post",
+				data:{"keyword":keyword}, 
+				async: false,
+				success: function(eList){
+				 	//console.log(eList);
+					var value = "";
+					
+					if(eList.length == 0){ // 리스트가 비어있을 경우
+		            	value = '<td colspan="4">조회된 사원이 없습니다. </td>';
+					}else{ // 리스트가 비어있지 않을 경우
+		            	//console.log(eList[0]);
+						for(var i in eList){
+							
+							var empName = eList[i].empName;
+							var empId = eList[i].empId;
+							var empRank = eList[i].rankTitle;
+							var empJob = eList[i].jobTitle;
+							var empDept = eList[i].deptTitle;
+							
+							value += '<tr><input type="hidden" name="empId" value="'+empId+'">' +
+									 '<input type="hidden" name="empName" value="'+empName+'">' +
+									 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
+									 '<td class="name">'+empName + '</td>' +
+									 '<td class="dept">'+ empDept + '</td>' +
+									 '<td class="jobRank" width="120">'+empJob+'/'+empRank+'</td></tr>';							 
+							
+						}
+						$(".empList tbody").html(value);
+					} 
+					
+				},
+				error:function(){
+					console.log("조직도 부서별 사원 리스트 조회 실패");
+				}
+			});
+		});
+
+	});
+	
+	
+	function searchEmpProfile(){
+		condition = $("#condition option:selected").val();
+		keyword = $("#keyword").val();
+		if(keyword==''){
+			alert("키워드를 입력하세요");
+			return;
+		}
+		$.ajax({
+			url:"empListSearch.gr",
+			type:"get",
+			data:{condition:condition,
+				 keyword:keyword},
+			success: function(list){
+			console.log(list);
+				var value = "";
+				
+				if(list.length == 0){ // 리스트가 비어있을 경우
+					value = '<td colspan="4">조회된 사원이 없습니다. </td>';
+				}else{ // 리스트가 비어있지 않을 경우
+	            
+					for(var i in list){
+
+						var empName = list[i].empName;
+						var empId = list[i].empId;
+						var empRank = list[i].rankTitle;
+						var empJob = list[i].jobTitle;
+						var empDept = list[i].deptTitle;
+						
+						value += '<tr><input type="hidden" name="empId" value="'+empId+'">' + 
+						 '<td><input name="chk" class="checkBox" type="checkbox"></td>' +
+						 '<td>'+empName + '</td>' +
+						 '<td>'+ empDept + '</td>' +
+						 '<td width="120">'+empJob+'/'+empRank+'</td></tr>';	
+					}
+				}
+				$(".empList tbody").html(value);
+			},
+			error:function(){
+				console.log("조직도 사원 리스트조회용 통신 실패");
+			}
+			
+		})
+		
+	}
+	</script>
+	
+	
+	
 	<!-- 팝업창 자동 사이즈맞춤용 스크립트 -->
 	<script>
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							// 팝업 창 크기를 HTML 크기에 맞추어 자동으로 크기를 조정하는 함수.
 							var strWidth;
 							var strHeight;
@@ -494,7 +743,7 @@ div {
 
 							//resize
 							window.resizeTo(strWidth, strHeight);
-						});
+		});
 	</script>
 
 </body>

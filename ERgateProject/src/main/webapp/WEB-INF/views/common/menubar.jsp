@@ -158,6 +158,14 @@ button:focus{
 </style>
 </head>
 <body>
+	<c:if test="${!empty msg2 }">
+			<script>
+				alert("${msg2}");
+				
+			</script>
+			<c:remove var="msg2" scope="session"/>
+	</c:if>
+
 	<div class="menubar">
 		<!-- 로고영역 -->
 		<div id="logoArea" onclick="location.href='main.ma';">
@@ -322,9 +330,9 @@ button:focus{
 	             data:{empId:"${loginUser.empId}", workDate:d , clockIn:c},
 	             type:"POST",
 	             success:function(att){	            	
-	            	 alert("출근성공");	                
+	            	 alert("msg2", "출근 오늘하루도화이팅입니다.");	                
 	             },errorPage:function(){
-	                console.log("출석 갱신 실패");
+	                console.log("msg2", "출석 갱신 실패");
 	             }
 	          });			
   		}); 
@@ -339,10 +347,10 @@ button:focus{
 	             data:{empId:"${loginUser.empId}", clockOut:c},
 	             type:"POST",
 	             success:function(att){
-	            	 alert("퇴근성공");
+	            	 alert("msg2", "퇴근 오늘하루고생하셨습니다.");
 	                
 	             },errorPage:function(){
-	                console.log("퇴근 갱신 실패");
+	                console.log("msg", "퇴근 갱신 실패");
 	             }
 	          });			
   		}); 

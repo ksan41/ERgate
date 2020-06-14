@@ -106,6 +106,10 @@ public class MailServiceImpl implements MailService {
 	public Email nowMailNo() {
 		return milDao.nowMailNo(sqlSession);
 	}
+	@Override
+	public String loadMailnameTo(String toname) {
+		return milDao.loadMailnameTo(sqlSession, toname);
+	}
 
 
 
