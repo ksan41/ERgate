@@ -333,7 +333,7 @@
 							<tr>
 								<th class="mainLabel">
 									<img src="${ pageContext.servletContext.contextPath }/resources/icons/mail.png" onclick="location.href='mailbox.ml';" class="cursorPointer">
-									<span style="vertical-align: top;" onclick="location.href='mailbox.ml';" class="cursorPointer">전자메일</span>
+									<span style="vertical-align: top;" onclick="location.href='list.mil?currentPage=1&mailOwn=${loginUser.empId}';" class="cursorPointer">전자메일</span>
 								</th>
 								<td class="mainNextArea">
 									<button class="mainNextBtn cursorPointer" onclick="location.href='mailbox.ml';">
