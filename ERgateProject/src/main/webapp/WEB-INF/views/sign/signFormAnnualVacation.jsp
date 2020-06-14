@@ -301,9 +301,9 @@ h2, h3 {
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
 				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
-				<li><button class="subBtn subActive" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
+				<li><button class="subBtn " onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
 				<c:if test="${loginUser.deptCode eq 'D2' }">
-					<li><button class="subBtn subActive"
+					<li><button class="subBtn "
 							onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
 				</c:if>
 				<c:if test="${loginUser.deptCode eq 'D5' }">

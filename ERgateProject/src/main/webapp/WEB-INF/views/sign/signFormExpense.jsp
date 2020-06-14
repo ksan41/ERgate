@@ -297,25 +297,24 @@ h2, h3 {
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn"
-						onclick="location.href='waitingList.si';">결재대기함</button></li>
-				<li><button class="subBtn"
-						onclick="location.href='ongoingList.si';">진행결재함</button></li>
-				<li><button class="subBtn subActive"
-						onclick="location.href='reportList.si';">상신내역</button></li>
-				<li><button class="subBtn"
-						onclick="location.href='expenseList.si';">지출결의내역</button></li>
-				<li><button class="subBtn">외근&휴가내역</button></li>
+				<li><button class="subBtn" onclick="location.href='waitingList.si?currentPage=1';">결재대기함</button></li>
+				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
+				<li><button class="subBtn " onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
+				<c:if test="${loginUser.deptCode eq 'D2' }">
+					<li><button class="subBtn "
+							onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+				</c:if>
+				<c:if test="${loginUser.deptCode eq 'D5' }">
+					<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
+				</c:if>	
 			</ul>
 		</div>
 		<div class="contentArea">
 			<!-- 내용 작성 영역 입니다-->
 			<h1>지출결의서</h1>
 			<div id="btnArea">
-				<button type="button" class="bigBtn"
-					style="background: rgb(190, 190, 190);">임시저장</button>
 				<button type="button" class="bigBtn" id="signSubmit"
-					onclick="uploadFile();">기안등록</button>
+					onclick="uploadFile();" style="margin-left: 150px;">기안등록</button>
 			</div>
 			<br>
 			<form id="signForm" name="signForm" enctype="multipart/form-data"
