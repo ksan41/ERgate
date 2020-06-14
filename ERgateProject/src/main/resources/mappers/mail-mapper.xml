@@ -262,4 +262,25 @@
 	where mail_To = #{mailOwn} and mail_import_Flag = 'Y' and mail_status='Y'
 	</select>
 	
+	<select id="miniFromMailList" parameterType="String" resultMap="emailResultSet">
+		select * 
+		  from email
+		 where mail_status='Y' and mail_to = #{mailOwn}
+		 order by mail_no desc
+	</select>
+	<select id="miniToMailList" parameterType="String" resultMap="emailResultSet">
+		select * 
+		  from email
+		 where mail_status='Y' and mail_From = #{mailOwn}
+		 order by mail_no desc
+	</select>
+	<select id="miniImportMailList" parameterType="String" resultMap="emailResultSet">
+		select *
+		from (select * 
+			  from email
+			  where mail_from = #{mailOwn} or mail_to = #{mailOwn})
+		where mail_status='Y' and mail_import_flag='Y'
+		order by mail_date desc
+	</select>
+	
 </mapper>

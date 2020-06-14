@@ -47,6 +47,11 @@ public interface MailService {
 	int fromMail(String mailOwn);
 	int importMail(String mailOwn);
 	
+	
+	ArrayList<Email> miniFromMailList(String mailOwn);
+	ArrayList<Email> miniToMailList(String mailOwn);
+	ArrayList<Email> miniImportMailList(String mailOwn);
+	
 
 	
 	

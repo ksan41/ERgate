@@ -134,6 +134,21 @@ public class MailServiceImpl implements MailService {
 	public int importMail(String mailOwn) {
 		return milDao.importMail(sqlSession, mailOwn);
 	}
+	
+	
+	
+	@Override
+	public ArrayList<Email> miniFromMailList(String mailOwn) {
+		return milDao.miniFromMailList(sqlSession, mailOwn);
+	}
+	@Override
+	public ArrayList<Email> miniToMailList(String mailOwn) {
+		return milDao.miniToMailList(sqlSession, mailOwn);
+	}
+	@Override
+	public ArrayList<Email> miniImportMailList(String mailOwn) {
+		return milDao.miniImportMailList(sqlSession, mailOwn);
+	}
 
 
 

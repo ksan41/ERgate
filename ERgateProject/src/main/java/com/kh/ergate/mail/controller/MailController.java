@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.kh.ergate.mail.model.vo.SearchCondition;
 import com.kh.ergate.mail.model.vo.mainCount;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.ergate.board.model.vo.Board;
 import com.kh.ergate.board.model.vo.BoardAttachment;
 import com.kh.ergate.common.model.vo.PageInfo;
@@ -368,6 +369,27 @@ public class MailController {
 		mc.setImportMail(milService.importMail(mailOwn));
 			
 		return mc;
+	}
+	
+	@ResponseBody
+	@RequestMapping("miniFromMailList.mil")
+	public ArrayList<Email> miniFromMailList(String mailOwn) {
+		
+		ArrayList<Email> list = milService.miniFromMailList(mailOwn);
+		return list;
+	}
+	@ResponseBody
+	@RequestMapping("miniToMailList.mil")
+	public ArrayList<Email> miniToMailList(String mailOwn) {
+		
+		ArrayList<Email> list = milService.miniToMailList(mailOwn);
+		return list;
+	}
+	@ResponseBody
+	@RequestMapping("miniImportMailList.mil")
+	public ArrayList<Email> miniImportMailList(String mailOwn) {
+		ArrayList<Email> list = milService.miniImportMailList(mailOwn);
+		return list;
 	}
 	
 	

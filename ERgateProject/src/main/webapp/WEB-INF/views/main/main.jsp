@@ -222,6 +222,10 @@
     	border-bottom: 2px solid rgb(26, 188, 156);
     	cursor: pointer;
     }
+    .selectedThDiv {
+    	border-bottom: 2px solid rgb(26, 188, 156);
+    	cursor: pointer;
+    }
 	/* 메일, 결재 영역 */
 
     
@@ -252,6 +256,11 @@
 		background-color: rgb(224, 224, 224);
 		cursor: pointer;
 	}
+	
+	.madeCols {
+		width:84px;
+	}
+	
 	/* 게시판 스타일 */
 .nonContent {
 	cursor : default;
@@ -364,6 +373,10 @@
 										</table>
 										<script>
 										$(document).ready(function() {
+											$(document).on("click","#mailMailBoard",function(){
+												var mailNo = $(this).find('input[name=mailNo]').val();
+												console.log("gg");
+											})
 											$.ajax({
 									            url : "mailCount.mil",
 									            data : {mailOwn:'${loginUser.empId}'},
@@ -376,6 +389,158 @@
 														console.log("ajax 통신 실패!");
 												}
 									        });
+											
+											$.ajax({
+									            url : "miniFromMailList.mil",
+									            data : {mailOwn:'${loginUser.empId}'},
+									            success : function(list) {
+									            	var value="";
+									            	if(list.length < 3){
+									            		for(var i in list){
+									            			value += "<tr>" +
+																		 "<td class='madeCols'>" + list[i].mailFrom + "</td>" +
+																		 "<td>" + list[i].mailTitle + "</td>" +
+																		 "<input type='hidden' name='mailNo' value='" + list[i].mailNo + "'>" +
+																	 "</tr>";
+									            		}
+									            		for(var z=0; z<(3-list.length); z++){
+									            			value += "<tr>" +
+																		"<td></td>" +
+																		"<td></td>" +
+																	"</tr>";
+									            		}
+									            	
+									            	}else {
+									            		for(var y=0; y<3; y++){
+									            			value += "<tr>" +
+																		 "<td class='madeCols'>" + list[y].mailFrom + "</td>" +
+																		 "<td>" + list[y].mailTitle + "</td>" +
+																		 "<input type='hidden' name='mailNo' value='" + list[y].mailNo + "'>" +
+																	 "</tr>";
+									            		}
+									            	}
+									            		
+									            	$("#mainMailBoard").children().html(value);
+									            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+														console.log("ajax 통신 실패!");
+												}
+									        });
+											
+											
+											
+											$("#miniMail1").click(function(){
+												$.ajax({
+										            url : "miniFromMailList.mil",
+										            data : {mailOwn:'${loginUser.empId}'},
+										            success : function(list) {
+										            	var value="";
+										            	if(list.length < 3){
+										            		for(var i in list){
+										            			value += "<tr>" +
+																			 "<td class='madeCols'>" + list[i].mailFrom + "</td>" +
+																			 "<td>" + list[i].mailTitle + "</td>" +
+																			 "<input type='hidden' name='mailNo' value='" + list[i].mailNo + "'>" +
+																		 "</tr>";
+										            		}
+										            		for(var z=0; z<(3-list.length); z++){
+										            			value += "<tr>" +
+																			"<td></td>" +
+																			"<td></td>" +
+																		"</tr>";
+										            		}
+										            	
+										            	}else {
+										            		for(var y=0; y<3; y++){
+										            			value += "<tr>" +
+																			 "<td class='madeCols'>" + list[y].mailFrom + "</td>" +
+																			 "<td>" + list[y].mailTitle + "</td>" +
+																			 "<input type='hidden' name='mailNo' value='" + list[y].mailNo + "'>" +
+																		 "</tr>";
+										            		}
+										            	}
+										            		
+										            	$("#mainMailBoard").children().html(value);
+										            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+															console.log("ajax 통신 실패!");
+													}
+										        });
+											})
+											$("#miniMail2").click(function(){
+												$.ajax({
+										            url : "miniToMailList.mil",
+										            data : {mailOwn:'${loginUser.empId}'},
+										            type : 'POST',
+										            success : function(list) {
+										            	var value="";
+										            	if(list.length < 3){
+										            		for(var i in list){
+										            			value += "<tr>" +
+																			 "<td class='madeCols'>" + list[i].mailFrom + "</td>" +
+																			 "<td>" + list[i].mailTitle + "</td>" +
+																			 "<input type='hidden' name='mailNo' value='" + list[i].mailNo + "'>" +
+																		 "</tr>";
+										            		}
+										            		for(var z=0; z<(3-list.length); z++){
+										            			value += "<tr>" +
+																			"<td></td>" +
+																			"<td></td>" +
+																		"</tr>";
+										            		}
+										            	
+										            	}else {
+										            		for(var y=0; y<3; y++){
+										            			value += "<tr>" +
+																			 "<td class='madeCols'>" + list[y].mailFrom + "</td>" +
+																			 "<td>" + list[y].mailTitle + "</td>" +
+																			 "<input type='hidden' name='mailNo' value='" + list[y].mailNo + "'>" +
+																		 "</tr>";
+										            		}
+										            	}
+										            		
+										            	$("#mainMailBoard").children().html(value);    
+										            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+															console.log("ajax 통신 실패!");
+													}
+										        });
+											})
+											$("#miniMail3").click(function(){
+												$.ajax({
+										            url : "miniImportMailList.mil",
+										            data : {mailOwn:'${loginUser.empId}'},
+										            type : 'POST',
+										            success : function(list) {
+										            	var value="";
+										            	if(list.length < 3){
+										            		for(var i in list){
+										            			value += "<tr>" +
+																			 "<td class='madeCols'>" + list[i].mailFrom + "</td>" +
+																			 "<td>" + list[i].mailTitle + "</td>" +
+																			 "<input type='hidden' name='mailNo' value='" + list[i].mailNo + "'>" +
+																		 "</tr>";
+										            		}
+										            		for(var z=0; z<(3-list.length); z++){
+										            			value += "<tr>" +
+																			"<td></td>" +
+																			"<td></td>" +
+																		"</tr>";
+										            		}
+										            	
+										            	}else {
+										            		for(var y=0; y<3; y++){
+										            			value += "<tr>" +
+																			 "<td class='madeCols'>" + list[y].mailFrom + "</td>" +
+																			 "<td>" + list[y].mailTitle + "</td>" +
+																			 "<input type='hidden' name='mailNo' value='" + list[y].mailNo + "'>" +
+																		 "</tr>";
+										            		}
+										            	}
+										            		
+										            	$("#mainMailBoard").children().html(value);   
+										            },error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+															console.log("ajax 통신 실패!");
+													}
+										        });
+											})
 										});
 										</script>
 									</div>
@@ -383,9 +548,9 @@
 							</tr>
 							<tr>
 								<td colspan="2" id="mainMailThArea">
-									<div id="mainMailTh1" class="thDiv">받은 메일함</div>
-									<div id="mainMailTh2" class="thDiv">보낸 메일함</div>
-									<div id="mainMailTh3" class="thDiv">중요 메일함</div>
+									<div id="mainMailTh1" class="thDiv"><label id="miniMail1">받은 메일함</label></div>
+									<div id="mainMailTh2" class="thDiv"><label id="miniMail2">보낸 메일함</label></div>
+									<div id="mainMailTh3" class="thDiv"><label id="miniMail3">중요 메일함</label></div>
 								</td>
 							</tr>
 							<tr>
@@ -393,8 +558,7 @@
 									<!-- 게시판 -->
 									<table id="mainMailBoard" class="boardTable">
 										<tr>
-											<td>user01</td>
-											<td>메일 보냈습니다. 확인해주세요.</td>
+											<td colspan="2">메일함이 비어있습니다.</td>
 										</tr>
 										<tr>
 											<td></td>

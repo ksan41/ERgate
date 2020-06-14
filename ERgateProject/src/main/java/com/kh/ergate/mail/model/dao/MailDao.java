@@ -132,6 +132,15 @@ public class MailDao {
 	public int importMail(SqlSessionTemplate sqlSession, String mailOwn) {
 		return sqlSession.selectOne("mailMapper.importMail", mailOwn);
 	}
+	public ArrayList<Email> miniFromMailList(SqlSessionTemplate sqlSession, String mailOwn) {
+		return (ArrayList)sqlSession.selectList("mailMapper.miniFromMailList", mailOwn);
+	}
+	public ArrayList<Email> miniToMailList(SqlSessionTemplate sqlSession, String mailOwn) {
+		return (ArrayList)sqlSession.selectList("mailMapper.miniToMailList", mailOwn);
+	}
+	public ArrayList<Email> miniImportMailList(SqlSessionTemplate sqlSession, String mailOwn) {
+		return (ArrayList)sqlSession.selectList("mailMapper.miniImportMailList", mailOwn);
+	}
 
 
 
