@@ -13,32 +13,19 @@ public interface MeetingroomService {
 	// 현재 예약현황 조회용 --- currentStatusList()
 	public ArrayList<MeetingroomReservation> currentStatusList(String date);
 
-	// 회의실 예약용 ---reserveMtroom(MeetingroomReservation,ArrayList<String> empId)
-	int reserveMtroom(MeetingroomReservation mr);
-
-	// 예약상세 조회용 ---reserveDetail(int reservNo)
-	int reserveDetail(int reservNo);
-
 	// 나의 예약현황 총 개수 조회용 서비스
 	int selectRvListCount(String empId);
+
+	// 회의실 예약용 ---reserveMtroom(MeetingroomReservation,ArrayList<String> empId)
+	int reserveMtroom(MeetingroomReservation mr);
 	
 	// 내 예약현황 리스트 조회용 --- myReserveList(String empId)
 	ArrayList<MeetingroomReservation> myReserveList(String empId, PageInfo pi);
 	
+	ArrayList<MeetingroomReservation> selectCurrentStatus(String currentDate);
+	
 	// 예약취소용---cancelReserve(int mtrmReservNo)
 	int cancelReserve(int mtrmReserveNo);
-
-	// 회의실 총 개수 조회용 서비스
-	int statusListCount();
-
-	// 회의실 예약현황 리스트 조회용--- statusList(Meetingroom)
-	ArrayList<MeetingroomReservation> statusList(PageInfo pi);
-
-	
-	public ArrayList<MeetingroomReservation> searchList(String date);
-	
-	// 회의실 예약현황(관리자쪽)
-	public ArrayList<MeetingroomReservation> statusListMonth(String month);
 
 	// 
 	ArrayList<MeetingroomReservation> reserveMeetingroomList(String date, PageInfo pi);

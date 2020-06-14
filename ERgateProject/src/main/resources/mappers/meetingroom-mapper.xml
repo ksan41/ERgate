@@ -34,14 +34,6 @@
 		where mtrm_reserve_status='Y'
 	</select>
 
-	<!-- 관리자 예약리스트 조회용 -->
-	<select id="statusList" resultMap="MeetingroomReservationResultSet">
-		select *
-		  from meetingroom_reservation
-		 where mtrm_reserve_status='Y'
-	</select>
-
-	<!--  -->
 	<select id="currentStatusList" resultMap="MeetingroomReservationResultSet">
 		SELECT *
 		FROM MEETINGROOM_RESERVATION
@@ -65,7 +57,7 @@
 	<!-- 회의실 예약하기 -->
 	<insert id="reserveMtroom" parameterType="MeetingroomReservation">
 		insert into meetingroom_reservation 
-		values(seq_mreserv_no.nextval, #{empId}, #{mtrmCode}, SYSDATE, #{deptTitle},
+		values(seq_mreserve_no.nextval, #{empId}, #{mtrmCode}, SYSDATE, #{deptTitle},
 			   #{mtrmStartDate}, #{mtrmStartTime},  #{mtrmEndDate}, #{mtrmEndTime}, #{mtrmPurpose}, 'Y')
 	</insert>
 	
@@ -93,7 +85,7 @@
 		 order by mtrm_reserve_date desc
 	</select>
 	
-	<update id="cancelReserve" parameterType="string">
+	<update id="cancelReserve" parameterType="_int">
 		UPDATE MEETINGROOM_RESERVATION
 		   SET MTRM_RESERVE_STATUS='N'
 		 WHERE MTRM_RESERVE_NO=#{mtrmReserveNo}
@@ -103,7 +95,8 @@
 		UPDATE MEETINGROOM
 		   SET MTRM_NAME=#{mtrmName},
 		   	   MTRM_LOCATION=#{mtrmLocation},
-		   	   MTRM_CAPACITY=#{mtrmCapacity}
+		   	   MTRM_CAPACITY=#{mtrmCapacity},
+		   	   MTRM_IMAGE=#{mtrmImage}
 		 WHERE MTRM_CODE=#{mtrmCode}
 	</update>
 

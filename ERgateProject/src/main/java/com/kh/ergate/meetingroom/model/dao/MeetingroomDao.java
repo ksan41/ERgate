@@ -24,16 +24,6 @@ public class MeetingroomDao {
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.currentStatusList", date);
 	}
 	
-	public ArrayList<MeetingroomReservation> statusList(SqlSessionTemplate sqlSession, PageInfo pi){
-		
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.statusList", null, rowBounds);
-		
-	}
-	
 	public int selectMtroomDetailListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("meetingroomMapper.selectMtroomDetailListCount");
 	}
@@ -99,6 +89,9 @@ public class MeetingroomDao {
 	public int reserveMeetingroomListCount(SqlSessionTemplate sqlSession, String date) {
 		return sqlSession.selectOne("meetingroomMapper.reserveMeetingroomListCount", date);
 	}
-
+	
+	public ArrayList<MeetingroomReservation> selectCurrentStatus(SqlSessionTemplate sqlSession, String currentDate) {
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectCurrentStatus", currentDate);
+	}
 
 }

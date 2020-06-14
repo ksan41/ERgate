@@ -215,7 +215,7 @@
 			<!-- 달력 설정 부분 -->
 			<h2 style="display: inline-block; margin-left: 430px;">
 				<span id="arrowLeft" class="material-icons"> arrow_left </span> 
-				<b id="calYear"></b>년 <b id="calMonth"></b>월
+				<b id="calYear"></b>년 <b id="calMonth"></b>월&nbsp;
 
 				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24" fill="black" width="48px" height="48px">
@@ -235,11 +235,11 @@
 			<table id="reservationList" class="boardTable">
 				<thead>
 					<tr>
-						<th>부서명</th>
-						<th>예약자</th>
-						<th>회의실</th>
-						<th style="width: 400px">사용목적</th>
-						<th style="width: 350px">사용기간</th>
+						<th style="width:200px">부서명</th>
+						<th style="width:200px">예약자</th>
+						<th style="width:200px">회의실</th>
+						<th style="width:200px">사용목적</th>
+						<th style="width:400px">사용기간</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -249,7 +249,6 @@
 
 			<!-- 페이징바 -->
 			<div id="pagingArea"></div>
-			<!-- 페이징바 -->
 			
 		</div>
 	</div>
@@ -274,39 +273,49 @@
 				$("#calMonth").text(month);
 			}
 			
+			listAjax(1);
 			
 			/* 이전으로  */
 			$("#arrowLeft").click(function() {
 				
-				date.setTime(date.getTime() - (1 * 24 * 60 * 60 * 1000)); //1일전
-
-				year = date.getFullYear();
-				month = date.getMonth() + 1;
-				
-				console.log(year);
-				console.log(month);
+				month = month - 1;
+				if (month < 1) {
+					month = 12;
+					year = year - 1;
+				}
 				
 				$("#calMonth").text(month);
 				$("#calYear").text(year);
 				
 				$("input[name=month]").attr("value", month);
 				$("input[name=year]").attr("value", year);
-
-				$("#changeMonthForm").submit();
-
-			});
-
+				
+				if(newYear != ""){
+					newMonth = newMonth - 1;
+					if (newMonth < 1) {
+						newMonth = 12;
+						newYear = newYear - 1;
+					}
+					$("#calMonth").text(newMonth);
+					$("#calYear").text(newYear);
+					
+					$("input[name=month]").attr("value",newMonth);
+					$("input[name=year]").attr("value",newYear);
+				}
+				
+				listAjax(1);
+				
+			});	
 			
 			/* 다음으로 */
+
 			$("#arrowRight").click(function() {
 				
-				date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); //1일전
-
-				year = date.getFullYear();
-				month = date.getMonth() + 1;
-				
-				console.log(year);
-				console.log(month);
+				month = parseInt(month) + 1;
+				if (month > 12) {
+					month = 1;
+					year = parseInt(year) + 1;
+				}
 				
 				$("#calMonth").text(month);
 				$("#calYear").text(year);
@@ -314,9 +323,23 @@
 				$("input[name=month]").attr("value", month);
 				$("input[name=year]").attr("value", year);
 				
-				$("#changeMonthForm").submit(); 
-			});
-
+				if(newYear != ""){
+					newMonth = parseInt(newMonth) + 1;
+					if (newMonth > 12) {
+						newMonth = 1;
+						newYear = parseInt(newYear) + 1;
+					}
+					$("#calMonth").text(newMonth);
+					$("#calYear").text(newYear);
+					
+					$("input[name=month]").attr("value",newMonth);
+					$("input[name=year]").attr("value",newYear);
+				}
+				
+				listAjax(1);
+				
+			});	
+		
 		});
 	</script>
 
@@ -413,14 +436,6 @@
 			});
 		}
 	</script>
-		
-		
-	
-		
-		
-		
-		
-
 
 </body>
 </html>

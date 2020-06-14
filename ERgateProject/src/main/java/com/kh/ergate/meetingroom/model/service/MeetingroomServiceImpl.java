@@ -28,11 +28,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	}
 
 	@Override
-	public int reserveDetail(int reservNo) {
-		return 0;
-	}
-
-	@Override
 	public int cancelReserve(int mtrmReserveNo) {
 		return mrDao.cancelReserve(sqlSession, mtrmReserveNo);
 	}
@@ -40,18 +35,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	@Override
 	public int insertMeetingroom(Meetingroom m) {
 		return mrDao.insertMeetingroom(sqlSession, m);
-	}
-
-	// 회의실 예약현황 리스트 조회용-
-	@Override
-	public int statusListCount() {
-		return mrDao.statusListCount(sqlSession);
-	}
-
-	// 회의실예약현황리스트조회용
-	@Override
-	public ArrayList<MeetingroomReservation> statusList(PageInfo pi) {
-		return mrDao.statusList(sqlSession, pi);
 	}
 
 	// 회의실 예약용
@@ -78,16 +61,6 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 		return mrDao.myReserveList(sqlSession, empId, pi);
 	}
 
-	@Override
-	public ArrayList<MeetingroomReservation> searchList(String date) {
-		return mrDao.searchList(sqlSession, date);
-	}
-
-	@Override
-	public ArrayList<MeetingroomReservation> statusListMonth(String month) {
-		return mrDao.statusListMonth(sqlSession, month);
-	}
-
 	// 회의실 리스트 조회용 서비스 -관리자
 	@Override
 	public int selectMtroomDetailListCount() {
@@ -111,12 +84,17 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 
 	@Override
 	public ArrayList<MeetingroomReservation> reserveMeetingroomList(String date, PageInfo pi) {
-		return mrDao.reserveMeetingroomList(sqlSession, date);
+		return mrDao.reserveMeetingroomList(sqlSession, date, pi);
 	}
 
 	@Override
 	public int reserveMeetingroomListCount(String date) {
-		return mrDao.reserveMeetingroomListCount(sqlSession);
+		return mrDao.reserveMeetingroomListCount(sqlSession, date);
+	}
+
+	@Override
+	public ArrayList<MeetingroomReservation> selectCurrentStatus(String currentDate) {
+		return mrDao.selectCurrentStatus(sqlSession, currentDate);
 	}
 
 	

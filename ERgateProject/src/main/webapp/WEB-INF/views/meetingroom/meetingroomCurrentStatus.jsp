@@ -583,8 +583,8 @@ p {
 		<!-- 모달 (예약하기 부분) -->
 		<div id="open_reservation" class="modal" style="height: 730px;">
 			<div class="modal-title">회의실 예약</div>
-			<div class="modal-content">
-				<form action="reserveMtroom.me" id="reservationForm" name="reservationForm">
+			<form action="reserveMtroom.me" action="post"> <!-- id="reservationForm" name="reservationForm" -->
+				<div class="modal-content">
 					<table class="reservationContent">
 						<input type="hidden" name="empId" value="${ loginUser.empId }"/>
 						<input type="hidden" name="deptTitle" value="${ loginUser.deptTitle }"/>
@@ -597,7 +597,7 @@ p {
 							<td id="r2">
 								<input type="text" name="mtrmStartDate" class="inputs" style="width: 140px" required readonly> 
 								<select name="mtrmStartTime" class="inputs" style="width: 120px" required>
-									<option disabled selected>시작 시각</option>
+									<option disabled>시작 시각</option>
 									<option value="10">10:00</option>
 									<option value="11">11:00</option>
 									<option value="12">12:00</option>
@@ -611,7 +611,7 @@ p {
 								</select>
 								<img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg"> 
 								<input type="text" name="mtrmEndDate" class="inputs" style="width: 140px" required readonly> 
-								<select name="mtrmEndTime" class="inputs" style="width: 120px" required>
+								<select name="mtrmEndTime" class="inputs" style="width: 110px" required>
 									<option disabled selected>종료 시각</option>
 									<option value="10">10:00</option>
 									<option value="11">11:00</option>
@@ -630,8 +630,8 @@ p {
 						<tr>
 							<td id="r1">회의실</td>
 							<td id="r2">
-							<select id="meetingroomSelect" name="mtrmCode" class="inputs" style="width: 120px">
-									<option selected disabled>회의실 선택</option>
+							<select id="meetingroomSelect" name="mtrmCode" class="inputs" style="width:180px; height:33px;" required>
+									<option disabled>회의실 선택</option>
 									<option value="1">미팅룸1</option>
 									<option value="2">미팅룸2</option>
 									<option value="3">미팅룸3</option>
@@ -645,18 +645,19 @@ p {
 						<tr>
 							<td id="r1">사용목적</td>
 							<td id="r2">
-								<input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" value="${ mr.mtrmPurpose }">
+								<input type="text" placeholder="내용을 입력하세요" class="inputs" name="mtrmPurpose" required>
 							</td>
 						</tr>
 					</table>
-				</form>
+				
 			</div>
 
 			<!-- 예약/취소 버튼 -->
 			<div class="btns">
-				<button id="reservBtn" type="button">예약하기</button>
+				<button id="reservBtn" type="submit">예약하기</button>
 				<button id="resetBtn" type="reset" onclick="history.go(0)">취소</button>
 			</div>
+			</form>
 		</div>
 
 
@@ -1089,35 +1090,7 @@ p {
 	
 	<!-- 예약하기 모달 스크립트 -->
 	
-	<script>
-		/* 예약하기 ajax*/
-		$(function(){
-
-			$("#reservBtn").click(function(){
-				
-				console.log($("form[name=reservationForm]"));
-				
-			 	var queryString = $("form[name=reservationForm]").serialize() ;
-			 	console.log(queryString);
-				
-				$.ajax({
-					url:"reserveMtroom.me",
-					data:queryString,
-					type:"post",
-					dataType:'json',
-					 error: function(xhr, status, error){
-			                alert(error);
-			            },
-			            success : function(json){
-			                alert(json)
-			            },
-
-
-				});
-				
-			});
-		});
-	</script>
+	
 	
 	<!-- 가용회의실 검색  -->
 	<script>
