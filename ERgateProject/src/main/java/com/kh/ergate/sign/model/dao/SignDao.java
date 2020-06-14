@@ -122,4 +122,16 @@ public class SignDao {
 	public int updateSignDoc(SqlSessionTemplate sqlSession,Signer si) {
 		return sqlSession.update("signMapper.updateSignDoc",si);
 	}
+	
+	public ArrayList<SignDocument> selectWaitingListMain(SqlSessionTemplate sqlSession,String empId) {
+		return (ArrayList)sqlSession.selectList("signMapper.selectWaitingList",empId);
+	}
+	
+	public ArrayList<SignDocument> ongoingListMain(SqlSessionTemplate sqlSession,String empId) {
+		return (ArrayList)sqlSession.selectList("signMapper.ongoingList",empId);
+	}
+	
+	public ArrayList<SignDocument> reportListMain(SqlSessionTemplate sqlSession,SignDateSearch sds) {
+		return (ArrayList)sqlSession.selectList("signMapper.reportList",sds);
+	}
 } 

@@ -138,10 +138,28 @@ public class SignServiceImpl implements SignService{
 		return siDao.updateSign(sqlSession,si);
 	}
 
-
+	// 결재순서 마지막일 경우, 결재문서 상태값 변경용
 	@Override
 	public int updateSignDoc(Signer si) {
 		return siDao.updateSignDoc(sqlSession,si);
+	}
+
+	//결재대기함 메인페이지용
+	@Override
+	public ArrayList<SignDocument> selectWaitingListMain(String empId) {
+		return siDao.selectWaitingListMain(sqlSession,empId);
+	}
+
+	//진행결재함 메인페이지용
+	@Override
+	public ArrayList<SignDocument> ongoingListMain(String empId) {
+		return siDao.ongoingListMain(sqlSession,empId);
+	}
+
+	//상신내역 메인페이지용
+	@Override
+	public ArrayList<SignDocument> reportListMain(SignDateSearch sds) {
+		return siDao.reportListMain(sqlSession,sds);
 	}
 
 
