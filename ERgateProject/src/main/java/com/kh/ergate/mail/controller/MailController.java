@@ -217,14 +217,14 @@ public class MailController {
 		//System.out.println(files.length);
 		String title[] = form.getParameterValues("mailTitle");
 		String content[] = form.getParameterValues("mailContent");
-		String to[] = form.getParameterValues("mailTo");
+		String tto[] = form.getParameterValues("mailTo");
 		String toname[] = form.getParameterValues("mailnameTo");
 		String from[] = form.getParameterValues("empId");
 		String fromname[] = form.getParameterValues("mailnameFrom");
 		String with[] = form.getParameterValues("mailWith");
 		String withname[] = form.getParameterValues("mailnameWith");
-		
-		
+		String [] to = { "1", "2" };
+		to[0] = tto[0].substring(0,tto[0].indexOf('@'));
 		
 		Email insertE = new Email();
 		insertE.setMailTitle(title[0]);
@@ -326,5 +326,35 @@ public class MailController {
 		
 		return "redirect:list.mil?currentPage=1&mailOwn=" + mailOwn;
 	}  
+	
+	@ResponseBody
+	@RequestMapping("importFlagUpdate.mil")
+	public int importFlagUpdate(int mailNo) {
+		
+		int result = 0;
+		Email e = milService.selectMail(mailNo);
+		if(e.getMailImportFlag().equals("Y")) {
+			
+			result = milService.unImportFlagUpdate(mailNo);
+		}else if(e.getMailImportFlag().equals("N")) {
+			result = milService.importFlagUpdate(mailNo);
+		}
+			
+		return result;
+	}
+	@RequestMapping("replyMail.mil")
+	public String replyMail(int mailNo, Model model) {
+		Email e = milService.selectMail(mailNo);
+		model.addAttribute("m", e);
+		model.addAttribute("f", 0);
+		return "mail/mailSentDetail";
+	}
+	@RequestMapping("transMail.mil")
+	public String transMail(int mailNo, Model model) {
+		Email e = milService.selectMail(mailNo);
+		model.addAttribute("m", e);
+		model.addAttribute("f", 1);
+		return "mail/mailSentDetail";
+	}
 	
 }

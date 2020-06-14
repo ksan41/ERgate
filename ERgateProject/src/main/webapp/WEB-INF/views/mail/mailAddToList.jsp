@@ -349,7 +349,7 @@ div {
 						var signerId=new Array();
 						var cnt = $("#signList tbody input[name=empId]").length;
 						for(var i=0;i<cnt;i++){
-							var signerIdStr = $("#signList tbody input[name=empId]").eq(i).val() + "@ergate.com";
+							var signerIdStr = $("#signList tbody input[name=empId]").eq(i).val();
 							signerId.push(signerIdStr);
 						}
 						//결재자 이름 배열에 담기
@@ -417,7 +417,7 @@ div {
 						var refId=new Array();
 						cnt = $("#refList tbody input[name=empId]").length;
 						for(var i=0;i<cnt;i++){
-							var refStr = $("#refList tbody input[name=empId]").eq(i).val() + "@ergate.com";
+							var refStr = $("#refList tbody input[name=empId]").eq(i).val();
 							refId.push(refStr);
 						}
 						

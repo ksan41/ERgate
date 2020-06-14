@@ -364,7 +364,14 @@
 								</label>
 		   					</td>
 							<td>
-								<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
+								<c:choose>
+									<c:when test="${b.mailImportFlag eq 'Y' }">
+										<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg"></label>
+									</c:when>
+									<c:otherwise>
+										<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
+									</c:otherwise>
+								</c:choose>
 							</td>
 							<td><span data-tooltip-text="${b.mailFrom }@ergate.com">${b.mailnameFrom }</span></td>
 							<td>${b.mailTitle }</td>
@@ -382,7 +389,14 @@
 								</label>
 		   					</td>
 							<td>
-								<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
+								<c:choose>
+									<c:when test="${b.mailImportFlag eq 'Y' }">
+										<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg"></label>
+									</c:when>
+									<c:otherwise>
+										<label><input type="checkbox" class="importbox" name="ichk"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></label>
+									</c:otherwise>
+								</c:choose>
 							</td>
 							<td><span data-tooltip-text="${b.mailFrom }@ergate.com">${b.mailnameFrom }</span></td>
 							<td>${b.mailTitle }</td>
@@ -537,7 +551,23 @@
 			});
 			
 		});
-				
+		
+		
+		$(".mailTable>tbody>tr>td:nth-child(2)>label>img").on('click', function(){
+			var mailNo = $(this).parent().parent().parent().find('input[name=mailNo]').val();
+			var mailOwn = "${loginUser.empId}";
+			
+			$.ajax({
+				url : "importFlagUpdate.mil",
+				data : {mailNo:mailNo},
+				success : function(result){
+					console.log("되니?");
+					location.href="list.mil?currentPage=1&mailOwn=" + mailOwn;
+				},error:function(){
+					console.log("ajax 통신 실패!");
+				}
+			});
+		});
 		
 	});
 

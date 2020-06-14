@@ -244,12 +244,13 @@
 					<tr>
 						<th>받는사람</th>
 						<td>
-							<div><input id="n1" type="text" class="inputs inputDual1" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n0" type="text" class="inputs inputDual1" name="mailTo" style="width:120px; float:left;" value="${m.mailFrom}@ergate.com"></div>
+							<div><input id="n1" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
 							<div><input id="n2" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
 							<div><input id="n3" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
 							<div><input id="n4" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
-							<div><input id="n5" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
-							<div><input id="n6" type="text" class="inputs inputDual3" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n5" type="text" class="inputs inputDual3" name="mailTo" style="width:120px; float:left;"></div>
+							
 							<div><input id="m1" type="hidden" class="inputs" name="mailnameTo"></div>
 							<div><input id="m2" type="hidden" class="inputs" name="mailnameTo"></div>
 							<div><input id="m3" type="hidden" class="inputs" name="mailnameTo"></div>
@@ -261,12 +262,13 @@
 					<tr>
 						<th>참조</th>
 						<td>
-							<div><input id="l1" type="text" class="inputs inputDual1" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l0" type="text" class="inputs inputDual1" name="mailWith" style="width:120px; float:left;" value="${m.mailWith }"></div>
+							<div><input id="l1" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
 							<div><input id="l2" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
 							<div><input id="l3" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
 							<div><input id="l4" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
-							<div><input id="l5" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
-							<div><input id="l6" type="text" class="inputs inputDual3" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l5" type="text" class="inputs inputDual3" name="mailWith" style="width:120px; float:left;"></div>
+							
 							<div><input id="i1" type="hidden" class="inputs" name="mailnameWith"></div>
 							<div><input id="i2" type="hidden" class="inputs" name="mailnameWith"></div>
 							<div><input id="i3" type="hidden" class="inputs" name="mailnameWith"></div>
@@ -277,11 +279,41 @@
 					</tr>
 					<tr>
 						<th>제목</th>
-						<td colspan="2"><input type="text" class="inputs" name="mailTitle" style="width:892px;"></td>
+						<td colspan="2">
+							<c:choose>
+								<c:when test="${f eq 0 }">
+									<input type="text" class="inputs" name="mailTitle" style="width:892px;" value="[RE:]${m.mailTitle }">
+								</c:when>
+								<c:otherwise>
+									<input type="text" class="inputs" name="mailTitle" style="width:892px;" value="${m.mailTitle }">
+								</c:otherwise>
+							</c:choose>
+
+						</td>
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td colspan="2"><textarea class="textArea" rows="25" cols="125" name="mailContent" style="resize:none;"></textarea></td>
+							
+						<td colspan="2">
+<textarea class="textArea" rows="25" cols="125" name="mailContent" style="resize:none;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------original Message-------------
+
+${m.mailContent }
+</textarea>
+						</td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
@@ -633,7 +665,6 @@
 	        for (var i = 0; i < uploadFileList.length; i++) {
 	            formData.append('files', fileList[uploadFileList[i]]);
 	        }
-	        
 	        /* console.log(formData.getAll('boardTitle'));
 	        console.log(formData.getAll('boardContent'));
 	        console.log(formData.getAll('boardWriter'));

@@ -38,6 +38,8 @@ public interface MailService {
 	Email nowMailNo();
 	String loadMailnameTo(String toname);
 	int deleteMail(int i);
+	int importFlagUpdate(int mailNo);
+	int unImportFlagUpdate(int mailNo);
 	
 
 	

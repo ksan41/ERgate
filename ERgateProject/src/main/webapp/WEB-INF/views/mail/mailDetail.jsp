@@ -218,8 +218,8 @@
 				<table class="bas">
 					<tr>
 						<td id="leftArea">
-							<button class="smallBtn">답장</button>&nbsp;
-							<button class="smallBtn" style="background:gray;">전달</button>&nbsp;
+							<button class="smallBtn takeReplyBtn">답장</button>&nbsp;
+							<button class="smallBtn takeTransBtn" style="background:gray;">전달</button>&nbsp;
 							<button class="smallBtn takeManyBtn" style="background:rgb(190, 190, 190);">삭제</button>
 							<input type="hidden" name="mailNo" value="${e.mailNo }">
 						</td>
@@ -228,7 +228,17 @@
 				<br>
 				<div class="mailTitleZone">
 					<div>
-						<div class="importantIcon"><img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg"></div>
+						<div class="importantIcon">
+							<c:choose>
+									<c:when test="${e.mailImportFlag eq 'Y' }">
+										<img src="${pageContext.servletContext.contextPath }/resources/icons/star-black-48dp.svg">
+									</c:when>
+									<c:otherwise>
+										<img src="${pageContext.servletContext.contextPath }/resources/icons/star_border-black-48dp.svg">
+									</c:otherwise>
+							</c:choose>
+							
+						</div>
 						<div class="titleZone" name="mailTitle">${e.mailTitle }</div>
 					</div>
 				</div>
@@ -345,6 +355,14 @@
 		 location.href="delete.mil?mailNo=" + delchk + "&mailOwn=" + '${param.mailOwn}';
 
 	})
+	
+	$(".takeReplyBtn").click(function(){
+		location.href="replyMail.mil?mailNo="+${e.mailNo};
+	});
+	
+	$(".takeTransBtn").click(function(){
+		location.href="transMail.mil?mailNo="+${e.mailNo};
+	});
 	</script>
 </body>
 </html>

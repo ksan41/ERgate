@@ -114,6 +114,14 @@ public class MailServiceImpl implements MailService {
 	public int deleteMail(int i) {
 		return milDao.deleteMail(sqlSession, i);
 	}
+	@Override
+	public int importFlagUpdate(int mailNo) {
+		return milDao.importFlagUpdate(sqlSession, mailNo);
+	}
+	@Override
+	public int unImportFlagUpdate(int mailNo) {
+		return milDao.unImportFlagUpdate(sqlSession, mailNo);
+	}
 
 
 

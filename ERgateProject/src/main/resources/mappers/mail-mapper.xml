@@ -235,5 +235,14 @@
 		where mail_no = #{mailNo}
 	</update>
 
-
+	<update id="importFlagUpdate" parameterType="_int">
+		update email set
+		mail_import_flag = 'Y'
+		where mail_no = #{mailNo}
+	</update>
+		<update id="unImportFlagUpdate" parameterType="_int">
+		update email set
+		mail_import_flag = 'N'
+		where mail_no = #{mailNo}
+	</update>
 </mapper>

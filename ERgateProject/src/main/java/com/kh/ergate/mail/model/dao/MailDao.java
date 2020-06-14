@@ -117,6 +117,12 @@ public class MailDao {
 	public int deleteMail(SqlSessionTemplate sqlSession, int mailOwn) {
 		return sqlSession.update("mailMapper.deleteMail", mailOwn);
 	}
+	public int importFlagUpdate(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.update("mailMapper.importFlagUpdate", mailNo);
+	}
+	public int unImportFlagUpdate(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.update("mailMapper.unImportFlagUpdate", mailNo);
+	}
 
 
 
