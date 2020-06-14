@@ -280,8 +280,6 @@
 				<table class="bas">
 					<tr>
 						<td id="leftArea">
-							<button class="middleBtn" type="button">답장</button>&nbsp;
-							<button class="middleBtn" type="button" style="background:gray;">전달</button>&nbsp;
 							<button class="middleBtn takeManyBtn" type="button" style="background:rgb(190, 190, 190);">삭제</button>
 						</td>
 						<td id="rightArea">
@@ -530,10 +528,11 @@
 	$(".takeManyBtn").click(function(){
 		 var delchk = []; // key 값을 담을 배열
 		 $('.chk:checked').each(function(){
-		    delchk.push($(this).val());
+		    delchk.push($(this).parent().find('input[name=mailNo]').val());
 		 });
 		 
-		 location.href="";
+		 location.href="delete.mil?mailNo=" + delchk + "&mailOwn=" + '${param.mailOwn}';
+
 	})
 	
 	$('.disabled').click(function () {return false;});

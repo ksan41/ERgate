@@ -37,6 +37,7 @@ public interface MailService {
 	int updateMailFlag(int currNo);
 	Email nowMailNo();
 	String loadMailnameTo(String toname);
+	int deleteMail(int i);
 	
 
 	

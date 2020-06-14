@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
-<!-- 메일상세페이지 -->
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>mailSendForm</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <style>
 /* ==========페이지영역========== */
     .outer{
@@ -71,28 +72,74 @@
         float:left;
     }
     /* 콘텐츠영역 */
-	/* 작은버튼 스타일 */
-	.smallBtn {
-		width: 60px;
-		height: 25px;
+	/* 중간버튼 스타일 */
+	.middleBtn2 {
+		width: 80px;
+		height: 30px;
 		border: 0px;
 		border-radius: 5px;
 		background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
 		color: white;
-		font-size: 12px;
+		font-size: 15px;
 	}
-	
-	.smallBtn:hover {
+	.middleBtn:hover {
 		cursor: pointer;
 	}
-	/* 작은버튼 스타일 */
+	/* 중간버튼 스타일 */
+	/* input창 스타일(가로크기는 자유) */
+	input {
+		height: 25px;
+		border: 1px solid lightgray;
+		border-radius: 3px;
+	}
+	/* input창 스타일 */
+	
+	/* textarea스타일 */
+	textarea {
+		border: 1px solid lightgray;
+		border-radius: 3px;
+		resize: none;
+	}
+	/* textarea스타일 */
+		
+	/* 입력폼 영역 */
+	.inputForm {
+		width:80%;
+		height:700px;
+	}
+	.mailUpload {
+		text-align:left;
+	}
+	.mailUpload tr:nth-child(1) td:nth-child(2), .mailUpload tr:nth-child(2) td:nth-child(2){
+		width:600px;
+	}
+	.mailUpload tr:nth-child(1) td:nth-child(3){
+		text-align:left;
+		width:100px;
+		padding:0px;
+	}
+	.mailUpload tr:nth-child(4) th{
+		vertical-align:top;
+		padding-top:10px;
+	}
+	
+	.mailUpload tr th{
+		width:100px;
+	}
+	.mailUpload tr td{
+		height:40px;
+	}
+	.mailUpload tr:nth-child(4) th,.mailUpload tr:nth-child(4) td {
+		padding-top:10px;
+	}
+	/* 입력폼 영역 */
 	/* 큰버튼 스타일 */
 	.bigBtn {
 		width: 140px;
 		height: 40px;
 		border: 0px;
 		border-radius: 5px;
-		background: rgb(26, 188, 156); /* 회색 : rgb(190, 190, 190) */
+		background: rgb(190, 190, 190);
 		color: white;
 		font-size: 18px;
 	}
@@ -101,79 +148,81 @@
 		cursor: pointer;
 	}
 	/* 큰버튼 스타일 */
-	.importantIcon {
-		margin:auto;
-		padding-top:13px;
-		padding-left:10px;
-		float:left;
+	/* 파일 첨부 관련 */
+ 	/* 파일 첨부 관련 */
+ 	.upload-btn-wrapper {
+	    position: relative;
+	    overflow: hidden;
+	    display: inline-block;
 	}
-	.attachFileList {
-		margin:auto;
-		padding-top:20px;
-		padding-left:10px;
-		float:left;
+	        
+	.upload-btn {
+	    border: 2px solid gray;
+	    color: gray;
+	    background-color: white;
+	    padding: 8px 20px;
+	    border-radius: 8px;
+	    font-size: 20px;
+	    font-weight: bold;
 	}
-	.titleZone {
-		margin:auto;
-		padding-top:20px;
-		padding-left:10px;
-		float:left;
+	        
+	.upload-btn-wrapper input[type=file] {
+	    font-size: 100px;
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	    opacity: 0;
 	}
-	.fileZone {
-		margin:auto;
-		padding-top:20px;
-		padding-left:10px;
-		float:left;
+	        
+	#fileDragDesc {
+	    margin-top:40px;
+	    vertical-align:middle;
+	    text-align: center; 
+	    color:lightgray;
+	    font-size:16px;
 	}
-	.mailTitleZone, .mailAttachFile {
-		height:60px; 
-		background-color:rgba(211, 211, 211, 0.226);
-		width:80%;
+	
+	#deleteBtn{
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		color: rgb(190, 190, 190);
+		display: inline-block;
+		vertical-align: sub;
 	}
-	.mailContentZone {
-		width:80%;
+	
+	#deleteBtn:hover{
+		cursor:pointer;
+		color:rgb(243, 156, 18);
 	}
-	.wrap {
-		margin-left:-50px;
-	}
-	#btnArea {
-	margin-left: 370px;
+
+    #btnArea {
+	margin-left: 290px;
 	width: 500px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	}
 	
 	#btnArea button {
 		display: inline-block;
 		margin: 5px;
 	}
-	.infoBar {
-		margin-top:7px;
-		height:70px;
-		font-size:12px;
-		font-weight:700;
+	.inputDual1 {
+		border-right:none;
 	}
-	.infoBar tr td:nth-child(2n) {
-		padding-left:20px;
-		width:300px;
-		text-align:left;
+	.inputDual {
+		border-right:none;
+		border-left:none;
 	}
-	.onlyContent {
-		min-height:300px;
-		width:80%;
+	.inputDual3 {
+		border-left:none;
 	}
-	.contentPre {
-		margin-left:10px;
-	}
-/* ==========페이지영역========== */
-</style>   
+	
+</style>
 </head>
 <body>
 	<!-- 이곳에 메뉴바 include -->
-	<jsp:include page="../common/menubar.jsp"/>
+	<jsp:include page="../common/menubar.jsp" />
 	<!-- 이곳에 메뉴바 include -->
-	
+
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -182,86 +231,443 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn">받은메일함</button></li>
-				<li><button class="subBtn subActive">보낸메일함</button></li>
-				<li><button class="subBtn">중요메일함</button></li>
-				<li><button class="subBtn">메일작성</button></li>
+				<li><button class="subBtn" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
+				<li><button class="subBtn" onclick='location.href="ilist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>중요메일함</button></li>
+				<li><button class="subBtn subActive" onclick='location.href="enrollForm.mil"'>메일작성</button></li>
 			</ul>
 		</div>
 		<div class="contentArea">
-			<!-- 내용 작성 영역 입니다-->
-			<br>
-			
-			<div class="wrap">
-				<table class="bas">
+			<div class="inputForm">
+				<form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="get">
+				<table class="mailUpload" id="boardDetail">
 					<tr>
-						<td id="leftArea">
-							<button class="smallBtn">전달</button>&nbsp;
-							<button class="smallBtn" style="background:gray;">메일수거</button>&nbsp;
-							<button class="smallBtn takeManyBtn" style="background:rgb(190, 190, 190);">삭제</button>
+						<th>받는사람</th>
+						<td>
+							<div><input id="n1" type="text" class="inputs inputDual1" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n2" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n3" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n4" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n5" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n6" type="text" class="inputs inputDual3" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="m1" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m2" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m3" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m4" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m5" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m6" type="hidden" class="inputs" name="mailnameTo"></div>
+						<td><button type="button" class="middleBtn2" onclick="window.open('openSigner.mil','mailAddToList','_blank');">주소록</button></td>
+					</tr>
+					<tr>
+						<th>참조</th>
+						<td>
+							<div><input id="l1" type="text" class="inputs inputDual1" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l2" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l3" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l4" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l5" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="l6" type="text" class="inputs inputDual3" name="mailWith" style="width:120px; float:left;"></div>
+							<div><input id="i1" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i2" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i3" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i4" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i5" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i6" type="hidden" class="inputs" name="mailnameWith"></div>
+						</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td colspan="2"><input type="text" class="inputs" name="mailTitle" style="width:892px;"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td colspan="2"><textarea class="textArea" rows="25" cols="125" name="mailContent" style="resize:none;"></textarea></td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td colspan="2">
+							<button type="button" class="bigBtn fileShow">추가</button>
+							<c:if test="${e.mailAttachment ne null}">
+								※현재 파일 <span><b>${fn:length(mtList)}</b></span>개
+							</c:if>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="2">
+									<div class="fileWrap" style="display:none;">
+									<div class="upload-btn-wrapper">
+										<input type="file" id="input_file" multiple="multiple" style="height: 100%;" />
+										<button class="upload-btn fileShow">파일선택</button>
+									</div>
+							        <div id="dropZone" style="width: 896px; height: 100px; border: 1px solid lightgray;">
+							            <div id="fileDragDesc"> ※파일을 드래그 해주세요. </div>
+							            <table id="fileListTable" width="100%" border="0px">
+							                <tbody id="fileTableTbody">
+							                	
+							                </tbody>
+							            </table>
+							        </div>
+							        <input type="hidden" id="bff" name="boardFileFlag" value="${e.mailAttachment }">
+							        <input type="hidden" id="fileListSize" name="fileListSize" value="${fn:length(mtList)}">
+							        <div class="fileNameList" style="display:none;">
+							        	<table class="fnoTable" border="1">
+							        	<tr>
+							        	<c:forEach items="${ mtList }" var="mt">
+							        		<td><input type="hidden" name="fno" value="${mt.attachmentNo}">${mt.attachmentNo}</td>
+							        	</c:forEach>
+							        	</tr>
+							        	</table>
+							        </div>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<div id="btnArea">
+								<c:choose>
+									<c:when test="${empty e }">
+										<button id="submitBoard" type="button" class="bigBtn" onclick="uploadFile();" style="background: rgb(26, 188, 156);">등록</button>
+									</c:when>
+									<c:otherwise>
+										<button id="submitBoard" type="button" class="bigBtn" onclick="updateLoadFile();" style="background: rgb(26, 188, 156);">수정</button>
+									</c:otherwise>
+								</c:choose>
+								<button class="bigBtn" type="button" onclick="cancleBack();">취소</button>
+							</div>
 						</td>
 					</tr>
 				</table>
-				<br>
-				<div class="mailTitleZone">
-					<div>
-						<div class="importantIcon"><img src="../../resources/icons/star_border-black-48dp.svg"></div>
-						<div class="titleZone" name="mailTitle">안녕하세요, 개발팀 케빈입니다.</div>
-					</div>
-				</div>
+				<input type="hidden" name="mailnameFrom" value="${ loginUser.empName }">
+				<input type="hidden" name="empId" value="${ loginUser.empId }">
+				<input type="hidden" id="mailNo" name="mailNo" value="${e.mailNo }">
+				<div class="ffnos" style="display:none;">
+				<c:forEach items="${ btList }" var="bt">
+					<input type="file" id="ffno" name="ffno" value="">
+				</c:forEach>
 				
-				<div class="mailContentZone">
-				<table class="infoBar">
-					<tr>
-						<td>보낸사람</td>
-						<td>kevin166@ergate.com</td>
-					</tr>
-					<tr>
-						<td>받는사람</td>
-						<td>lessmoni@ergate.com</td>
-					</tr>
-					<tr>
-						<td>보낸날짜</td>
-						<td>2020-05-05 19:22</td>
-					</tr>
-				</table>
-				<div style="height:1px;"></div>
-				<hr>
-				<div class="onlyContent">
-					<pre class="contentPre" name="mailContent">
-피가 뜨거운지라 인간의 동산에는 사랑의 풀이 돋고 이상의 꽃이
-
-피고 희망의 놀이 뜨고 열락의 새가 운다사랑의 풀
-					
-이 없으면 
-					
-인간은 사막이다 오아이스도 없는 사막이다 보이는 끝까지 
-					
-찾아다녀도 목숨이 있는 때까지 방황하여
-					
-도 보이는 것은
-					</pre>
 				</div>
-				<div style="height:1px;"></div>
-				<hr>
-				</div>
-				
-				<div class="mailAttachFile">
-					<div>
-						<div class="attachFileList">첨부파일 : </div>
-						<div class="fileZone"><a href="">4월 생일자 명단.xlsx</a></div>
-					</div>
-				</div>
-			</div>
-			<br><br>
-			<div id="btnArea">
-				<button class="bigBtn listBtn">목록으로</button>
+				</form>
+				<br><br><br><br><br><br><br><br><br><br>
 			</div>
 			
-			<br><br><br><br>
 		</div>
 	</div>
-		</div>
-	</div>
+	<script>
+	var signerId = new Array();
+	var signerName = new Array();
+	
+	// 받는사람아이디 받아오기
+	function getSid(data){
+		signerId = data;
+		console.log("받는사람: " + signerId);
+	}
+	
+	// 받는사람이름 받아오기
+	function getSname(data){
+		signerName = data;
+		console.log("받는사람: " + signerName);
+	}
+	
+	var refId = new Array();
+	var refName = new Array();
+	
+	// 참조 아이디 받아오기
+	function getRefId(data){
+		refId = data;
+		console.log("참조: " + refId);
+	}
+	
+	// 참조 이름 받아오기
+	function getRefName(data){
+		refName = data;
+		console.log("참조: " + refName);
+	}
+	
+	function cancleBack(){
+		if('${param.pageFrom}'=='inbox'){
+			location.href="list.mil?currentPage=1&mailOwn=" + '${loginUser.empId}';
+		}else if('${param.pageFrom}'=='detail'){
+			location.href="list.mil?currentPage=1&mailOwn=" + '${loginUser.empId}';
+		}else if('${param.pageFrom}'=='import'){
+			location.href="ilist.mil?currentPage=1&mailOwn=" + '${loginUser.empId}';
+		}else{
+			location.href="flist.mil?currentPage=1&mailOwn=" + '${loginUser.empId}';
+		}
+		
+	}
+	$(document).ready(function() {
+        $("#input_file").bind('change', function() {
+            selectFile(this.files);
+            //this.files[0].size gets the size of your file.
+            //alert(this.files[0].size);
+        });
+	});
+	
+	$(document).ready(function() {
+		$(".fileShow").click(function(e) {
+			e.preventDefault();
+			if($(".fileWrap").is(":visible")){
+				$(".fileWrap").slideUp(100);
+			}else {
+				$(".fileWrap").slideDown(100);
+			}
+		});
+	 });
+	 // 파일 리스트 번호
+	 var fileIndex = 0;
+	 // 등록할 전체 파일 사이즈
+	 var totalFileSize = 0;
+	 // 파일 리스트
+	 var fileList = new Array();
+	 // 파일 사이즈 리스트
+	 var fileSizeList = new Array();
+	 // 등록 가능한 파일 사이즈 MB
+	 var uploadSize = 50;
+	 // 등록 가능한 총 파일 사이즈 MB
+	 var maxUploadSize = 500;
+	
+	 $(function() {
+	     // 파일 드롭 다운
+	     fileDropDown();
+	 });
+	
+	 // 파일 드롭 다운
+	 function fileDropDown() {
+	     var dropZone = $("#dropZone");
+	     //Drag기능 
+	     dropZone.on('dragenter', function(e) {
+	         e.stopPropagation();
+	         e.preventDefault();
+	         // 드롭다운 영역 css
+	         dropZone.css('background-color', '#E3F2FC');
+	     });
+	     dropZone.on('dragleave', function(e) {
+	         e.stopPropagation();
+	         e.preventDefault();
+	         // 드롭다운 영역 css
+	         dropZone.css('background-color', '#FFFFFF');
+	     });
+	     dropZone.on('dragover', function(e) {
+	         e.stopPropagation();
+	         e.preventDefault();
+	         // 드롭다운 영역 css
+	         dropZone.css('background-color', '#E3F2FC');
+	     });
+	     dropZone.on('drop', function(e) {
+	         e.preventDefault();
+	         // 드롭다운 영역 css
+	         dropZone.css('background-color', '#FFFFFF');
+	
+	         var files = e.originalEvent.dataTransfer.files;
+	         if (files != null) {
+	             if (files.length < 1) {
+	                 /* alert("폴더 업로드 불가"); */
+	                 console.log("폴더 업로드 불가");
+	                 return;
+	             } else {
+	                 selectFile(files)
+	             }
+	         } else {
+	             alert("ERROR");
+	         }
+	     });
+	 }
+	
+	 // 파일 선택시
+	 function selectFile(fileObject) {
+	     var files = null;
+			 console.log(fileObject);
+	     if (fileObject != null) {
+	         // 파일  등록시
+	         files = fileObject;
+	         console.log(files);
+	     }
+	
+	     // 다중파일 등록
+	     if (files != null) {
+	         
+	         if (files != null && files.length > 0) {
+	             $("#fileDragDesc").hide(); 
+	             $("fileListTable").show();
+	         } else {
+	             $("#fileDragDesc").show(); 
+	             $("fileListTable").hide();
+	         }
+	         
+	         for (var i = 0; i < files.length; i++) {
+	             // 파일 이름
+	             var fileName = files[i].name;
+	             var fileNameArr = fileName.split("\.");
+	             // 확장자
+	             var ext = fileNameArr[fileNameArr.length - 1];
+	             
+	             var fileSize = files[i].size; // 파일 사이즈(단위 :byte)
+	             console.log("fileSize="+fileSize);
+	             if (fileSize <= 0) {
+	                 console.log("0kb file return");
+	                 return;
+	             }
+	             
+	             var fileSizeKb = fileSize / 1024;
+	             var fileSizeMb = fileSizeKb / 1024;
+	             
+	             var fileSizeStr = "";
+	             if ((1024*1024) <= fileSize) {    // 파일 용량이 1메가 이상인 경우 
+	                 console.log("fileSizeMb="+fileSizeMb.toFixed(2));
+	                 fileSizeStr = fileSizeMb.toFixed(2) + " Mb";
+	             } else if ((1024) <= fileSize) {
+	                 console.log("fileSizeKb="+parseInt(fileSizeKb));
+	                 fileSizeStr = parseInt(fileSizeKb) + " kb";
+	             } else {
+	                 console.log("fileSize="+parseInt(fileSize));
+	                 fileSizeStr = parseInt(fileSize) + " byte";
+	             }
+	
+	             /* if ($.inArray(ext, [ 'exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml' ]) >= 0) {
+	                 // 확장자 체크
+	                 alert("등록 불가 확장자");
+	                 break; */
+	             if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'pdf','PNG', 'png', 'jpeg', 'gif', 'zip' ]) <= 0) {
+	                 // 확장자 체크
+	                 /* alert("등록이 불가능한 파일 입니다.");
+	                 break; */
+	                 alert("등록이 불가능한 파일 입니다.("+fileName+")");
+	             } else if (fileSizeMb > uploadSize) {
+	                 // 파일 사이즈 체크
+	                 alert("용량 초과\n업로드 가능 용량 : " + uploadSize + " MB");
+	                 break;
+	             } else {
+	                 // 전체 파일 사이즈
+	                 totalFileSize += fileSizeMb;
+	
+	                 // 파일 배열에 넣기
+	                 fileList[fileIndex] = files[i];
+	
+	                 // 파일 사이즈 배열에 넣기
+	                 fileSizeList[fileIndex] = fileSizeMb;
+	
+	                 // 업로드 파일 목록 생성
+	                 addFileList(fileIndex, fileName, fileSizeStr);
+	
+	                 // 파일 번호 증가
+	                 fileIndex++;
+	             }
+	         }
+	     } else {
+	         alert("ERROR");
+	     }
+	 }
+	 
+	 // 업로드 파일 목록 생성
+	 function addFileList(fIndex, fileName, fileSizeStr) {
+	     /* if (fileSize.match("^0")) {
+	         alert("start 0");
+	     } */
+	
+	     var html = "";
+	     html += "<tr id='fileTr_" + fIndex + "'>";
+	     html += "    <td id='dropZone' class='left' >";
+	     html += fileName + " (" + fileSizeStr +") " 
+	             //+ "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'> 삭제</a>"
+	             + "<span id='deleteBtn' class='material-icons' onclick='deleteFile(" + fIndex + "); return false;'>highlight_off</span>"
+	     html += "    </td>"
+	     html += "</tr>"
+	
+	     $('#fileTableTbody').append(html);
+	 }
+	
+	 // 업로드 파일 삭제
+	 function deleteFile(fIndex) {
+	     console.log("deleteFile.fIndex=" + fIndex);
+	     // 전체 파일 사이즈 수정
+	     totalFileSize -= fileSizeList[fIndex];
+	
+	     // 파일 배열에서 삭제
+	     delete fileList[fIndex];
+	
+	     // 파일 사이즈 배열 삭제
+	     delete fileSizeList[fIndex];
+	
+	     // 업로드 파일 테이블 목록에서 삭제
+	     $("#fileTr_" + fIndex).remove();
+	     
+	     console.log("totalFileSize="+totalFileSize);
+	     
+	     if (totalFileSize > 0) {
+	         $("#fileDragDesc").hide(); 
+	         $("fileListTable").show();
+	     } else {
+	         $("#fileDragDesc").show(); 
+	         $("fileListTable").hide();
+	     }
+	 }
+		 
+	 
+	 
+	 
+	 // 파일 등록
+	 function uploadFile() {
+	     // 등록할 파일 리스트
+	     var uploadFileList = Object.keys(fileList);
+	     	//signerId - 받는사람 아이디
+	 	
+			//signerName = data; -- 받는 사람 이름
+		
+			//refId = data; -- 참조 아이디
+		
+		
+			//refName = data; -- 참조 이름
+			var refNameStr=refName.join(',');
+			
+		    console.log(signerId + signerName + refId, refNameStr);
+	        var form = $('#uploadForm');
+	        console.log(form[0]);
+	        var formData = new FormData(form[0]);
+	        formData.append('mailTitle', form[0].mailTitle.innerText);
+	        formData.append('mailContent', form[0].mailContent.innerText);
+	        formData.append('mailTo', form[0].mailTo.innerText);
+	        formData.append('empId', form[0].empId.innerText);
+	        formData.append("mailnameTo", form[0].mailnameTo.innerText);
+	        formData.append("mailnameFrom", form[0].mailnameFrom.innerText);
+	        for (var i = 0; i < uploadFileList.length; i++) {
+	            formData.append('files', fileList[uploadFileList[i]]);
+	        }
+	        
+	        /* console.log(formData.getAll('boardTitle'));
+	        console.log(formData.getAll('boardContent'));
+	        console.log(formData.getAll('boardWriter'));
+	        console.log(formData.getAll('empId'));
+	        console.log(formData.getAll('files')); */
+	        
+	        $.ajax({
+	            url : "insert.mil",
+	            data : formData,
+	            type : 'POST',
+	            enctype : 'multipart/form-data',
+	            processData : false,
+	            contentType : false,
+	            dataType : 'json',
+	            cache : false,
+	            success : function(result) {
+	                if (result >= 1) {
+	                    alert("게시글이 등록되었습니다.");
+	                    location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId}";
+	                } else {
+	                    alert("게시글 등록에 실패하였습니다.");
+	                    location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId}";
+	                }
+	                
+	            },
+	            error:function(){	// error : ajax 통신실패시 처리할 함수 지정
+						console.log("ajax 통신 실패!");
+					},
+					complete:function(){// complete : ajax 통신 성공여부와 상관없이 실행
+						console.log("무조건 호출!!");
+					}
+	        });
+	 }
+	</script>
+	
 </body>
 </html>

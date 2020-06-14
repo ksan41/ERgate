@@ -29,4 +29,5 @@ public class Email {
 	private String mailDateStr;
 	private String mailReadFlag;
 	private String mailStatus;
+	private String mailnameWith;
 }

@@ -36,7 +36,6 @@ public class MailController {
 
 	@RequestMapping("list.mil")
 	public String selectList(int currentPage, String mailOwn, Model model) {
-
 		int listCount = milService.selectListCount(mailOwn);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
@@ -222,7 +221,8 @@ public class MailController {
 		String toname[] = form.getParameterValues("mailnameTo");
 		String from[] = form.getParameterValues("empId");
 		String fromname[] = form.getParameterValues("mailnameFrom");
-		
+		String with[] = form.getParameterValues("mailWith");
+		String withname[] = form.getParameterValues("mailnameWith");
 		
 		
 		
@@ -232,14 +232,14 @@ public class MailController {
 		insertE.setMailTo(to[0]);
 		insertE.setMailFrom(from[0]);
 		insertE.setMailnameTo(toname[0]);
-		
+		insertE.setMailnameWith(withname[0]);
+		insertE.setMailWith(with[0]);
 		if(toname[0].length() == 0) {
 			insertE.setMailnameTo(milService.loadMailnameTo(to[0]));
 		}
 		
 		insertE.setMailnameFrom(fromname[0]);
 		
-		System.out.println(insertE.getMailnameTo());
 		
 		int result = 0;
 		result = milService.insertMail(insertE);
@@ -315,5 +315,16 @@ public class MailController {
 		  model.addAttribute("documentNo",documentNo);
 		  return "mail/mailAddToList";
 	  }
+	  
+	@RequestMapping("delete.mil")
+	public String deleteMail(int mailNo[], String mailOwn, Model model) {
+		
+		int result = 0;
+		for(int i=0; i<mailNo.length; i++) {
+			result = milService.deleteMail(mailNo[i]);
+		}
+		
+		return "redirect:list.mil?currentPage=1&mailOwn=" + mailOwn;
+	}  
 	
 }

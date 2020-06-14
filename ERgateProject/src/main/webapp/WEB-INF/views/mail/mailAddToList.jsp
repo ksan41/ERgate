@@ -314,30 +314,30 @@ div {
 						
 						var n1 = $("#signList tbody tr input[name=empId]").eq(0).val();
 						if(n1){
-							opener.document.getElementById("n1").value=n1;
+							opener.document.getElementById("n1").value=n1 + "@ergate.com";
 						}						
 						
 						var n2 = $("#signList tbody tr input[name=empId]").eq(1).val();
 						if(n2){
-							opener.document.getElementById("n2").value=n2;
+							opener.document.getElementById("n2").value=n2 + "@ergate.com";
 						}
 						
 						var n3 = $("#signList tbody tr input[name=empId]").eq(2).val();
 						if(n3){
-							opener.document.getElementById("n3").value=n3;
+							opener.document.getElementById("n3").value=n3 + "@ergate.com";
 						}
 						var n4 = $("#signList tbody tr input[name=empId]").eq(3).val();
 						if(n4){
-							opener.document.getElementById("n4").value=n4;
+							opener.document.getElementById("n4").value=n4 + "@ergate.com";
 						}
 						var n5 = $("#signList tbody tr input[name=empId]").eq(4).val();
 						if(n5){
-							opener.document.getElementById("n5").value=n5;
+							opener.document.getElementById("n5").value=n5 + "@ergate.com";
 						}
 						
 						var n6 = $("#signList tbody tr input[name=empId]").eq(5).val();
 						if(n6){
-							opener.document.getElementById("n6").value=n6;
+							opener.document.getElementById("n6").value=n6 + "@ergate.com";
 
 						}
 						
@@ -349,7 +349,8 @@ div {
 						var signerId=new Array();
 						var cnt = $("#signList tbody input[name=empId]").length;
 						for(var i=0;i<cnt;i++){
-							signerId.push($("#signList tbody input[name=empId]").eq(i).val());
+							var signerIdStr = $("#signList tbody input[name=empId]").eq(i).val() + "@ergate.com";
+							signerId.push(signerIdStr);
 						}
 						//결재자 이름 배열에 담기
 						var signerName=new Array();
@@ -381,27 +382,27 @@ div {
 						
 						var l1 = $("#refList tbody tr input[name=empId]").eq(0).val();
 						if(l1){
-						opener.document.getElementById("l1").value=l1;
+						opener.document.getElementById("l1").value=l1 + "@ergate.com";
 						}
 						var l2 = $("#refList tbody tr input[name=empId]").eq(1).val();
 						if(l2){
-						opener.document.getElementById("l2").value=l2;
+						opener.document.getElementById("l2").value=l2 + "@ergate.com";
 						}
 						var l3 = $("#refList tbody tr input[name=empId]").eq(2).val();
 						if(l3){
-						opener.document.getElementById("l3").value=l3;
+						opener.document.getElementById("l3").value=l3 + "@ergate.com";
 						}
 						var l4 = $("#refList tbody tr input[name=empId]").eq(3).val();
 						if(l4){
-						opener.document.getElementById("l4").value=l4;
+						opener.document.getElementById("l4").value=l4 + "@ergate.com";
 						}
 						var l5 = $("#refList tbody tr input[name=empId]").eq(4).val();
 						if(l5){
-						opener.document.getElementById("l5").value=l5;
+						opener.document.getElementById("l5").value=l5 + "@ergate.com";
 						}
 						var l6 = $("#refList tbody tr input[name=empId]").eq(5).val();
 						if(l6){
-						opener.document.getElementById("l6").value=l6;
+						opener.document.getElementById("l6").value=l6 + "@ergate.com";
 						}
 						
 						// 수신참조자이름 출력/변수에 담기
@@ -409,8 +410,6 @@ div {
 						cnt = $("#refList tbody input[name=empName]").length;
 						for(var i=0;i<cnt;i++){
 							refName.push($("#refList tbody input[name=empName]").eq(i).val());
-							opener.document.getElementById("refArea").innerHTML+= 
-										"@"+ $("#refList tbody input[name=empName]").eq(i).val()+" ";
 						}
 						
 						
@@ -418,7 +417,8 @@ div {
 						var refId=new Array();
 						cnt = $("#refList tbody input[name=empId]").length;
 						for(var i=0;i<cnt;i++){
-							refId.push($("#refList tbody input[name=empId]").eq(i).val());
+							var refStr = $("#refList tbody input[name=empId]").eq(i).val() + "@ergate.com";
+							refId.push(refStr);
 						}
 						
 						

@@ -11,11 +11,13 @@
 		<result column="mailname_to" property="mailnameTo"/>
 		<result column="mail_title" property="mailTitle"/>
 		<result column="mail_with" property="mailWith"/>
+		<result column="mailname_with" property="mailnameWith"/>
 		<result column="mail_content" property="mailContent"/>
 		<result column="mail_attachment" property="mailAttachment"/>
 		<result column="mail_date" property="mailDate"/>
 		<result column="mail_read_flag" property="mailReadFlag"/>
 		<result column="mail_status" property="mailStatus"/>
+		
 	</resultMap>
 	
 	<resultMap id="attachResultSet" type="MailAttachment">
@@ -33,12 +35,12 @@
 	<select id="selectListCount" parameterType="String" resultType="_int">
 		select count(*)
 		  from email
-		 where mail_status='Y' and mail_to=#{mailTo}
+		 where mail_status='Y' and mail_to = #{mailTo} 
 	</select>
 	<select id="selectList" parameterType="String" resultMap="emailResultSet">
 		select * 
 		  from email
-		 where mail_status='Y' and mail_to=#{mailTo}
+		 where mail_status='Y' and mail_to = #{mailTo}
 		 order by mail_no desc
 	</select>
 	
@@ -48,12 +50,12 @@
 	<select id="fselectListCount" parameterType="String" resultType="_int">
 		select count(*)
 		  from email
-		 where mail_status='Y' and mail_from=#{mailFrom}
+		 where mail_status='Y' and mail_from = #{mailFrom}
 	</select>
 	<select id="fselectList" parameterType="String" resultMap="emailResultSet">
 		select * 
 		  from email
-		 where mail_status='Y' and mail_from=#{mailFrom}
+		 where mail_status='Y' and mail_from = #{mailFrom}
 		 order by mail_no desc
 	</select>
 
@@ -62,14 +64,14 @@
 		select count(*)
 		from (select * 
 			  from email
-			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+			  where mail_from = #{mailOwn} or mail_to = #{mailOwn})
 		where mail_status='Y' and mail_import_flag='Y'
 	</select>
 	<select id="iselectList" parameterType="String" resultMap="emailResultSet">
 		select *
 		from (select * 
 			  from email
-			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+			  where mail_from = #{mailOwn} or mail_to = #{mailOwn})
 		where mail_status='Y' and mail_import_flag='Y'
 		order by mail_date desc
 	</select>
@@ -81,10 +83,10 @@
 		  from email
 		 where mail_status='Y'
 		    <if test="mailTo != null">
-		    	and mail_To=#{mailTo}
+		    	and mail_To = #{mailTo}
 		    </if>
 		    <if test="mailFrom != null">
-		    	and mail_from=#{mailFrom}
+		    	and mail_from = #{mailFrom}
 		    </if>
 		    <if test="mailnameFrom != null">
 				AND mailname_from LIKE '%' || #{mailnameFrom} || '%'  
@@ -106,10 +108,10 @@
 		  from email
 		 where mail_status='Y'
 		 	<if test="mailTo != null">
-		    	and mail_To=#{mailTo}
+		    	and mail_To = #{mailTo}
 		    </if>
 		    <if test="mailFrom != null">
-		    	and mail_from=#{mailFrom}
+		    	and mail_from = #{mailFrom}
 		    </if>
 		 	<if test="mailnameFrom != null">
 				AND mailname_From LIKE '%' || #{mailnameFrom} || '%'  
@@ -130,7 +132,7 @@
 		select count(*)
 		from (select * 
 			  from email
-			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+			  where mail_from = #{mailOwn} mail_to = #{mailOwn})
 		where mail_status='Y' and mail_import_flag='Y'
 		    <if test="mailnameFrom != null">
 				and mailname_from LIKE '%' || #{mailnameFrom} || '%'  
@@ -151,7 +153,7 @@
 		select *
 		from (select * 
 			  from email
-			  where mail_from=#{mailOwn} or mail_to=#{mailOwn})
+			  where mail_from = #{mailOwn} mail_to = #{mailOwn})
 		where mail_status='Y' and mail_import_flag='Y'
 		 	<if test="mailnameFrom != null">
 				and mailname_From LIKE '%' || #{mailnameFrom} || '%'  
@@ -192,7 +194,7 @@
 	<insert id="insertMail" parameterType="Email">
 		insert into email
 		values(seq_mail_no.nextval, 'N', #{mailFrom}, #{mailTo}, #{mailTitle}, 
-		#{mailContent}, 'Y', sysdate, 'N', 'Y', #{mailnameFrom}, #{mailnameTo}, #{mailWith})
+		#{mailContent}, 'Y', sysdate, 'N', 'Y', #{mailnameFrom}, #{mailnameTo}, #{mailWith}, #{mailnameWith})
 	</insert>
 	
 	<insert id="insertMailAttachment" parameterType="MailAttachment">
@@ -227,6 +229,11 @@
 		where emp_id = #{toname}
 	</select>
 
+	<update id="deleteMail" parameterType="_int">
+		update email set
+		mail_status = 'N'
+		where mail_no = #{mailNo}
+	</update>
 
 
 </mapper>

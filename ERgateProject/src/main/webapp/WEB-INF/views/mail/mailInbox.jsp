@@ -257,7 +257,7 @@
 	<!-- 이곳에 메뉴바 include -->
 	<jsp:include page="../common/menubar.jsp"/>
 	<!-- 이곳에 메뉴바 include -->
-	
+
 	<div class="outer">
 		<div class="topBar">
 			<!-- 메뉴명 -->
@@ -266,11 +266,30 @@
 		<div class="subMenuArea">
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
-				<li><button class="subBtn subActive" onclick='location.href="list.mil?currentPage=1&mailOwn=${loginUser.empId }"'>받은메일함</button></li>
-				<li><button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>보낸메일함</button></li>
-				<li><button class="subBtn" onclick='location.href="ilist.mil?currentPage=1&mailOwn=${loginUser.empId }"'>중요메일함</button></li>
-				<li><button class="subBtn" onclick='location.href="enrollForm.mil?currentPage=1&pageFrom=inbox"'>메일작성</button></li>
+				<li>
+					<form action="list.mil" method="post">
+					<input type="hidden" name="currentPage" value="1">
+					<input type="hidden" name="mailOwn" value="${loginUser.empId}">
+						<button class="subBtn subActive">받은메일함</button>
+					</form>
+				</li>
+				<li>
+					
+					<button class="subBtn" onclick='location.href="flist.mil?currentPage=1&mailOwn=${loginUser.empId}"'>보낸메일함</button>
+					
+				</li>
+				<li>
+					
+					<button class="subBtn" onclick='location.href="ilist.mil?currentPage=1&mailOwn=${loginUser.empId}"'>중요메일함</button>
+					
+				</li>
+				<li>
+					
+					<button class="subBtn" onclick='location.href="enrollForm.mil?currentPage=1&pageFrom=inbox"'>메일작성</button>
+					
+				</li>
 			</ul>
+			
 		</div>
 		<div class="contentArea">
 			<!-- 내용 작성 영역 입니다-->
@@ -280,8 +299,6 @@
 				<table class="bas">
 					<tr>
 						<td id="leftArea">
-							<button class="middleBtn" type="button">답장</button>&nbsp;
-							<button class="middleBtn" type="button" style="background:gray;">전달</button>&nbsp;
 							<button class="middleBtn takeManyBtn" type="button" style="background:rgb(190, 190, 190);">삭제</button>
 						</td>
 						<td id="rightArea">
@@ -530,10 +547,11 @@
 	$(".takeManyBtn").click(function(){
 		 var delchk = []; // key 값을 담을 배열
 		 $('.chk:checked').each(function(){
-		    delchk.push($(this).val());
+		    delchk.push($(this).parent().find('input[name=mailNo]').val());
 		 });
 		 
-		 location.href="";
+		 location.href="delete.mil?mailNo=" + delchk + "&mailOwn=" + '${param.mailOwn}';
+
 	})
 	
 	$('.disabled').click(function () {return false;});

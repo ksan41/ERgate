@@ -221,6 +221,7 @@
 							<button class="smallBtn">답장</button>&nbsp;
 							<button class="smallBtn" style="background:gray;">전달</button>&nbsp;
 							<button class="smallBtn takeManyBtn" style="background:rgb(190, 190, 190);">삭제</button>
+							<input type="hidden" name="mailNo" value="${e.mailNo }">
 						</td>
 					</tr>
 				</table>
@@ -285,7 +286,7 @@
 			</div>
 			<br><br>
 			<div id="btnArea">
-				<button class="bigBtn listBtn">목록으로</button>
+				<button class="bigBtn listBtn" type="button" onclick="location.href='list.mil?currentPage=1&mailOwn=${loginUser.empId}'">목록으로</button>
 			</div>
 			
 			<br><br><br><br>
@@ -334,6 +335,16 @@
 			}
 		});
 	});
+	
+	$(".takeManyBtn").click(function(){
+		 var delchk = []; // key 값을 담을 배열
+			 delchk.push($(this).parent().find('input[name=mailNo]').val());
+			 console.log(delchk[0]);
+
+		 
+		 location.href="delete.mil?mailNo=" + delchk + "&mailOwn=" + '${param.mailOwn}';
+
+	})
 	</script>
 </body>
 </html>

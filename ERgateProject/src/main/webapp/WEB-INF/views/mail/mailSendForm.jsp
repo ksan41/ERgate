@@ -250,12 +250,12 @@
 							<div><input id="n4" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
 							<div><input id="n5" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
 							<div><input id="n6" type="text" class="inputs inputDual3" name="mailTo" style="width:120px; float:left;"></div>
-							<div><input id="m1" type="hidden" class="inputs" name="mailnameTo"></td></div>
-							<div><input id="m2" type="hidden" class="inputs" name="mailnameTo"></td></div>
-							<div><input id="m3" type="hidden" class="inputs" name="mailnameTo"></td></div>
-							<div><input id="m4" type="hidden" class="inputs" name="mailnameTo"></td></div>
-							<div><input id="m5" type="hidden" class="inputs" name="mailnameTo"></td></div>
-							<div><input id="m6" type="hidden" class="inputs" name="mailnameTo"></td></div>
+							<div><input id="m1" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m2" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m3" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m4" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m5" type="hidden" class="inputs" name="mailnameTo"></div>
+							<div><input id="m6" type="hidden" class="inputs" name="mailnameTo"></div>
 						<td><button type="button" class="middleBtn2" onclick="window.open('openSigner.mil','mailAddToList','_blank');">주소록</button></td>
 					</tr>
 					<tr>
@@ -267,12 +267,12 @@
 							<div><input id="l4" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
 							<div><input id="l5" type="text" class="inputs inputDual" name="mailWith" style="width:120px; float:left;"></div>
 							<div><input id="l6" type="text" class="inputs inputDual3" name="mailWith" style="width:120px; float:left;"></div>
-							<div><input id="i1" type="hidden" class="inputs" name="mailWithName"></td></div>
-							<div><input id="i2" type="hidden" class="inputs" name="mailWithName"></td></div>
-							<div><input id="i3" type="hidden" class="inputs" name="mailWithName"></td></div>
-							<div><input id="i4" type="hidden" class="inputs" name="mailWithName"></td></div>
-							<div><input id="i5" type="hidden" class="inputs" name="mailWithName"></td></div>
-							<div><input id="i6" type="hidden" class="inputs" name="mailWithName"></td></div>
+							<div><input id="i1" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i2" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i3" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i4" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i5" type="hidden" class="inputs" name="mailnameWith"></div>
+							<div><input id="i6" type="hidden" class="inputs" name="mailnameWith"></div>
 						</td>
 					</tr>
 					<tr>
@@ -360,11 +360,13 @@
 	// 받는사람아이디 받아오기
 	function getSid(data){
 		signerId = data;
+		console.log("받는사람: " + signerId);
 	}
 	
 	// 받는사람이름 받아오기
 	function getSname(data){
 		signerName = data;
+		console.log("받는사람: " + signerName);
 	}
 	
 	var refId = new Array();
@@ -373,11 +375,13 @@
 	// 참조 아이디 받아오기
 	function getRefId(data){
 		refId = data;
+		console.log("참조: " + refId);
 	}
 	
 	// 참조 이름 받아오기
 	function getRefName(data){
 		refName = data;
+		console.log("참조: " + refName);
 	}
 	
 	function cancleBack(){
@@ -606,7 +610,17 @@
 	 function uploadFile() {
 	     // 등록할 파일 리스트
 	     var uploadFileList = Object.keys(fileList);
-	     	
+	     	//signerId - 받는사람 아이디
+	 	
+			//signerName = data; -- 받는 사람 이름
+		
+			//refId = data; -- 참조 아이디
+		
+		
+			//refName = data; -- 참조 이름
+			var refNameStr=refName.join(',');
+			
+		    console.log(signerId + signerName + refId, refNameStr);
 	        var form = $('#uploadForm');
 	        console.log(form[0]);
 	        var formData = new FormData(form[0]);

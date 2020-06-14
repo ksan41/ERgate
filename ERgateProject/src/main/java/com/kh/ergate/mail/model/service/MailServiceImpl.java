@@ -110,6 +110,10 @@ public class MailServiceImpl implements MailService {
 	public String loadMailnameTo(String toname) {
 		return milDao.loadMailnameTo(sqlSession, toname);
 	}
+	@Override
+	public int deleteMail(int i) {
+		return milDao.deleteMail(sqlSession, i);
+	}
 
 
 

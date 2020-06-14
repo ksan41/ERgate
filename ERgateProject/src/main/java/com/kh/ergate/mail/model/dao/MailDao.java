@@ -114,6 +114,9 @@ public class MailDao {
 	public String loadMailnameTo(SqlSessionTemplate sqlSession, String toname) {
 		return sqlSession.selectOne("mailMapper.loadMailnameTo", toname);
 	}
+	public int deleteMail(SqlSessionTemplate sqlSession, int mailOwn) {
+		return sqlSession.update("mailMapper.deleteMail", mailOwn);
+	}
 
 
 
