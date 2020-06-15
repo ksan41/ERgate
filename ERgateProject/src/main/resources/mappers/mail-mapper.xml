@@ -195,6 +195,7 @@
 		insert into email
 		values(seq_mail_no.nextval, 'N', #{mailFrom}, #{mailTo}, #{mailTitle}, 
 		#{mailContent}, 'Y', sysdate, 'N', 'Y', #{mailnameFrom}, #{mailnameTo}, #{mailWith}, #{mailnameWith})
+		
 	</insert>
 	
 	<insert id="insertMailAttachment" parameterType="MailAttachment">

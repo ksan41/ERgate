@@ -209,6 +209,7 @@ public class MailController {
 	
 	@RequestMapping("enrollForm.mil")
 	public String enrollForm(@RequestParam(required=false)String empId, Model model) {
+		empId = empId + "@ergate.com";
 		model.addAttribute("trans", empId);
 		return "mail/mailSendForm";
 	}
