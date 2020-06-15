@@ -424,7 +424,7 @@
 	/* 페이징바 스타일 */
 	.pagingBar {
 		list-style: none;
-		margin-left: 340px;
+		margin-left: 300px;
 		margin-top: 40px;
 	}
 	.pagingBar li {

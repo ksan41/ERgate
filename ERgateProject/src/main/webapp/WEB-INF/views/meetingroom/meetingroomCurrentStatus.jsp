@@ -424,7 +424,7 @@
 	/* 페이징바 스타일 */
 	.pagingBar {
 		list-style: none;
-		margin-left: 340px;
+		margin-left: 300px;
 		margin-top: 40px;
 	}
 	.pagingBar li {
@@ -811,9 +811,6 @@
 	<!-- 나의 예약 현황 리스트 조회 ajax -->
 	<script>
 		function myReserveList(cur){
-			console.log("요처처처청");
-			console.log(cur);
-			console.log("${loginUser.empId}");
 			 $.ajax({
 				url:"myReserve.me",
 				data:{empId:"${loginUser.empId}",
@@ -821,9 +818,6 @@
 				type:"post",
 				success:function(map){ // map
 					
-					//console.log(arr);
-					
-				
 					// map.pi  => {}
 					// map.list => [{}, {}]
 					
@@ -1069,7 +1063,7 @@
 					var mtrmEnrollDate = meetingroom.mtrmEnrollDate;
 					var mtrmStatus = meetingroom.mtrmStatus;
 					
-					$("#partArea").html("차종 : " + mtrmName + ", " + "회의실 번호 : " + mtrmLocation + ", " + "최대 탑승 인원 : " + mtrmCapacity);
+					$("#partArea").html("회의실명 : " + mtrmName + ", " + "회의실 위치 : " + mtrmLocation + ", " + "수용 가능 인원 : " + mtrmCapacity);
 					
 				},error:function(){
 					console.log("가용 회의실 검색 ajax 통신 실패");

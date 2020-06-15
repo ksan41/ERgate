@@ -34,13 +34,13 @@ public class MeetingroomController {
 	private MeetingroomService mrService;
 
 	
-	// 업무차량 메인
+	// 회의실 메인
 	@RequestMapping("currentStatus.me")
 	public String selectCurrentStatus() {
 		return "meetingroom/meetingroomCurrentStatus";
 	}
 	
-	// 업무차량 예약 현황 (일별) 조회 ajax
+	// 회의실 예약 현황 (일별) 조회 ajax
 	@RequestMapping("currentStatusAjax.me")
 	public void currentStatusListAjax(String calYear, String calMonth, String calDay, HttpServletResponse response) throws JsonIOException, IOException {
 		
@@ -58,14 +58,12 @@ public class MeetingroomController {
 	public void myReserveList(String empId, int currentPage, HttpServletResponse response) throws JsonIOException, IOException {
 		
 		int listCount = mrService.selectReserveListCount(empId);
-		
-		HashMap<String, Object> map = new HashMap<>();
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 4);
 		
 		ArrayList<MeetingroomReservation> list = mrService.myReserveMeetingroom(empId, pi);
 		
-		System.out.println(list);
+		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("pi", pi);
 		map.put("list", list);
@@ -74,7 +72,7 @@ public class MeetingroomController {
 		new Gson().toJson(map, response.getWriter());
 	}
 	
-	// 차량 예약 취소
+	// 회의실 예약 취소
 	@ResponseBody
 	@RequestMapping(value="cancelReserve.me")
 	public String cancelReserveMeetingroom(int mtrmReserveNo) {
@@ -88,7 +86,7 @@ public class MeetingroomController {
 		}
 	}
 	
-	// 차량 예약
+	// 회의실 예약
 	@RequestMapping("reserve.me")
 	public String reserveMeetingroom(MeetingroomReservation mr, HttpSession session) {
 		
@@ -104,15 +102,15 @@ public class MeetingroomController {
 		
 	}
 
-	// 차량 예약 현황 조회 (월별) - 관리자
+	// 회의실 예약 현황 조회 (월별) - 관리자
 	@RequestMapping("reserveList.me")
 	public String reserveMeetingroomList() {
 		return "meetingroom/meetingroomReservationList";
 	}
 	
-	// 차량 예약 현황 조회 (월별) ajax - 관리자
-	@RequestMapping(value="reserveListAjax.me", produces="application/json; charset=utf-8")
-	public String reserveMeetingroomListAjax(String calYear, String calMonth, int currentPage, Model model, HttpServletResponse response) throws JsonIOException, IOException {
+	// 회의실 예약 현황 조회 (월별) ajax - 관리자
+	@RequestMapping(value="reserveListAjax.me")
+	public void reserveMeetingroomListAjax(String calYear, String calMonth, int currentPage, HttpServletResponse response) throws JsonIOException, IOException {
 		
 		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
 		String date = calYear + "/" + month;
@@ -125,15 +123,14 @@ public class MeetingroomController {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
-		System.out.println("월별" + list);
-		
 		map.put("pi", pi);
 		map.put("list", list);
 		
-		return new Gson().toJson(map);
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(map, response.getWriter());
 	}
 	
-	// 차량 리스트 조회 - 관리자
+	// 회의실 리스트 조회 - 관리자
 	@RequestMapping("meetingroomList.me")
 	public String selectMeetingroomList(int currentPage, Model model, HttpSession session) {
 
@@ -149,7 +146,7 @@ public class MeetingroomController {
 		return "meetingroom/meetingroomManagement";
 	}
 	
-	// 차량 등록 - 관리자
+	// 회의실 등록 - 관리자
 	@RequestMapping("insert.me")
 	public String insertMeetingroom(Meetingroom m, HttpSession session,
 								@RequestParam(name="uploadFile", required=false) MultipartFile file,
@@ -164,25 +161,26 @@ public class MeetingroomController {
 		int result = mrService.insertMeetingroom(m);
 		
 		if(result > 0) {
-			session.setAttribute("msg", "성공적으로 업무 차량 등록되었습니다.");
+			session.setAttribute("msg", "성공적으로 회의실 등록되었습니다.");
 			return "redirect:meetingroomList.me?currentPage=1";
 		}else {
-			session.setAttribute("msg", "업무 차량 등록에 실패하였습니다. 다시 시도해 주세요.");
+			session.setAttribute("msg", "회의실 등록에 실패하였습니다. 다시 시도해 주세요.");
 			return "redirect:meetingroomList.me?currentPage=1";
 		}
 		
 	}
 
-	// 차량 정보 조회 ajax - 관리자
-	@ResponseBody
-	@RequestMapping(value="select.me", produces="application/json; charset=utf-8")
-	public String selectMeetingroom(String mtrmCode) {
+	// 회의실 정보 조회 ajax - 관리자
+	@RequestMapping(value="select.me")
+	public void selectMeetingroom(String mtrmCode, HttpServletResponse response) throws JsonIOException, IOException {
 		
 		Meetingroom meetingroom = mrService.selectMeetingroom(mtrmCode);
-		return new Gson().toJson(meetingroom);
+		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(meetingroom, response.getWriter());
 	}
 	
-	// 차량 수정 - 관리자
+	// 회의실 수정 - 관리자
 	@RequestMapping("update.me")
 	public String updateMeetingroom(Meetingroom m, HttpSession session,
 			   					@RequestParam(name="reUploadFile", required=false) MultipartFile file,
@@ -203,26 +201,26 @@ public class MeetingroomController {
 		int result = mrService.updateMeetingroom(m);
 		
 		if(result > 0) {
-			session.setAttribute("msg", "성공적으로 업무 차량 수정되었습니다.");
+			session.setAttribute("msg", "성공적으로 회의실 수정되었습니다.");
 			return "redirect:meetingroomList.me?currentPage=1";
 		}else {
-			session.setAttribute("msg", "업무 차량 수정에 실패하였습니다. 다시 시도해 주세요.");
+			session.setAttribute("msg", "회의실 수정에 실패하였습니다. 다시 시도해 주세요.");
 			return "redirect:meetingroomList.me?currentPage=1";
 		}
 		
 	}
 
-	// 차량 삭제 - 관리자
+	// 회의실 삭제 - 관리자
 	@RequestMapping("delete.me")
 	public String deleteMeetingroom(Meetingroom m, HttpSession session) {
 		
 		int result = mrService.deleteMeetingroom(m);
 		
 		if(result > 0) {
-			session.setAttribute("msg", "성공적으로 업무 차량 삭제되었습니다.");
+			session.setAttribute("msg", "성공적으로 회의실 삭제되었습니다.");
 			return "redirect:meetingroomList.me?currentPage=1";
 		}else {
-			session.setAttribute("msg", "업무 차량 삭제에 실패하였습니다. 다시 시도해 주세요.");
+			session.setAttribute("msg", "회의실 삭제에 실패하였습니다. 다시 시도해 주세요.");
 			return "redirect:meetingroomList.me?currentPage=1";
 		}
 		
