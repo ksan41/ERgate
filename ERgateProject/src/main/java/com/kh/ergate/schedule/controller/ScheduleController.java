@@ -58,7 +58,7 @@ public class ScheduleController {
 	@RequestMapping("insert.sc")
 	public String insertSchedule(Schedule s, Model model,HttpSession session) {
 	
-		System.out.println(s);
+		
 		
 		int result = sService.insertSchedule(s);
 		
@@ -82,7 +82,7 @@ public class ScheduleController {
 	  @RequestMapping(value="slist.sc")
 	  public void selectScheduleDetail(String scheduleNo, HttpServletResponse response ) throws JsonIOException, IOException{		
 		  int scNo=Integer.parseInt(scheduleNo);
-		  System.out.println("scNo"+ scNo);
+		
 		  Schedule sc = sService.selectScheduleDetail(scNo);	
 		  response.setContentType("application/json; charset=utf-8");
 		   new Gson().toJson(sc, response.getWriter());		 

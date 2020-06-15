@@ -9,7 +9,6 @@
 <meta charset="UTF-8">
 <title>scheduleMain</title>
 <jsp:include page="../common/menubar.jsp" />
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- 이 부분  -->
 
 <!-- 여기부터 달력 -->
@@ -211,7 +210,6 @@ document.addEventListener('DOMContentLoaded', function() {
 html, body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 14px;
 }
 #external-events {
@@ -221,7 +219,6 @@ html, body {
   left: 20px;
   width: 150px;
   padding: 0 10px;
- 
   background: #eee;
 
 }
@@ -261,7 +258,7 @@ html, body {
             padding-top: 10px; padding-bottom: 10px; float: left; }
       .tabMenu a { color: #000000; font-weight: bold; text-decoration: none; }
    .current {
-            border: 1px solid blue; border-bottom:hidden; }
+            border-top: 3px solid rgba(22, 160, 133, 0.39); border-bottom:hidden; }
    .tabPage { width: 900px; height: 470px; float: left;}
 /* ==========페이지영역========== */
     .outer{
@@ -344,11 +341,22 @@ html, body {
       background: rgb(26, 188, 156);
       color: white;
       font-size: 18px;
-      margin-left: 50px;
+      margin-left: -55px; 
    }
    #scheduleBtn:hover {
       cursor: pointer;
    }
+   #scheduleBtn1{
+   	  width: 140px;
+      height: 40px;
+      border: 0px;
+      border-radius: 5px;
+      background: rgb(26, 188, 156);
+      color: white;
+      font-size: 18px;
+      margin-left: 230px;
+   }
+   
    
    #updateBtn {
      width: 140px;
@@ -358,7 +366,10 @@ html, body {
      background: rgb(26, 188, 156);
      color: white;
      font-size: 18px;
-     margin-left: 50px;
+     position:relative;
+     left:100px;
+     
+     
   }
   #updateBtn:hover {
      cursor: pointer;
@@ -435,6 +446,8 @@ html, body {
    }
    #resetBtn{
       background: rgb(190, 190, 190);
+      
+      
    }
    #scheduleContentBtn:hover, #resetBtn:hover{
       cursor: pointer;
@@ -479,7 +492,7 @@ html, body {
       </div>
      
       <!-- 모달 내용(예약하기 부분) -->
-      <div id="open_schedule" class="modal">
+      <div id="open_schedule" class="modal" style="width:800px;">
          <div class="modal-title">일정등록</div>
          <div class="modal-content">
          
@@ -501,19 +514,19 @@ html, body {
                <div id="tabContent01" class="tabPage" style="height:400px; width:100%;">
       			   <input type="hidden" id="scheduleKind" name="scheduleKind" value="개인일정">
       			   <input type="hidden" id="empId" name="empId" value="${ loginUser.empId }">      			  
-                   <table class="scheduleContent">
+                   <table class="scheduleContent" style="width:760px">
                         <tr>
                            <td id="r1">제목</td>
                            <td id="r2">
-                              <input type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
+                              <input style="width: 140px" type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
                            </td>
                         </tr>
                         <tr>
                            <td id="r1">시작일시</td>
                            <td id="r2">                             
-                                 <input type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
+                                 <input style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-                                 <input type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
+                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
                              
                            </td>
                         </tr>
@@ -521,9 +534,9 @@ html, body {
                         <tr>                        
                            <td id="r1">종료일시</td>
                            <td id="r2">                              
-                                 <input type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
+                                 <input  style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-                                 <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">        
+                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">        
                           		 <input type="hidden" id="outmeetingroom" name="outmeetingroom" >
                           		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" >
                           		 <input type="hidden" id="callPeople" name="callPeople" value="null">
@@ -533,12 +546,13 @@ html, body {
                         <tr>
                            <td id="r1">내용</td>
                            <td id="r2">                             
-                             <textarea cols="60" rows="4" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent"></textarea>
+                             <textarea cols="80" rows="6" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent"></textarea>
                            </td>
                         </tr>
                      </table>
+                     <br>
                     <div class="btns">
-		            <button id="scheduleBtn" type="submit">확인</button>
+		            <button id="scheduleBtn1" type="submit">확인</button>
 		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		         </div>
                </div>		          
@@ -552,24 +566,24 @@ html, body {
                         <tr>
                            <td id="r1">제목</td>
                            <td id="r2">
-                              <input type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
+                              <input style="width: 140px" type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
                            </td>
                         </tr>
                         <tr>
                            <td id="r1">시작일시</td>
                            <td id="r2">
-                                 <input type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
+                                 <input style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-                                 <input type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
+                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
                            </td>
                         </tr>
                         
                        <tr>
                            <td id="r1">종료일시</td>
                            <td id="r2">
-                                 <input type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
+                                 <input style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-                                 <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">         
+                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">         
                            </td>
                         </tr>
                          <tr>
@@ -599,9 +613,9 @@ html, body {
                                  <option value="5층회의실2">5층회의실2</option>
                                  <option value="6층회의실1">6층회의실1</option>
                                  <option value="6층회의실2">6층회의실2</option>
-                              </select><br>
+                              </select><br><br>
                                  <input type="radio"> 외부회의실
-                                 <input type="text" name="outMeetingRoom" id="outMeetingRoom">  <br>
+                                 <input  style="width: 140px" type="text" name="outMeetingRoom" id="outMeetingRoom">  <br><br>
                                  <input type="radio"> 지정안함 <br>
                            </td>                                                      
                         </tr> 
@@ -614,8 +628,9 @@ html, body {
                         </tr>
                      </table>
                      <!-- 예약/취소 버튼 -->
+                     <br>
 		         <div class="btns">
-		            <button id="scheduleBtn" type="submit">확인</button>
+		            <button id="scheduleBtn1" type="submit">확인</button>
 		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		         </div>
                		</div>
@@ -626,34 +641,34 @@ html, body {
 	               <div id="tabContent03" class="tabPage"  style="height:400px;width:100%;">
 	                  <input type="hidden" id="scheduleKind" name="scheduleKind" value="공유일정">
 	                  <input type="hidden" id="empId" name="empId" value="${ loginUser.empId }">
-	                  <table class="scheduleContent">
+	                  <table class="scheduleContent" style="width:760px">
 	                        <tr>
 	                           <td id="r1">제목</td>
 	                           <td id="r2">
-	                              <input type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
+	                              <input style="width: 140px" type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
 	                           </td>
 	                        </tr>
 	                        <tr>
 	                           <td id="r1">시작일시</td>
 	                           <td id="r2">
-	                                 <input type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
+	                                 <input style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
 	                                 <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-	                                 <input type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
+	                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
 	                           </td>
 	                        </tr>
 	                        
 	                        <tr>                        
 	                           <td id="r1">종료일시</td>
 	                           <td id="r2">
-	                                 <input type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
+	                                 <input style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
 	                                 <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-	                                 <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">         
+	                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">         
 	                           </td>
 	                        </tr>
 	                        <tr>
 	                           <td id="r1">내용</td>
 	                           <td id="r2">                             
-	                             <textarea cols="60" rows="4" id="partArea" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent" ></textarea>
+	                             <textarea cols="80" rows="6" id="partArea" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent" ></textarea>
 	                             <input type="hidden" id="outmeetingroom" name="outmeetingroom" value="null">
                           		 <input type="hidden" id="inmeetingroom" name="inmeetingroom" value="null">
                           		 <input type="hidden" id="callPeople" name="callPeople" value="null">
@@ -667,9 +682,10 @@ html, body {
 	                         <td id="r1"></td>
 	                         </tr>
 	                     </table>  
+	                     <br>
 	            <!-- 예약/취소 버튼 -->
 		         <div class="btns">
-		            <button id="scheduleBtn" type="submit">확인</button>
+		            <button id="scheduleBtn1" type="submit">확인</button>
 		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
 		            
 		         </div>                  
@@ -685,7 +701,7 @@ html, body {
       
       
       
-  <div id="list_schedule_Ga" class="modal">
+  <div id="list_schedule_Ga" class="modal"  style="width:750px;">
    <div class="modal-title">개인일정 상세보기</div>
          <div class="modal-content">
          	
@@ -734,7 +750,7 @@ html, body {
                   <div class="btns">
 		            <button id="updateBtn" type="submit">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
-		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)" style="margin-left:100px;">취소</button>
 		         </div> 
 		      </form>   
             
@@ -753,31 +769,31 @@ html, body {
                         <tr>
                            <td id="r1">제목</td>
                            <td id="r2">
-                          	 <input type="text" class="inputs" id="scheduleTitle" name="scheduleTitle" value="">                            
+                          	 <input style="width: 140px" type="text" class="inputs" id="scheduleTitle" name="scheduleTitle" value="">                            
                            </td>
                         </tr>
                         <tr>
                            <td id="r1">시작일시</td>
                            <td id="r2">
-                                 <input type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
+                                 <input style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-                                 <input type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
+                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
                            </td>
                         </tr>
                         
                        <tr>
                            <td id="r1">종료일시</td>
                            <td id="r2">
-                                 <input type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
+                                 <input style="width: 140px" type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
                                  <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-                                 <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">         
+                                 <input style="width: 140px" type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime">         
                            </td>
                         </tr>
                          <tr>
                            <td id="r1">참석자</td>
                            <td id="r2">
                            		 <button type="button" id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddJoinparticipantsModal','_blank');">참석자 지정</button> 
-                 		   		<textarea cols="60" rows="4" id="joinAreaM" name="joinPeople"></textarea> 
+                 		   		<textarea cols="80" rows="6" id="joinAreaM" name="joinPeople"></textarea> 
                            </td>
                         </tr>
                  
@@ -787,7 +803,7 @@ html, body {
                            <td id="r1">수신자</td>
                            <td id="r2">
                            		<button type="button" id="" class="searchBtn" onclick="window.open('callPeople.sc','scheduleAddCallparticipantsModal','_blank');">수신자 지정</button> 
-       							<textarea cols="60" rows="4" id="callAreaM" name="callPeople"></textarea> 
+       							<textarea cols="80" rows="6" id="callAreaM" name="callPeople"></textarea> 
                            </td>
                         </tr> 
                         
@@ -801,9 +817,9 @@ html, body {
                                  <option value="5층회의실2">5층회의실2</option>
                                  <option value="6층회의실1">6층회의실1</option>
                                  <option value="6층회의실2">6층회의실2</option>
-                              </select><br>
+                              </select><br><br>
                                  <input type="radio"> 외부회의실
-                                 <input type="text" name="outMeetingRoom" id="outMeetingRoom">  <br>
+                                 <input type="text" name="outMeetingRoom" id="outMeetingRoom">  <br><br>
                                  <input type="radio"> 지정안함 <br>
                            </td>                                                      
                         </tr> 
@@ -817,9 +833,9 @@ html, body {
                      </table>
                     
                   <div class="btns">
-		            <button id="updateBtn" type="submit">수정하기</button>
+		            <button id="updateBtn" type="submit" style="margin-left:120px;">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
-		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)" style="margin-left:100px;">취소</button>
 		         </div> 
              </form>
              
@@ -827,7 +843,7 @@ html, body {
        </div>
           
 
-  <div id="list_schedule_Go" class="modal">
+  <div id="list_schedule_Go" class="modal" style="width:750px;" >
    <div class="modal-title">공유일정 상세보기</div>
          <div class="modal-content">
          <form action="update.sc" method="post" onsubmit="">        
@@ -838,24 +854,24 @@ html, body {
 	                        <tr>
 	                           <td id="r1">제목</td>
 	                           <td id="r2">
-	                              <input type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
+	                              <input style="width:140px;" type="text" placeholder="내용을 입력해주세요." class="inputs" id="scheduleTitle" name="scheduleTitle">
 	                           </td>
 	                        </tr>
 	                        <tr>
 	                           <td id="r1">시작일시</td>
 	                           <td id="r2">
-	                                 <input type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
+	                                 <input style="width:140px;" type="date" class="inputs" style="width:140px" id="scheduleStartDay" name="scheduleStartDay">
 	                                 <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-	                                 <input type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
+	                                 <input style="width:140px;" type="time" class="inputs" style="width:120px" id="scheduleStartTime" name="scheduleStartTime">                           
 	                           </td>
 	                        </tr>
 	                        
 	                        <tr>                        
 	                           <td id="r1">종료일시</td>
 	                           <td id="r2">
-	                                 <input type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
+	                                 <input style="width:140px;" type="date" class="inputs" style="width:140px" id="scheduleEndDay" name="scheduleEndDay">
 	                                 <img src="${ pageContext.servletContext.contextPath }/resources/icons/minus.png" id="minusImg">
-	                                 <input type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime"> 
+	                                 <input style="width:140px;" type="time" class="inputs" style="width:120px" id="scheduleEndTime" name="scheduleEndTime"> 
 	                                 <input type="hidden" id="outmeetingroom" name="outmeetingroom" value="null">
                           		     <input type="hidden" id="inmeetingroom" name="inmeetingroom" value="null">
                           		     <input type="hidden" id="callPeople" name="callPeople" value="">
@@ -865,7 +881,7 @@ html, body {
 	                        <tr>
 	                           <td id="r1">내용</td>
 	                           <td id="r2">                             
-	                             <textarea cols="60" rows="4" id="partArea" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent" ></textarea>
+	                             <textarea cols="80" rows="6" id="partArea" placeholder="내용을 입력해주세요." id="scheduleContent" name="scheduleContent" ></textarea>
 	                             
 	                           </td>
 	                        </tr>
@@ -880,7 +896,7 @@ html, body {
                   <div class="btns">
 		            <button id="updateBtn" type="submit">수정하기</button>
 		            <button type="button" class="tempnn" id="updateBtn">삭제하기</button>
-		            <button id="resetBtn" type="button" onClick="history.go(0)">취소</button>
+		            <button id="resetBtn" type="button" onClick="history.go(0)" style="margin-left:100px;">취소</button>
 		         </div> 
 		       </form>
           </div>      
