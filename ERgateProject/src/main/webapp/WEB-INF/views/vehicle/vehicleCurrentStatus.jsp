@@ -543,11 +543,11 @@
 					<table class="table_resource" id="vhclSC" style="float: left;" cellpadding="0" cellspacing="0">
 						<thead>
 							<tr>
-								<th><p>그랜저 33허 3333</p></th>
-								<th><p>소나타 33허 3333</p></th>
-								<th><p>카니발 33허 3333</p></th>
-								<th><p>스타렉스 33허 3333</p></th>
-								<th><p>스파크 33허 3333</p></th>
+								<th><p>그랜저 44하 3456</p></th>
+								<th><p>소나타 45하 1234</p></th>
+								<th><p>카니발 46하 2345</p></th>
+								<th><p>스타렉스 44허 7889</p></th>
+								<th><p>스파크 34허 2950</p></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -621,11 +621,11 @@
 							<td id="r2">
 								<select id="vehicleSelect" name="vhclCode" class="inputs" style="width:180px; height:33px;" required>
 									<option disabled>업무차량 선택</option>
-									<option value="111">그랜저 33허 3333</option>
-									<option value="112">소나타 33허 3333</option>
-									<option value="113">카니발 33허 3333</option>
-									<option value="114">스타렉스 33허 3333</option>
-									<option value="115">스파크 33허 3333</option>
+									<option value="111">그랜저 44하 3456</option>
+									<option value="112">소나타 45하 1234</option>
+									<option value="113">카니발 46하 2345</option>
+									<option value="114">스타렉스 44허 7889</option>
+									<option value="115">스파크 34허 2950</option>
 								</select>
 								<button id="searchBtn1" class="searchBtn" type="button">업무차량 정보</button> 
 								<br>

@@ -136,6 +136,10 @@
 	    background-attachment: fixed; 
     }
     /* 배경 이미지 */
+    
+     #logoClick:hover{
+    	cursor: pointer;
+    }
 
 /* ==========페이지영역========== */
 </style>   
@@ -153,7 +157,9 @@
 	    <form action="updatePwd.ma" method="post">
 	        <table id="findPwdTable">
 	            <tr>
-	                <td colspan="2" style="text-align: center; height: 60px;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
+	                <td colspan="2" style="text-align: center; height: 60px;">
+	                	<img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png" id="logoClick" onclick="location.href='returnLogin.ma';">
+	                </td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" id="findPwdDescript">

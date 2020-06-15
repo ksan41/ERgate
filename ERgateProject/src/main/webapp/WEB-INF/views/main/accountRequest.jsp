@@ -135,6 +135,10 @@
 	    background-attachment: fixed; 
     }
     /* 배경 이미지 */
+    
+    #logoClick:hover{
+    	cursor: pointer;
+    }
 
 /* ==========페이지영역========== */
 </style>   
@@ -144,7 +148,9 @@
 	    <form id="enrollForm" action="insertRequest.ma" method="post" enctype="multipart/form-data">
 	        <table id="enrollTable">
 	            <tr>
-	                <td colspan="2" style="text-align: center;"><img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png"></td>
+	                <td colspan="2" style="text-align: center;">
+	                	<img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png" id="logoClick" onclick="location.href='returnLogin.ma';">
+	                </td>
 	            </tr>
 	            <tr>
 	                <td colspan="2" id="enrollDescript">계정 등록을 위해 필요한 정보를 입력해 주세요.</td>

@@ -130,6 +130,10 @@
 	    background-attachment: fixed; 
     }
     /* 배경 이미지 */
+    
+     #logoClick:hover{
+    	cursor: pointer;
+    }
 
 /* ==========페이지영역========== */
 </style>   
@@ -148,7 +152,7 @@
 	        <table id="findIdTable">
 	            <tr>
 	                <td colspan="2" style="text-align: center; height: 60px;">
-	                	<img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png">
+	                	<img src="${ pageContext.servletContext.contextPath }/resources/siteImgs/logo.png" id="logoClick" onclick="location.href='returnLogin.ma';">
 	                </td>
 	            </tr>
 	            <tr>
