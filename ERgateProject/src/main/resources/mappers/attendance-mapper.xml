@@ -92,18 +92,13 @@
 		
 	</select>
 	
-	<!-- 사원별 근태현황 상세 조회용 -->
+	<!-- 사원별 근태현황 상세 조회용 아랫부분 들어갈 정보 -->
 	<select id="selectAtMgDetail" parameterType="Holiday" resultMap="holidayResultSet">
-		select h.hday, h.useday, h.remain_day, uh.holiday_usecount,
-		       uh.holiday_start, uh.holiday_end,
-		       ht.holiday_type, emp_name, rank_title, dept_title
-		  from holiday h
-		  join use_holiday uh using (emp_id)
-		  join holiday_type ht using (holiday_typecode)
+		select emp_name, uh.holiday_usecount, uh.holiday_start, uh.holiday_end, ht.holiday_type
+  		  from use_holiday uh
+ 		  join holiday_type ht using (holiday_typecode)
 		  join employee e using(emp_id)
-		  join department d on(e.dept_code=d.dept_code)
-		  join rank r on(e.rank_code=r.rank_code)
-		 where emp_id=#{empId} and SUBSTR(holiday_start,1,4)=#{year}
+		 where emp_id=#{empId} and SUBSTR(holiday_start,1,4)=#{year} 
 	</select>
 	
 	<!-- 사원별 근태현황 상세조회용 윗부분에 들어갈 정보 -->
