@@ -457,8 +457,8 @@
 				
 				for(var i = 0; i < num.length; i++){ // 게시글에 딸려있는 리플 갯수만큼 num[]에 리플 번호를 담아놨음. 
 				    (function(i) {
-				            $.ajax({
-				                url: "relist.bo",
+				            $.ajax({ 
+				                url: "relist.bo", // 댓글 불러오는 ajax 안에 + 대댓글 호출하는 ajax를 호출
 				                data:{refRno:num[i]}, // 여기로 댓글 번호를 넘김 (대댓글은 댓글 번호를 참조로 하고 있음)(num변수가 배열이니까 배열 길이만큼 반복해서 controller로 넘김)
 				                success:function(relist){
 				                	var value2 = "";
