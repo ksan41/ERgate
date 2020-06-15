@@ -323,7 +323,7 @@
 												<th>일정 내용</th>
 											</tr>
 										</thead>
-										<c:forEach var="list" items="${slist}" begin="1" end="5">										
+										<c:forEach var="list" items="${slist}" begin="1" end="7">										
 										<tr>										
 											<td>${list.scheduleStartTime}</td>
 											<td>${list.scheduleTitle}</td>										
