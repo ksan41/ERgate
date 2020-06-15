@@ -88,14 +88,14 @@
 	
 	/* 게시판 스타일 */
 	.boardTable {
-		width: 1100px;
+		width: 1400px;
 		height: auto;
 	}
 	
  	.boardScroll {
 		overflow-x:hidden;
 		overflow-y:scroll;
-		width:1300px;
+		width:1400px;
 		height:450px;	
 	}
 	
