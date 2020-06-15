@@ -817,7 +817,7 @@
 				data:{empId:"${loginUser.empId}",
 					  currentPage:cur},
 				type:"post",
-				success:function(map){ // map
+				success:function(map){
 					
 					// map.pi  => {}
 					// map.list => [{}, {}]
@@ -990,10 +990,6 @@
 			var month = $("#calMonth").text();
 			var day = $("#calDay").text();
 			
-			
-			
-			console.log(month);
-			
 			var realMonth;
 			if(month.length = 1){
 				realMonth = "0" + month;
@@ -1001,13 +997,10 @@
 				realMont = month;
 			}
 			
-			console.log(realMonth);
-			
 			var today = year + "/" + realMonth + "/" + day;
 			
 			$("#vhclStartDate").val(today);
 			$("#vhclEndDate").val(today);
-			
 			
 			var vhclOption = $("#vehicleSelect>option").map(function() { return $(this).val(); });
 
@@ -1019,7 +1012,6 @@
 			$("#vehicleSelect option:not(:selected)").prop("disabled", true);
 			
 			
-			
 			var startOption = $("#vhclStartTime>option").map(function() { return $(this).val(); });
 			
 			for(var so in startOption){
@@ -1029,7 +1021,6 @@
 			}
 			$("#vhclStartTime option:not(:selected)").prop("disabled", true);
 				
-			
 			
 			var endOption = $("#vhclEndTime>option").map(function() { return $(this).val(); });
 			
