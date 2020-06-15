@@ -244,7 +244,7 @@
 					<tr>
 						<th>받는사람</th>
 						<td>
-							<div><input id="n1" type="text" class="inputs inputDual1" name="mailTo" style="width:120px; float:left;"></div>
+							<div><input id="n1" type="text" class="inputs inputDual1" name="mailTo" style="width:120px; float:left;" value="${trans}"></div>
 							<div><input id="n2" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
 							<div><input id="n3" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>
 							<div><input id="n4" type="text" class="inputs inputDual" name="mailTo" style="width:120px; float:left;"></div>

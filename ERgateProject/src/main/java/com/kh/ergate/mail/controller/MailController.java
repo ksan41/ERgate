@@ -208,7 +208,8 @@ public class MailController {
 	
 	
 	@RequestMapping("enrollForm.mil")
-	public String enrollForm() {
+	public String enrollForm(@RequestParam(required=false)String empId, Model model) {
+		model.addAttribute("trans", empId);
 		return "mail/mailSendForm";
 	}
 	
@@ -216,7 +217,7 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping(value="insert.mil", produces="application/json; charset=utf-8")
 	public int insertBoard(MultipartHttpServletRequest form, @RequestParam(name="files", required=false) MultipartFile[] files) {
-		//System.out.println(files.length);
+		
 		String title[] = form.getParameterValues("mailTitle");
 		String content[] = form.getParameterValues("mailContent");
 		String tto[] = form.getParameterValues("mailTo");

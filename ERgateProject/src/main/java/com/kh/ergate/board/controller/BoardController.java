@@ -140,14 +140,11 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="insert.bo", produces="application/json; charset=utf-8")
 	public int insertBoard(MultipartHttpServletRequest form, @RequestParam(name="files", required=false) MultipartFile[] files) {
-		//System.out.println(files.length);
 		String title[] = form.getParameterValues("boardTitle");
 		String content[] = form.getParameterValues("boardContent");
 		String writer[] = form.getParameterValues("boardWriter");
 		String empId[] = form.getParameterValues("empId");
-		//System.out.println("제목값은? : " + title[0]); 
-		//System.out.println("내용값은? : " + content[0]);
-		//System.out.println("이름은? : " + content[0]);
+
 		Board insertB = new Board();
 		insertB.setBoardTitle(title[0]);
 		insertB.setBoardContent(content[0]);
@@ -291,16 +288,14 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="realUpdate.bo", produces="application/json; charset=utf-8")
 	public int realUpdateBoard(MultipartHttpServletRequest form, @RequestParam(name="files", required=false) MultipartFile[] files) {
-		//System.out.println(files.length);
+
 		String title[] = form.getParameterValues("boardTitle");
 		String content[] = form.getParameterValues("boardContent");
 		String writer[] = form.getParameterValues("boardWriter");
 		String empId[] = form.getParameterValues("empId");
 		String boardNo[] = form.getParameterValues("boardNo");
 		String nowFnoTemp[] = form.getParameterValues("nowFno");
-		//System.out.println("제목값은? : " + title[0]); 
-		//System.out.println("내용값은? : " + content[0]);
-		//System.out.println("이름은? : " + content[0]);
+		
 		Board insertB = new Board();
 		insertB.setBoardTitle(title[0]);
 		insertB.setBoardContent(content[0]);
@@ -358,7 +353,7 @@ public class BoardController {
 			if(list.size() > 0) {
 				for(int i=0; i<list.size(); i++) {
 					fileName[i] = list.get(i).getChangeName();
-					//System.out.println(fileName[i]);
+					
 					deleteFile(fileName[i], request);
 				}
 				
