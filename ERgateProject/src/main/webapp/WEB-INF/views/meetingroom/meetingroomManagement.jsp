@@ -152,25 +152,25 @@
 		border-radius: 5px;
 		padding-top: 10px;
 	}
-	.mmTdImg {
+	.vmTdImg {
 		width: 250px;
 		height: 220px;
 		text-align: center;
 	}
-	.mmImg {
+	.vmImg {
 		width: 180px;
 		height: 180px;
 		border-radius: 50%;
 		margin-bottom: 30px;
 	}
-	.mmTdContent {
+	.vmTdContent {
 		width: 270px;
 		padding-left: 20px;
 	}
-	.mmLabel {
+	.vmLabel {
 		font-weight: 550;
 	}
-	.mmBtn {
+	.vmBtn {
 		width: 180px;
 		height: 35px;
 		border: 1px solid rgb(160, 160, 160);
@@ -200,7 +200,7 @@
 		border-left: none;
 		border-right: none;
 	}
-	.mmModalInput{
+	.vmModalInput{
 		margin-left: 20px;
 		margin-top: 10px;
 		margin-bottom: 10px;
@@ -211,10 +211,10 @@
 		padding-left: 10px;
 		font-size: 16px;
 	}
-	.mmName, .mmLocation, .mmPersonnel, .mmImgEnroll{
+	.vmName, .vmLocation, .vmPersonnel, .vmImgEnroll1{
 		background-color: #eeee;
 	}
-	.mmName {
+	.vmName {
 		width: 200px;
 		height: 50px;
 		text-align: center;
@@ -222,10 +222,10 @@
 		font-size: 16px;
 		border-bottom: 1px solid rgb(190, 190, 190);
 	}
-	.mmName2 {
+	.vmName2 {
 		border-bottom: 1px solid lightgray;
 	}
-	.mmLocation {
+	.vmLocation {
 		width: 200px;
 		height: 50px;
 		text-align: center;
@@ -234,10 +234,10 @@
 		border-style: none;
 		border-bottom: 1px solid rgb(190, 190, 190);
 	}
-	.mmLocation2 {
+	.vmLocation2 {
 		border-bottom: 1px solid lightgray;
 	}
-	.mmPersonnel {
+	.vmPersonnel {
 		width: 200px;
 		height: 50px;
 		text-align: center;
@@ -245,10 +245,10 @@
 		font-size: 16px;
 		border-bottom: 1px solid rgb(190, 190, 190);
 	}
-	.mmPersonnel2 {
+	.vmPersonnel2 {
 		border-bottom: 1px solid lightgray;
 	}
-	.mmImgEnroll {
+	.vmImgEnroll1 {
 		width: 200px;
 		height: 50px;
 		text-align: center;
@@ -257,7 +257,7 @@
 	}
 
 	/* 등록, 수정 버튼 */
-	.mmSubmitBtn {
+	.vmSubmitBtn {
 		width: 140px;
 		height: 40px;
 		border: 0px;
@@ -268,7 +268,7 @@
 		margin-left: 30px;
 	}
 	/* 취소 버튼 */
-	.mmResetBtn {
+	.vmResetBtn {
 		width: 140px;
 		height: 40px;
 		border: 0px;
@@ -287,7 +287,7 @@
 	
 /* ==========회의실 등록 모달========== */
 
-	#mmImgEnroll{
+	#vmImgEnroll{
 		width: 200px;
 		height: 200px;
 		border-radius: 50%;
@@ -299,7 +299,7 @@
 	
 /* ==========회의실 수정 모달========== */
 
-	#mmImgEdit{
+	#vmImgEdit{
 		width: 200px;
 		height: 200px;
 		border-radius: 50%;
@@ -310,12 +310,18 @@
 	
 /* ==========회의실 수정 모달========== */
 
+	#pagingArea {
+		width: 100%;
+		height: auto;
+		border: 1px solid red;
+		text-align: center;
+	}
 
 	/* 페이징바 스타일 */
 	.pagingBar {
 		list-style: none;
 		margin-top: 50px;
-		margin-left: 400px;
+		margin-left: 450px;
 	}
 	.pagingBar li {
 		float: left;
@@ -350,8 +356,9 @@
 		<script>
 			alert('${ msg }');
 		</script>
-		<c:remove var="msg" scope="session" />
+		<c:remove var="msg" scope="session"/>
 	</c:if>
+	
 
 	<div class="outer">
 		<div class="topBar">
@@ -362,8 +369,8 @@
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='currentStatus.me'">회의실 예약</button></li>
-				<li><button class="subBtn" style="width: 170px" onclick="location.href='statusList.me'">회의실 예약현황</button></li>
-				<li><button class="subBtn subActive" onclick="location.href='mtroomDetail.me?currentPage=1'">회의실 관리</button></li>
+				<li><button class="subBtn" style="width: 170px" onclick="location.href='reserveList.me'">회의실 예약현황</button></li>
+				<li><button class="subBtn subActive" onclick="location.href='meetingroomList.me?currentPage=1'">회의실 관리</button></li>
 				
 			</ul>
 		</div>
@@ -374,61 +381,60 @@
 			
 			<div id="mtrmManageOuter">
 			
-			<c:forEach var="m" items="${ list }">
+			<c:forEach items="${ list }" var="v">
 			
-				<table class="mtrmManageInner" >
-					
-						<tr>
-							<td rowspan="5" class="mmTdImg">
+				<table class="mtrmManageInner">
+					<tr>
+						<td rowspan="5" class="vmTdImg">
 							
-								<c:choose>
-									<c:when test="${ empty m.mtrmImage }">
-										<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/크기변환_KENN4462-1.jpg">
-									</c:when>
-									<c:otherwise>
-										<img class="mmImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${m.mtrmImage}">
-									</c:otherwise>
-									
-								</c:choose>
+							<c:choose>
+								<c:when test="${ empty v.mtrmImage }">
+									<img class="vmImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
+								</c:when>
+								<c:otherwise>
+									<img class="vmImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${ v.mtrmImage }">
+								</c:otherwise>
 								
-							</td>
-							<td class="mmTdContent">
-								<span class="mmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;
-								<span class="mmContent">${ m.mtrmName }</span>
-							</td>
-						</tr>
-						<tr>
-							<td class="mmTdContent">
-								<span class="mmLabel">회의실 위치</span>&nbsp;&nbsp;&nbsp;&nbsp;
-								<span class="mmContent">${ m.mtrmLocation }</span>
-							</td>
-						</tr>
-						<tr>
-							<td class="mmTdContent"><span class="mmLabel">수용인원</span>&nbsp;&nbsp;&nbsp;&nbsp;
-								<span class="mmContent">${ m.mtrmCapacity }</span>
-							</td>
-						</tr>
-						<tr>
-							<td class="mmTdContent">
-								<span class="mmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;
-								<span class="mmContent">${ m.mtrmEnrollDate }</span>
-							</td>
-						</tr>
-					
-					
-						<tr>
-							<td class="mmTdContent">
-								<input type="hidden" class="mtrmCode" name="mtrmCode" value="${ m.mtrmCode }"/>
-								<button class="mmBtn editMtrm" type="button" onclick="open_modal2();">수정하기</button>
-								<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
-							</td>
-						</tr>
+							</c:choose>
+						</td>
+						<td class="vmTdContent">
+							<span class="vmLabel">회의실명</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.mtrmName }</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="vmTdContent">
+							<span class="vmLabel">회의실 번호</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.mtrmLocation }</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="vmTdContent">
+							<span class="vmLabel">수용인원</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.mtrmCapacity }명</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="vmTdContent">
+							<span class="vmLabel">등록일</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="vmContent">${ v.mtrmEnrollDate }</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="vmTdContent">
+							<input type="hidden" class="mtrmCode" name="mtrmCode" value="${ v.mtrmCode }"/>
+							<button id="" class="vmBtn editMeetingroom" type="button" onclick="open_modal2();">수정하기</button>
+							<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
+						</td>
+					</tr>
 				</table>
-				</c:forEach>
+				
+			</c:forEach>
+				
 			</div>
-
-				<!-- 페이징바 -->
-			<c:if test="${ pi.startPage eq 1 }">
+			
+			<!-- 페이징바 -->
+			<c:if test="${ pi.endPage gt 1 }">
 			
 				<ul class="pagingBar">
 					
@@ -437,7 +443,7 @@
 	                		<li><a href="#">&lt;&lt;</a></li>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<li><a href="mtroomDetail.me?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
+	                    	<li><a href="meetingroomList.me?currentPage=${ pi.startPage }">&lt;&lt;</a></li>
 	                    </c:otherwise>
 					</c:choose>
 					
@@ -446,7 +452,7 @@
 	                		<li><a href="#">&lt;</a></li>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<li><a href="mtroomDetail.me?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
+	                    	<li><a href="meetingroomList.me?currentPage=${ pi.currentPage - 1 }">&lt;</a></li>
 	                    </c:otherwise>
 					</c:choose>
 					
@@ -456,7 +462,7 @@
 			                    <li><span>${ p }</span></li>
 		                    </c:when>
 		                    <c:otherwise>
-		                    	<li><a href="mtroomDetail.me?currentPage=${ p }">${ p }</a></li>
+		                    	<li><a href="meetingroomList.me?currentPage=${ p }">${ p }</a></li>
 			                </c:otherwise>
 						</c:choose>	                    
 					</c:forEach>
@@ -466,7 +472,7 @@
 		                    <li><a href="#">&gt;</a></li>
 	                   	</c:when>
 	                   	<c:otherwise>
-		                    <li><a href="mtroomDetail.me?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                    <li><a href="meetingroomList.me?currentPage=${ pi.currentPage + 1 }">&gt;</a></li>
 		                </c:otherwise>
 	                </c:choose>
 	                
@@ -475,7 +481,7 @@
 		                    <li><a href="#">&gt;&gt;</a></li>
 	                   	</c:when>
 	                   	<c:otherwise>
-		                    <li><a href="mtroomDetail.me?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
+		                    <li><a href="meetingroomList.me?currentPage=${ pi.endPage }">&gt;&gt;</a></li>
 		                </c:otherwise>
 	                </c:choose>
 					
@@ -484,258 +490,247 @@
 			</c:if>
 			<!-- 페이징바 -->
 			
-			
 		</div>
 
-
-	<!-- 모달팝업 (head부분에 링크들도 복사해주셔야합니다) 모달 사용시엔 메뉴바를 head맨 윗부분에 include해주셔야 합니다. -->
-	<!-- 모달 타겟. href의 #xxx와 모달영역의 id(xxx)가 한셋트입니다. 용도에 따라 href와 id는 변경해주세요.(여러개 가능) 모달타겟으로 쓸 요소에 class와 href 복사해주세요. -->
-
+		
+		<!-- 등록하기 모달 -->
 		<div id="enroll" class="modal">
 			<div class="modal-title">회의실 등록</div>
 			<div class="modal-content">
 			<a class="open-modal" href="#modal-form"></a>
-				<form id="enrollMtrm" method="post" action="insertMtroom.me" enctype="multipart/form-data">
-						<table class="meetingroomModalTable">
-							<tr>
-								<td class="mmName">회의실명</td>
-								<td class="mmName2"><input class="mmModalInput" type="text"></td>
-							</tr>
-	
-							<tr>
-								<td class="mmLocation">회의실 위치</td>
-								<td class="mmLocation2"><input class="mmModalInput" type="text"></td>
-							</tr>
-	
-							<tr>
-								<td class="mmPersonnel">최대 수용인원</td>
-								<td class="mmPersonnel2"><input class="mmModalInput" type="text"></td>
-							</tr>
-	
-							<tr>
-								<td class="mmImgEnroll">회의실 이미지</td>
-								<td class="mmImgEnroll2">
-									<img id="mmImgEnroll" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
-								</td>
-							</tr>
-	
-	
-						</table>
-						<!-- 예약/취소 버튼 -->
-						<div class=btns>
-							<button class="mmSubmitBtn" type="submit">등록하기</button>
-							<button class="mmResetBtn" type="reset">삭제하기</button>
-						</div>
-						
-						<div id="fileArea">
-							<input type="file" name="uploadFile" id="fileInput" onchange="loadImg(this, 1);">
-						</div>
-					
-					</form>
-
+			<form action="insert.me" method="post" enctype="multipart/form-data">
+				<div>
+					<table class="meetingroomModalTable">
+						<tr>
+							<td class="vmName">회의실명</td>
+							<td class="vmName2">
+								<input name="mtrmName" class="vmModalInput" type="text">
+							</td>
+						</tr>
+						<tr>
+							<td class="vmLocation">회의실 번호</td>
+							<td class="vmLocation2">
+								<input name="mtrmLocation" class="vmModalInput" type="text">
+							</td>
+						</tr>
+						<tr>
+							<td class="vmPersonnel">수용인원</td>
+							<td class="vmPersonnel2">
+								<input name="mtrmCapacity" class="vmModalInput" type="text">
+							</td>
+						</tr>
+						<tr>
+							<td class="vmImgEnroll1">회의실 이미지</td>
+							<td class="vmImgEnroll2">
+								<img id="vmImgEnroll" src="${ pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!-- 예약/취소 버튼 -->
+				<div class=btns>
+					<button class="vmSubmitBtn" type="submit">등록하기</button>
+					<button class="vmResetBtn" type="reset" onclick="history.go(0)">취소</button>
+				</div>
+				
+				<div id="fileArea">
+					<input type="file" name="uploadFile" id="fileInput" onchange="loadImg(this, 1);">
+				</div>
+			</form>
 			</div>
 		</div>
 		
 		
 		
-		<!-- 수정하기 부분 모달 -->
+		<!-- 수정하기 모달 -->
 		<div id="edit" class="modal">
 			<div class="modal-title">회의실 수정</div>
 			<div class="modal-content">
-				<form action="" method="post" id="updataForm" enctype="multipart/form-data">
-					<div>
-						<table class="meetingroomModalTable">
-							<tr>
-								<td class="mmName">회의실 명</td>
-								<td class="mmName2">
-									<input id="editMtrmName" class="mmModalInput" type="text" name="mtrmName" value=""></td>
-							</tr>
-
-							<tr>
-								<td class="mmLocation">회의실 위치</td>
-								<td class="mmLocation2">
-									<input id="editMtrmLocation" class="mmModalInput" type="text" name="mtrmLocation" value=""></td>
-							</tr>
-
-							<tr>
-								<td class="mmPersonnel">최대 수용인원</td>
-								<td class="mmPersonnel2">
-									<input id="editMtrmCapacity" class="mmModalInput" type="text" name="mtrmCapacity" value=""></td>
-							</tr>
-
-							<tr>
-								<td class="mmImgEnroll">회의실 이미지</td>
-								<td class="mmImgEnroll2">
+			<form action="" method="post" id="updateModalForm" enctype="multipart/form-data">
+				<div>
+	                <table class="meetingroomModalTable">
+	                    <tr>
+							<td class="vmName">회의실명</td>
+							<td class="vmName2">
+								<input id="editMtrmName" name="mtrmName" class="vmModalInput" type="text" value="">
+							</td>
+						</tr>
+						<tr>
+							<td class="vmLocation">회의실 위치</td>
+							<td class="vmLocation2">
+								<input id="editMtrmLocation" name="mtrmLocation" class="vmModalInput" type="text" value="">
+							</td>
+						</tr>
+						<tr>
+							<td class="vmPersonnel">수용인원</td>
+							<td class="vmPersonnel2">
+								<input id="editMtrmCapacity" name="mtrmCapacity" class="vmModalInput" type="text" value="">
+							</td>
+						</tr>
+						<tr>
+							<td class="vmImgEnroll1">회의실 이미지</td>
+							<td class="vmImgEnroll2">
 								
-										<c:choose>
-											<c:when test="${ empty m.mtrmImage }">
-												<img id="mmImgEdit"
-													src="${ pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
-											</c:when>
-											<c:otherwise>
-												<img id="mmImgEdit"
-													src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${m.mtrmImage}">
-											</c:otherwise>
-										</c:choose></td>
-							</tr>
-						</table>
-					</div>
-					<!-- 예약/취소 버튼 -->
-					<div class=btns>
-						<button class="mmSubmitBtn" type="submit" id="editUpdateBtn">수정하기</button>
-						<button class="mmResetBtn" type="submit" id="editDeleteBtn">삭제하기</button>
-					</div>
-
-					<div id="fileArea2">
-						<input type="file" name="reUploadFile" id="fileInput2" onchange="loadImg2(this, 1);">
-					</div>
-					
-					<input id="editMtrmImage" name="mtrmImage" type="hidden" value="">
-					<input id="editMtrmCode" name="mtrmCode" type="hidden" value="">
-					<input id="editMtrmEnrollDate" name="mtrmEnrollDate" type="hidden" value="">
-					<input id="editMtrmStatus" name="mtrmStatus" type="hidden" value="">
-					
-					
-				</form>
+								<c:choose>
+									<c:when test="${ empty v.mtrmImage }">
+										<img id="vmImgEdit" src="${pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png">
+									</c:when>
+									<c:otherwise>
+										<img id="vmImgEdit" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/${ v.mtrmImage }">
+									</c:otherwise>
+								</c:choose>
+								
+							</td>
+						</tr>
+	                </table>
+	            </div>
+                <!-- 예약/취소 버튼 -->
+				<div class=btns>
+					<button class="vmSubmitBtn" type="submit" id="editUpdateBtn">수정하기</button>
+					<button class="vmResetBtn" type="submit" id="editDeleteBtn">삭제하기</button>
+				</div>
+				<div id="fileArea2">
+					<input type="file" name="reUploadFile" id="fileInput2" value="" onchange="loadImg2(this, 1);">
+				</div>
+				
+				<input id="editMtrmImage" name="mtrmImage" type="hidden" value="">
+				<input id="editMtrmCode" name="mtrmCode" type="hidden" value="">
+				<input id="editMtrmEnrollDate" name="mtrmEnrollDate" type="hidden" value="">
+				<input id="editMtrmStatus" name="mtrmStatus" type="hidden" value="">
+				
+			</form>
 			</div>
-			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br>
+			<a id="open_edit" class="open-modal" href="#edit" style="display: none;">모달</a> <br> 
 		</div>
 
 	</div>
-		
-		<!-- 모달용 스크립트 -->
-		<script>
-		
-			$('.open-modal').click(function() {
-				$(this).modal({
-					fadeDuration : 150
-				});
-
-			});
-			
-			/* 등록하기 모달 여는 function */
-			function open_modal() {
-				$("#open_enroll").click();
-			};
-			
-			/* 수정하기 모달 여는 function */
-			function open_modal2() {
-				$("#open_edit").click();
-			};
-
-		</script>
-		
-		<!-- 수정하기 모달 값 전달 ajax  -->
-		<script>
-			$(".editMtrm").click(function(){
-				
-				$.ajax({
-					url:"select.me",
-					data:{mtrmCode:$(this).prev().val()},
-					type:"post",
-					success:function(meetingroom){
-						
-						var mtrmCode = meetingroom.mtrmCode;
-						var mtrmName = meetingroom.mtrmName;
-						var mtrmLocation = meetingroom.mtrmLocation;
-						var mtrmCapacity = meetingroom.mtrmCapacity;
-						var mtrmEnrollDate = meetingroom.mtrmEnrollDate;
-						var mtrmImage = meetingroom.mtrmImage;
-						var mtrmStatus = meetingroom.mtrmStatus;
-						
-						$("#editMtrmCode").val(mtrmCode);
-						$("#editMtrmName").val(mtrmName);
-						$("#editMtrmLocation").val(mtrmLocation);
-						$("#editMtrmCapacity").val(mtrmCapacity);
-						$("#editMtrmEnrollDate").val(mtrmEnrollDate);
-						$("#editMtrmImage").val(mtrmImage);
-						$("#editMtrmStatus").val(mtrmStatus);
-						
-						if(mtrmImage == null){
-							$("#mmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png");
-						}else{
-							$("#mmImgEdit").attr("src", "${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/"+mtrmImage);
-						}
-						
-					},error:function(){
-						console.log(" ajax 통신 실패");
-					}
-				});
-			});
-		</script>
-
-		<!-- 수정하기 모달에서 수정하기/삭제하기 form -->
-		<script>
-			$("#editUpdateBtn").click(function () {
-		       $("#updataForm").attr("action", "updateMtroom.me");
-			});
-			 
-			$("#editDeleteBtn").click(function () {
-			       $("#updataForm").attr("action", "deleteMtroom.me");
-			});
-		</script>
 	
-		
-		<!-- 사진 첨부  -->
-		<script>
-			
-			$(function() {
-				$("#fileArea").hide();
 
-				$("#mmImgEnroll").click(function() {
-					$("#fileInput").click();
-				});
+	<!-- 모달용 스크립트 -->
+	<script>
+	
+		$('.open-modal').click(function() {
+			$(this).modal({
+				fadeDuration : 150
 			});
 
-			function loadImg(inputFile, num) {
-
-				if (inputFile.files.length == 1) {
-
-					var reader = new FileReader();
-
-					reader.readAsDataURL(inputFile.files[0]);
-
-					reader.onload = function(e) {
-						switch (num) {
-						case 1:
-							$("#mmImgEnroll").attr("src", e.target.result);
-							break;
-						}
-					};
-				}
-			}
-		</script>
-
-
-		<!-- 사진 첨부 수정 -->
+		});
 		
-		<script>
+		/* 등록하기 모달 여는 function */
+		function open_modal() {
+			$("#open_enroll").click();
+		};
+		
+		/* 수정하기 모달 여는 function */
+		function open_modal2() {
+			$("#open_edit").click();
+		};
+
+	</script>
+
+	<!-- 수정하기 모달 값 전달 ajax -->
+	<script>
+		$(".editMeetingroom").click(function(){
 			
-			$(function() {
-				$("#fileArea2").hide();
-
-				$("#mmImgEdit").click(function() {
-					$("#fileInput2").click();
-				});
-			});
-
-			function loadImg2(inputFile, num) {
-
-				if (inputFile.files.length == 1) {
-
-					var reader = new FileReader();
-
-					reader.readAsDataURL(inputFile.files[0]);
-
-					reader.onload = function(e) {
-						switch (num) {
-						case 1:
-							$("#mmImgEdit").attr("src", e.target.result);
-							break;
-						}
-					};
+			$.ajax({
+				url:"select.me",
+				data:{mtrmCode:$(this).prev().val()},
+				type:"post",
+				success:function(meetingroom){
+					
+					var mtrmName = meetingroom.mtrmName;
+					var mtrmLocation = meetingroom.mtrmLocation;
+					var mtrmCapacity = meetingroom.mtrmCapacity;
+					var mtrmImage = meetingroom.mtrmImage;
+					var mtrmCode = meetingroom.mtrmCode;
+					var mtrmEnrollDate = meetingroom.mtrmEnrollDate;
+					var mtrmStatus = meetingroom.mtrmStatus;
+					
+					$("#editMtrmName").val(mtrmName);
+					$("#editMtrmLocation").val(mtrmLocation);
+					$("#editMtrmCapacity").val(mtrmCapacity);
+					$("#editMtrmImage").val(mtrmImage);
+					$("#editMtrmCode").val(mtrmCode);
+					$("#editMtrmEnrollDate").val(mtrmEnrollDate);
+					$("#editMtrmStatus").val(mtrmStatus);
+					
+					if(mtrmImage == null){
+						$("#vmImgEdit").attr("src", "${pageContext.servletContext.contextPath }/resources/siteImgs/mtrmLogo.png");
+					}else{
+						$("#vmImgEdit").attr("src", "${ pageContext.servletContext.contextPath }/resources/uploadFiles/meetingroom/"+mtrmImage);
+					}
+					
+				},error:function(){
+					console.log("수정 모달 selectMeetingroom ajax 통신 실패");
 				}
+			});
+		});
+	</script>
+
+	<!-- 수정하기 모달에서 수정하기/삭제하기 form -->
+	<script>
+		$("#editUpdateBtn").click(function () {
+	       $("#updateModalForm").attr("action", "update.me");
+		});
+		 
+		$("#editDeleteBtn").click(function () {
+		       $("#updateModalForm").attr("action", "delete.me");
+		});
+	</script>
+		
+    <!-- 사진 첨부 -->
+    <script>
+		$(function(){
+			$("#fileArea").hide();
+			
+			$("#vmImgEnroll").click(function(){
+				$("#fileInput").click();
+			});
+		});
+	
+		function loadImg(inputFile, num){
+
+			if(inputFile.files.length == 1){
+				
+				var reader = new FileReader();
+				
+				reader.readAsDataURL(inputFile.files[0]);
+				
+				reader.onload = function(e){
+					switch(num){
+						case 1: $("#vmImgEnroll").attr("src", e.target.result); break;
+					}
+				};
 			}
-		</script>
+		}
+	</script>
+	
+	<!-- 사진 첨부 (수정) -->
+    <script>
+		$(function(){
+			$("#fileArea2").hide();
+			
+			$("#vmImgEdit").click(function(){
+				$("#fileInput2").click();
+			});
+		});
+	
+		function loadImg2(inputFile, num){
+
+			if(inputFile.files.length == 1){
+				
+				var reader = new FileReader();
+				
+				reader.readAsDataURL(inputFile.files[0]);
+				
+				reader.onload = function(e){
+					switch(num){
+						case 1: $("#vmImgEdit").attr("src", e.target.result); break;
+					}
+				};
+			}
+		}
+	</script>
+		
 </body>
 </html>

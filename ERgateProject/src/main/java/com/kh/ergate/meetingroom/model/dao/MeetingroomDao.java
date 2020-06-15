@@ -7,79 +7,38 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.common.model.vo.PageInfo;
-import com.kh.ergate.main.model.vo.Employee;
 import com.kh.ergate.meetingroom.model.vo.Meetingroom;
-import com.kh.ergate.meetingroom.model.vo.MeetingroomDate;
 import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
-import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 
 @Repository("mrDao")
 public class MeetingroomDao {
 
-	public int statusListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("meetingroomMapper.statusListCount");
-	}
-	
 	public ArrayList<MeetingroomReservation> currentStatusList(SqlSessionTemplate sqlSession, String date){
 		return (ArrayList)sqlSession.selectList("meetingroomMapper.currentStatusList", date);
 	}
 	
-	public int selectMtroomDetailListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("meetingroomMapper.selectMtroomDetailListCount");
+	public int selectReserveListCount(SqlSessionTemplate sqlSession, String empId) {
+		return sqlSession.selectOne("meetingroomMapper.selectReserveListCount", empId);
 	}
 	
-	public ArrayList<Meetingroom> selectMtroomDetail(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<MeetingroomReservation> myReserveMeetingroom(SqlSessionTemplate sqlSession, String empId, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMtroomDetail", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.myReserveMeetingroom", empId, rowBounds);
 	}
 	
-	public int reserveMtroom(SqlSessionTemplate sqlSession, MeetingroomReservation mr) {
-		return sqlSession.insert("meetingroomMapper.reserveMtroom", mr);
+	public ArrayList<MeetingroomReservation> selectCurrentStatus(SqlSessionTemplate sqlSession, String currentDate) {
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectCurrentStatus", currentDate);
 	}
 	
-	public int insertMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
-		return sqlSession.insert("meetingroomMapper.insertMeetingroom", m);
-	}
-
-	public int selectRvListCount(SqlSessionTemplate sqlSession, String empId) {
-		return sqlSession.selectOne("meetingroomMapper.selectRvListCount", empId);
+	public int reserveMeetingroom(SqlSessionTemplate sqlSession, MeetingroomReservation mr) {
+		return sqlSession.insert("meetingroomMapper.reserveMeetingroom", mr);
 	}
 	
-	public ArrayList<MeetingroomReservation> myReserveList(SqlSessionTemplate sqlSession, String empId, PageInfo pi){
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.myReserveList", empId, rowBounds);
-	}
-
-	public int updateMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
-		return sqlSession.update("meetingroomMapper.updateMeetingroom", m);
+	public int cancelReserveMeetingroom(SqlSessionTemplate sqlSession, int mtrmReserveNo) {
+		return sqlSession.update("meetingroomMapper.cancelReserveMeetingroom", mtrmReserveNo);
 	}
 	
-	public int searchListCount(SqlSessionTemplate sqlSession, String month) {
-		return sqlSession.selectOne("meetingroomMapper.searchListCount", month);
-	}
-	
-	public ArrayList<MeetingroomReservation> searchList(SqlSessionTemplate sqlSession, String date){
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", date);
-	}
-	
-	public int cancelReserve(SqlSessionTemplate sqlSession, int mtrmReserveNo) {
-		return sqlSession.update("meetingroomMapper.cancelReserve", mtrmReserveNo);
-	}
-	
-	public ArrayList<MeetingroomReservation> statusListMonth(SqlSessionTemplate sqlSession, String month){
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.searchList", month);
-	}
-	
-	public int deleteMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
-		return sqlSession.update("meetingroomMapper.deleteMeetingroom", m);
-	}
-	
-	public Meetingroom selectMeetingroom(SqlSessionTemplate sqlSession, String mtrmCode) {
-		return sqlSession.selectOne("meetingroomMapper.selectMeetingroom", mtrmCode);
-	}
-
 	public ArrayList<MeetingroomReservation> reserveMeetingroomList(SqlSessionTemplate sqlSession, String date, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
@@ -90,8 +49,30 @@ public class MeetingroomDao {
 		return sqlSession.selectOne("meetingroomMapper.reserveMeetingroomListCount", date);
 	}
 	
-	public ArrayList<MeetingroomReservation> selectCurrentStatus(SqlSessionTemplate sqlSession, String currentDate) {
-		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectCurrentStatus", currentDate);
+	public int selectMeetingroomListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("meetingroomMapper.selectMeetingroomListCount");
 	}
-
+	
+	public ArrayList<Meetingroom> selectMeetingroomList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("meetingroomMapper.selectMeetingroomList", null, rowBounds);
+	}
+	
+	public Meetingroom selectMeetingroom(SqlSessionTemplate sqlSession, String mtrmCode) {
+		return sqlSession.selectOne("meetingroomMapper.selectMeetingroom", mtrmCode);
+	}
+	
+	public int insertMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
+		return sqlSession.insert("meetingroomMapper.insertMeetingroom", m);
+	}
+	
+	public int updateMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
+		return sqlSession.update("meetingroomMapper.updateMeetingroom", m);
+	}
+	
+	public int deleteMeetingroom(SqlSessionTemplate sqlSession, Meetingroom m) {
+		return sqlSession.update("meetingroomMapper.deleteMeetingroom", m);
+	}
+	
 }

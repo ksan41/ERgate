@@ -58,7 +58,7 @@ public class VehicleController {
 	@ResponseBody
 	@RequestMapping(value="myReserve.ve", produces="application/json; charset=utf-8")
 	public String myReserveList(String empId, int currentPage, Model model) {
-		
+		System.out.println("차량요청");
 		int listCount = vService.selectReserveListCount(empId);
 		
 		// PageInfo

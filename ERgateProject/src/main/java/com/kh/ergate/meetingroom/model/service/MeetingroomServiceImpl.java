@@ -22,80 +22,88 @@ public class MeetingroomServiceImpl implements MeetingroomService {
 	private MeetingroomDao mrDao;
 
 
+	// 업무차량 예약 현황 조회용 서비스 (일별)
 	@Override
 	public ArrayList<MeetingroomReservation> currentStatusList(String date) {
 		return mrDao.currentStatusList(sqlSession, date);
 	}
-
-	@Override
-	public int cancelReserve(int mtrmReserveNo) {
-		return mrDao.cancelReserve(sqlSession, mtrmReserveNo);
-	}
-
-	@Override
-	public int insertMeetingroom(Meetingroom m) {
-		return mrDao.insertMeetingroom(sqlSession, m);
-	}
-
-	// 회의실 예약용
-	@Override
-	public int reserveMtroom(MeetingroomReservation mr) {
-		return mrDao.reserveMtroom(sqlSession, mr);
-	}
-
-	// 회의실 수정용
-	@Override
-	public int updateMeetingroom(Meetingroom m) {
-		return mrDao.updateMeetingroom(sqlSession, m);
-	}
-
+	
 	// 나의 예약 현황 총 개수 조회용 서비스
 	@Override
-	public int selectRvListCount(String empId) {
-		return mrDao.selectRvListCount(sqlSession, empId);
+	public int selectReserveListCount(String empId) {
+		return mrDao.selectReserveListCount(sqlSession, empId);
 	}
-
-	// 나의 예약 조회용 서비스
+	
+	// 내 예약 조회용 서비스 ajax
 	@Override
-	public ArrayList<MeetingroomReservation>myReserveList(String empId, PageInfo pi) {
-		return mrDao.myReserveList(sqlSession, empId, pi);
+	public ArrayList<MeetingroomReservation> myReserveMeetingroom(String empId, PageInfo pi) {
+		return mrDao.myReserveMeetingroom(sqlSession, empId, pi);
 	}
-
-	// 회의실 리스트 조회용 서비스 -관리자
-	@Override
-	public int selectMtroomDetailListCount() {
-		return mrDao.selectMtroomDetailListCount(sqlSession);
-	}
-
-	@Override
-	public ArrayList<Meetingroom> selectMtroomDetail(PageInfo pi) {
-		return mrDao.selectMtroomDetail(sqlSession, pi);
-	}
-
-	@Override
-	public int deleteMeetingroom(Meetingroom m) {
-		return mrDao.deleteMeetingroom(sqlSession, m);
-	}
-
-	@Override
-	public Meetingroom selectMeetingroom(String mtrmCode) {
-		return mrDao.selectMeetingroom(sqlSession, mtrmCode);
-	}
-
-	@Override
-	public ArrayList<MeetingroomReservation> reserveMeetingroomList(String date, PageInfo pi) {
-		return mrDao.reserveMeetingroomList(sqlSession, date, pi);
-	}
-
-	@Override
-	public int reserveMeetingroomListCount(String date) {
-		return mrDao.reserveMeetingroomListCount(sqlSession, date);
-	}
-
+		
+	// 차량 예약 현황 조회용 서비스 (일별)
 	@Override
 	public ArrayList<MeetingroomReservation> selectCurrentStatus(String currentDate) {
 		return mrDao.selectCurrentStatus(sqlSession, currentDate);
 	}
 
+	// 차량 예약용 서비스
+	@Override
+	public int reserveMeetingroom(MeetingroomReservation vr) {
+		return mrDao.reserveMeetingroom(sqlSession, vr);
+	}
+
+	// 차량 예약 취소용 서비스
+	@Override
+	public int cancelReserveMeetingroom(int mtrmReserveNo) {
+		return mrDao.cancelReserveMeetingroom(sqlSession, mtrmReserveNo);
+	}
+
+	// 차량 예약 현황 조회용 서비스 (월별) - 관리자
+	@Override
+	public ArrayList<MeetingroomReservation> reserveMeetingroomList(String date, PageInfo pi) {
+		return mrDao.reserveMeetingroomList(sqlSession, date, pi);
+	}
+
+	// 월별 예약 현황 총 개수 조회용 서비스
+	@Override
+	public int reserveMeetingroomListCount(String date) {
+		return mrDao.reserveMeetingroomListCount(sqlSession, date);
+	}
 	
+	// 차량 리스트 총 개수 조회용 서비스
+	@Override
+	public int selectMeetingroomListCount() {
+		return mrDao.selectMeetingroomListCount(sqlSession);
+	}
+
+	// 차량 리스트 조회용 서비스 - 관리자
+	@Override
+	public ArrayList<Meetingroom> selectMeetingroomList(PageInfo pi) {
+		return mrDao.selectMeetingroomList(sqlSession, pi);
+	}
+
+	// 차량 등록용 서비스 - 관리자
+	@Override
+	public int insertMeetingroom(Meetingroom m) {
+		return mrDao.insertMeetingroom(sqlSession, m);
+	}
+	
+	// 차량 상세 조회용 서비스 - 관리자
+	@Override
+	public Meetingroom selectMeetingroom(String mtrmCode) {
+		return mrDao.selectMeetingroom(sqlSession, mtrmCode);
+	}
+
+	// 차량 수정용 서비스 - 관리자
+	@Override
+	public int updateMeetingroom(Meetingroom m) {
+		return mrDao.updateMeetingroom(sqlSession, m);
+	}
+
+	// 차량 삭제용 서비스 - 관리자
+	@Override
+	public int deleteMeetingroom(Meetingroom m) {
+		return mrDao.deleteMeetingroom(sqlSession, m);
+	}
+
 }
