@@ -55,7 +55,7 @@ public class MeetingroomController {
 
 	// 나의 예약 현황 리스트 조회 ajax
 	@RequestMapping(value="myReserve.me")
-	public void myReserveList(HttpSession session,String empId,HttpServletResponse response,int currentPage, Model model) throws JsonIOException, IOException {
+	public void myReserveList(String empId, int currentPage, HttpServletResponse response) throws JsonIOException, IOException {
 		
 		int listCount = mrService.selectReserveListCount(empId);
 		
@@ -111,9 +111,8 @@ public class MeetingroomController {
 	}
 	
 	// 차량 예약 현황 조회 (월별) ajax - 관리자
-	@ResponseBody
 	@RequestMapping(value="reserveListAjax.me", produces="application/json; charset=utf-8")
-	public String reserveMeetingroomListAjax(String calYear, String calMonth, int currentPage, Model model) {
+	public String reserveMeetingroomListAjax(String calYear, String calMonth, int currentPage, Model model, HttpServletResponse response) throws JsonIOException, IOException {
 		
 		String month = calMonth.length() == 1 ? "0"+calMonth : calMonth; 
 		String date = calYear + "/" + month;
