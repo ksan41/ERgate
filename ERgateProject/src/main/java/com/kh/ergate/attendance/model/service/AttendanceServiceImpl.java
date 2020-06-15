@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ergate.attendance.model.dao.AttendanceDao;
 import com.kh.ergate.attendance.model.vo.Holiday;
+import com.kh.ergate.attendance.model.vo.UseHoliday;
 import com.kh.ergate.attendance.model.vo.WorkRecord;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
@@ -44,6 +45,11 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public Holiday selectHoli(Holiday holiday) {
 		return atDao.selectHoli(sqlSession, holiday);
+	}
+	@Override
+	public ArrayList<UseHoliday> myStatusList() {
+		
+		return atDao.myStatusList(sqlSession);
 	}
 	@Override
 	public ArrayList<WorkRecord> selectAtList() {

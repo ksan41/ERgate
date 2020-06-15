@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.ergate.attendance.model.service.AttendanceService;
 import com.kh.ergate.attendance.model.vo.Holiday;
+import com.kh.ergate.attendance.model.vo.UseHoliday;
 import com.kh.ergate.attendance.model.vo.WorkRecord;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
@@ -40,8 +41,14 @@ public class AttendanceController {
 	
 	// 근태현황 조회용
 	@RequestMapping(value="myStatus.at")
-	public String myStatusList(String empId, Model model) {
-		return "attendance/attendanceMyStatus";
+	public ModelAndView myStatusList() {
+		ArrayList<UseHoliday> uhlist = atService.myStatusList();
+		System.out.println("wrlist: "+uhlist);		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("attendance/attendanceMyStatus");
+		mv.addObject("uhlist", uhlist);
+		return mv;
+		
 	}	
 	
 	// 근태관리 페이지 이동

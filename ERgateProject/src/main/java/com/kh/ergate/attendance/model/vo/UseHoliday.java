@@ -20,4 +20,9 @@ public class UseHoliday {
 	private String holidayEnd;			// 휴가종료일시
 	private String holidayUsecount;		// 휴가사용일수
 	
+	//휴가타입vo 	
+	private String holidayType;		// 휴가타입
+	private String holidayCount;	// 휴가타입 별 휴가일수
+	
+	private String year;				// 년도
 }

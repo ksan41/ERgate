@@ -3,6 +3,7 @@ package com.kh.ergate.attendance.model.service;
 import java.util.ArrayList;
 
 import com.kh.ergate.attendance.model.vo.Holiday;
+import com.kh.ergate.attendance.model.vo.UseHoliday;
 import com.kh.ergate.attendance.model.vo.WorkRecord;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
@@ -27,6 +28,8 @@ public interface AttendanceService {
 	//
 	ArrayList<WorkRecord> selectAtList();
 	
+	//근태현황조회용 
+	ArrayList<UseHoliday> myStatusList();
 	 ///출근요청용 
 	 int clockInAt(WorkRecord wr);
 	 //퇴근요청용 

@@ -245,14 +245,16 @@
 							</tr>
 						</thead>
                         <tbody>
+                        	<c:forEach var="list" items="${uhlist}">
 	                        <tr>
 								<td>2020</td>
-								<td>연차</td>
-								<td>1</td>
-	                            <td>2020.05.23</td>
-	                            <td>2020.05.23</td>
-	                            <td>2020.05.23</td>
-	                        </tr>
+								<td>${list.holidayType}</td>
+								<td>${list.holidayCount}</td>
+	                            <td>${list.holidayStart}</td>
+	                            <td>${list.holidayEnd}</td>
+	                            <td>${list.holidayStart}</td>
+	                        </tr><br>
+	                      </c:forEach>
 						</tbody>
 					</table>
 				</div>	

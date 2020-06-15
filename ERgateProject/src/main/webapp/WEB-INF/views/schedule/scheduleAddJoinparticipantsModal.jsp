@@ -267,7 +267,7 @@ div {
 
 
 	<div class="popup-outer" >
-		<div class="popup-title">수신자 지정</div>
+		<div class="popup-title">참석자 지정</div>
 		<div class="popup-content">
 			<!-- 검색바 -->
 			<div class="searchBar">
@@ -282,38 +282,38 @@ div {
 									<path
 						d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
 									<path d="M0 0h24v24H0z" fill="none" /></svg>
-			<button type="button" class="bigBtn" id="callSubmit" style="margin-left: 680px;">등록</button>
+			<button type="button" class="bigBtn" id="joinModalSubmit" style="margin-left: 680px;">등록</button>
 			
 			
 			<script>
-				$(document).on("click","#callSubmit",function(){				
+				$(document).on("click","#joinModalSubmit",function(){				
 					
 					
-					var v = $(".callView tbody").text();
+					var v = $(".joinViewM tbody").text();
 					
 						if(v !=""){
 						
 						// 수신참조자이름 출력/변수에 담기
-						var callName=new Array();
-						cnt = $("#callList tbody input[name=empName]").length;
+						var joinNameM=new Array();
+						cnt = $("#joinListM tbody input[name=empName]").length;
 						for(var i=0;i<cnt;i++){
 							
-							callName.push($("#callList tbody input[name=empName]").eq(i).val());
-							opener.document.getElementById("callArea").innerHTML+= 
-										$("#callList tbody input[name=empName]").eq(i).val()+" ";
+							joinNameM.push($("#joinListM tbody input[name=empName]").eq(i).val());
+							opener.document.getElementById("joinAreaM").innerHTML+= 
+										$("#joinListM tbody input[name=empName]").eq(i).val()+" ";
 						}
 						
 						
 						// 수신참조자 아이디 변수에 담기
-						var callId=new Array();
-						cnt = $("#callList tbody input[name=empId]").length;
+						var joinIdM=new Array();
+						cnt = $("#joinListM tbody input[name=empId]").length;
 						for(var i=0;i<cnt;i++){
-							callIdM.push($("#callList tbody input[name=empId]").eq(i).val());
+							joinIdM.push($("#joinListM tbody input[name=empId]").eq(i).val());
 						}
 						
 						
-						opener.getCallId(callId);
-						opener.getCallName(callName);
+						opener.getJoinIdM(joinIdM);
+						opener.getJoinNameM(joinNameM);
 						
 						window.close();
 					
@@ -361,13 +361,13 @@ div {
 
 				<!-- 우측 선택영역 -->
 				<div id="selectArea">
-					<div id="callArea">
+					<div id="joinAreaM">
 						<button class="middleBtn selRef">선택추가</button>
-						<h2 style="display:inline-block;margin:0;">수신자</h2>
+						<h2 style="display:inline-block;margin:0;">참석자</h2>
 						<br><br>
 						<div id="signSelDiv">
 							<div style="width:100%;height:645px;overflow:auto;">
-								<table id="callList" class="boardTable callView">
+								<table id="joinListM" class="boardTable joinViewMM">
 								<thead>
 									<tr>
 										<th width="100">이름</th>
@@ -428,7 +428,7 @@ div {
 	       	
 			//$(this).removeAttr("checked");
 			
-			if(regExp.test($(".callView tbody").html())){
+			if(regExp.test($(".joinViewM tbody").html())){
 				console.log("중복");
 				return false;
 			}
@@ -437,7 +437,7 @@ div {
 	       			+ '<td><span class="material-icons btnDel">remove_circle</span></td>'
 	       			+ '</tr>';
 	       			
-			$(".callView tbody").append(value2);
+			$(".joinViewM tbody").append(value2);
 			value2="";
 		});
 		

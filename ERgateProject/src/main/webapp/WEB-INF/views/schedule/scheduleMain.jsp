@@ -775,7 +775,7 @@ html, body {
                          <tr>
                            <td id="r1">참석자</td>
                            <td id="r2">
-                           		 <button type="button" id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddJoinparticipants','_blank');">참석자 지정</button> 
+                           		 <button type="button" id="" class="searchBtn" onclick="window.open('joinPeople.sc','scheduleAddJoinparticipantsModal','_blank');">참석자 지정</button> 
                  		   		<textarea cols="60" rows="4" id="joinAreaM" name="joinPeople"></textarea> 
                            </td>
                         </tr>
@@ -785,7 +785,7 @@ html, body {
                         <tr>
                            <td id="r1">수신자</td>
                            <td id="r2">
-                           		<button type="button" id="" class="searchBtn" onclick="window.open('callPeople.sc','scheduleAddCallparticipants','_blank');">수신자 지정</button> 
+                           		<button type="button" id="" class="searchBtn" onclick="window.open('callPeople.sc','scheduleAddCallparticipantsModal','_blank');">수신자 지정</button> 
        							<textarea cols="60" rows="4" id="callAreaM" name="callPeople"></textarea> 
                            </td>
                         </tr> 
@@ -980,7 +980,33 @@ function getCallId(data){
 
 // 수신자 이름 받아오기
 function getCallName(data){
-	callName = data;
+	callName = data;	
+}
+
+var joinIdM = new Array();
+var joinNameM = new Array();
+
+// 참석자 아이디 받아오기
+function getJoinIdM(data){
+	joinIdM = data;
+}
+
+// 참석자 이름 받아오기
+function getJoinName(data){
+	joinNameM = data;
+}
+
+var callIdM = new Array();
+var callNameM = new Array();
+
+// 수신자 아이디 받아오기
+function getCallIdM(data){
+	callIdM = data;
+}
+
+// 수신자 이름 받아오기
+function getCallNameM(data){
+	callNameM = data;
 }
 </script>
 </body>

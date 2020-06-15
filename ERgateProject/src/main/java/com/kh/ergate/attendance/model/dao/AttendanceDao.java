@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.attendance.model.vo.Holiday;
+import com.kh.ergate.attendance.model.vo.UseHoliday;
 import com.kh.ergate.attendance.model.vo.WorkRecord;
 import com.kh.ergate.group.model.vo.Search;
 import com.kh.ergate.main.model.vo.Employee;
@@ -40,9 +41,14 @@ public class AttendanceDao {
 		return sqlSession.update("attendanceMapper.clockOutAt", wr);
 	}
 
-	 //출퇴근내역리스트조회용 ---
+	 //출퇴근내역리스트조회용 
 	public ArrayList<WorkRecord> selectAtList(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("attendanceMapper.selectAtList");
+	}
+	
+	public ArrayList<UseHoliday> myStatusList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("attendanceMapper.myStatusList");
+		
 	}
 
 	
