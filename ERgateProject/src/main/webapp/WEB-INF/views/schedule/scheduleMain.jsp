@@ -221,8 +221,9 @@ html, body {
   left: 20px;
   width: 150px;
   padding: 0 10px;
-  border: 1px solid #ccc;
+ 
   background: #eee;
+
 }
 .demo-topbar + #external-events { /* will get stripped out */
   top: 60px;
@@ -237,7 +238,7 @@ html, body {
   margin-left: 200px; */
    margin-top: 50px;
    margin-left: 100px;
-   width: 1600px;
+   width: 1400px;
    height: auto;
    float: left;
 }
@@ -247,7 +248,7 @@ html, body {
   margin: 20px auto;*/
    margin-top: 50px;
    margin-left: 100px;
-   width: 1600px;
+   width: 1200px;
    height: auto;
    float: left;
    position:relative;

@@ -31,8 +31,7 @@ public class AttendanceController {
 	// 출퇴근내역 리스트 조회용
 	@RequestMapping(value="atList.at")
 	public ModelAndView selectAtList() {
-		ArrayList<WorkRecord> wrlist = atService.selectAtList();
-		System.out.println("wrlist: "+wrlist);		
+		ArrayList<WorkRecord> wrlist = atService.selectAtList();		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("attendance/attendanceList");
 		mv.addObject("wrlist", wrlist);
@@ -42,8 +41,7 @@ public class AttendanceController {
 	// 근태현황 조회용
 	@RequestMapping(value="myStatus.at")
 	public ModelAndView myStatusList() {
-		ArrayList<UseHoliday> uhlist = atService.myStatusList();
-		System.out.println("wrlist: "+uhlist);		
+		ArrayList<UseHoliday> uhlist = atService.myStatusList();	
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("attendance/attendanceMyStatus");
 		mv.addObject("uhlist", uhlist);
@@ -76,7 +74,7 @@ public class AttendanceController {
 	@RequestMapping(value="atMgdeptEmpList.gr", produces="application/json; charset=utf-8")
 	public String selectAtMgdeptEmpList(Search srch) {
 		
-		System.out.println(srch);
+		
 		ArrayList<Employee> array = atService.selectAtMgdeptEmpList(srch);
 		//return new Gson().toJson(array);
 		return new GsonBuilder().setDateFormat("yyyy/MM/dd").create().toJson(array);
