@@ -323,13 +323,30 @@
 												<th>일정 내용</th>
 											</tr>
 										</thead>
-										<c:forEach var="list" items="${slist}" begin="1" end="7">										
-										<tr>										
-											<td>${list.scheduleStartTime}</td>
-											<td>${list.scheduleTitle}</td>										
-										</tr><br>
-	
-										</c:forEach>
+										<tr>
+											<td>${slist[0].scheduleStartTime}</td>
+											<td>${slist[0].scheduleTitle}</td>
+										</tr>
+										<tr>
+											<td>${slist[1].scheduleStartTime}</td>
+											<td>${slist[1].scheduleTitle}</td>
+										</tr>
+										<tr>
+											<td>${slist[2].scheduleStartTime}</td>
+											<td>${slist[2].scheduleTitle}</td>
+										</tr>
+										<tr>
+											<td>${slist[3].scheduleStartTime}</td>
+											<td>${slist[3].scheduleTitle}</td>
+										</tr>
+										<tr>
+											<td>${slist[4].scheduleStartTime}</td>
+											<td>${slist[4].scheduleTitle}</td>
+										</tr>
+										<tr>
+											<td>${slist[5].scheduleStartTime}</td>
+											<td>${slist[5].scheduleTitle}</td>
+										</tr>
 										
 									</table>
 									<!-- 게시판 -->
