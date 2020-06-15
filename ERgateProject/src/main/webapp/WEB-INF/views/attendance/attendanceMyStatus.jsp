@@ -253,7 +253,7 @@
 	                            <td>${list.holidayStart}</td>
 	                            <td>${list.holidayEnd}</td>
 	                            <td>${list.holidayStart}</td>
-	                        </tr><br>
+	                        </tr>
 	                      </c:forEach>
 						</tbody>
 					</table>
