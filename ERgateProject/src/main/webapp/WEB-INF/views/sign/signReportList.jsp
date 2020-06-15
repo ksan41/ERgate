@@ -332,14 +332,13 @@
 						<th width="150">상태</th>
 						<th width="200">문서분류</th>
 						<th width="250">문서번호</th>
-						<th width="150">결재자</th>
 						<th>제목</th>
 						<th width="150">기안일시</th>
 					</tr>
 				</thead>
 				<c:choose>
 					<c:when test="${empty list }">
-						<td colspan="6" rowspan="10"  class="pageNoClick">조회된 결과가 없습니다.</td>
+						<td colspan="5" rowspan="10"  class="pageNoClick">조회된 결과가 없습니다.</td>
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${list}" var="l">
@@ -358,14 +357,12 @@
 								</c:choose>
 								<td>${l.signTypeName }</td>
 								<td>${l.documentNo }</td>
-								<td>${l.empName }</td>
 								<td>${l.signTitle }</td>
 								<td>${l.draftDate }</td>
 							</tr>
 						</c:forEach>
 						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
     						<tr>
-							<td class="pageNoClick">&nbsp;</td>
 							<td class="pageNoClick">&nbsp;</td>
 							<td class="pageNoClick">&nbsp;</td>
 							<td class="pageNoClick">&nbsp;</td>

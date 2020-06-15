@@ -330,7 +330,6 @@
 						<th width="200">문서번호</th>
 						<th width="100">기안부서</th>
 						<th width="150">기안자</th>
-						<th width="150">결재자</th>
 						<th>제목</th>
 						<th width="120">기안일시</th>
 					</tr>
@@ -339,7 +338,7 @@
 				<c:choose>
 					<c:when test="${ empty list }">
 						<tr>
-							<td colspan="8" rowspan="10">조회된 결과가 없습니다.</td>
+							<td colspan="7" rowspan="10">조회된 결과가 없습니다.</td>
 						</tr>
 					</c:when>
 					<c:otherwise>
@@ -361,14 +360,12 @@
 								<td>${l.documentNo }</td>
 								<td>${l.deptTitle }</td>
 								<td>${l.empName }</td>
-								<td>결재자</td>
 								<td>${l.signTitle }</td>
 								<td>${l.draftDate }</td>
 							</tr>
 						</c:forEach>
 						<c:forEach var="b" begin="1" end="${10-fn:length(list)}">
     						<tr>
-							<td class="pageNoClick">&nbsp;</td>
 							<td class="pageNoClick">&nbsp;</td>
 							<td class="pageNoClick">&nbsp;</td>
 							<td class="pageNoClick">&nbsp;</td>
