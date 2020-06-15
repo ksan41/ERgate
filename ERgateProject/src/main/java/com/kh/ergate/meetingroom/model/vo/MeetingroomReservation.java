@@ -31,4 +31,7 @@ public class MeetingroomReservation {
 
 	private String mtrmName;			// 회의실 이름
 	private String mtrmImage;			// 회의실 이미지
+	private String mtrmLocation;
+	private String empName;
+	
 }

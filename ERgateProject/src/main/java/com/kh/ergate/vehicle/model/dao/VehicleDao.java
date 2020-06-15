@@ -7,8 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ergate.common.model.vo.PageInfo;
-import com.kh.ergate.main.model.vo.Employee;
-import com.kh.ergate.meetingroom.model.vo.MeetingroomReservation;
 import com.kh.ergate.vehicle.model.vo.Vehicle;
 import com.kh.ergate.vehicle.model.vo.VehicleReservation;
 

@@ -18,6 +18,8 @@
 <!-- 모달 사용페이지에 복사해주세요 -->
 
 <style>
+
+/* ==========페이지영역========== */
 	.outer {
 		padding-left: 320px;
 		float: left;
@@ -95,45 +97,36 @@
 	.subBtn:hover {
 		cursor: pointer;
 	}
-	
 	/* 서브메뉴바 메뉴버튼(기본) */
 	/* 서브메뉴바 메뉴버튼(현재페이지일때) */
 	.subActive {
 		border: 4px solid rgb(26, 188, 156);
+		width: 190px;
 	}
 	
 	/* 체크박스 스타일 */
 	.checkBox {
 		zoom: 1.7;
 	}
-	
+
 	/* 스케줄관련 아이콘스타일 */
-	.schedule_icons {
-		fill: rgb(190, 190, 190); /* 검은색 : rgb(94, 94, 94)*/
-		width: 35px;
-		vertical-align: bottom;
+	.material-icons {
+		font-size: 40px;
+		vertical-align: middle;
 	}
-	
+	.material-icons:hover {
+		cursor: pointer;
+	}
+	.pageNoClick {
+		pointer-events: none;
+		cursor: default;
+	}
 	/* 스케줄관련 아이콘스타일 */
-	.material-icons{
-		font-size:40px;
-		vertical-align:middle;
-	}
-	.material-icons:hover{
-		cursor:pointer;
-	}
-	#labelBackground{
-		width: 1400px;
-		height: 70px;
-		background: #eeee;
-		padding-bottom: 20px;
-		text-align: center;
-	}
 	
 	/* 게시판 스타일 */
 	.boardTable {
 		width: 1400px;
-		height: 400px;
+		height: auto;
 		margin-top: 10px;
 	}
 	.boardTable, .boardTable th, .boardTable td {
@@ -159,17 +152,18 @@
 	/* 게시판 스타일 */
 	
 	/* 페이징바 스타일 */
-	.pagination {
+	.pagingBar {
 		list-style: none;
-		margin-left: 400px;
+		margin-left: 520px;
 		margin-top:50px;
 	}
-	
-	.pagination li {
+	.pagingBar:hover{
+		cursor:pointer;
+	}
+	.pagingBar li {
 		float: left;
 	}
-	
-	.pagination li * {
+	.pagingBar li * {
 		float: left;
 		padding: 4px;
 		margin-right: 3px;
@@ -181,18 +175,17 @@
 		text-decoration: none;
 		font-size: 15px;
 	}
-	
-	.pagination li>span {
+	.pagingBar li>span {
 		color: rgb(26, 188, 156);
 		border: 1px solid rgb(26, 188, 156);
 	}
-	
-	.pagination li a:hover {
+	.pagingBar li a:hover {
 		color: rgb(26, 188, 156);
 		border: 1px solid rgb(26, 188, 156);
 	}
 	/* 페이징바 스타일 */
 
+/* ==========페이지영역========== */
 </style>
 </head>
 <body>
@@ -205,34 +198,38 @@
 			<ul id="subMenuList">
 				<!-- 서브메뉴 버튼 영역. 기본:subBtn , 활성화시: subBtn subActive 클래스 추가해주세요 -->
 				<li><button class="subBtn" onclick="location.href='currentStatus.me'">회의실 예약</button></li>
-				<li><button class="subBtn subActive" style="width: 170px" onclick="location.href='statusList.me'">회의실 예약현황</button></li>
-				<li><button class="subBtn" onclick="location.href='mtroomDetail.me?currentPage=1'">회의실 관리</button></li>
-				
+				<li><button class="subBtn subActive" onclick="location.href='reserveList.me'">회의실 예약현황</button></li>
+				<li><button class="subBtn" onclick="location.href='meetingroomList.me?currentPage=1'">회의실 관리</button></li>
 			</ul>
 		</div>
 
 		<div class="contentArea">
 			<!-- 달력 설정 부분 -->
-			<h2 style="display: inline-block; margin-left: 430px;">
-				<span id="arrowLeft" class="material-icons"> arrow_left </span> 
-				<b id="calYear"></b>년 <b id="calMonth"></b>월&nbsp;
-
-				<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24" fill="black" width="30px" height="30px" style="vertical-align: text-top;">
+			<div id="midContentArea">
+	
+				<h2 style="display: inline-block; margin-left: 540px;">
+					<span id="arrowLeft" class="material-icons"> arrow_left </span> 
+						
+						<b id="calYear"></b>년 <b id="calMonth"></b>월&nbsp;
+	
+					<svg class="schedule_icons" xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24" fill="black" width="30px" height="30px" style="vertical-align: text-top;">
 					<path
-						d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+							d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
 					<path d="M0 0h24v24H0z" fill="none" /></svg>
-				<span id="arrowRight" class="material-icons"> arrow_right </span>
-			</h2>
-
-			<form id="changeMonthForm" action="currentStatusD.me" method="get">
-				<input type="hidden" name="year"> 
-				<input type="hidden" name="month">
-				<input type="hidden" name="day">
-			</form>
-
+					<span id="arrowRight" class="material-icons"> arrow_right </span>
+				</h2>
+	
+				<form id="changeMonthForm" action="currentStatusD.me" method="get">
+					<input type="hidden" name="year"> 
+					<input type="hidden" name="month">
+					<input type="hidden" name="day">
+				</form>
+	
+			</div>
+	
 			<!-- 게시판 -->
-			<table id="reservationList" class="boardTable">
+			<table id="vrTable" class="boardTable">
 				<thead>
 					<tr>
 						<th style="width:200px">부서명</th>
@@ -243,23 +240,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+				
 				</tbody>
 			</table>
-
-			<!-- 페이징바 -->
+				
 			<div id="pagingArea"></div>
 			
 		</div>
+
 	</div>
 
 	
+	<!-- 캘린더 -->	
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function(){
 			var date = new Date();
 			var year = date.getFullYear();
 			var month = date.getMonth() + 1;
-
+			
 			var newYear = "<c:out value='${md.year}'/>";
 			var newMonth = "<c:out value='${md.month}'/>";
 			
@@ -307,8 +305,7 @@
 				
 			});	
 			
-			/* 다음으로 */
-
+			
 			$("#arrowRight").click(function() {
 				
 				month = parseInt(month) + 1;
@@ -342,8 +339,7 @@
 		
 		});
 	</script>
-
-		
+	
 	<!-- 월별 예약 현황 조회 -->
 	<script>
 		function listAjax(cur){
@@ -368,7 +364,7 @@
 								"<tr>" +
 									"<td>" + map.list[i].deptTitle + "</td>" + 
 									"<td>" + map.list[i].empName + "</td>" +
-									"<td>" + map.list[i].mtrmName + "</td>" +
+									"<td>" + map.list[i].mtrmName + " " + map.list[i].mtrmLocation + "</td>" +
 									"<td>" + map.list[i].mtrmPurpose + "</td>" + 
 									"<td>" + map.list[i].mtrmStartDate + " " + map.list[i].mtrmStartTime + ":00 ~ " + map.list[i].mtrmEndDate + " " + map.list[i].mtrmEndTime + ":00" + "</td>" +
 								"</tr>";
@@ -427,15 +423,15 @@
 							value2 += "</ul>";
 					}
 					
-					$("#reservationList tbody").html(value1);
+					$("#vrTable tbody").html(value1);
 					$("#pagingArea").html(value2);
 						
 				},error:function(){
-					console.log("월별 예약 현황 모달 리스트 조회 ajax 통신 실패");
+					console.log("월별 예약 현황 리스트 조회 ajax 통신 실패");
 				}
 			});
 		}
 	</script>
-
+	
 </body>
 </html>
