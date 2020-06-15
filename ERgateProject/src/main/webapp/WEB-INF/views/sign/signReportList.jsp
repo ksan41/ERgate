@@ -214,7 +214,7 @@
 				<li><button class="subBtn" onclick="location.href='ongoingList.si?currentPage=1';">진행결재함</button></li>
 				<li><button class="subBtn subActive" onclick="location.href='reportList.si?currentPage=1';">상신내역</button></li>
 				<c:if test="${loginUser.deptCode eq 'D2' }">
-					<li><button class="subBtn subActive" onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
+					<li><button class="subBtn" onclick="location.href='expenseList.si?currentPage=1';">지출결의내역</button></li>
 				</c:if>
 				<c:if test="${loginUser.deptCode eq 'D5' }">
 					<li><button class="subBtn" onclick="location.href='hrList.si?currentPage=1'">외근&휴가내역</button></li>
