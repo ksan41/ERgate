@@ -31,6 +31,20 @@
 		<result column="WORK_DATE" property="workDate"/>	
 	</resultMap>
 	
+	<resultMap id="useHolidayResult" type="UseHoliday">
+		<id column="USE_HOLIDAY_NO" property="useHolidayNo"/>
+		<result column="EMP_ID" property="empId"/>
+		<result column="HOLIDAY_TYPECODE" property="holidayTypeCode"/>
+		<result column="HOLIDAY_START" property="holidayStart"/>
+		<result column="HOLIDAY_END" property="holidayEnd"/>	
+		<result column="HOLIDAY_USECOUNT" property="holidayUsecount"/>		
+		<result column="HOLIDAY_TYPE" property="holidayType"/>
+		<result column="HOLIDAY_COUNT" property="holidayCount"/>
+		<result column="YEAR" property="year"/>		
+			
+	</resultMap>
+	
+
 	<!-- 근태관리 리스트 조회용 - 첫페이지에 뿌려지는 ajax -->
 	<select id="selectAtMgListAjax" parameterType="string" resultMap="holidayResultSet">
 		select emp_name, rank_title, job_title, emp_id, dept_title
@@ -78,13 +92,18 @@
 		
 	</select>
 	
-	<!-- 사원별 근태현황 상세 조회용 아랫부분 들어갈 정보 -->
+	<!-- 사원별 근태현황 상세 조회용 -->
 	<select id="selectAtMgDetail" parameterType="Holiday" resultMap="holidayResultSet">
-		select emp_name, uh.holiday_usecount, uh.holiday_start, uh.holiday_end, ht.holiday_type
-  		  from use_holiday uh
-          join holiday_type ht using (holiday_typecode)
-          join employee e using(emp_id)
-         where emp_id=#{empId} and SUBSTR(holiday_start,1,4)=#{year}
+		select h.hday, h.useday, h.remain_day, uh.holiday_usecount,
+		       uh.holiday_start, uh.holiday_end,
+		       ht.holiday_type, emp_name, rank_title, dept_title
+		  from holiday h
+		  join use_holiday uh using (emp_id)
+		  join holiday_type ht using (holiday_typecode)
+		  join employee e using(emp_id)
+		  join department d on(e.dept_code=d.dept_code)
+		  join rank r on(e.rank_code=r.rank_code)
+		 where emp_id=#{empId} and SUBSTR(holiday_start,1,4)=#{year}
 	</select>
 	
 	<!-- 사원별 근태현황 상세조회용 윗부분에 들어갈 정보 -->
@@ -99,6 +118,10 @@
 	
 	<select id="selectAtList" resultMap="workRecordResult">
 		select * from Work_Record
+	</select>
+	
+	<select id="myStatusList" resultMap="useHolidayResult">
+		select us.*, ht.* from use_holiday us, HOLIDAY_TYPE ht where us.holiday_typecode=ht.holiday_typecode 		
 	</select>
 	
 	<insert id="clockInAt" parameterType="WorkRecord">	
