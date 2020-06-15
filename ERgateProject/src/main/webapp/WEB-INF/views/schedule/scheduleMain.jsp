@@ -210,7 +210,6 @@ document.addEventListener('DOMContentLoaded', function() {
 html, body {
   margin: 0;
   padding: 0;
-  font-size: 14px;
 }
 #external-events {
   position: fixed;
