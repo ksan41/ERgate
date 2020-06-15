@@ -969,7 +969,7 @@
 			//console.log($(this).attr("class").substring(0, 3));
 			//console.log($(this).parent().attr("id"));
 			
-			var code = $(this).attr("class").substring(0, 3);
+			var code = $(this).attr("class").substring(0, 1);
 			var time = $(this).parent().attr("id");
 			//13
 			// 14 ~ 19 
@@ -990,9 +990,6 @@
 			var day = $("#calDay").text();
 			
 			
-			
-			console.log(month);
-			
 			var realMonth;
 			if(month.length = 1){
 				realMonth = "0" + month;
@@ -1000,7 +997,6 @@
 				realMont = month;
 			}
 			
-			console.log(realMonth);
 			
 			var today = year + "/" + realMonth + "/" + day;
 			
