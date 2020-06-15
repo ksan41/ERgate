@@ -508,7 +508,7 @@ div {
 			data:{"empId":empId}, 
 			async: false,
 			success: function(empPrf){
-				console.log(empPrf.empImage);
+				/* console.log(empPrf.empImage); */
 				var valueUp="";
 				valueUp +=
 					
@@ -541,7 +541,7 @@ div {
 							valueUp +=
 			                '<div class="dept_rank_code1">(' + empPrf.deptTitle + '/'+ empPrf.rankTitle + ')</div>' +
 			                '<div style="margin-top: 5px;""><span style="vertical-align:middle;"><img src="${pageContext.servletContext.contextPath}/resources/icons/mail.png" width="20px;"></span>'+
-			                '<span class="dept_mail">&nbsp;' + empPrf.empComEmail + '</span></div>' +
+			                '<span class="dept_mail" onclick="sendEmail();">&nbsp;' + empPrf.empComEmail + '</span></div>' +
 			            '</div>'
 							
 				$(".profile_up").html(valueUp);
@@ -570,6 +570,11 @@ div {
 		});
 	}
 
+	/* 메일주소 클릭시 메일보내기 페이지 이동 */
+	function sendEmail(){
+		/* console.log(empId); */	
+		location.href="enrollForm.mil?empId=" + empId;
+	} 
 	
 	/* 조직도 전체 리스트 조회 - 조직도 페이지 첫 화면 */
 	function selectNoList(){		
