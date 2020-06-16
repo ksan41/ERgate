@@ -60,6 +60,11 @@ public class GroupServiceImpl implements GroupService {
 		return grDao.noUpdateGroupEmp(sqlSession, empId);
 	}
 
+	@Override
+	public ArrayList<Employee> exelDown() {
+		return grDao.exelDown(sqlSession);
+	}
+
 //	@Override
 //	public Employee updateGroupEmp(String empId) {
 //		return grDao.updateGroupEmp(sqlSession, empId);

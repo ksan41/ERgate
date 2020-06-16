@@ -140,5 +140,16 @@
 		where emp_id=#{empId}
 	</delete>
 	
+	<!-- 엑셀 다운용 전체 사원 조회용 -->
+	<select id="exelDown" resultMap="employeeResultSet">
+		select emp_id, emp_name, dept_title, rank_title, job_title, 
+		       hire_date, emp_extension, emp_fax, emp_com_email, 
+		       emp_phone, emp_address, emp_address_detail, emp_birthday
+		  from employee e
+		  join rank r on e.rank_code=r.rank_code
+		  join job j on e.job_code=j.job_code
+		  join department d on e.dept_code=d.dept_code
+		 where resign_flag='N' and r.rank_Code is not null
+	</select>
 
 </mapper>

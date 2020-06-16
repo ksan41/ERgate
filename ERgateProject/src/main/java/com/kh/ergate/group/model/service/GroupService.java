@@ -33,6 +33,9 @@ public interface GroupService {
 	// 계정승인 거절용
 	int noUpdateGroupEmp(String empId);
 
+	// 엑셀 다운용 전체 사원 조회
+	ArrayList<Employee> exelDown();
+
 	// 사원 계정 수정용
 	//Employee updateGroupEmp(String empId);
 	

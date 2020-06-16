@@ -298,7 +298,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td id="mypageDescript">개인정보 수정 후 <br>그룹웨어 정보 반영을 위해 <br>재로그인 해주세요.</bt></td>
+                                    <td id="mypageDescript"> <br><br><br></td>
                                		<tr><td><div style="height:503px;"></div></td></tr>
                                 </tr>
                             </table>
@@ -321,7 +321,7 @@
                                    <td><input type="text" name="empCode" id="empCode" value="${empPrf.empCode}" readonly></td>
                                    <td>
                                         <select name="deptCode" id="deptTitle">
-                                        	<option>부서를 설정하세요</option>
+                                        	<option disabled selected>부서를 설정하세요</option>
 	                                        <option value="D0">임원</option>
 	                                        <option value="D1">개발팀</option> 
 	                                        <option value="D2">회계팀</option>
@@ -338,7 +338,7 @@
                                 <tr>
                                     <td>
                                         <select name="rankCode" id="rankTitle">
-                                        	<option>직급을 설정하세요</option>
+                                        	<option disabled selected>직급을 설정하세요</option>
                                             <option value="D0">대표</option>
                                             <option value="R1">부대표</option> 
                                             <option value="R2">전무</option>
@@ -354,7 +354,7 @@
                                     </td>
                                     <td>
                                         <select name="jobCode" id="jobTitle">
-                                        	<option>직책을 설정하세요</option>
+                                        	<option disabled selected>직책을 설정하세요</option>
                                             <option value="J0">COO</option>
                                             <option value="J1">본부장</option> 
                                             <option value="J2">팀장</option>
