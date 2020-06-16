@@ -1,9 +1,19 @@
 package com.kh.ergate.group.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -106,7 +116,7 @@ public class GroupController {
 		if(result>0) {
 			session.setAttribute("msg", "계정을 승인했습니다.");
 			return "redirect:requestList.gr";
-		}else {
+		}else { // null 값이 인서트되므로 계정승인 실패시에도 성공 메세지 뜨고 리스트에서 안 없어지는 문제 있음 ㅠㅠ
 			session.setAttribute("msg", "계정 승인을 실패하였습니다. 다시 시도해 주세요.");
 			return "group/groupRequestDetail";
 		}
@@ -150,6 +160,163 @@ public class GroupController {
 			session.setAttribute("msg", "계정 삭제에 실패하였습니다. 다시 시도해 주세요.");
 			return "requestList.gr";
 		}
+	}
+	
+	// 11. 조직도 주소록 엑셀 다운로드
+	@RequestMapping("exel.gr")
+	public void exelDown(HttpServletResponse response) {
+		
+		ArrayList <Employee> xlist = grService.exelDown();
+		
+		//for(int i=0; i<list.size(); i++) {
+		//	System.out.println(list.get(i));
+		//}
+		
+		//Workbook xlsxWb = new XSSFWorkbook(); // Excel 2007 이상
+		
+		// Sheet 생성
+        //Sheet sheet1 = xlsxWb.createSheet("firstSheet");
+	    // 워크북 생성
+
+	    Workbook wb = new HSSFWorkbook();
+	    Sheet sheet = wb.createSheet("게시판");
+	    Row row = null;
+	    Cell cell = null;
+
+	    int rowNo = 0;
+	    // 테이블 헤더용 스타일
+
+	    CellStyle headStyle = wb.createCellStyle();
+
+	    // 가는 경계선을 가집니다.
+
+	    headStyle.setBorderTop(BorderStyle.THIN);
+	    headStyle.setBorderBottom(BorderStyle.THIN);
+	    headStyle.setBorderLeft(BorderStyle.THIN);
+	    headStyle.setBorderRight(BorderStyle.THIN);
+
+	    // 데이터는 가운데 정렬합니다.
+
+	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+
+	    // 데이터용 경계 스타일 테두리만 지정
+
+	    CellStyle bodyStyle = wb.createCellStyle();
+	    bodyStyle.setBorderTop(BorderStyle.THIN);
+	    bodyStyle.setBorderBottom(BorderStyle.THIN);
+	    bodyStyle.setBorderLeft(BorderStyle.THIN);
+	    bodyStyle.setBorderRight(BorderStyle.THIN);
+	    
+	    // 헤더 생성
+
+	    row = sheet.createRow(rowNo++);
+
+	    cell = row.createCell(0);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("아이디");
+
+	    cell = row.createCell(1);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("이름");
+
+	    cell = row.createCell(2);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("부서");
+
+	    cell = row.createCell(3);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("직급");
+	    
+	    cell = row.createCell(4);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("직책");
+
+	    cell = row.createCell(5);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("내선번호");
+	    
+	    cell = row.createCell(6);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("팩스번호");
+	    
+	    cell = row.createCell(7);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("휴대폰 번호");
+	    
+	    cell = row.createCell(8);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("주소");
+	    
+	    cell = row.createCell(9);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상세주소");
+
+	    // 데이터 부분 생성
+
+	    for(int i=0; i<xlist.size(); i++) {
+
+	        row = sheet.createRow(rowNo++);
+
+	        cell = row.createCell(0);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getEmpId());
+
+	        cell = row.createCell(1);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getEmpName());
+
+	        cell = row.createCell(2);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getDeptTitle());
+
+	        cell = row.createCell(3);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getRankTitle());
+	        
+	        cell = row.createCell(4);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getJobTitle());
+
+	        cell = row.createCell(5);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getEmpExtension());
+	        
+	        cell = row.createCell(6);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getEmpFax());
+	        
+	        cell = row.createCell(7);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getEmpPhone());
+	        
+	        cell = row.createCell(8);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getEmpAddress());
+	        
+	        cell = row.createCell(9);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(xlist.get(i).getEmpAddressDetail());
+	        
+	    }
+
+	    // 컨텐츠 타입과 파일명 지정
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition", "attachment;filename=empAddress.xls");
+
+
+        // 엑셀 출력
+        try {
+			wb.write(response.getOutputStream());
+			wb.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+
+
+		
+		
+		
 	}
 
 	

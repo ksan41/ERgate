@@ -43,6 +43,10 @@ public class GroupDao {
 		return sqlSession.delete("groupMapper.noUpdateGroupEmp", empId);
 	}
 
+	public ArrayList<Employee> exelDown(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("groupMapper.exelDown");
+	}
+
 //	public Employee updateGroupEmp(SqlSessionTemplate sqlSession, String empId) {
 //		return sqlSession.selectOne("groupMapper.updateGroupEmp", empId);
 //	}
