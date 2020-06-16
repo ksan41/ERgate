@@ -390,7 +390,7 @@ div{
 						<td id="leftArea">
 							<!-- 인사팀만 보이는 버튼 -->
 							<button class="bigBtn" onclick="location.href='requestList.gr';">승인대기</button> &nbsp;
-							<button class="bigBtn" onclick="location.href='exel.gr';" style="background:rgb(190, 190, 190)">엑셀 다운로드</button>
+							<button class="bigBtn" onclick="location.href='exel.gr';" style="background:rgb(190, 190, 190)">주소록 다운로드</button>
 						</td>
 						<td id="rightArea">
 							<!-- 검색바 -->
