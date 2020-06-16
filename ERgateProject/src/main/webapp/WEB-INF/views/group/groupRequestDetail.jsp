@@ -280,17 +280,17 @@
                                 <tr>
                                     <td>
                                     	 <c:choose>
-											<c:when test="${ empty empPrf.empImage }">
+											<c:when test="${ empty loginUser.empImage }">
 												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png">
 											</c:when>
 											<c:otherwise>
-												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/main/${empPrf.empImage}">
+												<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/${empPrf.empImage}">
 											</c:otherwise>
 										</c:choose>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td>
+                                    <td ><button class="smallBtn">편집</button></td>
                                 </tr>
                                 <tr>
                                     <td style="height:50px; font-size: 18px;">

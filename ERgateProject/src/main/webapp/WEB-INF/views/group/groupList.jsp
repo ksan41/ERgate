@@ -518,9 +518,9 @@ div {
 								valueUp += '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
 							}else{
 									
-								valueUp +=
-							'<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/uploadFiles/main/'+empPrf.empImage+'" width="140" height="140">';
-							 
+								valueUp += '사진 샘플데이터 넣으면 수정하기';
+							/* '<img id="mypageProfileImg" src="${pageContext.servletContext.contextPath }/resources/siteImgs/profile_logo.png" width="140" height="140">';
+							 */
 							} 
 						
 						valueUp +=
