@@ -182,25 +182,21 @@ public class GroupController {
 	    Sheet sheet = wb.createSheet("게시판");
 	    Row row = null;
 	    Cell cell = null;
-
 	    int rowNo = 0;
+	    
 	    // 테이블 헤더용 스타일
-
 	    CellStyle headStyle = wb.createCellStyle();
 
 	    // 가는 경계선을 가집니다.
-
 	    headStyle.setBorderTop(BorderStyle.THIN);
 	    headStyle.setBorderBottom(BorderStyle.THIN);
 	    headStyle.setBorderLeft(BorderStyle.THIN);
 	    headStyle.setBorderRight(BorderStyle.THIN);
 
 	    // 데이터는 가운데 정렬합니다.
-
 	    headStyle.setAlignment(HorizontalAlignment.CENTER);
 
 	    // 데이터용 경계 스타일 테두리만 지정
-
 	    CellStyle bodyStyle = wb.createCellStyle();
 	    bodyStyle.setBorderTop(BorderStyle.THIN);
 	    bodyStyle.setBorderBottom(BorderStyle.THIN);
@@ -208,7 +204,6 @@ public class GroupController {
 	    bodyStyle.setBorderRight(BorderStyle.THIN);
 	    
 	    // 헤더 생성
-
 	    row = sheet.createRow(rowNo++);
 
 	    cell = row.createCell(0);
@@ -252,7 +247,6 @@ public class GroupController {
 	    cell.setCellValue("상세주소");
 
 	    // 데이터 부분 생성
-
 	    for(int i=0; i<xlist.size(); i++) {
 
 	        row = sheet.createRow(rowNo++);
@@ -296,13 +290,11 @@ public class GroupController {
 	        cell = row.createCell(9);
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(xlist.get(i).getEmpAddressDetail());
-	        
 	    }
 
 	    // 컨텐츠 타입과 파일명 지정
         response.setContentType("ms-vnd/excel");
         response.setHeader("Content-Disposition", "attachment;filename=empAddress.xls");
-
 
         // 엑셀 출력
         try {
@@ -311,12 +303,6 @@ public class GroupController {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
-
-
-		
-		
-		
 	}
 
 	
