@@ -691,14 +691,7 @@
 														<td>${w.draftDate }</td>
 													</tr>
 												</c:forEach>
-												<c:forEach var="b" begin="1" end="${2-fn:length(siWlist)}">
-							    					<tr>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-													</tr>
-												</c:forEach>
+												
 											</c:otherwise>
 										</c:choose>
 										</table>
@@ -721,13 +714,7 @@
 														<td>${o.draftDate }</td>
 													</tr>
 												</c:forEach>
-												<c:forEach var="b" begin="1" end="${2-fn:length(siOlist)}">
-							    					<tr>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-													</tr>
-												</c:forEach>
+												
 											</c:otherwise>
 										</c:choose>
 										</table>
@@ -758,14 +745,7 @@
 														<td>${r.draftDate }</td>
 													</tr>
 												</c:forEach>
-												<c:forEach var="b" begin="1" end="${2-fn:length(siRlist)}">
-							    					<tr>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-														<td class="nonContent">&nbsp;</td>
-													</tr>
-												</c:forEach>
+												
 											</c:otherwise>
 										</c:choose>
 										</table>
