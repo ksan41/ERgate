@@ -283,7 +283,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td ><button class="smallBtn">편집</button></td>
+                                    <td ></td>
                                 </tr>
                                 <tr>
                                     <td style="height:50px; font-size: 18px;">
@@ -291,7 +291,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td id="mypageDescript">개인정보 수정 후 <br>그룹웨어 정보 반영을 위해 <br>재로그인 해주세요.</bt></td>
+                                    <td id="mypageDescript"> <br><br></td>
                                		<tr><td><div style="height:503px;"></div></td></tr>
                                 </tr>
                             </table>
