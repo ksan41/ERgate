@@ -339,7 +339,7 @@
                                     <td>
                                         <select name="rankCode" id="rankTitle">
                                         	<option disabled selected>직급을 설정하세요</option>
-                                            <option value="D0">대표</option>
+                                            <option value="R0">대표</option>
                                             <option value="R1">부대표</option> 
                                             <option value="R2">전무</option>
                                             <option value="R3">상무</option>
